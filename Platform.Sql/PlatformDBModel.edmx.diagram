@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6b144207ab294981b1eebd4026721a87" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="NatrajModel.Customer" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.CustomerAgriculture" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.CustomerBank" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DCPaymentDetail" Width="1.5" PointX="8" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DistributionCenter" Width="1.5" PointX="5.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DockMilkCollection" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DockMilkCollectionDetail" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DockRejectedMilk" Width="1.5" PointX="3" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.Message" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.MilkProcessing" Width="1.5" PointX="17.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.NumberMaster" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.OrderStatu" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.Product" Width="1.5" PointX="17.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.ProductBatch" Width="1.5" PointX="19.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.ProductBatchDetail" Width="1.5" PointX="21.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.ProductBatchQuality" Width="1.5" PointX="21.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.ProductCategory" Width="1.5" PointX="12.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.ProductSubCategory" Width="1.5" PointX="15" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.PurchaseOrder" Width="1.5" PointX="5.75" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.PurchaseOrderItem" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.Role" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.ScreenSecurityCode" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.UserPermission" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.User" Width="1.5" PointX="10.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.VLC" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.VLCMilkCollection" Width="2" PointX="7.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.VLCMilkCollectionDtl" Width="1.5" PointX="10.5" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="NatrajModel.FK_Customer_VLC" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_CustomerAgriculture_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_CustomerBank_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_VLCMilkCollection_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_DCPaymentDetails_DistributionCenter" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_DCPaymentDetails_PurchaseOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_DockMilkCollectionDetails_VLC" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_DockRejectedMilk_VLC" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_ProductBatch_MilkProcessing" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_Product_ProductCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_Product_ProductSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_ProductBatch_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_ProductBatchDetails_ProductBatch" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_ProductBatchQuality_ProductBatch" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_ProductSubCategory_ProductCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_VLCMilkCollection_VLC" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_VLCMilkCollectiondtl_VLCMilkCollection" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

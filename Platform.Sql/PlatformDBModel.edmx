@@ -1,0 +1,2144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NatrajModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="100" />
+          <Property Name="FatherName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="10" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="Village" Type="nvarchar" MaxLength="300" />
+          <Property Name="Tehsil" Type="nvarchar" MaxLength="80" />
+          <Property Name="District" Type="nvarchar" MaxLength="80" />
+          <Property Name="AddressState" Type="nvarchar" MaxLength="60" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="PIN" Type="nvarchar" MaxLength="12" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="13" />
+          <Property Name="IdentificationNumber" Type="nvarchar" MaxLength="20" />
+          <Property Name="AlternateContact" Type="nvarchar" MaxLength="13" />
+          <Property Name="Email" Type="nvarchar" MaxLength="60" />
+          <Property Name="Aniversary" Type="date" />
+          <Property Name="Occupation" Type="nvarchar" MaxLength="13" />
+          <Property Name="VLCId" Type="int" />
+          <Property Name="DateOfJoinVLC" Type="date" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="CustomerCode" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerAgriculture">
+          <Key>
+            <PropertyRef Name="CustAgriId" />
+          </Key>
+          <Property Name="CustAgriId" Type="int" Nullable="false" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="NoOfCow" Type="int" />
+          <Property Name="NoOfBuffelo" Type="int" />
+          <Property Name="AgricultureLand" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="MilkProductionQty" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CustomerBank">
+          <Key>
+            <PropertyRef Name="CustomerBankId" />
+          </Key>
+          <Property Name="CustomerBankId" Type="int" Nullable="false" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="IFSCCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="AccountNo" Type="nvarchar" MaxLength="80" />
+          <Property Name="Branch" Type="nvarchar" MaxLength="80" />
+          <Property Name="BankName" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccountHolderName" Type="nvarchar" MaxLength="100" />
+          <Property Name="UPIId" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DCPaymentDetails">
+          <Key>
+            <PropertyRef Name="DCPaymentId" />
+          </Key>
+          <Property Name="DCPaymentId" Type="int" Nullable="false" />
+          <Property Name="PurchaseOrderId" Type="int" />
+          <Property Name="DCId" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentStatus" Type="int" />
+          <Property Name="PaymentDate" Type="date" />
+          <Property Name="ReceivedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentMode" Type="nvarchar" MaxLength="10" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DistributionCenter">
+          <Key>
+            <PropertyRef Name="DCId" />
+          </Key>
+          <Property Name="DCId" Type="int" Nullable="false" />
+          <Property Name="DCCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="DCName" Type="nvarchar" MaxLength="50" />
+          <Property Name="AgentName" Type="nvarchar" MaxLength="150" />
+          <Property Name="FatherName" Type="nvarchar" MaxLength="150" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="15" />
+          <Property Name="Email" Type="nvarchar" MaxLength="60" />
+          <Property Name="DCAddress" Type="nvarchar" MaxLength="200" />
+          <Property Name="Area" Type="nvarchar" MaxLength="60" />
+          <Property Name="City" Type="nvarchar" MaxLength="60" />
+          <Property Name="DCState" Type="nvarchar" MaxLength="60" />
+          <Property Name="PIN" Type="nvarchar" MaxLength="10" />
+          <Property Name="AlternateContact" Type="nvarchar" MaxLength="15" />
+          <Property Name="AADHAR" Type="nvarchar" MaxLength="17" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="Anniversary" Type="date" />
+          <Property Name="DateOfRegistration" Type="date" />
+          <Property Name="NoOfEmployee" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DockMilkCollection">
+          <Key>
+            <PropertyRef Name="DockMilkCollectionId" />
+          </Key>
+          <Property Name="DockMilkCollectionId" Type="int" Nullable="false" />
+          <Property Name="CollectionDate" Type="date" />
+          <Property Name="TotalNoOfCan" Type="int" />
+          <Property Name="TotalRejectedCan" Type="int" />
+          <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AverageFAT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AverageSNF" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalRejectedQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DockMilkCollectionDetails">
+          <Key>
+            <PropertyRef Name="DMCDId" />
+          </Key>
+          <Property Name="DMCDId" Type="int" Nullable="false" />
+          <Property Name="VLCId" Type="int" />
+          <Property Name="TotalNoOfCan" Type="int" />
+          <Property Name="TotalRejectedCan" Type="int" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="FAT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SNF" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RatePerUnit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MilkCollectionDate" Type="date" />
+          <Property Name="MileCollectionTime" Type="time" Precision="7" />
+          <Property Name="CarrierName" Type="nvarchar" MaxLength="60" />
+          <Property Name="DockReceiverName" Type="nvarchar" MaxLength="60" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DockRejectedMilk">
+          <Key>
+            <PropertyRef Name="DockRejectedMilkId" />
+          </Key>
+          <Property Name="DockRejectedMilkId" Type="int" Nullable="false" />
+          <Property Name="VLCId" Type="int" />
+          <Property Name="TotalRejectedCan" Type="int" />
+          <Property Name="ReturnedCan" Type="int" />
+          <Property Name="NoOfProcessCan" Type="int" />
+          <Property Name="QuantityRejected" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="QuantityProcessed" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="FAT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SNF" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RatePerUnit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RejectionDate" Type="date" />
+          <Property Name="ReasonForRejection" Type="nvarchar" MaxLength="200" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MessageCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="MessageString" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MilkProcessing">
+          <Key>
+            <PropertyRef Name="ProcessingId" />
+          </Key>
+          <Property Name="ProcessingId" Type="int" Nullable="false" />
+          <Property Name="ProcessCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProcessingDate" Type="date" />
+          <Property Name="TotalQuantityProcessed" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="InchargeName" Type="nvarchar" MaxLength="60" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="NumberMaster">
+          <Key>
+            <PropertyRef Name="EntityCode" />
+          </Key>
+          <Property Name="EntityCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NextNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="OrderStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="SubCategoryId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="Unit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SGST" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CGST" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IGST" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Acidity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="FAT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="REF1" Type="nvarchar" MaxLength="20" />
+          <Property Name="REF2" Type="nvarchar" MaxLength="20" />
+          <Property Name="REF3" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProductBatch">
+          <Key>
+            <PropertyRef Name="BatchId" />
+          </Key>
+          <Property Name="BatchId" Type="int" Nullable="false" />
+          <Property Name="BatchNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProcessingId" Type="int" />
+          <Property Name="ProductBatchDate" Type="date" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="BatchQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BatchRemainingQunatity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProductBatchDetails">
+          <Key>
+            <PropertyRef Name="BatchDetailId" />
+          </Key>
+          <Property Name="BatchDetailId" Type="int" Nullable="false" />
+          <Property Name="BatchId" Type="int" />
+          <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ProcessedQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="NoOfPackets" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProductBatchQuality">
+          <Key>
+            <PropertyRef Name="QualityId" />
+          </Key>
+          <Property Name="QualityId" Type="int" Nullable="false" />
+          <Property Name="BatchId" Type="int" />
+          <Property Name="FAT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SNF" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Acidity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TestDate" Type="date" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="150" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProductSubCategory">
+          <Key>
+            <PropertyRef Name="SubCategoryId" />
+          </Key>
+          <Property Name="SubCategoryId" Type="int" Nullable="false" />
+          <Property Name="SubCategoryName" Type="nvarchar" MaxLength="150" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="PurchaseOrderId" />
+          </Key>
+          <Property Name="PurchaseOrderId" Type="int" Nullable="false" />
+          <Property Name="DCId" Type="int" />
+          <Property Name="TotalQty" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderDate" Type="date" />
+          <Property Name="DeliveryExpectedDate" Type="date" />
+          <Property Name="TotalTax" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalDiscount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SGST" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CGST" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IGST" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderStatusId" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderItem">
+          <Key>
+            <PropertyRef Name="OrderItemId" />
+          </Key>
+          <Property Name="OrderItemId" Type="int" Nullable="false" />
+          <Property Name="PurchaseOrderId" Type="int" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="SubCategoryId" Type="int" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="Quntity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ScreenSecurityCodes">
+          <Key>
+            <PropertyRef Name="ScreenId" />
+          </Key>
+          <Property Name="ScreenId" Type="int" Nullable="false" />
+          <Property Name="ScreenName" Type="nvarchar" MaxLength="60" />
+          <Property Name="SecurityCode" Type="nvarchar" MaxLength="60" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserPermissions">
+          <Key>
+            <PropertyRef Name="UserPermissionId" />
+          </Key>
+          <Property Name="UserPermissionId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="IsPermit" Type="bit" />
+          <Property Name="SecurityCodeId" Type="int" />
+          <Property Name="DateOfCreation" Type="date" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="60" />
+          <Property Name="Permission" Type="nvarchar" MaxLength="250" />
+          <Property Name="SecurityCode" Type="nvarchar" MaxLength="250" />
+          <Property Name="Password" Type="nvarchar" MaxLength="60" />
+          <Property Name="Salt" Type="nvarchar" MaxLength="60" />
+          <Property Name="DateOfCreation" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VLC">
+          <Key>
+            <PropertyRef Name="VLCId" />
+          </Key>
+          <Property Name="VLCId" Type="int" Nullable="false" />
+          <Property Name="VLCCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="VLCName" Type="nvarchar" MaxLength="100" />
+          <Property Name="VLCEnrollmentDate" Type="date" />
+          <Property Name="AgentName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="15" />
+          <Property Name="Email" Type="nvarchar" MaxLength="60" />
+          <Property Name="VLCAddress" Type="nvarchar" MaxLength="150" />
+          <Property Name="Village" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="VLCState" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="AlternateContact" Type="nvarchar" MaxLength="15" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="VLCAgentAadhaar" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="VLCMilkCollection">
+          <Key>
+            <PropertyRef Name="VLCMilkCollectionId" />
+          </Key>
+          <Property Name="VLCMilkCollectionId" Type="int" Nullable="false" />
+          <Property Name="VLCId" Type="int" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CollectionDateTime" Type="datetime" />
+          <Property Name="ShiftId" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VLCMilkCollectionDtl">
+          <Key>
+            <PropertyRef Name="VLCMilkCollectionDtlId" />
+          </Key>
+          <Property Name="VLCMilkCollectionDtlId" Type="int" Nullable="false" />
+          <Property Name="VLCMilkCollectionId" Type="int" Nullable="false" />
+          <Property Name="Qunatity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="FAT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CLR" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RatePerUnit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ProductId" Type="int" />
+        </EntityType>
+        <Association Name="FK_Customer_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerAgriculture_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="CustomerAgriculture" Type="Self.CustomerAgriculture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerAgriculture">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerBank_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="CustomerBank" Type="Self.CustomerBank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerBank">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCPaymentDetails_DistributionCenter">
+          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="0..1" />
+          <End Role="DCPaymentDetails" Type="Self.DCPaymentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCenter">
+              <PropertyRef Name="DCId" />
+            </Principal>
+            <Dependent Role="DCPaymentDetails">
+              <PropertyRef Name="DCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCPaymentDetails_PurchaseOrder">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+          <End Role="DCPaymentDetails" Type="Self.DCPaymentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Principal>
+            <Dependent Role="DCPaymentDetails">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DockMilkCollectionDetails_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
+          <End Role="DockMilkCollectionDetails" Type="Self.DockMilkCollectionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="DockMilkCollectionDetails">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DockRejectedMilk_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
+          <End Role="DockRejectedMilk" Type="Self.DockRejectedMilk" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="DockRejectedMilk">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductSubCategory">
+          <End Role="ProductSubCategory" Type="Self.ProductSubCategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSubCategory">
+              <PropertyRef Name="SubCategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SubCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductBatch_MilkProcessing">
+          <End Role="MilkProcessing" Type="Self.MilkProcessing" Multiplicity="0..1" />
+          <End Role="ProductBatch" Type="Self.ProductBatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MilkProcessing">
+              <PropertyRef Name="ProcessingId" />
+            </Principal>
+            <Dependent Role="ProductBatch">
+              <PropertyRef Name="ProcessingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductBatch_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ProductBatch" Type="Self.ProductBatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductBatch">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductBatchDetails_ProductBatch">
+          <End Role="ProductBatch" Type="Self.ProductBatch" Multiplicity="0..1" />
+          <End Role="ProductBatchDetails" Type="Self.ProductBatchDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductBatch">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="ProductBatchDetails">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductBatchQuality_ProductBatch">
+          <End Role="ProductBatch" Type="Self.ProductBatch" Multiplicity="0..1" />
+          <End Role="ProductBatchQuality" Type="Self.ProductBatchQuality" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductBatch">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="ProductBatchQuality">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSubCategory_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="ProductSubCategory" Type="Self.ProductSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="ProductSubCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VLCMilkCollection_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="VLCMilkCollection" Type="Self.VLCMilkCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="VLCMilkCollection">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VLCMilkCollection_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
+          <End Role="VLCMilkCollection" Type="Self.VLCMilkCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="VLCMilkCollection">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VLCMilkCollectiondtl_VLCMilkCollection">
+          <End Role="VLCMilkCollection" Type="Self.VLCMilkCollection" Multiplicity="1" />
+          <End Role="VLCMilkCollectionDtl" Type="Self.VLCMilkCollectionDtl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLCMilkCollection">
+              <PropertyRef Name="VLCMilkCollectionId" />
+            </Principal>
+            <Dependent Role="VLCMilkCollectionDtl">
+              <PropertyRef Name="VLCMilkCollectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetNextEntityNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityName" Type="nvarchar" Mode="In" />
+          <Parameter Name="NextNumber" Type="int" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="NatrajModelStoreContainer">
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerAgriculture" EntityType="Self.CustomerAgriculture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerBank" EntityType="Self.CustomerBank" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DCPaymentDetails" EntityType="Self.DCPaymentDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DistributionCenter" EntityType="Self.DistributionCenter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DockMilkCollection" EntityType="Self.DockMilkCollection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DockMilkCollectionDetails" EntityType="Self.DockMilkCollectionDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DockRejectedMilk" EntityType="Self.DockRejectedMilk" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MilkProcessing" EntityType="Self.MilkProcessing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NumberMaster" EntityType="Self.NumberMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductBatch" EntityType="Self.ProductBatch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductBatchDetails" EntityType="Self.ProductBatchDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductBatchQuality" EntityType="Self.ProductBatchQuality" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSubCategory" EntityType="Self.ProductSubCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrderItem" EntityType="Self.PurchaseOrderItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScreenSecurityCodes" EntityType="Self.ScreenSecurityCodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPermissions" EntityType="Self.UserPermissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VLC" EntityType="Self.VLC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VLCMilkCollection" EntityType="Self.VLCMilkCollection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VLCMilkCollectionDtl" EntityType="Self.VLCMilkCollectionDtl" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customer_VLC" Association="Self.FK_Customer_VLC">
+            <End Role="VLC" EntitySet="VLC" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerAgriculture_Customer" Association="Self.FK_CustomerAgriculture_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerAgriculture" EntitySet="CustomerAgriculture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerBank_Customer" Association="Self.FK_CustomerBank_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerBank" EntitySet="CustomerBank" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCPaymentDetails_DistributionCenter" Association="Self.FK_DCPaymentDetails_DistributionCenter">
+            <End Role="DistributionCenter" EntitySet="DistributionCenter" />
+            <End Role="DCPaymentDetails" EntitySet="DCPaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCPaymentDetails_PurchaseOrder" Association="Self.FK_DCPaymentDetails_PurchaseOrder">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+            <End Role="DCPaymentDetails" EntitySet="DCPaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DockMilkCollectionDetails_VLC" Association="Self.FK_DockMilkCollectionDetails_VLC">
+            <End Role="VLC" EntitySet="VLC" />
+            <End Role="DockMilkCollectionDetails" EntitySet="DockMilkCollectionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DockRejectedMilk_VLC" Association="Self.FK_DockRejectedMilk_VLC">
+            <End Role="VLC" EntitySet="VLC" />
+            <End Role="DockRejectedMilk" EntitySet="DockRejectedMilk" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductCategory" Association="Self.FK_Product_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductSubCategory" Association="Self.FK_Product_ProductSubCategory">
+            <End Role="ProductSubCategory" EntitySet="ProductSubCategory" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductBatch_MilkProcessing" Association="Self.FK_ProductBatch_MilkProcessing">
+            <End Role="MilkProcessing" EntitySet="MilkProcessing" />
+            <End Role="ProductBatch" EntitySet="ProductBatch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductBatch_Product" Association="Self.FK_ProductBatch_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductBatch" EntitySet="ProductBatch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductBatchDetails_ProductBatch" Association="Self.FK_ProductBatchDetails_ProductBatch">
+            <End Role="ProductBatch" EntitySet="ProductBatch" />
+            <End Role="ProductBatchDetails" EntitySet="ProductBatchDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductBatchQuality_ProductBatch" Association="Self.FK_ProductBatchQuality_ProductBatch">
+            <End Role="ProductBatch" EntitySet="ProductBatch" />
+            <End Role="ProductBatchQuality" EntitySet="ProductBatchQuality" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSubCategory_ProductCategory" Association="Self.FK_ProductSubCategory_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="ProductSubCategory" EntitySet="ProductSubCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VLCMilkCollection_Customer" Association="Self.FK_VLCMilkCollection_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="VLCMilkCollection" EntitySet="VLCMilkCollection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VLCMilkCollection_VLC" Association="Self.FK_VLCMilkCollection_VLC">
+            <End Role="VLC" EntitySet="VLC" />
+            <End Role="VLCMilkCollection" EntitySet="VLCMilkCollection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VLCMilkCollectiondtl_VLCMilkCollection" Association="Self.FK_VLCMilkCollectiondtl_VLCMilkCollection">
+            <End Role="VLCMilkCollection" EntitySet="VLCMilkCollection" />
+            <End Role="VLCMilkCollectionDtl" EntitySet="VLCMilkCollectionDtl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NatrajModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FatherName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="Village" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Tehsil" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="District" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="AddressState" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PIN" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="IdentificationNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AlternateContact" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Aniversary" Type="DateTime" Precision="0" />
+          <Property Name="Occupation" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="VLCId" Type="Int32" />
+          <Property Name="DateOfJoinVLC" Type="DateTime" Precision="0" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="VLC" Relationship="Self.FK_Customer_VLC" FromRole="Customer" ToRole="VLC" />
+          <NavigationProperty Name="CustomerAgricultures" Relationship="Self.FK_CustomerAgriculture_Customer" FromRole="Customer" ToRole="CustomerAgriculture" />
+          <NavigationProperty Name="CustomerBanks" Relationship="Self.FK_CustomerBank_Customer" FromRole="Customer" ToRole="CustomerBank" />
+          <NavigationProperty Name="VLCMilkCollections" Relationship="Self.FK_VLCMilkCollection_Customer" FromRole="Customer" ToRole="VLCMilkCollection" />
+          <Property Name="CustomerCode" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerAgriculture">
+          <Key>
+            <PropertyRef Name="CustAgriId" />
+          </Key>
+          <Property Name="CustAgriId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="NoOfCow" Type="Int32" />
+          <Property Name="NoOfBuffelo" Type="Int32" />
+          <Property Name="AgricultureLand" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="MilkProductionQty" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Comments" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_CustomerAgriculture_Customer" FromRole="CustomerAgriculture" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="CustomerBank">
+          <Key>
+            <PropertyRef Name="CustomerBankId" />
+          </Key>
+          <Property Name="CustomerBankId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="IFSCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountNo" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Branch" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="BankName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccountHolderName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UPIId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_CustomerBank_Customer" FromRole="CustomerBank" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="DCPaymentDetail">
+          <Key>
+            <PropertyRef Name="DCPaymentId" />
+          </Key>
+          <Property Name="DCPaymentId" Type="Int32" Nullable="false" />
+          <Property Name="PurchaseOrderId" Type="Int32" />
+          <Property Name="DCId" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentStatus" Type="Int32" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="0" />
+          <Property Name="ReceivedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentMode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DistributionCenter" Relationship="Self.FK_DCPaymentDetails_DistributionCenter" FromRole="DCPaymentDetails" ToRole="DistributionCenter" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK_DCPaymentDetails_PurchaseOrder" FromRole="DCPaymentDetails" ToRole="PurchaseOrder" />
+        </EntityType>
+        <EntityType Name="DistributionCenter">
+          <Key>
+            <PropertyRef Name="DCId" />
+          </Key>
+          <Property Name="DCId" Type="Int32" Nullable="false" />
+          <Property Name="DCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DCName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AgentName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="FatherName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="DCAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Area" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="DCState" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="PIN" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="AlternateContact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="AADHAR" Type="String" MaxLength="17" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="Anniversary" Type="DateTime" Precision="0" />
+          <Property Name="DateOfRegistration" Type="DateTime" Precision="0" />
+          <Property Name="NoOfEmployee" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DCPaymentDetails" Relationship="Self.FK_DCPaymentDetails_DistributionCenter" FromRole="DistributionCenter" ToRole="DCPaymentDetails" />
+        </EntityType>
+        <EntityType Name="DockMilkCollection">
+          <Key>
+            <PropertyRef Name="DockMilkCollectionId" />
+          </Key>
+          <Property Name="DockMilkCollectionId" Type="Int32" Nullable="false" />
+          <Property Name="CollectionDate" Type="DateTime" Precision="0" />
+          <Property Name="TotalNoOfCan" Type="Int32" />
+          <Property Name="TotalRejectedCan" Type="Int32" />
+          <Property Name="TotalQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AverageFAT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AverageSNF" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalRejectedQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="DockMilkCollectionDetail">
+          <Key>
+            <PropertyRef Name="DMCDId" />
+          </Key>
+          <Property Name="DMCDId" Type="Int32" Nullable="false" />
+          <Property Name="VLCId" Type="Int32" />
+          <Property Name="TotalNoOfCan" Type="Int32" />
+          <Property Name="TotalRejectedCan" Type="Int32" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FAT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SNF" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RatePerUnit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MilkCollectionDate" Type="DateTime" Precision="0" />
+          <Property Name="MileCollectionTime" Type="Time" Precision="7" />
+          <Property Name="CarrierName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="DockReceiverName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="VLC" Relationship="Self.FK_DockMilkCollectionDetails_VLC" FromRole="DockMilkCollectionDetails" ToRole="VLC" />
+        </EntityType>
+        <EntityType Name="DockRejectedMilk">
+          <Key>
+            <PropertyRef Name="DockRejectedMilkId" />
+          </Key>
+          <Property Name="DockRejectedMilkId" Type="Int32" Nullable="false" />
+          <Property Name="VLCId" Type="Int32" />
+          <Property Name="TotalRejectedCan" Type="Int32" />
+          <Property Name="ReturnedCan" Type="Int32" />
+          <Property Name="NoOfProcessCan" Type="Int32" />
+          <Property Name="QuantityRejected" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="QuantityProcessed" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FAT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SNF" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RatePerUnit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RejectionDate" Type="DateTime" Precision="0" />
+          <Property Name="ReasonForRejection" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="VLC" Relationship="Self.FK_DockRejectedMilk_VLC" FromRole="DockRejectedMilk" ToRole="VLC" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MessageCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MessageString" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MilkProcessing">
+          <Key>
+            <PropertyRef Name="ProcessingId" />
+          </Key>
+          <Property Name="ProcessingId" Type="Int32" Nullable="false" />
+          <Property Name="ProcessCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProcessingDate" Type="DateTime" Precision="0" />
+          <Property Name="TotalQuantityProcessed" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="InchargeName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ProductBatches" Relationship="Self.FK_ProductBatch_MilkProcessing" FromRole="MilkProcessing" ToRole="ProductBatch" />
+        </EntityType>
+        <EntityType Name="NumberMaster">
+          <Key>
+            <PropertyRef Name="EntityCode" />
+          </Key>
+          <Property Name="EntityCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NextNumber" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderStatu">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="OrderStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="SubCategoryId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SGST" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CGST" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IGST" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Acidity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FAT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="REF1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="REF2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="REF3" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
+          <NavigationProperty Name="ProductSubCategory" Relationship="Self.FK_Product_ProductSubCategory" FromRole="Product" ToRole="ProductSubCategory" />
+          <NavigationProperty Name="ProductBatches" Relationship="Self.FK_ProductBatch_Product" FromRole="Product" ToRole="ProductBatch" />
+        </EntityType>
+        <EntityType Name="ProductBatch">
+          <Key>
+            <PropertyRef Name="BatchId" />
+          </Key>
+          <Property Name="BatchId" Type="Int32" Nullable="false" />
+          <Property Name="BatchNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProcessingId" Type="Int32" />
+          <Property Name="ProductBatchDate" Type="DateTime" Precision="0" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="BatchQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BatchRemainingQunatity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MilkProcessing" Relationship="Self.FK_ProductBatch_MilkProcessing" FromRole="ProductBatch" ToRole="MilkProcessing" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_ProductBatch_Product" FromRole="ProductBatch" ToRole="Product" />
+          <NavigationProperty Name="ProductBatchDetails" Relationship="Self.FK_ProductBatchDetails_ProductBatch" FromRole="ProductBatch" ToRole="ProductBatchDetails" />
+          <NavigationProperty Name="ProductBatchQualities" Relationship="Self.FK_ProductBatchQuality_ProductBatch" FromRole="ProductBatch" ToRole="ProductBatchQuality" />
+        </EntityType>
+        <EntityType Name="ProductBatchDetail">
+          <Key>
+            <PropertyRef Name="BatchDetailId" />
+          </Key>
+          <Property Name="BatchDetailId" Type="Int32" Nullable="false" />
+          <Property Name="BatchId" Type="Int32" />
+          <Property Name="TotalQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ProcessedQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="NoOfPackets" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ProductBatch" Relationship="Self.FK_ProductBatchDetails_ProductBatch" FromRole="ProductBatchDetails" ToRole="ProductBatch" />
+        </EntityType>
+        <EntityType Name="ProductBatchQuality">
+          <Key>
+            <PropertyRef Name="QualityId" />
+          </Key>
+          <Property Name="QualityId" Type="Int32" Nullable="false" />
+          <Property Name="BatchId" Type="Int32" />
+          <Property Name="FAT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SNF" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Acidity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TestDate" Type="DateTime" Precision="0" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ProductBatch" Relationship="Self.FK_ProductBatchQuality_ProductBatch" FromRole="ProductBatchQuality" ToRole="ProductBatch" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
+          <NavigationProperty Name="ProductSubCategories" Relationship="Self.FK_ProductSubCategory_ProductCategory" FromRole="ProductCategory" ToRole="ProductSubCategory" />
+        </EntityType>
+        <EntityType Name="ProductSubCategory">
+          <Key>
+            <PropertyRef Name="SubCategoryId" />
+          </Key>
+          <Property Name="SubCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductSubCategory" FromRole="ProductSubCategory" ToRole="Product" />
+          <NavigationProperty Name="ProductCategory" Relationship="Self.FK_ProductSubCategory_ProductCategory" FromRole="ProductSubCategory" ToRole="ProductCategory" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="PurchaseOrderId" />
+          </Key>
+          <Property Name="PurchaseOrderId" Type="Int32" Nullable="false" />
+          <Property Name="DCId" Type="Int32" />
+          <Property Name="TotalQty" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderDate" Type="DateTime" Precision="0" />
+          <Property Name="DeliveryExpectedDate" Type="DateTime" Precision="0" />
+          <Property Name="TotalTax" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalDiscount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SGST" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CGST" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IGST" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderStatusId" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DCPaymentDetails" Relationship="Self.FK_DCPaymentDetails_PurchaseOrder" FromRole="PurchaseOrder" ToRole="DCPaymentDetails" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderItem">
+          <Key>
+            <PropertyRef Name="OrderItemId" />
+          </Key>
+          <Property Name="OrderItemId" Type="Int32" Nullable="false" />
+          <Property Name="PurchaseOrderId" Type="Int32" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="SubCategoryId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="Quntity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ScreenSecurityCode">
+          <Key>
+            <PropertyRef Name="ScreenId" />
+          </Key>
+          <Property Name="ScreenId" Type="Int32" Nullable="false" />
+          <Property Name="ScreenName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserPermission">
+          <Key>
+            <PropertyRef Name="UserPermissionId" />
+          </Key>
+          <Property Name="UserPermissionId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="IsPermit" Type="Boolean" />
+          <Property Name="SecurityCodeId" Type="Int32" />
+          <Property Name="DateOfCreation" Type="DateTime" Precision="0" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Permission" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Salt" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfCreation" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="VLC">
+          <Key>
+            <PropertyRef Name="VLCId" />
+          </Key>
+          <Property Name="VLCId" Type="Int32" Nullable="false" />
+          <Property Name="VLCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VLCName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VLCEnrollmentDate" Type="DateTime" Precision="0" />
+          <Property Name="AgentName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="VLCAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Village" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VLCState" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AlternateContact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="VLCAgentAadhaar" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_VLC" FromRole="VLC" ToRole="Customer" />
+          <NavigationProperty Name="DockMilkCollectionDetails" Relationship="Self.FK_DockMilkCollectionDetails_VLC" FromRole="VLC" ToRole="DockMilkCollectionDetails" />
+          <NavigationProperty Name="DockRejectedMilks" Relationship="Self.FK_DockRejectedMilk_VLC" FromRole="VLC" ToRole="DockRejectedMilk" />
+          <NavigationProperty Name="VLCMilkCollections" Relationship="Self.FK_VLCMilkCollection_VLC" FromRole="VLC" ToRole="VLCMilkCollection" />
+        </EntityType>
+        <EntityType Name="VLCMilkCollection">
+          <Key>
+            <PropertyRef Name="VLCMilkCollectionId" />
+          </Key>
+          <Property Name="VLCMilkCollectionId" Type="Int32" Nullable="false" />
+          <Property Name="VLCId" Type="Int32" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="TotalQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CollectionDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ShiftId" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_VLCMilkCollection_Customer" FromRole="VLCMilkCollection" ToRole="Customer" />
+          <NavigationProperty Name="VLC" Relationship="Self.FK_VLCMilkCollection_VLC" FromRole="VLCMilkCollection" ToRole="VLC" />
+          <NavigationProperty Name="VLCMilkCollectionDtls" Relationship="Self.FK_VLCMilkCollectiondtl_VLCMilkCollection" FromRole="VLCMilkCollection" ToRole="VLCMilkCollectionDtl" />
+        </EntityType>
+        <EntityType Name="VLCMilkCollectionDtl">
+          <Key>
+            <PropertyRef Name="VLCMilkCollectionDtlId" />
+          </Key>
+          <Property Name="VLCMilkCollectionDtlId" Type="Int32" Nullable="false" />
+          <Property Name="VLCMilkCollectionId" Type="Int32" Nullable="false" />
+          <Property Name="Qunatity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FAT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CLR" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RatePerUnit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="VLCMilkCollection" Relationship="Self.FK_VLCMilkCollectiondtl_VLCMilkCollection" FromRole="VLCMilkCollectionDtl" ToRole="VLCMilkCollection" />
+          <Property Name="ProductId" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_Customer_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerAgriculture_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="CustomerAgriculture" Type="Self.CustomerAgriculture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerAgriculture">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerBank_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="CustomerBank" Type="Self.CustomerBank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerBank">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VLCMilkCollection_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="VLCMilkCollection" Type="Self.VLCMilkCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="VLCMilkCollection">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCPaymentDetails_DistributionCenter">
+          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="0..1" />
+          <End Role="DCPaymentDetails" Type="Self.DCPaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCenter">
+              <PropertyRef Name="DCId" />
+            </Principal>
+            <Dependent Role="DCPaymentDetails">
+              <PropertyRef Name="DCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCPaymentDetails_PurchaseOrder">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+          <End Role="DCPaymentDetails" Type="Self.DCPaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Principal>
+            <Dependent Role="DCPaymentDetails">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DockMilkCollectionDetails_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
+          <End Role="DockMilkCollectionDetails" Type="Self.DockMilkCollectionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="DockMilkCollectionDetails">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DockRejectedMilk_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
+          <End Role="DockRejectedMilk" Type="Self.DockRejectedMilk" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="DockRejectedMilk">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductBatch_MilkProcessing">
+          <End Role="MilkProcessing" Type="Self.MilkProcessing" Multiplicity="0..1" />
+          <End Role="ProductBatch" Type="Self.ProductBatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MilkProcessing">
+              <PropertyRef Name="ProcessingId" />
+            </Principal>
+            <Dependent Role="ProductBatch">
+              <PropertyRef Name="ProcessingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductSubCategory">
+          <End Role="ProductSubCategory" Type="Self.ProductSubCategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSubCategory">
+              <PropertyRef Name="SubCategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SubCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductBatch_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ProductBatch" Type="Self.ProductBatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductBatch">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductBatchDetails_ProductBatch">
+          <End Role="ProductBatch" Type="Self.ProductBatch" Multiplicity="0..1" />
+          <End Role="ProductBatchDetails" Type="Self.ProductBatchDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductBatch">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="ProductBatchDetails">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductBatchQuality_ProductBatch">
+          <End Role="ProductBatch" Type="Self.ProductBatch" Multiplicity="0..1" />
+          <End Role="ProductBatchQuality" Type="Self.ProductBatchQuality" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductBatch">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="ProductBatchQuality">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSubCategory_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="ProductSubCategory" Type="Self.ProductSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="ProductSubCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VLCMilkCollection_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
+          <End Role="VLCMilkCollection" Type="Self.VLCMilkCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="VLCMilkCollection">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VLCMilkCollectiondtl_VLCMilkCollection">
+          <End Role="VLCMilkCollection" Type="Self.VLCMilkCollection" Multiplicity="1" />
+          <End Role="VLCMilkCollectionDtl" Type="Self.VLCMilkCollectionDtl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLCMilkCollection">
+              <PropertyRef Name="VLCMilkCollectionId" />
+            </Principal>
+            <Dependent Role="VLCMilkCollectionDtl">
+              <PropertyRef Name="VLCMilkCollectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PlatformDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="CustomerAgricultures" EntityType="Self.CustomerAgriculture" />
+          <EntitySet Name="CustomerBanks" EntityType="Self.CustomerBank" />
+          <EntitySet Name="DCPaymentDetails" EntityType="Self.DCPaymentDetail" />
+          <EntitySet Name="DistributionCenters" EntityType="Self.DistributionCenter" />
+          <EntitySet Name="DockMilkCollections" EntityType="Self.DockMilkCollection" />
+          <EntitySet Name="DockMilkCollectionDetails" EntityType="Self.DockMilkCollectionDetail" />
+          <EntitySet Name="DockRejectedMilks" EntityType="Self.DockRejectedMilk" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
+          <EntitySet Name="MilkProcessings" EntityType="Self.MilkProcessing" />
+          <EntitySet Name="NumberMasters" EntityType="Self.NumberMaster" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatu" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductBatches" EntityType="Self.ProductBatch" />
+          <EntitySet Name="ProductBatchDetails" EntityType="Self.ProductBatchDetail" />
+          <EntitySet Name="ProductBatchQualities" EntityType="Self.ProductBatchQuality" />
+          <EntitySet Name="ProductCategories" EntityType="Self.ProductCategory" />
+          <EntitySet Name="ProductSubCategories" EntityType="Self.ProductSubCategory" />
+          <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrder" />
+          <EntitySet Name="PurchaseOrderItems" EntityType="Self.PurchaseOrderItem" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="ScreenSecurityCodes" EntityType="Self.ScreenSecurityCode" />
+          <EntitySet Name="UserPermissions" EntityType="Self.UserPermission" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="VLCs" EntityType="Self.VLC" />
+          <EntitySet Name="VLCMilkCollections" EntityType="Self.VLCMilkCollection" />
+          <EntitySet Name="VLCMilkCollectionDtls" EntityType="Self.VLCMilkCollectionDtl" />
+          <AssociationSet Name="FK_Customer_VLC" Association="Self.FK_Customer_VLC">
+            <End Role="VLC" EntitySet="VLCs" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerAgriculture_Customer" Association="Self.FK_CustomerAgriculture_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerAgriculture" EntitySet="CustomerAgricultures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerBank_Customer" Association="Self.FK_CustomerBank_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerBank" EntitySet="CustomerBanks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VLCMilkCollection_Customer" Association="Self.FK_VLCMilkCollection_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="VLCMilkCollection" EntitySet="VLCMilkCollections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCPaymentDetails_DistributionCenter" Association="Self.FK_DCPaymentDetails_DistributionCenter">
+            <End Role="DistributionCenter" EntitySet="DistributionCenters" />
+            <End Role="DCPaymentDetails" EntitySet="DCPaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCPaymentDetails_PurchaseOrder" Association="Self.FK_DCPaymentDetails_PurchaseOrder">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="DCPaymentDetails" EntitySet="DCPaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DockMilkCollectionDetails_VLC" Association="Self.FK_DockMilkCollectionDetails_VLC">
+            <End Role="VLC" EntitySet="VLCs" />
+            <End Role="DockMilkCollectionDetails" EntitySet="DockMilkCollectionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DockRejectedMilk_VLC" Association="Self.FK_DockRejectedMilk_VLC">
+            <End Role="VLC" EntitySet="VLCs" />
+            <End Role="DockRejectedMilk" EntitySet="DockRejectedMilks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductBatch_MilkProcessing" Association="Self.FK_ProductBatch_MilkProcessing">
+            <End Role="MilkProcessing" EntitySet="MilkProcessings" />
+            <End Role="ProductBatch" EntitySet="ProductBatches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductCategory" Association="Self.FK_Product_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductSubCategory" Association="Self.FK_Product_ProductSubCategory">
+            <End Role="ProductSubCategory" EntitySet="ProductSubCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductBatch_Product" Association="Self.FK_ProductBatch_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductBatch" EntitySet="ProductBatches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductBatchDetails_ProductBatch" Association="Self.FK_ProductBatchDetails_ProductBatch">
+            <End Role="ProductBatch" EntitySet="ProductBatches" />
+            <End Role="ProductBatchDetails" EntitySet="ProductBatchDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductBatchQuality_ProductBatch" Association="Self.FK_ProductBatchQuality_ProductBatch">
+            <End Role="ProductBatch" EntitySet="ProductBatches" />
+            <End Role="ProductBatchQuality" EntitySet="ProductBatchQualities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSubCategory_ProductCategory" Association="Self.FK_ProductSubCategory_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="ProductSubCategory" EntitySet="ProductSubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VLCMilkCollection_VLC" Association="Self.FK_VLCMilkCollection_VLC">
+            <End Role="VLC" EntitySet="VLCs" />
+            <End Role="VLCMilkCollection" EntitySet="VLCMilkCollections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VLCMilkCollectiondtl_VLCMilkCollection" Association="Self.FK_VLCMilkCollectiondtl_VLCMilkCollection">
+            <End Role="VLCMilkCollection" EntitySet="VLCMilkCollections" />
+            <End Role="VLCMilkCollectionDtl" EntitySet="VLCMilkCollectionDtls" />
+          </AssociationSet>
+          <FunctionImport Name="GetNextEntityNumber">
+            <Parameter Name="EntityName" Mode="In" Type="String" />
+            <Parameter Name="NextNumber" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NatrajModelStoreContainer" CdmEntityContainer="PlatformDBEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="NatrajModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Village" ColumnName="Village" />
+                <ScalarProperty Name="Tehsil" ColumnName="Tehsil" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="AddressState" ColumnName="AddressState" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="IdentificationNumber" ColumnName="IdentificationNumber" />
+                <ScalarProperty Name="AlternateContact" ColumnName="AlternateContact" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Aniversary" ColumnName="Aniversary" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="VLCId" ColumnName="VLCId" />
+                <ScalarProperty Name="DateOfJoinVLC" ColumnName="DateOfJoinVLC" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerAgricultures">
+            <EntityTypeMapping TypeName="NatrajModel.CustomerAgriculture">
+              <MappingFragment StoreEntitySet="CustomerAgriculture">
+                <ScalarProperty Name="CustAgriId" ColumnName="CustAgriId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="NoOfCow" ColumnName="NoOfCow" />
+                <ScalarProperty Name="NoOfBuffelo" ColumnName="NoOfBuffelo" />
+                <ScalarProperty Name="AgricultureLand" ColumnName="AgricultureLand" />
+                <ScalarProperty Name="MilkProductionQty" ColumnName="MilkProductionQty" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerBanks">
+            <EntityTypeMapping TypeName="NatrajModel.CustomerBank">
+              <MappingFragment StoreEntitySet="CustomerBank">
+                <ScalarProperty Name="CustomerBankId" ColumnName="CustomerBankId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="IFSCCode" ColumnName="IFSCCode" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="AccountHolderName" ColumnName="AccountHolderName" />
+                <ScalarProperty Name="UPIId" ColumnName="UPIId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DCPaymentDetails">
+            <EntityTypeMapping TypeName="NatrajModel.DCPaymentDetail">
+              <MappingFragment StoreEntitySet="DCPaymentDetails">
+                <ScalarProperty Name="DCPaymentId" ColumnName="DCPaymentId" />
+                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+                <ScalarProperty Name="DCId" ColumnName="DCId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="ReceivedBy" ColumnName="ReceivedBy" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistributionCenters">
+            <EntityTypeMapping TypeName="NatrajModel.DistributionCenter">
+              <MappingFragment StoreEntitySet="DistributionCenter">
+                <ScalarProperty Name="DCId" ColumnName="DCId" />
+                <ScalarProperty Name="DCCode" ColumnName="DCCode" />
+                <ScalarProperty Name="DCName" ColumnName="DCName" />
+                <ScalarProperty Name="AgentName" ColumnName="AgentName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DCAddress" ColumnName="DCAddress" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="DCState" ColumnName="DCState" />
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                <ScalarProperty Name="AlternateContact" ColumnName="AlternateContact" />
+                <ScalarProperty Name="AADHAR" ColumnName="AADHAR" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Anniversary" ColumnName="Anniversary" />
+                <ScalarProperty Name="DateOfRegistration" ColumnName="DateOfRegistration" />
+                <ScalarProperty Name="NoOfEmployee" ColumnName="NoOfEmployee" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DockMilkCollections">
+            <EntityTypeMapping TypeName="NatrajModel.DockMilkCollection">
+              <MappingFragment StoreEntitySet="DockMilkCollection">
+                <ScalarProperty Name="DockMilkCollectionId" ColumnName="DockMilkCollectionId" />
+                <ScalarProperty Name="CollectionDate" ColumnName="CollectionDate" />
+                <ScalarProperty Name="TotalNoOfCan" ColumnName="TotalNoOfCan" />
+                <ScalarProperty Name="TotalRejectedCan" ColumnName="TotalRejectedCan" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="AverageFAT" ColumnName="AverageFAT" />
+                <ScalarProperty Name="AverageSNF" ColumnName="AverageSNF" />
+                <ScalarProperty Name="TotalRejectedQuantity" ColumnName="TotalRejectedQuantity" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DockMilkCollectionDetails">
+            <EntityTypeMapping TypeName="NatrajModel.DockMilkCollectionDetail">
+              <MappingFragment StoreEntitySet="DockMilkCollectionDetails">
+                <ScalarProperty Name="DMCDId" ColumnName="DMCDId" />
+                <ScalarProperty Name="VLCId" ColumnName="VLCId" />
+                <ScalarProperty Name="TotalNoOfCan" ColumnName="TotalNoOfCan" />
+                <ScalarProperty Name="TotalRejectedCan" ColumnName="TotalRejectedCan" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="FAT" ColumnName="FAT" />
+                <ScalarProperty Name="SNF" ColumnName="SNF" />
+                <ScalarProperty Name="RatePerUnit" ColumnName="RatePerUnit" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="MilkCollectionDate" ColumnName="MilkCollectionDate" />
+                <ScalarProperty Name="MileCollectionTime" ColumnName="MileCollectionTime" />
+                <ScalarProperty Name="CarrierName" ColumnName="CarrierName" />
+                <ScalarProperty Name="DockReceiverName" ColumnName="DockReceiverName" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DockRejectedMilks">
+            <EntityTypeMapping TypeName="NatrajModel.DockRejectedMilk">
+              <MappingFragment StoreEntitySet="DockRejectedMilk">
+                <ScalarProperty Name="DockRejectedMilkId" ColumnName="DockRejectedMilkId" />
+                <ScalarProperty Name="VLCId" ColumnName="VLCId" />
+                <ScalarProperty Name="TotalRejectedCan" ColumnName="TotalRejectedCan" />
+                <ScalarProperty Name="ReturnedCan" ColumnName="ReturnedCan" />
+                <ScalarProperty Name="NoOfProcessCan" ColumnName="NoOfProcessCan" />
+                <ScalarProperty Name="QuantityRejected" ColumnName="QuantityRejected" />
+                <ScalarProperty Name="QuantityProcessed" ColumnName="QuantityProcessed" />
+                <ScalarProperty Name="FAT" ColumnName="FAT" />
+                <ScalarProperty Name="SNF" ColumnName="SNF" />
+                <ScalarProperty Name="RatePerUnit" ColumnName="RatePerUnit" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="RejectionDate" ColumnName="RejectionDate" />
+                <ScalarProperty Name="ReasonForRejection" ColumnName="ReasonForRejection" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="NatrajModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="MessageString" ColumnName="MessageString" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="MessageCode" ColumnName="MessageCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MilkProcessings">
+            <EntityTypeMapping TypeName="NatrajModel.MilkProcessing">
+              <MappingFragment StoreEntitySet="MilkProcessing">
+                <ScalarProperty Name="ProcessingId" ColumnName="ProcessingId" />
+                <ScalarProperty Name="ProcessCode" ColumnName="ProcessCode" />
+                <ScalarProperty Name="ProcessingDate" ColumnName="ProcessingDate" />
+                <ScalarProperty Name="TotalQuantityProcessed" ColumnName="TotalQuantityProcessed" />
+                <ScalarProperty Name="InchargeName" ColumnName="InchargeName" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NumberMasters">
+            <EntityTypeMapping TypeName="NatrajModel.NumberMaster">
+              <MappingFragment StoreEntitySet="NumberMaster">
+                <ScalarProperty Name="EntityCode" ColumnName="EntityCode" />
+                <ScalarProperty Name="NextNumber" ColumnName="NextNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStatus">
+            <EntityTypeMapping TypeName="NatrajModel.OrderStatu">
+              <MappingFragment StoreEntitySet="OrderStatus">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="NatrajModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="SGST" ColumnName="SGST" />
+                <ScalarProperty Name="CGST" ColumnName="CGST" />
+                <ScalarProperty Name="IGST" ColumnName="IGST" />
+                <ScalarProperty Name="Acidity" ColumnName="Acidity" />
+                <ScalarProperty Name="FAT" ColumnName="FAT" />
+                <ScalarProperty Name="REF1" ColumnName="REF1" />
+                <ScalarProperty Name="REF2" ColumnName="REF2" />
+                <ScalarProperty Name="REF3" ColumnName="REF3" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductBatches">
+            <EntityTypeMapping TypeName="NatrajModel.ProductBatch">
+              <MappingFragment StoreEntitySet="ProductBatch">
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
+                <ScalarProperty Name="ProcessingId" ColumnName="ProcessingId" />
+                <ScalarProperty Name="ProductBatchDate" ColumnName="ProductBatchDate" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="BatchQuantity" ColumnName="BatchQuantity" />
+                <ScalarProperty Name="BatchRemainingQunatity" ColumnName="BatchRemainingQunatity" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductBatchDetails">
+            <EntityTypeMapping TypeName="NatrajModel.ProductBatchDetail">
+              <MappingFragment StoreEntitySet="ProductBatchDetails">
+                <ScalarProperty Name="BatchDetailId" ColumnName="BatchDetailId" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="ProcessedQuantity" ColumnName="ProcessedQuantity" />
+                <ScalarProperty Name="NoOfPackets" ColumnName="NoOfPackets" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductBatchQualities">
+            <EntityTypeMapping TypeName="NatrajModel.ProductBatchQuality">
+              <MappingFragment StoreEntitySet="ProductBatchQuality">
+                <ScalarProperty Name="QualityId" ColumnName="QualityId" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="FAT" ColumnName="FAT" />
+                <ScalarProperty Name="SNF" ColumnName="SNF" />
+                <ScalarProperty Name="Acidity" ColumnName="Acidity" />
+                <ScalarProperty Name="TestDate" ColumnName="TestDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="NatrajModel.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSubCategories">
+            <EntityTypeMapping TypeName="NatrajModel.ProductSubCategory">
+              <MappingFragment StoreEntitySet="ProductSubCategory">
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrders">
+            <EntityTypeMapping TypeName="NatrajModel.PurchaseOrder">
+              <MappingFragment StoreEntitySet="PurchaseOrder">
+                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+                <ScalarProperty Name="DCId" ColumnName="DCId" />
+                <ScalarProperty Name="TotalQty" ColumnName="TotalQty" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="DeliveryExpectedDate" ColumnName="DeliveryExpectedDate" />
+                <ScalarProperty Name="TotalTax" ColumnName="TotalTax" />
+                <ScalarProperty Name="TotalDiscount" ColumnName="TotalDiscount" />
+                <ScalarProperty Name="SGST" ColumnName="SGST" />
+                <ScalarProperty Name="CGST" ColumnName="CGST" />
+                <ScalarProperty Name="IGST" ColumnName="IGST" />
+                <ScalarProperty Name="OrderStatusId" ColumnName="OrderStatusId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrderItems">
+            <EntityTypeMapping TypeName="NatrajModel.PurchaseOrderItem">
+              <MappingFragment StoreEntitySet="PurchaseOrderItem">
+                <ScalarProperty Name="OrderItemId" ColumnName="OrderItemId" />
+                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Quntity" ColumnName="Quntity" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="NatrajModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScreenSecurityCodes">
+            <EntityTypeMapping TypeName="NatrajModel.ScreenSecurityCode">
+              <MappingFragment StoreEntitySet="ScreenSecurityCodes">
+                <ScalarProperty Name="ScreenId" ColumnName="ScreenId" />
+                <ScalarProperty Name="ScreenName" ColumnName="ScreenName" />
+                <ScalarProperty Name="SecurityCode" ColumnName="SecurityCode" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPermissions">
+            <EntityTypeMapping TypeName="NatrajModel.UserPermission">
+              <MappingFragment StoreEntitySet="UserPermissions">
+                <ScalarProperty Name="UserPermissionId" ColumnName="UserPermissionId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="IsPermit" ColumnName="IsPermit" />
+                <ScalarProperty Name="SecurityCodeId" ColumnName="SecurityCodeId" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="NatrajModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Permission" ColumnName="Permission" />
+                <ScalarProperty Name="SecurityCode" ColumnName="SecurityCode" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VLCs">
+            <EntityTypeMapping TypeName="NatrajModel.VLC">
+              <MappingFragment StoreEntitySet="VLC">
+                <ScalarProperty Name="VLCId" ColumnName="VLCId" />
+                <ScalarProperty Name="VLCCode" ColumnName="VLCCode" />
+                <ScalarProperty Name="VLCName" ColumnName="VLCName" />
+                <ScalarProperty Name="VLCEnrollmentDate" ColumnName="VLCEnrollmentDate" />
+                <ScalarProperty Name="AgentName" ColumnName="AgentName" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="VLCAddress" ColumnName="VLCAddress" />
+                <ScalarProperty Name="Village" ColumnName="Village" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="VLCState" ColumnName="VLCState" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="AlternateContact" ColumnName="AlternateContact" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="VLCAgentAadhaar" ColumnName="VLCAgentAadhaar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VLCMilkCollections">
+            <EntityTypeMapping TypeName="NatrajModel.VLCMilkCollection">
+              <MappingFragment StoreEntitySet="VLCMilkCollection">
+                <ScalarProperty Name="VLCMilkCollectionId" ColumnName="VLCMilkCollectionId" />
+                <ScalarProperty Name="VLCId" ColumnName="VLCId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="CollectionDateTime" ColumnName="CollectionDateTime" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VLCMilkCollectionDtls">
+            <EntityTypeMapping TypeName="NatrajModel.VLCMilkCollectionDtl">
+              <MappingFragment StoreEntitySet="VLCMilkCollectionDtl">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="VLCMilkCollectionDtlId" ColumnName="VLCMilkCollectionDtlId" />
+                <ScalarProperty Name="VLCMilkCollectionId" ColumnName="VLCMilkCollectionId" />
+                <ScalarProperty Name="Qunatity" ColumnName="Qunatity" />
+                <ScalarProperty Name="FAT" ColumnName="FAT" />
+                <ScalarProperty Name="CLR" ColumnName="CLR" />
+                <ScalarProperty Name="RatePerUnit" ColumnName="RatePerUnit" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetNextEntityNumber" FunctionName="NatrajModel.Store.GetNextEntityNumber" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
