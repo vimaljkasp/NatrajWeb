@@ -70,6 +70,12 @@
     <Compile Include="CustomerBankService\CustomerBankService.cs" />
     <Compile Include="CustomerService\CustomerConvertor.cs" />
     <Compile Include="CustomerService\CustomerService.cs" />
+    <Compile Include="DCAddressService\DCAddressServices.cs" />
+    <Compile Include="DCOrderService\DCOrderService.cs" />
+    <Compile Include="DCPaymentService\DCPaymentService.cs" />
+    <Compile Include="DistributionCenterService\DCWalletService.cs" />
+    <Compile Include="DistributionCenterService\DistributionCenterConvertor.cs" />
+    <Compile Include="DistributionCenterService\DistributionCenterService.cs" />
     <Compile Include="LoginService\LoggedInUserConvertor.cs" />
     <Compile Include="UserService\UserConvertor.cs" />
     <Compile Include="UserService\UserService.cs" />

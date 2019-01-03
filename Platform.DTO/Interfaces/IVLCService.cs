@@ -13,11 +13,11 @@ namespace Platform.DTO
 
         List<VLCDTO> GetAllVLCAgentsByPageCount(int? pageNumber, int? count);
 
-        VLCDTO GetVLCById(int vlcId);
+        ResponseDTO GetVLCById(int vlcId);
 
         ResponseDTO AddVLC(VLCDTO vlcDto);
 
-        void UpdateVLC(VLCDTO vlcDto);
+        ResponseDTO UpdateVLC(VLCDTO vlcDto);
 
         void DeleteVLC(int id);
 

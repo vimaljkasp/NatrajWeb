@@ -14,36 +14,39 @@ namespace Platform.Service
     {
         private UnitOfWork unitOfWork = new UnitOfWork();
 
-        public LoggedInUserDTO ValidateLoginAndCreateLoginSession(string userName,string password)
+        public LoggedInUserDTO ValidateLoginAndCreateLoginSession(string userName, string password)
         {
             LoggedInUserDTO loggedInUserDTO = new LoggedInUserDTO();
-       
+            password = EncryptionHelper.Encryptword(password);
+            // DC Check
+            List<DistributionCenter> distributionCenters = unitOfWork.DistributionCenterRepository.GetAll();
+            if (distributionCenters.Where(v => v.Contact.Equals(userName, StringComparison.CurrentCultureIgnoreCase)
+              && v.Password.Equals(password, StringComparison.CurrentCultureIgnoreCase)).Any())
+            {
+                var dcEmployee = distributionCenters.Where(e => e.Contact.Equals(userName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                loggedInUserDTO = LoggedInUserConvertor.ConvertToLoggedInDistributionCenterDTO(dcEmployee);
+                loggedInUserDTO.LoginType = LoginType.DistributionCenter.ToString();
+                return loggedInUserDTO;
+            }
             //VLC Check
-                List<VLC> vLCs = unitOfWork.VLCRepository.GetAll();
-               password = EncryptionHelper.Encryptword(password);
-                if (vLCs.Where(v =>v.VLCName.Equals(userName, StringComparison.CurrentCultureIgnoreCase)
+                List<VLC> vLCs = unitOfWork.VLCRepository.GetAll(); 
+         
+             if (vLCs.Where(v => v.VLCName.Equals(userName, StringComparison.CurrentCultureIgnoreCase)
                  && v.Password.Equals(password, StringComparison.CurrentCultureIgnoreCase)).Any())
-                {
-                    var vlcEmployee = vLCs.Where(e => e.VLCName.Equals(userName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-                //    this.CreateEmployeeSession(employee, logindto);
+            {
+                var vlcEmployee = vLCs.Where(e => e.VLCName.Equals(userName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
                 loggedInUserDTO = LoggedInUserConvertor.ConvertToLoggedInUserDTO(vlcEmployee);
                 loggedInUserDTO.LoginType = LoginType.VLC.ToString();
-                //responseDTO.Message = "Login Successfull";
-                //responseDTO.Status = true;
-                //    return responseDTO;
-                }
-                else if (!vLCs.Where(e => e.VLCName.Equals(userName, StringComparison.CurrentCultureIgnoreCase)).Any())
-               {
-                    throw new PlatformModuleException("The UserName that you've entered doesn't match any account");
-              
-                }
-                else if (!vLCs.Where(e => e.Password.Equals(password, StringComparison.CurrentCultureIgnoreCase)).Any())
-                {
-                    throw new PlatformModuleException("Password that you've entered doesn't match any account");
-               
+                return loggedInUserDTO;
             }
-            return loggedInUserDTO;
+          
+            else 
+            {
+                throw new PlatformModuleException("UserName and Password that you've entered doesn't match any account");
 
+            }
+           
+        }
             //  }
             //else if (loginDto.LoginType ==LoginType.UserLogin)
             //{
@@ -71,7 +74,7 @@ namespace Platform.Service
             //}
 
             //return false;
-        }
+        
 
 
         public bool ChangePassword(ChangePasswordDTO changePasswordDTO)

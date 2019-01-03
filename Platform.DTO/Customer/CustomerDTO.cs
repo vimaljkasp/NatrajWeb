@@ -19,6 +19,7 @@ namespace Platform.DTO
         public string FatherName { get; set; }
         public DateTime? DOB { get; set; }
         public string Gender { get; set; }
+        public string AddressLine { get; set; }
         public string Village { get; set; }
         public string Tehsil { get; set; }
         public string District { get; set; }
@@ -46,8 +47,8 @@ namespace Platform.DTO
     {
         public CustomerValidator()
         {
-            RuleFor(x => x.VLCId).NotEmpty().WithMessage("The VLCId cannot be blank.");
-            RuleFor(x => x.CustomerName).NotNull().WithMessage("Customer Name Cannot be NULL");                       
+       //     RuleFor(x => x.VLCId).NotEmpty().WithMessage("The VLCId cannot be blank.");
+       //     RuleFor(x => x.CustomerName).NotNull().WithMessage("Customer Name Cannot be NULL");                       
 
             //      RuleFor(x => x.WalletBalance).NotEmpty().WithMessage("The Password cannot be blank.");
 

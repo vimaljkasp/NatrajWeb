@@ -31,6 +31,9 @@ namespace Platform.Service
             vlcDto.ModifiedBy = vLC.ModifiedBy;
             vlcDto.ModifiedDate = vLC.ModifiedDate;
             vlcDto.VLCAgentAadhaar = vLC.VLCAgentAadhaar;
+            vlcDto.CLR = vLC.CLR;
+            vlcDto.FAT = vLC.FAT;
+            vlcDto.DifferenceCLR = vLC.DifferenceCLR;
 
             return vlcDto;
 
@@ -41,36 +44,36 @@ namespace Platform.Service
         {
             if (isUpdate)
                 vLC.VLCId = vlcDTO.VLCId;
-            vLC.VLCCode = vlcDTO.VLCCode;
-            vLC.VLCName = vlcDTO.VLCName;
-            vLC.VLCEnrollmentDate = vlcDTO.VLCEnrollmentDate.HasValue ? vlcDTO.VLCEnrollmentDate.Value : DateTime.MinValue;
-            if(string.IsNullOrWhiteSpace(vlcDTO.AgentName))
+            if (string.IsNullOrWhiteSpace(vlcDTO.VLCCode) == false)
+                vLC.VLCCode = vlcDTO.VLCCode;
+            if (string.IsNullOrWhiteSpace(vlcDTO.VLCName) == false)
+                vLC.VLCName = vlcDTO.VLCName;
+            if(string.IsNullOrWhiteSpace(vlcDTO.AgentName)==false)
             vLC.AgentName = vlcDTO.AgentName;
-            if (string.IsNullOrWhiteSpace(vlcDTO.Contact))
+            if (string.IsNullOrWhiteSpace(vlcDTO.Contact) == false)
                 vLC.Contact = vlcDTO.Contact;
-            if (string.IsNullOrWhiteSpace(vlcDTO.Email))
+            if (string.IsNullOrWhiteSpace(vlcDTO.Email) == false)
                 vLC.Email = vlcDTO.Email;
-            if (string.IsNullOrWhiteSpace(vlcDTO.VLCAddress))
+            if (string.IsNullOrWhiteSpace(vlcDTO.VLCAddress) == false)
                 vLC.VLCAddress = vlcDTO.VLCAddress;
-            if (string.IsNullOrWhiteSpace(vlcDTO.Village))
+            if (string.IsNullOrWhiteSpace(vlcDTO.Village) == false)
                 vLC.Village = vlcDTO.Village;
-            if (string.IsNullOrWhiteSpace(vlcDTO.City))
+            if (string.IsNullOrWhiteSpace(vlcDTO.City) == false)
                 vLC.City = vlcDTO.City;
-            if (string.IsNullOrWhiteSpace(vlcDTO.Password))
+            if (string.IsNullOrWhiteSpace(vlcDTO.Password) == false)
                 vLC.Password = vlcDTO.Password;
-            if (string.IsNullOrWhiteSpace(vlcDTO.AlternateContact))
+            if (string.IsNullOrWhiteSpace(vlcDTO.AlternateContact) == false)
                 vLC.AlternateContact = vlcDTO.AlternateContact;
-            if (string.IsNullOrWhiteSpace(vlcDTO.CreatedBy))
-                vLC.CreatedBy = vlcDTO.CreatedBy;
-            vLC.CreatedDate = vlcDTO.CreatedDate;
-
+       
             vLC.IsDeleted = false;
-            if (string.IsNullOrWhiteSpace(vlcDTO.ModifiedBy))
-                vLC.ModifiedBy = vlcDTO.ModifiedBy;
-            vLC.ModifiedDate = vlcDTO.ModifiedDate;
-            if (string.IsNullOrWhiteSpace(vlcDTO.VLCAgentAadhaar))
+            if (string.IsNullOrWhiteSpace(vlcDTO.VLCAgentAadhaar) == false)
                 vLC.VLCAgentAadhaar = vlcDTO.VLCAgentAadhaar;
-
+            if (vlcDTO.CLR.HasValue)
+                vLC.CLR = vlcDTO.CLR.Value;
+            if (vlcDTO.FAT.HasValue)
+                vLC.FAT = vlcDTO.FAT.Value;
+            if (vlcDTO.DifferenceCLR.HasValue)
+                vLC.DifferenceCLR = vlcDTO.DifferenceCLR.Value;
 
         }
     }

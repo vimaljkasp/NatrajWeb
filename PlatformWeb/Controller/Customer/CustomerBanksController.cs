@@ -73,17 +73,17 @@ namespace PlatformWeb.Controller
 
         //Put api/Customer/5
         [Route("api/customerBanks/{id}")]
-        public IHttpActionResult Put(int id, [FromBody]CustomerBankDTO customerBankDTO)
+        public IHttpActionResult Post(int id, [FromBody]CustomerBankDTO customerBankDTO)
         {
             try
             {
-                customerBankDTO.CustomerBankId = id;
+                customerBankDTO.CustomerId = id;
                 if (customerBankDTO == null)
-                    Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
+                return  Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
                 //Update New Customer
-                ResponseDTO responseDTO = _customerBankService.UpdateCustomerBank(customerBankDTO);
+             
 
-                return Ok(responseDTO);
+                return Ok(_customerBankService.UpdateCustomerBank(customerBankDTO));
             }
             catch (PlatformModuleException ex)
             {

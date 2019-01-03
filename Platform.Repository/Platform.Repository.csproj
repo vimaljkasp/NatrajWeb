@@ -52,6 +52,12 @@
     <Compile Include="CustomerBankRepository.cs" />
     <Compile Include="CustomerRepository.cs" />
     <Compile Include="DashboardRepository.cs" />
+    <Compile Include="DistributionCenter\DCAddressRepository.cs" />
+    <Compile Include="DistributionCenter\DCOrderDtlRepository.cs" />
+    <Compile Include="DistributionCenter\DCOrderRepository.cs" />
+    <Compile Include="DistributionCenter\DCPaymentDetailRepository.cs" />
+    <Compile Include="DistributionCenter\DCWalletRepository.cs" />
+    <Compile Include="DistributionCenter\DistributionCenterRepository.cs" />
     <Compile Include="MessageRepository.cs" />
     <Compile Include="PagingConstant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

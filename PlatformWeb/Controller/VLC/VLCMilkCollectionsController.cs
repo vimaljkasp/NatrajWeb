@@ -88,7 +88,7 @@ namespace PlatformWeb.Controller
 
         //Put api/Customer/5
         [Route("api/VLCMilkCollections/{id}")]
-        public IHttpActionResult Put(int id, [FromBody]VLCMilkCollectionDTO vLCMilkCollectionDTO)
+        public IHttpActionResult Post(int id, [FromBody]VLCMilkCollectionDTO vLCMilkCollectionDTO)
         {
             try
             {
@@ -107,8 +107,9 @@ namespace PlatformWeb.Controller
             }
         }
 
-        [Route("api/customers/id/{id}")]
-        public IHttpActionResult Delete(int id)
+        [Route("api/DeleteVLCMilkCollection/{id}")]
+        [HttpPost]
+        public IHttpActionResult DeleteVLCMilkCollection(int id)
         {
             try
             {

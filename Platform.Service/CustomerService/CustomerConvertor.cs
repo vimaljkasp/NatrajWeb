@@ -16,12 +16,13 @@ namespace Platform.Service
 
             if (customer != null)
             {
-                
+
                 customerDto.CustomerId = customer.CustomerId;
                 customerDto.CustomerCodeId = customer.CustomerCode;
                 customerDto.CustomerName = customer.CustomerName;
                 customerDto.FatherName = customer.FatherName;
                 customerDto.DOB = customer.DOB.HasValue ? customer.DOB.Value : DateTime.MinValue;
+                customerDto.AddressLine = customer.CustomerAddress;
                 customerDto.Village = customer.Village;
                 customerDto.Tehsil = customer.Tehsil;
                 customerDto.District = customer.District;
@@ -42,18 +43,38 @@ namespace Platform.Service
                 customerDto.ModifiedDate = customer.ModifiedDate.GetValueOrDefault();
                 customerDto.ModifiedBy = customer.ModifiedBy;
                 customerDto.IsDeleted = customer.IsDeleted.GetValueOrDefault();
-                
+
             }
             return customerDto;
         }
+        public static CustomerSearchDTO ConvertToCustomerSearchDto(Customer customer)
+        {
+            CustomerSearchDTO customerSearchDTO = new CustomerSearchDTO();
+
+            if (customerSearchDTO != null)
+            {
+                customerSearchDTO.CustomerId = customer.CustomerId;
+                customerSearchDTO.CustomerCodeId = customer.CustomerCode;
+                customerSearchDTO.CustomerName = customer.CustomerName;
+
+            }
+
+            return customerSearchDTO;
+        }
+
+
 
         public static void ConvertToCustomerEntity(ref Customer customer, CustomerDto customerdto, bool isUpdate)
         {
-            if (isUpdate)
-                customer.CustomerId = customerdto.CustomerId;
-            if (string.IsNullOrWhiteSpace(customerdto.CustomerName)==false)
+           
+            if (string.IsNullOrWhiteSpace(customerdto.CustomerName) == false)
             {
                 customer.CustomerName = customerdto.CustomerName;
+            }
+
+            if(string.IsNullOrWhiteSpace(customerdto.AddressLine)==false)
+            {
+                customer.CustomerAddress = customerdto.AddressLine;
             }
             if (string.IsNullOrWhiteSpace(customerdto.FatherName) == false)
             {
@@ -102,13 +123,13 @@ namespace Platform.Service
                 customer.PIN = customerdto.Password;
 
             }
-            if (string.IsNullOrWhiteSpace(customerdto.Occupation)==false)
+            if (string.IsNullOrWhiteSpace(customerdto.Occupation) == false)
             {
                 customer.Occupation = customerdto.Occupation;
             }
-            customer.DOB = customerdto.DOB.HasValue ? customerdto.DOB.Value : DateTime.MinValue;
-            customer.Aniversary = customerdto.Aniversary.HasValue ? customerdto.Aniversary.Value:(DateTime?) null;
-          
+            customer.DOB = customerdto.DOB.HasValue ? customerdto.DOB.Value: (DateTime ?)null;
+            customer.Aniversary = customerdto.Aniversary.HasValue ? customerdto.Aniversary.Value : (DateTime?)null;
+
 
         }
     }

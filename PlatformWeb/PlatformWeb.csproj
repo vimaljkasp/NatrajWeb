@@ -172,6 +172,10 @@
     <Compile Include="Controller\Customer\CustomerAgriculturesController.cs" />
     <Compile Include="Controller\Customer\CustomerBanksController.cs" />
     <Compile Include="Controller\Customer\CustomersController.cs" />
+    <Compile Include="Controller\DistributionCenter\DCAddressController.cs" />
+    <Compile Include="Controller\DistributionCenter\DCOrdersController.cs" />
+    <Compile Include="Controller\DistributionCenter\DCPaymentsController.cs" />
+    <Compile Include="Controller\DistributionCenter\DistributionCentersController.cs" />
     <Compile Include="Controller\LoginController\LoginController.cs" />
     <Compile Include="Controller\User\UserController.cs" />
     <Compile Include="Controller\VLC\VLCController.cs" />

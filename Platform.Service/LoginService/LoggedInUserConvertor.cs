@@ -30,7 +30,31 @@ namespace Platform.Service
 
         }
 
-      
+        public static LoggedInUserDTO ConvertToLoggedInDistributionCenterDTO(DistributionCenter distributionCenter)
+        {
+            LoggedInUserDTO loggedInUserDTO = new LoggedInUserDTO();
+            loggedInUserDTO.Id = distributionCenter.DCId;
+            loggedInUserDTO.Code = distributionCenter.DCCode;
+            loggedInUserDTO.Name = distributionCenter.DCName;
+            loggedInUserDTO.EnrollmentDate = distributionCenter.DateOfRegistration;
+            loggedInUserDTO.AgentName = distributionCenter.AgentName;
+            loggedInUserDTO.Contact = distributionCenter.Contact;
+            loggedInUserDTO.LoginStatus = true;
+            loggedInUserDTO.Email = distributionCenter.Email;
+            DCAddress dCAddress = distributionCenter.DCAddresses.Where(d => d.IsDefaultAddress.GetValueOrDefault()).FirstOrDefault();
+            if (dCAddress != null)
+            {
+                loggedInUserDTO.Address = dCAddress.Address;
+                loggedInUserDTO.Village = dCAddress.AddressTypeId.ToString();
+                loggedInUserDTO.City = dCAddress.City;
+                loggedInUserDTO.State = dCAddress.State;
+            }
+            loggedInUserDTO.AgentAadhaar = distributionCenter.AADHAR;
+            return loggedInUserDTO;
+
+        }
+
+
 
 
     }

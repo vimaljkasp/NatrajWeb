@@ -12,8 +12,6 @@ namespace Platform.Sql
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
     public partial class PlatformDBEntities : DbContext
     {
@@ -30,7 +28,11 @@ namespace Platform.Sql
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<CustomerAgriculture> CustomerAgricultures { get; set; }
         public virtual DbSet<CustomerBank> CustomerBanks { get; set; }
+        public virtual DbSet<DCAddress> DCAddresses { get; set; }
+        public virtual DbSet<DCOrder> DCOrders { get; set; }
+        public virtual DbSet<DCOrderDtl> DCOrderDtls { get; set; }
         public virtual DbSet<DCPaymentDetail> DCPaymentDetails { get; set; }
+        public virtual DbSet<DCWallet> DCWallets { get; set; }
         public virtual DbSet<DistributionCenter> DistributionCenters { get; set; }
         public virtual DbSet<DockMilkCollection> DockMilkCollections { get; set; }
         public virtual DbSet<DockMilkCollectionDetail> DockMilkCollectionDetails { get; set; }
@@ -45,8 +47,6 @@ namespace Platform.Sql
         public virtual DbSet<ProductBatchQuality> ProductBatchQualities { get; set; }
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
         public virtual DbSet<ProductSubCategory> ProductSubCategories { get; set; }
-        public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
-        public virtual DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<ScreenSecurityCode> ScreenSecurityCodes { get; set; }
         public virtual DbSet<UserPermission> UserPermissions { get; set; }
@@ -54,14 +54,5 @@ namespace Platform.Sql
         public virtual DbSet<VLC> VLCs { get; set; }
         public virtual DbSet<VLCMilkCollection> VLCMilkCollections { get; set; }
         public virtual DbSet<VLCMilkCollectionDtl> VLCMilkCollectionDtls { get; set; }
-    
-        public virtual int GetNextEntityNumber(string entityName, ObjectParameter nextNumber)
-        {
-            var entityNameParameter = entityName != null ?
-                new ObjectParameter("EntityName", entityName) :
-                new ObjectParameter("EntityName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetNextEntityNumber", entityNameParameter, nextNumber);
-        }
     }
 }

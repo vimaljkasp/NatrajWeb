@@ -28,5 +28,8 @@ namespace Platform.DTO
 
         ResponseDTO DeleteCustomer(int id);
 
+
+        ResponseDTO GetCustomerListForSearchByVLCId(int vlcId);
+
     }
 }

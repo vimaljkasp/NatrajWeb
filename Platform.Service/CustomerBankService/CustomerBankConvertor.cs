@@ -35,8 +35,7 @@ namespace Platform.Service
 
         public static void ConvertToCustomerBankEntity(ref CustomerBank customerBank, CustomerBankDTO customerBankDto, bool isUpdate)
         {
-            if (isUpdate)
-                customerBank.CustomerBankId = customerBankDto.CustomerBankId;
+            
             customerBank.CustomerId = customerBankDto.CustomerId;
             if (String.IsNullOrWhiteSpace(customerBankDto.IFSCCode) == false)
                 customerBank.IFSCCode = customerBankDto.IFSCCode;

@@ -47,6 +47,7 @@ namespace Platform.Sql
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public int CustomerCode { get; set; }
+        public string CustomerAddress { get; set; }
     
         public virtual VLC VLC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

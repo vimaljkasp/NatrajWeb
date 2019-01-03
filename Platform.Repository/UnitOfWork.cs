@@ -19,6 +19,13 @@ namespace Platform.Service
         private VLCRepository vLCRepository;
         private VLCMilkCollectionRepository vLCMilkCollectionRepository;
         private VLCMilkCollectionDtlRepository vLCMilkCollectionDtlRepository;
+        private DistributionCenterRepository distributionCenterRepository;
+        private DCAddressRepository dCAddressRepository;
+        private DCOrderRepository dCOrderRepository;
+        private DCOrderDtlRepository dCOrderDtlRepository;
+        private DCWalletRepository dCWalletRepository;
+        private DCPaymentDetailRepository dCPaymentDetailRepository;
+
 
         PlatformDBEntities _repository;
         public UnitOfWork()
@@ -142,6 +149,75 @@ namespace Platform.Service
                 }
             }
         }
+
+
+        public DistributionCenterRepository DistributionCenterRepository
+        {
+            get
+            {
+                if (distributionCenterRepository == null)
+                    return distributionCenterRepository = new DistributionCenterRepository(_repository);
+                else
+                    return distributionCenterRepository;
+            }
+        }
+
+        public DCAddressRepository DCAddressRepository
+        {
+            get
+            {
+                if (dCAddressRepository == null)
+                    return dCAddressRepository = new DCAddressRepository(_repository);
+                else
+                    return dCAddressRepository;
+            }
+        }
+
+        public DCOrderRepository DCOrderRepository
+        {
+            get
+            {
+                if (dCOrderRepository == null)
+                    return dCOrderRepository = new DCOrderRepository(_repository);
+                else
+                    return dCOrderRepository;
+            }
+        }
+
+        public DCOrderDtlRepository DCOrderDtlRepository
+        {
+            get
+            {
+                if (dCOrderDtlRepository == null)
+                    return dCOrderDtlRepository = new DCOrderDtlRepository(_repository);
+                else
+                    return dCOrderDtlRepository;
+            }
+        }
+
+        public DCPaymentDetailRepository DCPaymentDetailRepository
+        {
+            get
+            {
+                if (dCPaymentDetailRepository == null)
+                    return dCPaymentDetailRepository = new DCPaymentDetailRepository(_repository);
+                else
+                    return dCPaymentDetailRepository;
+            }
+        }
+
+        public DCWalletRepository DCWalletRepository
+        {
+            get
+            {
+                if (dCWalletRepository == null)
+                    return dCWalletRepository = new DCWalletRepository(_repository);
+                else
+                    return dCWalletRepository;
+            }
+        }
+
+        
 
         public MessageRepository MessageRepository
         {

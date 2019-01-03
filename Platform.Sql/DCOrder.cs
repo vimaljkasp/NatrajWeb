@@ -12,32 +12,46 @@ namespace Platform.Sql
     using System;
     using System.Collections.Generic;
     
-    public partial class PurchaseOrder
+    public partial class DCOrder
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PurchaseOrder()
+        public DCOrder()
         {
+            this.DCOrderDtls = new HashSet<DCOrderDtl>();
             this.DCPaymentDetails = new HashSet<DCPaymentDetail>();
         }
     
-        public int PurchaseOrderId { get; set; }
-        public Nullable<int> DCId { get; set; }
-        public Nullable<decimal> TotalQty { get; set; }
-        public Nullable<decimal> TotalAmount { get; set; }
-        public Nullable<System.DateTime> OrderDate { get; set; }
-        public Nullable<System.DateTime> DeliveryExpectedDate { get; set; }
-        public Nullable<decimal> TotalTax { get; set; }
-        public Nullable<decimal> TotalDiscount { get; set; }
+        public int DCOrderId { get; set; }
+        public string DCOrderNumber { get; set; }
+        public System.DateTime OrderDate { get; set; }
+        public string BillNumber { get; set; }
+        public int DCId { get; set; }
+        public int OrderAddressId { get; set; }
+        public decimal OrderPrice { get; set; }
         public Nullable<decimal> SGST { get; set; }
         public Nullable<decimal> CGST { get; set; }
         public Nullable<decimal> IGST { get; set; }
+        public Nullable<decimal> OrderTax { get; set; }
+        public Nullable<decimal> OrderDiscount { get; set; }
+        public Nullable<decimal> OrderTotalPrice { get; set; }
+        public Nullable<decimal> OrderPaidAmount { get; set; }
+        public Nullable<decimal> TotalOrderQuantity { get; set; }
+        public Nullable<decimal> TotalActualQuantity { get; set; }
         public Nullable<int> OrderStatusId { get; set; }
+        public Nullable<System.DateTime> DeliveryExpectedDate { get; set; }
+        public Nullable<System.DateTime> DeliveredDate { get; set; }
+        public string DeliveredBy { get; set; }
+        public string OrderComments { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
+        public virtual DCAddress DCAddress { get; set; }
+        public virtual DistributionCenter DistributionCenter { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DCOrderDtl> DCOrderDtls { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DCPaymentDetail> DCPaymentDetails { get; set; }
     }

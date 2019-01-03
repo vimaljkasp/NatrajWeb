@@ -73,9 +73,9 @@ namespace PlatformWeb.Controller
                 if (vLCDTO == null)
                     Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
                 //Create New Customer
-                _vlcService.AddVLC(vLCDTO);
+               
 
-                return Ok();
+                return Ok(_vlcService.AddVLC(vLCDTO));
             }
             catch (PlatformModuleException ex)
             {
@@ -86,7 +86,7 @@ namespace PlatformWeb.Controller
 
         //Put api/Customer/5
         [Route("api/vlcs/{id}")]
-        public IHttpActionResult Put(int id, [FromBody]VLCDTO vLCDTO)
+        public IHttpActionResult Post(int id, [FromBody]VLCDTO vLCDTO)
         {
             try
             {
@@ -94,9 +94,8 @@ namespace PlatformWeb.Controller
                 if (vLCDTO == null)
                     Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
                 //Update New Customer
-                _vlcService.UpdateVLC(vLCDTO);
-
-                return Ok();
+               
+                return Ok(_vlcService.UpdateVLC(vLCDTO));
             }
             catch (PlatformModuleException ex)
             {

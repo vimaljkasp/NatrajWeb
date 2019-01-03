@@ -110,9 +110,12 @@ namespace Platform.Service
         public ResponseDTO UpdateCustomerAgriculture(CustomerAgricultureDTO customerAgricultureDTO)
         {
             ResponseDTO responseDTO = new ResponseDTO();
-            var customerAgriculture = unitOfWork.CustomerAgricultureRepository.GetByCustomerId(customerAgricultureDTO.CustAgriId);
+            var customerAgriculture = unitOfWork.CustomerAgricultureRepository.GetByCustomerId(customerAgricultureDTO.CustomerId);
+            if (customerAgriculture == null)
+                throw new PlatformModuleException(string.Format("Customer Agriculture Details Not Found with Customer Id {0}", customerAgriculture.CustomerId));
+
             CustomerAgricultureConvertor.ConvertToCustomerAgriCultureEntity(ref customerAgriculture, customerAgricultureDTO, true);
-            customerAgriculture.ModifiedBy  = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerAgricultureDTO.VLCId);
+         //   customerAgriculture.ModifiedBy  = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerAgriculture.Customer.VLCId.GetValueOrDefault());
             customerAgriculture.ModifiedDate = DateTime.Now;
             unitOfWork.CustomerAgricultureRepository.Update(customerAgriculture);
             unitOfWork.SaveChanges();

@@ -40,6 +40,15 @@ namespace Platform.Repository
         }
 
 
+        public List<Customer> GetCustomerListForSearchByVLCId(int vlcId)
+        {
+            var customers = _repository.Customers
+                 .Where(v => v.VLCId == vlcId)
+                .OrderBy(c => c.CustomerId)
+                .ToList<Sql.Customer>();
+            return customers;
+        }
+
         public List<Customer> GetCustomerByCount(int? pageNumber, int? count)
         {
             var takePage = pageNumber ?? PagingConstant.DefaultPageNumber;

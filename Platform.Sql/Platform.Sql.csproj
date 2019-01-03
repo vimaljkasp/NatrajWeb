@@ -59,7 +59,19 @@
     <Compile Include="CustomerBank.cs">
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DCAddress.cs">
+      <DependentUpon>PlatformDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DCOrder.cs">
+      <DependentUpon>PlatformDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DCOrderDtl.cs">
+      <DependentUpon>PlatformDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DCPaymentDetail.cs">
+      <DependentUpon>PlatformDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DCWallet.cs">
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DistributionCenter.cs">
@@ -120,12 +132,6 @@
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PurchaseOrder.cs">
-      <DependentUpon>PlatformDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PurchaseOrderItem.cs">
-      <DependentUpon>PlatformDBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Role.cs">
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>

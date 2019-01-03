@@ -57,7 +57,7 @@ namespace Platform.Service
         public static VLCCustomerCollectionDTO ConvertToVLCCustomerCollectionDTO(VLCMilkCollection vLCMilkCollection)
         {
             VLCCustomerCollectionDTO vLCCustomerCollectionDTO = new VLCCustomerCollectionDTO();
-            if (vLCMilkCollection != null && vLCMilkCollection.VLCMilkCollectionDtls.Count() > 1)
+            if (vLCMilkCollection != null && vLCMilkCollection.VLCMilkCollectionDtls.Count() > 0)
             {
 
                 vLCCustomerCollectionDTO.VLCMilkCollectionId = vLCMilkCollection.VLCMilkCollectionId;

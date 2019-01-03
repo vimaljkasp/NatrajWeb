@@ -58,7 +58,7 @@ namespace PlatformWeb.Controller
             try
             {
                 if (customerAgricultureDTO == null)
-                    Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
+                    return Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
                 //Create New Customer
               ResponseDTO responseDTO=  _customerAgricultureService.AddCustomerAgriculture(customerAgricultureDTO);
 
@@ -73,13 +73,13 @@ namespace PlatformWeb.Controller
 
         //Put api/Customer/5
         [Route("api/CustomerAgricultures/{id}")]
-        public IHttpActionResult Put(int id, [FromBody]CustomerAgricultureDTO customerAgricultureDTO)
+        public IHttpActionResult Post(int id, [FromBody]CustomerAgricultureDTO customerAgricultureDTO)
         {
             try
             {
-                customerAgricultureDTO.CustAgriId = id;
+                customerAgricultureDTO.CustomerId = id;
                 if (customerAgricultureDTO == null)
-                    Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
+                    return Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
                 //Update New Customer
                 ResponseDTO responseDTO = _customerAgricultureService.UpdateCustomerAgriculture(customerAgricultureDTO);
 

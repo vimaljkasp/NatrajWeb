@@ -42,6 +42,9 @@ namespace Platform.Sql
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string VLCAgentAadhaar { get; set; }
+        public Nullable<decimal> CLR { get; set; }
+        public Nullable<decimal> FAT { get; set; }
+        public Nullable<decimal> DifferenceCLR { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer> Customers { get; set; }

@@ -34,8 +34,7 @@ namespace Platform.Service
 
         public static void ConvertToCustomerAgriCultureEntity(ref CustomerAgriculture customerAgriculture, CustomerAgricultureDTO customerAgricultureDto, bool isUpdate)
         {
-            if (isUpdate)
-            customerAgriculture.CustAgriId = customerAgricultureDto.CustAgriId;
+           
             customerAgriculture.CustomerId = customerAgricultureDto.CustomerId;
             if(customerAgricultureDto.NoOfCow.GetValueOrDefault()>0)
             customerAgriculture.NoOfCow = customerAgricultureDto.NoOfCow;

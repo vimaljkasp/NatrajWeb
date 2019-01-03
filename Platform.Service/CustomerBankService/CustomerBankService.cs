@@ -77,6 +77,10 @@ namespace Platform.Service
         {
             ResponseDTO responseDTO = new ResponseDTO();
             CustomerBank customerBank = new CustomerBank();
+            var exisitingcustomerBank = unitOfWork.CustomerBankRepository.GetByCustomerId(customerBankDto.CustomerId);
+            if (customerBank != null)
+                throw new PlatformModuleException(string.Format("Customer Bank Account Details Already Exist For Customer Id {0}", customerBankDto.CustomerId));
+
             customerBank.CustomerBankId = unitOfWork.DashboardRepository.NextNumberGenerator("CustomerBank");
             CustomerBankConvertor.ConvertToCustomerBankEntity(ref customerBank, customerBankDto, false);
             customerBank.CreatedBy = "Vimal";
@@ -105,12 +109,17 @@ namespace Platform.Service
         public ResponseDTO UpdateCustomerBank(CustomerBankDTO customerBankDto)
         {
             ResponseDTO responseDTO = new ResponseDTO();
-            var customerBank = unitOfWork.CustomerBankRepository.GetByCustomerId(customerBankDto.CustomerBankId);
+            var customerBank = unitOfWork.CustomerBankRepository.GetByCustomerId(customerBankDto.CustomerId);
+            if (customerBank == null)
+                throw new PlatformModuleException(string.Format("Customer Bank Account Details Not Found with Customer Id {0}", customerBankDto.CustomerId));
+
             CustomerBankConvertor.ConvertToCustomerBankEntity(ref customerBank, customerBankDto, true);
+            customerBank.ModifiedDate = DateTime.Now;
+        //    customerBank.ModifiedBy = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerBank.Customer.VLCId.GetValueOrDefault());
 
             unitOfWork.CustomerBankRepository.Update(customerBank);
             unitOfWork.SaveChanges();
-            CustomerBankConvertor.ConvertTocustomerBankDto(customerBank);
+            customerBankDto= CustomerBankConvertor.ConvertTocustomerBankDto(customerBank);
             responseDTO.Status = true;
             responseDTO.Message = "Customer Bank Updated Successfully";
             responseDTO.Data = customerBankDto;

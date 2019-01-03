@@ -17,6 +17,7 @@ namespace Platform.Sql
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
+            this.DCOrderDtls = new HashSet<DCOrderDtl>();
             this.ProductBatches = new HashSet<ProductBatch>();
         }
     
@@ -41,6 +42,8 @@ namespace Platform.Sql
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DCOrderDtl> DCOrderDtls { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
         public virtual ProductSubCategory ProductSubCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

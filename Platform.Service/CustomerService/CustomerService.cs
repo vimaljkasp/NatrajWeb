@@ -70,6 +70,26 @@ namespace Platform.Service
            
         }
 
+        public ResponseDTO GetCustomerListForSearchByVLCId(int vlcId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+
+            List<CustomerSearchDTO> customerList = new List<CustomerSearchDTO>();
+            var customers = unitOfWork.CustomerRepository.GetCustomerListForSearchByVLCId(vlcId);
+            if (customers != null)
+            {
+                foreach (var customer in customers)
+                {
+                    customerList.Add(CustomerConvertor.ConvertToCustomerSearchDto(customer));
+                }
+
+            }
+            responseDTO.Status = true;
+            responseDTO.Message = String.Format("List of Customers By VLC Id");
+            responseDTO.Data = customerList;
+            return responseDTO;
+        }
+
         public ResponseDTO GetCustomerDetailsByCustomerId(int customerId)
         {
             ResponseDTO responseDTO = new ResponseDTO();
@@ -164,14 +184,7 @@ namespace Platform.Service
             customer.IsDeleted = false;
             customer.VLCId = customerDto.VLCId;
             unitOfWork.CustomerRepository.Add(customer);
-            //creating customer wallet with customer 
-            //CustomerWallet customerWallet = new CustomerWallet();
-            //customerWallet.WalletId = unitOfWork.DashboardRepository.NextNumberGenerator("CustomerWallet");
-            //customerWallet.CustomerId = customer.CustomerId;
-            //customerWallet.WalletBalance = 0;
-            //customerWallet.AmountDueDate = DateTime.Now.AddDays(10);
-            //unitOfWork.CustomerWalletRepository.Add(customerWallet);
-            customerDto=CustomerConvertor.ConvertToCustomerDto(customer);
+           customerDto=CustomerConvertor.ConvertToCustomerDto(customer);
             unitOfWork.SaveChanges();
             responseDTO.Status = true;
             responseDTO.Message = String.Format("Customer Successfully Created");
@@ -197,10 +210,12 @@ namespace Platform.Service
         {
 
             var customer = unitOfWork.CustomerRepository.GetById(customerDto.CustomerId);
+            if(customer ==null)
+                throw new PlatformModuleException(string.Format("Customer Account Not Found with Customer Id {0}",customerDto.CustomerId));
             CustomerConvertor.ConvertToCustomerEntity(ref customer, customerDto, true);
            
             customer.ModifiedDate = DateTime.Now;
-            customer.ModifiedBy = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerDto.VLCId);
+            customer.ModifiedBy = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customer.VLCId.GetValueOrDefault());
           
             unitOfWork.CustomerRepository.Update(customer);
             unitOfWork.SaveChanges();

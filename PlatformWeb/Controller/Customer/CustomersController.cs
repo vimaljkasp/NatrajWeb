@@ -67,9 +67,22 @@ namespace PlatformWeb.Controller
 
         }
 
+        [HttpPost]
+        [Route("api/GetCustomerListForSearchByVLCId/{id}")]
+        public IHttpActionResult GetCustomerListForSearchByVLCId(int id)
+        {
+            try
+            {
+                return Ok(_customerService.GetCustomerListForSearchByVLCId(id));
+            }
+            catch (PlatformModuleException ex)
+            {
+                return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
+            }
+        }
 
-        //GET api/Customer/id
-        [Route("api/customers/{id}")]
+      //GET api/Customer/id
+      [Route("api/customers/{id}")]
         public IHttpActionResult Get(int id)
         {
             try
@@ -89,7 +102,7 @@ namespace PlatformWeb.Controller
             try
             {
                 if (customer == null)
-                    Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
+                    return Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
                 //Create New Customer
                 ResponseDTO responseDTO = _customerService.AddCustomer(customer);
 
@@ -104,17 +117,17 @@ namespace PlatformWeb.Controller
 
         //Put api/Customer/5
         [Route("api/customers/{id}")]
-        public IHttpActionResult Put(int id, [FromBody]CustomerDto customerDTO)
+        public IHttpActionResult Post(int id, [FromBody]CustomerDto customerDTO)
         {
             try
             {
                 customerDTO.CustomerId = id;
                 if (customerDTO == null)
-                    Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
-                //Update New Customer
-                _customerService.UpdateCustomer(customerDTO);
+                    return Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
+                
+            
 
-                return Ok();
+                return Ok(_customerService.UpdateCustomer(customerDTO));
             }
             catch (PlatformModuleException ex)
             {

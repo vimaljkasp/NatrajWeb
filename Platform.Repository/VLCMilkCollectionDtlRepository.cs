@@ -36,9 +36,9 @@ namespace Platform.Repository
             return vlcMilkCollections;
         }
 
-        public VLCMilkCollectionDtl GetById(int id)
+        public List<VLCMilkCollectionDtl> GetById(int id)
         {
-            var vlcMilkCollection = _repository.VLCMilkCollectionDtls.FirstOrDefault(x => x.VLCMilkCollectionId == id);
+            var vlcMilkCollection = _repository.VLCMilkCollectionDtls.Where(x => x.VLCMilkCollectionId == id).ToList();
             return vlcMilkCollection;
         }
 

@@ -54,15 +54,24 @@ namespace Platform.Service
         }
 
 
-        public VLCDTO GetVLCById(int vlcId)
+        public ResponseDTO GetVLCById(int vlcId)
         {
+            ResponseDTO responseDTO = new ResponseDTO();
             VLCDTO vlcDto = null;
             var vlc = unitOfWork.VLCRepository.GetById(vlcId);
             if (vlc != null)
             {
                 vlcDto = VLCConvertor.ConvertToVLCDto(vlc);
+                responseDTO.Status = true;
+                responseDTO.Message = "VLC Details By VLC";
+                responseDTO.Data = vlcDto;
             }
-            return vlcDto;
+            else
+            {
+                throw new PlatformModuleException("VLC Details Not Found");
+            }
+            return responseDTO;
+
         }
 
         
@@ -98,14 +107,20 @@ namespace Platform.Service
 
     
 
-        public void UpdateVLC(VLCDTO vlcDto)
+        public ResponseDTO UpdateVLC(VLCDTO vlcDto)
         {
 
             var vlc = unitOfWork.VLCRepository.GetById(vlcDto.VLCId);
             VLCConvertor.ConvertToVLCEntity(ref vlc, vlcDto, true);
-           
+            vlc.ModifiedBy = vlc.AgentName;
+            vlc.ModifiedDate = DateTime.Now;
             unitOfWork.VLCRepository.Update(vlc);
             unitOfWork.SaveChanges();
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.Status = true;
+            responseDTO.Message = "VLC Succesfully Updated";
+            responseDTO.Data = VLCConvertor.ConvertToVLCDto(vlc);
+            return responseDTO;
         }
 
         public void DeleteVLC(int id)

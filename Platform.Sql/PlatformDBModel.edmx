@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="NatrajModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -34,6 +34,7 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="CustomerCode" Type="int" Nullable="false" />
+          <Property Name="CustomerAddress" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="CustomerAgriculture">
           <Key>
@@ -70,42 +71,113 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="DCPaymentDetails">
+        <EntityType Name="DCAddress">
           <Key>
-            <PropertyRef Name="DCPaymentId" />
+            <PropertyRef Name="DCAddressId" />
           </Key>
-          <Property Name="DCPaymentId" Type="int" Nullable="false" />
-          <Property Name="PurchaseOrderId" Type="int" />
-          <Property Name="DCId" Type="int" />
-          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="PaymentStatus" Type="int" />
-          <Property Name="PaymentDate" Type="date" />
-          <Property Name="ReceivedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="PaymentMode" Type="nvarchar" MaxLength="10" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+          <Property Name="DCAddressId" Type="int" Nullable="false" />
+          <Property Name="DCId" Type="int" Nullable="false" />
+          <Property Name="AddressTypeId" Type="int" Nullable="false" />
+          <Property Name="IsDefaultAddress" Type="bit" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="City" Type="nvarchar" MaxLength="60" />
+          <Property Name="District" Type="nvarchar" MaxLength="60" />
+          <Property Name="State" Type="nvarchar" MaxLength="60" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="30" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="15" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="DCOrder">
+          <Key>
+            <PropertyRef Name="DCOrderId" />
+          </Key>
+          <Property Name="DCOrderId" Type="int" Nullable="false" />
+          <Property Name="DCOrderNumber" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+          <Property Name="BillNumber" Type="nvarchar" MaxLength="30" />
+          <Property Name="DCId" Type="int" Nullable="false" />
+          <Property Name="OrderAddressId" Type="int" Nullable="false" />
+          <Property Name="OrderPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SGST" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CGST" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IGST" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTax" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderDiscount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTotalPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderPaidAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalOrderQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalActualQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderStatusId" Type="int" />
+          <Property Name="DeliveryExpectedDate" Type="datetime" />
+          <Property Name="DeliveredDate" Type="datetime" />
+          <Property Name="DeliveredBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="OrderComments" Type="nvarchar" MaxLength="100" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="DCOrderDtl">
+          <Key>
+            <PropertyRef Name="DCOrderDtlId" />
+          </Key>
+          <Property Name="DCOrderDtlId" Type="int" Nullable="false" />
+          <Property Name="DCOrderId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="QuantityOrdered" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ActualQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTax" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTotalPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DCPaymentDetail">
+          <Key>
+            <PropertyRef Name="DCPaymentId" />
+          </Key>
+          <Property Name="DCPaymentId" Type="int" Nullable="false" />
+          <Property Name="DCId" Type="int" />
+          <Property Name="DCOrderId" Type="int" />
+          <Property Name="PaymentCrAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentDrAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentDate" Type="datetime" Nullable="false" />
+          <Property Name="PaymentReceivedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentMode" Type="nvarchar" MaxLength="10" />
+          <Property Name="PaymentComments" Type="nvarchar" MaxLength="200" />
+          <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DCWallet">
+          <Key>
+            <PropertyRef Name="WalletId" />
+          </Key>
+          <Property Name="WalletId" Type="int" Nullable="false" />
+          <Property Name="DCId" Type="int" Nullable="false" />
+          <Property Name="WalletBalance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="AmountDueDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="DistributionCenter">
           <Key>
             <PropertyRef Name="DCId" />
           </Key>
           <Property Name="DCId" Type="int" Nullable="false" />
-          <Property Name="DCCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="DCName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DCCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DCName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="AgentName" Type="nvarchar" MaxLength="150" />
           <Property Name="FatherName" Type="nvarchar" MaxLength="150" />
-          <Property Name="Contact" Type="nvarchar" MaxLength="15" />
-          <Property Name="Email" Type="nvarchar" MaxLength="60" />
-          <Property Name="DCAddress" Type="nvarchar" MaxLength="200" />
-          <Property Name="Area" Type="nvarchar" MaxLength="60" />
-          <Property Name="City" Type="nvarchar" MaxLength="60" />
-          <Property Name="DCState" Type="nvarchar" MaxLength="60" />
-          <Property Name="PIN" Type="nvarchar" MaxLength="10" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="AlternateContact" Type="nvarchar" MaxLength="15" />
+          <Property Name="Email" Type="nvarchar" MaxLength="60" />
+          <Property Name="Password" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Pin" Type="nvarchar" MaxLength="40" />
           <Property Name="AADHAR" Type="nvarchar" MaxLength="17" />
           <Property Name="DOB" Type="date" />
           <Property Name="Anniversary" Type="date" />
@@ -326,48 +398,6 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="PurchaseOrder">
-          <Key>
-            <PropertyRef Name="PurchaseOrderId" />
-          </Key>
-          <Property Name="PurchaseOrderId" Type="int" Nullable="false" />
-          <Property Name="DCId" Type="int" />
-          <Property Name="TotalQty" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="OrderDate" Type="date" />
-          <Property Name="DeliveryExpectedDate" Type="date" />
-          <Property Name="TotalTax" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="TotalDiscount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="SGST" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="CGST" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="IGST" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="OrderStatusId" Type="int" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
-          <Property Name="ModifiedDate" Type="datetime" />
-        </EntityType>
-        <EntityType Name="PurchaseOrderItem">
-          <Key>
-            <PropertyRef Name="OrderItemId" />
-          </Key>
-          <Property Name="OrderItemId" Type="int" Nullable="false" />
-          <Property Name="PurchaseOrderId" Type="int" />
-          <Property Name="CategoryId" Type="int" />
-          <Property Name="SubCategoryId" Type="int" />
-          <Property Name="ProductId" Type="int" />
-          <Property Name="Quntity" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
-          <Property Name="ModifiedDate" Type="datetime" />
-        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -451,6 +481,9 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="VLCAgentAadhaar" Type="nvarchar" MaxLength="20" />
+          <Property Name="CLR" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="FAT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DifferenceCLR" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="VLCMilkCollection">
           <Key>
@@ -518,27 +551,99 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DCPaymentDetails_DistributionCenter">
-          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="0..1" />
-          <End Role="DCPaymentDetails" Type="Self.DCPaymentDetails" Multiplicity="*" />
+        <Association Name="fk_DCAddress_DistributionCenter">
+          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="1" />
+          <End Role="DCAddress" Type="Self.DCAddress" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DistributionCenter">
               <PropertyRef Name="DCId" />
             </Principal>
-            <Dependent Role="DCPaymentDetails">
+            <Dependent Role="DCAddress">
               <PropertyRef Name="DCId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DCPaymentDetails_PurchaseOrder">
-          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
-          <End Role="DCPaymentDetails" Type="Self.DCPaymentDetails" Multiplicity="*" />
+        <Association Name="fk_DCOrder_DCAddress">
+          <End Role="DCAddress" Type="Self.DCAddress" Multiplicity="1" />
+          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PurchaseOrder">
-              <PropertyRef Name="PurchaseOrderId" />
+            <Principal Role="DCAddress">
+              <PropertyRef Name="DCAddressId" />
             </Principal>
-            <Dependent Role="DCPaymentDetails">
-              <PropertyRef Name="PurchaseOrderId" />
+            <Dependent Role="DCOrder">
+              <PropertyRef Name="OrderAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DCOrder_DistributionCenter">
+          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="1" />
+          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCenter">
+              <PropertyRef Name="DCId" />
+            </Principal>
+            <Dependent Role="DCOrder">
+              <PropertyRef Name="DCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DCOrderDtl_DCOrder">
+          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="1" />
+          <End Role="DCOrderDtl" Type="Self.DCOrderDtl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DCOrder">
+              <PropertyRef Name="DCOrderId" />
+            </Principal>
+            <Dependent Role="DCOrderDtl">
+              <PropertyRef Name="DCOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DCOrderDtl_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="DCOrderDtl" Type="Self.DCOrderDtl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="DCOrderDtl">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCPaymentDetail_DistributionCenter">
+          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="0..1" />
+          <End Role="DCPaymentDetail" Type="Self.DCPaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCenter">
+              <PropertyRef Name="DCId" />
+            </Principal>
+            <Dependent Role="DCPaymentDetail">
+              <PropertyRef Name="DCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCPaymentDetails_DCOrder">
+          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="0..1" />
+          <End Role="DCPaymentDetail" Type="Self.DCPaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DCOrder">
+              <PropertyRef Name="DCOrderId" />
+            </Principal>
+            <Dependent Role="DCPaymentDetail">
+              <PropertyRef Name="DCOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCWallet_DCId">
+          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="1" />
+          <End Role="DCWallet" Type="Self.DCWallet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCenter">
+              <PropertyRef Name="DCId" />
+            </Principal>
+            <Dependent Role="DCWallet">
+              <PropertyRef Name="DCId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -686,15 +791,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetNextEntityNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EntityName" Type="nvarchar" Mode="In" />
-          <Parameter Name="NextNumber" Type="int" Mode="InOut" />
-        </Function>
-        <EntityContainer Name="NatrajModelStoreContainer">
+        <EntityContainer Name="PlatformDBModelStoreContainer">
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerAgriculture" EntityType="Self.CustomerAgriculture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerBank" EntityType="Self.CustomerBank" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DCPaymentDetails" EntityType="Self.DCPaymentDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DCAddress" EntityType="Self.DCAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DCOrder" EntityType="Self.DCOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DCOrderDtl" EntityType="Self.DCOrderDtl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DCPaymentDetail" EntityType="Self.DCPaymentDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DCWallet" EntityType="Self.DCWallet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistributionCenter" EntityType="Self.DistributionCenter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DockMilkCollection" EntityType="Self.DockMilkCollection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DockMilkCollectionDetails" EntityType="Self.DockMilkCollectionDetails" Schema="dbo" store:Type="Tables" />
@@ -709,8 +814,6 @@
           <EntitySet Name="ProductBatchQuality" EntityType="Self.ProductBatchQuality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductSubCategory" EntityType="Self.ProductSubCategory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PurchaseOrderItem" EntityType="Self.PurchaseOrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ScreenSecurityCodes" EntityType="Self.ScreenSecurityCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPermissions" EntityType="Self.UserPermissions" Schema="dbo" store:Type="Tables" />
@@ -730,13 +833,37 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="CustomerBank" EntitySet="CustomerBank" />
           </AssociationSet>
-          <AssociationSet Name="FK_DCPaymentDetails_DistributionCenter" Association="Self.FK_DCPaymentDetails_DistributionCenter">
+          <AssociationSet Name="fk_DCAddress_DistributionCenter" Association="Self.fk_DCAddress_DistributionCenter">
             <End Role="DistributionCenter" EntitySet="DistributionCenter" />
-            <End Role="DCPaymentDetails" EntitySet="DCPaymentDetails" />
+            <End Role="DCAddress" EntitySet="DCAddress" />
           </AssociationSet>
-          <AssociationSet Name="FK_DCPaymentDetails_PurchaseOrder" Association="Self.FK_DCPaymentDetails_PurchaseOrder">
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
-            <End Role="DCPaymentDetails" EntitySet="DCPaymentDetails" />
+          <AssociationSet Name="fk_DCOrder_DCAddress" Association="Self.fk_DCOrder_DCAddress">
+            <End Role="DCAddress" EntitySet="DCAddress" />
+            <End Role="DCOrder" EntitySet="DCOrder" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DCOrder_DistributionCenter" Association="Self.fk_DCOrder_DistributionCenter">
+            <End Role="DistributionCenter" EntitySet="DistributionCenter" />
+            <End Role="DCOrder" EntitySet="DCOrder" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DCOrderDtl_DCOrder" Association="Self.fk_DCOrderDtl_DCOrder">
+            <End Role="DCOrder" EntitySet="DCOrder" />
+            <End Role="DCOrderDtl" EntitySet="DCOrderDtl" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DCOrderDtl_Product" Association="Self.fk_DCOrderDtl_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DCOrderDtl" EntitySet="DCOrderDtl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCPaymentDetail_DistributionCenter" Association="Self.FK_DCPaymentDetail_DistributionCenter">
+            <End Role="DistributionCenter" EntitySet="DistributionCenter" />
+            <End Role="DCPaymentDetail" EntitySet="DCPaymentDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCPaymentDetails_DCOrder" Association="Self.FK_DCPaymentDetails_DCOrder">
+            <End Role="DCOrder" EntitySet="DCOrder" />
+            <End Role="DCPaymentDetail" EntitySet="DCPaymentDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCWallet_DCId" Association="Self.FK_DCWallet_DCId">
+            <End Role="DistributionCenter" EntitySet="DistributionCenter" />
+            <End Role="DCWallet" EntitySet="DCWallet" />
           </AssociationSet>
           <AssociationSet Name="FK_DockMilkCollectionDetails_VLC" Association="Self.FK_DockMilkCollectionDetails_VLC">
             <End Role="VLC" EntitySet="VLC" />
@@ -790,7 +917,7 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="NatrajModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="PlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -819,11 +946,12 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="CustomerCode" Type="Int32" Nullable="false" />
           <NavigationProperty Name="VLC" Relationship="Self.FK_Customer_VLC" FromRole="Customer" ToRole="VLC" />
           <NavigationProperty Name="CustomerAgricultures" Relationship="Self.FK_CustomerAgriculture_Customer" FromRole="Customer" ToRole="CustomerAgriculture" />
           <NavigationProperty Name="CustomerBanks" Relationship="Self.FK_CustomerBank_Customer" FromRole="Customer" ToRole="CustomerBank" />
           <NavigationProperty Name="VLCMilkCollections" Relationship="Self.FK_VLCMilkCollection_Customer" FromRole="Customer" ToRole="VLCMilkCollection" />
-          <Property Name="CustomerCode" Type="Int32" Nullable="false" />
+          <Property Name="CustomerAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CustomerAgriculture">
           <Key>
@@ -862,44 +990,124 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_CustomerBank_Customer" FromRole="CustomerBank" ToRole="Customer" />
         </EntityType>
-        <EntityType Name="DCPaymentDetail">
+        <EntityType Name="DCAddress">
           <Key>
-            <PropertyRef Name="DCPaymentId" />
+            <PropertyRef Name="DCAddressId" />
           </Key>
-          <Property Name="DCPaymentId" Type="Int32" Nullable="false" />
-          <Property Name="PurchaseOrderId" Type="Int32" />
-          <Property Name="DCId" Type="Int32" />
-          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="PaymentStatus" Type="Int32" />
-          <Property Name="PaymentDate" Type="DateTime" Precision="0" />
-          <Property Name="ReceivedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PaymentMode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DCAddressId" Type="Int32" Nullable="false" />
+          <Property Name="DCId" Type="Int32" Nullable="false" />
+          <Property Name="AddressTypeId" Type="Int32" Nullable="false" />
+          <Property Name="IsDefaultAddress" Type="Boolean" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="District" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="DistributionCenter" Relationship="Self.fk_DCAddress_DistributionCenter" FromRole="DCAddress" ToRole="DistributionCenter" />
+          <NavigationProperty Name="DCOrders" Relationship="Self.fk_DCOrder_DCAddress" FromRole="DCAddress" ToRole="DCOrder" />
+        </EntityType>
+        <EntityType Name="DCOrder">
+          <Key>
+            <PropertyRef Name="DCOrderId" />
+          </Key>
+          <Property Name="DCOrderId" Type="Int32" Nullable="false" />
+          <Property Name="DCOrderNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BillNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DCId" Type="Int32" Nullable="false" />
+          <Property Name="OrderAddressId" Type="Int32" Nullable="false" />
+          <Property Name="OrderPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SGST" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CGST" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IGST" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTax" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderDiscount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTotalPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderPaidAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalOrderQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalActualQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderStatusId" Type="Int32" />
+          <Property Name="DeliveryExpectedDate" Type="DateTime" Precision="3" />
+          <Property Name="DeliveredDate" Type="DateTime" Precision="3" />
+          <Property Name="DeliveredBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="OrderComments" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="DistributionCenter" Relationship="Self.FK_DCPaymentDetails_DistributionCenter" FromRole="DCPaymentDetails" ToRole="DistributionCenter" />
-          <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK_DCPaymentDetails_PurchaseOrder" FromRole="DCPaymentDetails" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="DCAddress" Relationship="Self.fk_DCOrder_DCAddress" FromRole="DCOrder" ToRole="DCAddress" />
+          <NavigationProperty Name="DistributionCenter" Relationship="Self.fk_DCOrder_DistributionCenter" FromRole="DCOrder" ToRole="DistributionCenter" />
+          <NavigationProperty Name="DCOrderDtls" Relationship="Self.fk_DCOrderDtl_DCOrder" FromRole="DCOrder" ToRole="DCOrderDtl" />
+          <NavigationProperty Name="DCPaymentDetails" Relationship="Self.FK_DCPaymentDetails_DCOrder" FromRole="DCOrder" ToRole="DCPaymentDetail" />
+        </EntityType>
+        <EntityType Name="DCOrderDtl">
+          <Key>
+            <PropertyRef Name="DCOrderDtlId" />
+          </Key>
+          <Property Name="DCOrderDtlId" Type="Int32" Nullable="false" />
+          <Property Name="DCOrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="QuantityOrdered" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ActualQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTax" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTotalPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DCOrder" Relationship="Self.fk_DCOrderDtl_DCOrder" FromRole="DCOrderDtl" ToRole="DCOrder" />
+          <NavigationProperty Name="Product" Relationship="Self.fk_DCOrderDtl_Product" FromRole="DCOrderDtl" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="DCPaymentDetail">
+          <Key>
+            <PropertyRef Name="DCPaymentId" />
+          </Key>
+          <Property Name="DCPaymentId" Type="Int32" Nullable="false" />
+          <Property Name="DCId" Type="Int32" />
+          <Property Name="DCOrderId" Type="Int32" />
+          <Property Name="PaymentCrAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentDrAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PaymentReceivedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentMode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentComments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DCOrder" Relationship="Self.FK_DCPaymentDetails_DCOrder" FromRole="DCPaymentDetail" ToRole="DCOrder" />
+          <NavigationProperty Name="DistributionCenter" Relationship="Self.FK_DCPaymentDetail_DistributionCenter" FromRole="DCPaymentDetail" ToRole="DistributionCenter" />
+        </EntityType>
+        <EntityType Name="DCWallet">
+          <Key>
+            <PropertyRef Name="WalletId" />
+          </Key>
+          <Property Name="WalletId" Type="Int32" Nullable="false" />
+          <Property Name="DCId" Type="Int32" Nullable="false" />
+          <Property Name="WalletBalance" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="AmountDueDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="DistributionCenter" Relationship="Self.FK_DCWallet_DCId" FromRole="DCWallet" ToRole="DistributionCenter" />
         </EntityType>
         <EntityType Name="DistributionCenter">
           <Key>
             <PropertyRef Name="DCId" />
           </Key>
           <Property Name="DCId" Type="Int32" Nullable="false" />
-          <Property Name="DCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DCName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DCName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AgentName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="FatherName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Contact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="DCAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Area" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="DCState" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="PIN" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AlternateContact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pin" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="AADHAR" Type="String" MaxLength="17" FixedLength="false" Unicode="true" />
           <Property Name="DOB" Type="DateTime" Precision="0" />
           <Property Name="Anniversary" Type="DateTime" Precision="0" />
@@ -910,7 +1118,10 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="DCPaymentDetails" Relationship="Self.FK_DCPaymentDetails_DistributionCenter" FromRole="DistributionCenter" ToRole="DCPaymentDetails" />
+          <NavigationProperty Name="DCAddresses" Relationship="Self.fk_DCAddress_DistributionCenter" FromRole="DistributionCenter" ToRole="DCAddress" />
+          <NavigationProperty Name="DCOrders" Relationship="Self.fk_DCOrder_DistributionCenter" FromRole="DistributionCenter" ToRole="DCOrder" />
+          <NavigationProperty Name="DCPaymentDetails" Relationship="Self.FK_DCPaymentDetail_DistributionCenter" FromRole="DistributionCenter" ToRole="DCPaymentDetail" />
+          <NavigationProperty Name="DCWallets" Relationship="Self.FK_DCWallet_DCId" FromRole="DistributionCenter" ToRole="DCWallet" />
         </EntityType>
         <EntityType Name="DockMilkCollection">
           <Key>
@@ -987,7 +1198,7 @@
           </Key>
           <Property Name="MessageId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MessageCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MessageString" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MessageString" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="MilkProcessing">
           <Key>
@@ -1049,6 +1260,7 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DCOrderDtls" Relationship="Self.fk_DCOrderDtl_Product" FromRole="Product" ToRole="DCOrderDtl" />
           <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
           <NavigationProperty Name="ProductSubCategory" Relationship="Self.FK_Product_ProductSubCategory" FromRole="Product" ToRole="ProductSubCategory" />
           <NavigationProperty Name="ProductBatches" Relationship="Self.FK_ProductBatch_Product" FromRole="Product" ToRole="ProductBatch" />
@@ -1137,49 +1349,6 @@
           <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductSubCategory" FromRole="ProductSubCategory" ToRole="Product" />
           <NavigationProperty Name="ProductCategory" Relationship="Self.FK_ProductSubCategory_ProductCategory" FromRole="ProductSubCategory" ToRole="ProductCategory" />
         </EntityType>
-        <EntityType Name="PurchaseOrder">
-          <Key>
-            <PropertyRef Name="PurchaseOrderId" />
-          </Key>
-          <Property Name="PurchaseOrderId" Type="Int32" Nullable="false" />
-          <Property Name="DCId" Type="Int32" />
-          <Property Name="TotalQty" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="OrderDate" Type="DateTime" Precision="0" />
-          <Property Name="DeliveryExpectedDate" Type="DateTime" Precision="0" />
-          <Property Name="TotalTax" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TotalDiscount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="SGST" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CGST" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="IGST" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="OrderStatusId" Type="Int32" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="DCPaymentDetails" Relationship="Self.FK_DCPaymentDetails_PurchaseOrder" FromRole="PurchaseOrder" ToRole="DCPaymentDetails" />
-        </EntityType>
-        <EntityType Name="PurchaseOrderItem">
-          <Key>
-            <PropertyRef Name="OrderItemId" />
-          </Key>
-          <Property Name="OrderItemId" Type="Int32" Nullable="false" />
-          <Property Name="PurchaseOrderId" Type="Int32" />
-          <Property Name="CategoryId" Type="Int32" />
-          <Property Name="SubCategoryId" Type="Int32" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="Quntity" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -1263,6 +1432,9 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="VLCAgentAadhaar" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CLR" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FAT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DifferenceCLR" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_VLC" FromRole="VLC" ToRole="Customer" />
           <NavigationProperty Name="DockMilkCollectionDetails" Relationship="Self.FK_DockMilkCollectionDetails_VLC" FromRole="VLC" ToRole="DockMilkCollectionDetails" />
           <NavigationProperty Name="DockRejectedMilks" Relationship="Self.FK_DockRejectedMilk_VLC" FromRole="VLC" ToRole="DockRejectedMilk" />
@@ -1299,8 +1471,8 @@
           <Property Name="CLR" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="RatePerUnit" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="VLCMilkCollection" Relationship="Self.FK_VLCMilkCollectiondtl_VLCMilkCollection" FromRole="VLCMilkCollectionDtl" ToRole="VLCMilkCollection" />
           <Property Name="ProductId" Type="Int32" />
+          <NavigationProperty Name="VLCMilkCollection" Relationship="Self.FK_VLCMilkCollectiondtl_VLCMilkCollection" FromRole="VLCMilkCollectionDtl" ToRole="VLCMilkCollection" />
         </EntityType>
         <Association Name="FK_Customer_VLC">
           <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
@@ -1350,27 +1522,99 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DCPaymentDetails_DistributionCenter">
-          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="0..1" />
-          <End Role="DCPaymentDetails" Type="Self.DCPaymentDetail" Multiplicity="*" />
+        <Association Name="fk_DCAddress_DistributionCenter">
+          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="1" />
+          <End Role="DCAddress" Type="Self.DCAddress" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DistributionCenter">
               <PropertyRef Name="DCId" />
             </Principal>
-            <Dependent Role="DCPaymentDetails">
+            <Dependent Role="DCAddress">
               <PropertyRef Name="DCId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DCPaymentDetails_PurchaseOrder">
-          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
-          <End Role="DCPaymentDetails" Type="Self.DCPaymentDetail" Multiplicity="*" />
+        <Association Name="fk_DCOrder_DCAddress">
+          <End Role="DCAddress" Type="Self.DCAddress" Multiplicity="1" />
+          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PurchaseOrder">
-              <PropertyRef Name="PurchaseOrderId" />
+            <Principal Role="DCAddress">
+              <PropertyRef Name="DCAddressId" />
             </Principal>
-            <Dependent Role="DCPaymentDetails">
-              <PropertyRef Name="PurchaseOrderId" />
+            <Dependent Role="DCOrder">
+              <PropertyRef Name="OrderAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DCOrder_DistributionCenter">
+          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="1" />
+          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCenter">
+              <PropertyRef Name="DCId" />
+            </Principal>
+            <Dependent Role="DCOrder">
+              <PropertyRef Name="DCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DCOrderDtl_DCOrder">
+          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="1" />
+          <End Role="DCOrderDtl" Type="Self.DCOrderDtl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DCOrder">
+              <PropertyRef Name="DCOrderId" />
+            </Principal>
+            <Dependent Role="DCOrderDtl">
+              <PropertyRef Name="DCOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCPaymentDetails_DCOrder">
+          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="0..1" />
+          <End Role="DCPaymentDetail" Type="Self.DCPaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DCOrder">
+              <PropertyRef Name="DCOrderId" />
+            </Principal>
+            <Dependent Role="DCPaymentDetail">
+              <PropertyRef Name="DCOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DCOrderDtl_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="DCOrderDtl" Type="Self.DCOrderDtl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="DCOrderDtl">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCPaymentDetail_DistributionCenter">
+          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="0..1" />
+          <End Role="DCPaymentDetail" Type="Self.DCPaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCenter">
+              <PropertyRef Name="DCId" />
+            </Principal>
+            <Dependent Role="DCPaymentDetail">
+              <PropertyRef Name="DCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCWallet_DCId">
+          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="1" />
+          <End Role="DCWallet" Type="Self.DCWallet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCenter">
+              <PropertyRef Name="DCId" />
+            </Principal>
+            <Dependent Role="DCWallet">
+              <PropertyRef Name="DCId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1510,7 +1754,11 @@
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="CustomerAgricultures" EntityType="Self.CustomerAgriculture" />
           <EntitySet Name="CustomerBanks" EntityType="Self.CustomerBank" />
+          <EntitySet Name="DCAddresses" EntityType="Self.DCAddress" />
+          <EntitySet Name="DCOrders" EntityType="Self.DCOrder" />
+          <EntitySet Name="DCOrderDtls" EntityType="Self.DCOrderDtl" />
           <EntitySet Name="DCPaymentDetails" EntityType="Self.DCPaymentDetail" />
+          <EntitySet Name="DCWallets" EntityType="Self.DCWallet" />
           <EntitySet Name="DistributionCenters" EntityType="Self.DistributionCenter" />
           <EntitySet Name="DockMilkCollections" EntityType="Self.DockMilkCollection" />
           <EntitySet Name="DockMilkCollectionDetails" EntityType="Self.DockMilkCollectionDetail" />
@@ -1525,8 +1773,6 @@
           <EntitySet Name="ProductBatchQualities" EntityType="Self.ProductBatchQuality" />
           <EntitySet Name="ProductCategories" EntityType="Self.ProductCategory" />
           <EntitySet Name="ProductSubCategories" EntityType="Self.ProductSubCategory" />
-          <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrder" />
-          <EntitySet Name="PurchaseOrderItems" EntityType="Self.PurchaseOrderItem" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="ScreenSecurityCodes" EntityType="Self.ScreenSecurityCode" />
           <EntitySet Name="UserPermissions" EntityType="Self.UserPermission" />
@@ -1550,13 +1796,37 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="VLCMilkCollection" EntitySet="VLCMilkCollections" />
           </AssociationSet>
-          <AssociationSet Name="FK_DCPaymentDetails_DistributionCenter" Association="Self.FK_DCPaymentDetails_DistributionCenter">
+          <AssociationSet Name="fk_DCAddress_DistributionCenter" Association="Self.fk_DCAddress_DistributionCenter">
             <End Role="DistributionCenter" EntitySet="DistributionCenters" />
-            <End Role="DCPaymentDetails" EntitySet="DCPaymentDetails" />
+            <End Role="DCAddress" EntitySet="DCAddresses" />
           </AssociationSet>
-          <AssociationSet Name="FK_DCPaymentDetails_PurchaseOrder" Association="Self.FK_DCPaymentDetails_PurchaseOrder">
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-            <End Role="DCPaymentDetails" EntitySet="DCPaymentDetails" />
+          <AssociationSet Name="fk_DCOrder_DCAddress" Association="Self.fk_DCOrder_DCAddress">
+            <End Role="DCAddress" EntitySet="DCAddresses" />
+            <End Role="DCOrder" EntitySet="DCOrders" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DCOrder_DistributionCenter" Association="Self.fk_DCOrder_DistributionCenter">
+            <End Role="DistributionCenter" EntitySet="DistributionCenters" />
+            <End Role="DCOrder" EntitySet="DCOrders" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DCOrderDtl_DCOrder" Association="Self.fk_DCOrderDtl_DCOrder">
+            <End Role="DCOrder" EntitySet="DCOrders" />
+            <End Role="DCOrderDtl" EntitySet="DCOrderDtls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCPaymentDetails_DCOrder" Association="Self.FK_DCPaymentDetails_DCOrder">
+            <End Role="DCOrder" EntitySet="DCOrders" />
+            <End Role="DCPaymentDetail" EntitySet="DCPaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DCOrderDtl_Product" Association="Self.fk_DCOrderDtl_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="DCOrderDtl" EntitySet="DCOrderDtls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCPaymentDetail_DistributionCenter" Association="Self.FK_DCPaymentDetail_DistributionCenter">
+            <End Role="DistributionCenter" EntitySet="DistributionCenters" />
+            <End Role="DCPaymentDetail" EntitySet="DCPaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCWallet_DCId" Association="Self.FK_DCWallet_DCId">
+            <End Role="DistributionCenter" EntitySet="DistributionCenters" />
+            <End Role="DCWallet" EntitySet="DCWallets" />
           </AssociationSet>
           <AssociationSet Name="FK_DockMilkCollectionDetails_VLC" Association="Self.FK_DockMilkCollectionDetails_VLC">
             <End Role="VLC" EntitySet="VLCs" />
@@ -1602,21 +1872,17 @@
             <End Role="VLCMilkCollection" EntitySet="VLCMilkCollections" />
             <End Role="VLCMilkCollectionDtl" EntitySet="VLCMilkCollectionDtls" />
           </AssociationSet>
-          <FunctionImport Name="GetNextEntityNumber">
-            <Parameter Name="EntityName" Mode="In" Type="String" />
-            <Parameter Name="NextNumber" Mode="InOut" Type="Int32" />
-          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="NatrajModelStoreContainer" CdmEntityContainer="PlatformDBEntities">
+        <EntityContainerMapping StorageEntityContainer="PlatformDBModelStoreContainer" CdmEntityContainer="PlatformDBEntities">
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="NatrajModel.Customer">
+            <EntityTypeMapping TypeName="PlatformDBModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="FatherName" ColumnName="FatherName" />
@@ -1641,11 +1907,12 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CustomerAgricultures">
-            <EntityTypeMapping TypeName="NatrajModel.CustomerAgriculture">
+            <EntityTypeMapping TypeName="PlatformDBModel.CustomerAgriculture">
               <MappingFragment StoreEntitySet="CustomerAgriculture">
                 <ScalarProperty Name="CustAgriId" ColumnName="CustAgriId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
@@ -1663,7 +1930,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CustomerBanks">
-            <EntityTypeMapping TypeName="NatrajModel.CustomerBank">
+            <EntityTypeMapping TypeName="PlatformDBModel.CustomerBank">
               <MappingFragment StoreEntitySet="CustomerBank">
                 <ScalarProperty Name="CustomerBankId" ColumnName="CustomerBankId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
@@ -1681,18 +1948,47 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DCPaymentDetails">
-            <EntityTypeMapping TypeName="NatrajModel.DCPaymentDetail">
-              <MappingFragment StoreEntitySet="DCPaymentDetails">
-                <ScalarProperty Name="DCPaymentId" ColumnName="DCPaymentId" />
-                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+          <EntitySetMapping Name="DCAddresses">
+            <EntityTypeMapping TypeName="PlatformDBModel.DCAddress">
+              <MappingFragment StoreEntitySet="DCAddress">
+                <ScalarProperty Name="DCAddressId" ColumnName="DCAddressId" />
                 <ScalarProperty Name="DCId" ColumnName="DCId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
-                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
-                <ScalarProperty Name="ReceivedBy" ColumnName="ReceivedBy" />
-                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="AddressTypeId" ColumnName="AddressTypeId" />
+                <ScalarProperty Name="IsDefaultAddress" ColumnName="IsDefaultAddress" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DCOrders">
+            <EntityTypeMapping TypeName="PlatformDBModel.DCOrder">
+              <MappingFragment StoreEntitySet="DCOrder">
+                <ScalarProperty Name="DCOrderId" ColumnName="DCOrderId" />
+                <ScalarProperty Name="DCOrderNumber" ColumnName="DCOrderNumber" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="BillNumber" ColumnName="BillNumber" />
+                <ScalarProperty Name="DCId" ColumnName="DCId" />
+                <ScalarProperty Name="OrderAddressId" ColumnName="OrderAddressId" />
+                <ScalarProperty Name="OrderPrice" ColumnName="OrderPrice" />
+                <ScalarProperty Name="SGST" ColumnName="SGST" />
+                <ScalarProperty Name="CGST" ColumnName="CGST" />
+                <ScalarProperty Name="IGST" ColumnName="IGST" />
+                <ScalarProperty Name="OrderTax" ColumnName="OrderTax" />
+                <ScalarProperty Name="OrderDiscount" ColumnName="OrderDiscount" />
+                <ScalarProperty Name="OrderTotalPrice" ColumnName="OrderTotalPrice" />
+                <ScalarProperty Name="OrderPaidAmount" ColumnName="OrderPaidAmount" />
+                <ScalarProperty Name="TotalOrderQuantity" ColumnName="TotalOrderQuantity" />
+                <ScalarProperty Name="TotalActualQuantity" ColumnName="TotalActualQuantity" />
+                <ScalarProperty Name="OrderStatusId" ColumnName="OrderStatusId" />
+                <ScalarProperty Name="DeliveryExpectedDate" ColumnName="DeliveryExpectedDate" />
+                <ScalarProperty Name="DeliveredDate" ColumnName="DeliveredDate" />
+                <ScalarProperty Name="DeliveredBy" ColumnName="DeliveredBy" />
+                <ScalarProperty Name="OrderComments" ColumnName="OrderComments" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
@@ -1701,8 +1997,57 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DCOrderDtls">
+            <EntityTypeMapping TypeName="PlatformDBModel.DCOrderDtl">
+              <MappingFragment StoreEntitySet="DCOrderDtl">
+                <ScalarProperty Name="DCOrderDtlId" ColumnName="DCOrderDtlId" />
+                <ScalarProperty Name="DCOrderId" ColumnName="DCOrderId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="QuantityOrdered" ColumnName="QuantityOrdered" />
+                <ScalarProperty Name="ActualQuantity" ColumnName="ActualQuantity" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+                <ScalarProperty Name="OrderTax" ColumnName="OrderTax" />
+                <ScalarProperty Name="OrderTotalPrice" ColumnName="OrderTotalPrice" />
+                <ScalarProperty Name="Ref1" ColumnName="Ref1" />
+                <ScalarProperty Name="Ref2" ColumnName="Ref2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DCPaymentDetails">
+            <EntityTypeMapping TypeName="PlatformDBModel.DCPaymentDetail">
+              <MappingFragment StoreEntitySet="DCPaymentDetail">
+                <ScalarProperty Name="DCPaymentId" ColumnName="DCPaymentId" />
+                <ScalarProperty Name="DCId" ColumnName="DCId" />
+                <ScalarProperty Name="DCOrderId" ColumnName="DCOrderId" />
+                <ScalarProperty Name="PaymentCrAmount" ColumnName="PaymentCrAmount" />
+                <ScalarProperty Name="PaymentDrAmount" ColumnName="PaymentDrAmount" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="PaymentReceivedBy" ColumnName="PaymentReceivedBy" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="PaymentComments" ColumnName="PaymentComments" />
+                <ScalarProperty Name="Ref1" ColumnName="Ref1" />
+                <ScalarProperty Name="Ref2" ColumnName="Ref2" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DCWallets">
+            <EntityTypeMapping TypeName="PlatformDBModel.DCWallet">
+              <MappingFragment StoreEntitySet="DCWallet">
+                <ScalarProperty Name="WalletId" ColumnName="WalletId" />
+                <ScalarProperty Name="DCId" ColumnName="DCId" />
+                <ScalarProperty Name="WalletBalance" ColumnName="WalletBalance" />
+                <ScalarProperty Name="AmountDueDate" ColumnName="AmountDueDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="DistributionCenters">
-            <EntityTypeMapping TypeName="NatrajModel.DistributionCenter">
+            <EntityTypeMapping TypeName="PlatformDBModel.DistributionCenter">
               <MappingFragment StoreEntitySet="DistributionCenter">
                 <ScalarProperty Name="DCId" ColumnName="DCId" />
                 <ScalarProperty Name="DCCode" ColumnName="DCCode" />
@@ -1710,13 +2055,10 @@
                 <ScalarProperty Name="AgentName" ColumnName="AgentName" />
                 <ScalarProperty Name="FatherName" ColumnName="FatherName" />
                 <ScalarProperty Name="Contact" ColumnName="Contact" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="DCAddress" ColumnName="DCAddress" />
-                <ScalarProperty Name="Area" ColumnName="Area" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="DCState" ColumnName="DCState" />
-                <ScalarProperty Name="PIN" ColumnName="PIN" />
                 <ScalarProperty Name="AlternateContact" ColumnName="AlternateContact" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Pin" ColumnName="Pin" />
                 <ScalarProperty Name="AADHAR" ColumnName="AADHAR" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="Anniversary" ColumnName="Anniversary" />
@@ -1731,7 +2073,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DockMilkCollections">
-            <EntityTypeMapping TypeName="NatrajModel.DockMilkCollection">
+            <EntityTypeMapping TypeName="PlatformDBModel.DockMilkCollection">
               <MappingFragment StoreEntitySet="DockMilkCollection">
                 <ScalarProperty Name="DockMilkCollectionId" ColumnName="DockMilkCollectionId" />
                 <ScalarProperty Name="CollectionDate" ColumnName="CollectionDate" />
@@ -1751,7 +2093,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DockMilkCollectionDetails">
-            <EntityTypeMapping TypeName="NatrajModel.DockMilkCollectionDetail">
+            <EntityTypeMapping TypeName="PlatformDBModel.DockMilkCollectionDetail">
               <MappingFragment StoreEntitySet="DockMilkCollectionDetails">
                 <ScalarProperty Name="DMCDId" ColumnName="DMCDId" />
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
@@ -1776,7 +2118,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DockRejectedMilks">
-            <EntityTypeMapping TypeName="NatrajModel.DockRejectedMilk">
+            <EntityTypeMapping TypeName="PlatformDBModel.DockRejectedMilk">
               <MappingFragment StoreEntitySet="DockRejectedMilk">
                 <ScalarProperty Name="DockRejectedMilkId" ColumnName="DockRejectedMilkId" />
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
@@ -1801,16 +2143,16 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Messages">
-            <EntityTypeMapping TypeName="NatrajModel.Message">
+            <EntityTypeMapping TypeName="PlatformDBModel.Message">
               <MappingFragment StoreEntitySet="Message">
-                <ScalarProperty Name="MessageString" ColumnName="MessageString" />
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
                 <ScalarProperty Name="MessageCode" ColumnName="MessageCode" />
+                <ScalarProperty Name="MessageString" ColumnName="MessageString" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MilkProcessings">
-            <EntityTypeMapping TypeName="NatrajModel.MilkProcessing">
+            <EntityTypeMapping TypeName="PlatformDBModel.MilkProcessing">
               <MappingFragment StoreEntitySet="MilkProcessing">
                 <ScalarProperty Name="ProcessingId" ColumnName="ProcessingId" />
                 <ScalarProperty Name="ProcessCode" ColumnName="ProcessCode" />
@@ -1827,7 +2169,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NumberMasters">
-            <EntityTypeMapping TypeName="NatrajModel.NumberMaster">
+            <EntityTypeMapping TypeName="PlatformDBModel.NumberMaster">
               <MappingFragment StoreEntitySet="NumberMaster">
                 <ScalarProperty Name="EntityCode" ColumnName="EntityCode" />
                 <ScalarProperty Name="NextNumber" ColumnName="NextNumber" />
@@ -1835,7 +2177,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OrderStatus">
-            <EntityTypeMapping TypeName="NatrajModel.OrderStatu">
+            <EntityTypeMapping TypeName="PlatformDBModel.OrderStatu">
               <MappingFragment StoreEntitySet="OrderStatus">
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
@@ -1848,7 +2190,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="NatrajModel.Product">
+            <EntityTypeMapping TypeName="PlatformDBModel.Product">
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
@@ -1874,7 +2216,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductBatches">
-            <EntityTypeMapping TypeName="NatrajModel.ProductBatch">
+            <EntityTypeMapping TypeName="PlatformDBModel.ProductBatch">
               <MappingFragment StoreEntitySet="ProductBatch">
                 <ScalarProperty Name="BatchId" ColumnName="BatchId" />
                 <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
@@ -1892,7 +2234,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductBatchDetails">
-            <EntityTypeMapping TypeName="NatrajModel.ProductBatchDetail">
+            <EntityTypeMapping TypeName="PlatformDBModel.ProductBatchDetail">
               <MappingFragment StoreEntitySet="ProductBatchDetails">
                 <ScalarProperty Name="BatchDetailId" ColumnName="BatchDetailId" />
                 <ScalarProperty Name="BatchId" ColumnName="BatchId" />
@@ -1908,7 +2250,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductBatchQualities">
-            <EntityTypeMapping TypeName="NatrajModel.ProductBatchQuality">
+            <EntityTypeMapping TypeName="PlatformDBModel.ProductBatchQuality">
               <MappingFragment StoreEntitySet="ProductBatchQuality">
                 <ScalarProperty Name="QualityId" ColumnName="QualityId" />
                 <ScalarProperty Name="BatchId" ColumnName="BatchId" />
@@ -1926,7 +2268,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductCategories">
-            <EntityTypeMapping TypeName="NatrajModel.ProductCategory">
+            <EntityTypeMapping TypeName="PlatformDBModel.ProductCategory">
               <MappingFragment StoreEntitySet="ProductCategory">
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
@@ -1939,7 +2281,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductSubCategories">
-            <EntityTypeMapping TypeName="NatrajModel.ProductSubCategory">
+            <EntityTypeMapping TypeName="PlatformDBModel.ProductSubCategory">
               <MappingFragment StoreEntitySet="ProductSubCategory">
                 <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
                 <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
@@ -1952,52 +2294,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PurchaseOrders">
-            <EntityTypeMapping TypeName="NatrajModel.PurchaseOrder">
-              <MappingFragment StoreEntitySet="PurchaseOrder">
-                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
-                <ScalarProperty Name="DCId" ColumnName="DCId" />
-                <ScalarProperty Name="TotalQty" ColumnName="TotalQty" />
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="DeliveryExpectedDate" ColumnName="DeliveryExpectedDate" />
-                <ScalarProperty Name="TotalTax" ColumnName="TotalTax" />
-                <ScalarProperty Name="TotalDiscount" ColumnName="TotalDiscount" />
-                <ScalarProperty Name="SGST" ColumnName="SGST" />
-                <ScalarProperty Name="CGST" ColumnName="CGST" />
-                <ScalarProperty Name="IGST" ColumnName="IGST" />
-                <ScalarProperty Name="OrderStatusId" ColumnName="OrderStatusId" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PurchaseOrderItems">
-            <EntityTypeMapping TypeName="NatrajModel.PurchaseOrderItem">
-              <MappingFragment StoreEntitySet="PurchaseOrderItem">
-                <ScalarProperty Name="OrderItemId" ColumnName="OrderItemId" />
-                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="Quntity" ColumnName="Quntity" />
-                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="NatrajModel.Role">
+            <EntityTypeMapping TypeName="PlatformDBModel.Role">
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
@@ -2010,7 +2308,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ScreenSecurityCodes">
-            <EntityTypeMapping TypeName="NatrajModel.ScreenSecurityCode">
+            <EntityTypeMapping TypeName="PlatformDBModel.ScreenSecurityCode">
               <MappingFragment StoreEntitySet="ScreenSecurityCodes">
                 <ScalarProperty Name="ScreenId" ColumnName="ScreenId" />
                 <ScalarProperty Name="ScreenName" ColumnName="ScreenName" />
@@ -2024,7 +2322,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserPermissions">
-            <EntityTypeMapping TypeName="NatrajModel.UserPermission">
+            <EntityTypeMapping TypeName="PlatformDBModel.UserPermission">
               <MappingFragment StoreEntitySet="UserPermissions">
                 <ScalarProperty Name="UserPermissionId" ColumnName="UserPermissionId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -2041,7 +2339,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="NatrajModel.User">
+            <EntityTypeMapping TypeName="PlatformDBModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -2061,7 +2359,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VLCs">
-            <EntityTypeMapping TypeName="NatrajModel.VLC">
+            <EntityTypeMapping TypeName="PlatformDBModel.VLC">
               <MappingFragment StoreEntitySet="VLC">
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
                 <ScalarProperty Name="VLCCode" ColumnName="VLCCode" />
@@ -2082,11 +2380,14 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="VLCAgentAadhaar" ColumnName="VLCAgentAadhaar" />
+                <ScalarProperty Name="CLR" ColumnName="CLR" />
+                <ScalarProperty Name="FAT" ColumnName="FAT" />
+                <ScalarProperty Name="DifferenceCLR" ColumnName="DifferenceCLR" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VLCMilkCollections">
-            <EntityTypeMapping TypeName="NatrajModel.VLCMilkCollection">
+            <EntityTypeMapping TypeName="PlatformDBModel.VLCMilkCollection">
               <MappingFragment StoreEntitySet="VLCMilkCollection">
                 <ScalarProperty Name="VLCMilkCollectionId" ColumnName="VLCMilkCollectionId" />
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
@@ -2104,9 +2405,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VLCMilkCollectionDtls">
-            <EntityTypeMapping TypeName="NatrajModel.VLCMilkCollectionDtl">
+            <EntityTypeMapping TypeName="PlatformDBModel.VLCMilkCollectionDtl">
               <MappingFragment StoreEntitySet="VLCMilkCollectionDtl">
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="VLCMilkCollectionDtlId" ColumnName="VLCMilkCollectionDtlId" />
                 <ScalarProperty Name="VLCMilkCollectionId" ColumnName="VLCMilkCollectionId" />
                 <ScalarProperty Name="Qunatity" ColumnName="Qunatity" />
@@ -2114,10 +2414,10 @@
                 <ScalarProperty Name="CLR" ColumnName="CLR" />
                 <ScalarProperty Name="RatePerUnit" ColumnName="RatePerUnit" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetNextEntityNumber" FunctionName="NatrajModel.Store.GetNextEntityNumber" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -17,7 +17,10 @@ namespace Platform.Sql
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DistributionCenter()
         {
+            this.DCAddresses = new HashSet<DCAddress>();
+            this.DCOrders = new HashSet<DCOrder>();
             this.DCPaymentDetails = new HashSet<DCPaymentDetail>();
+            this.DCWallets = new HashSet<DCWallet>();
         }
     
         public int DCId { get; set; }
@@ -26,13 +29,10 @@ namespace Platform.Sql
         public string AgentName { get; set; }
         public string FatherName { get; set; }
         public string Contact { get; set; }
-        public string Email { get; set; }
-        public string DCAddress { get; set; }
-        public string Area { get; set; }
-        public string City { get; set; }
-        public string DCState { get; set; }
-        public string PIN { get; set; }
         public string AlternateContact { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Pin { get; set; }
         public string AADHAR { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
         public Nullable<System.DateTime> Anniversary { get; set; }
@@ -45,6 +45,12 @@ namespace Platform.Sql
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DCAddress> DCAddresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DCOrder> DCOrders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DCPaymentDetail> DCPaymentDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DCWallet> DCWallets { get; set; }
     }
 }

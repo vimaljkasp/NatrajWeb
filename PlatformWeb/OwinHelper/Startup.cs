@@ -108,11 +108,16 @@ namespace PlatformWeb
             ////VLC
             container.RegisterType<IVLCService, VLCService>(new HierarchicalLifetimeManager());
             container.RegisterType<IVLCMilkCollectionService, VLCMilkCollectionService>(new HierarchicalLifetimeManager());
-           
+
 
             ////Dashboard
 
             //container.RegisterType<IDashboardService, DashboardService>(new HierarchicalLifetimeManager());
+
+
+            //// Distribution Center
+            container.RegisterType<IDistributionCenterService, DistributionCenterService>(new HierarchicalLifetimeManager());
+
 
             config.DependencyResolver = new UnityResolver(container);
             
