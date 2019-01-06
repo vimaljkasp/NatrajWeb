@@ -74,7 +74,7 @@ namespace PlatformWeb.Controller
         {
             try
             {
-                return Ok(_dCPaymentService.GetDCPayementsByDCId(id));
+                return Ok(_dCPaymentService.GetAllDCPayementsByDCId(id));
             }
             catch (PlatformModuleException ex)
             {
@@ -102,9 +102,9 @@ namespace PlatformWeb.Controller
             }
         }
 
-        //Put api/Customer/5
+        //Post api/Customer/5
         [Route("api/DCPayments/{id}")]
-        public IHttpActionResult Put(int id, [FromBody]DCPaymentDTO dCPaymentDTO)
+        public IHttpActionResult Post(int id, [FromBody]DCPaymentDTO dCPaymentDTO)
         {
             try
             {
@@ -112,9 +112,9 @@ namespace PlatformWeb.Controller
                 if (dCPaymentDTO == null)
                     Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
                 //Update New Customer
-                _dCPaymentService.UpadeDCPaymentDetail(dCPaymentDTO);
+             
 
-                return Ok();
+                return Ok(_dCPaymentService.UpdateDCPaymentDetail(dCPaymentDTO));
             }
             catch (PlatformModuleException ex)
             {
@@ -129,8 +129,8 @@ namespace PlatformWeb.Controller
             try
             {
                 //Delete Customer
-                _dCPaymentService.DeleteDCPaymentDetail(id);
-                return Ok();
+            
+                return Ok(_dCPaymentService.DeleteDCPaymentDetail(id));
             }
             catch (PlatformModuleException ex)
             {

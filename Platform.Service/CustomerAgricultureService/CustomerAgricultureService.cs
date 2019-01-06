@@ -112,7 +112,7 @@ namespace Platform.Service
             ResponseDTO responseDTO = new ResponseDTO();
             var customerAgriculture = unitOfWork.CustomerAgricultureRepository.GetByCustomerId(customerAgricultureDTO.CustomerId);
             if (customerAgriculture == null)
-                throw new PlatformModuleException(string.Format("Customer Agriculture Details Not Found with Customer Id {0}", customerAgriculture.CustomerId));
+                return AddCustomerAgriculture(customerAgricultureDTO);
 
             CustomerAgricultureConvertor.ConvertToCustomerAgriCultureEntity(ref customerAgriculture, customerAgricultureDTO, true);
          //   customerAgriculture.ModifiedBy  = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerAgriculture.Customer.VLCId.GetValueOrDefault());

@@ -115,7 +115,7 @@ namespace PlatformWeb.Controller
             }
         }
 
-        //Put api/Customer/5
+        //Post api/Customer/5
         [Route("api/customers/{id}")]
         public IHttpActionResult Post(int id, [FromBody]CustomerDto customerDTO)
         {

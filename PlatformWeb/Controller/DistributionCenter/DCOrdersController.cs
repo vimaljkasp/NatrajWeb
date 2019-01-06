@@ -102,9 +102,9 @@ namespace PlatformWeb.Controller
             }
         }
 
-        //Put api/Customer/5
+        //Post api/Customer/5
         [Route("api/DCOrders/{id}")]
-        public IHttpActionResult Put(int id, [FromBody]DCOrderDTO dCOrderDTO)
+        public IHttpActionResult Post(int id, [FromBody]DCOrderDTO dCOrderDTO)
         {
             try
             {

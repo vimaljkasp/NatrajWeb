@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -139,8 +139,8 @@
             <PropertyRef Name="DCPaymentId" />
           </Key>
           <Property Name="DCPaymentId" Type="int" Nullable="false" />
-          <Property Name="DCId" Type="int" />
-          <Property Name="DCOrderId" Type="int" />
+          <Property Name="DCId" Type="int" Nullable="false" />
+          <Property Name="DCOrderId" Type="int" Nullable="false" />
           <Property Name="PaymentCrAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PaymentDrAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PaymentDate" Type="datetime" Nullable="false" />
@@ -612,7 +612,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DCPaymentDetail_DistributionCenter">
-          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="0..1" />
+          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="1" />
           <End Role="DCPaymentDetail" Type="Self.DCPaymentDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DistributionCenter">
@@ -624,7 +624,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DCPaymentDetails_DCOrder">
-          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="0..1" />
+          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="1" />
           <End Role="DCPaymentDetail" Type="Self.DCPaymentDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DCOrder">
@@ -914,7 +914,8 @@
             <End Role="VLCMilkCollectionDtl" EntitySet="VLCMilkCollectionDtl" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -947,11 +948,11 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="CustomerCode" Type="Int32" Nullable="false" />
+          <Property Name="CustomerAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="VLC" Relationship="Self.FK_Customer_VLC" FromRole="Customer" ToRole="VLC" />
           <NavigationProperty Name="CustomerAgricultures" Relationship="Self.FK_CustomerAgriculture_Customer" FromRole="Customer" ToRole="CustomerAgriculture" />
           <NavigationProperty Name="CustomerBanks" Relationship="Self.FK_CustomerBank_Customer" FromRole="Customer" ToRole="CustomerBank" />
           <NavigationProperty Name="VLCMilkCollections" Relationship="Self.FK_VLCMilkCollection_Customer" FromRole="Customer" ToRole="VLCMilkCollection" />
-          <Property Name="CustomerAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CustomerAgriculture">
           <Key>
@@ -1066,8 +1067,8 @@
             <PropertyRef Name="DCPaymentId" />
           </Key>
           <Property Name="DCPaymentId" Type="Int32" Nullable="false" />
-          <Property Name="DCId" Type="Int32" />
-          <Property Name="DCOrderId" Type="Int32" />
+          <Property Name="DCId" Type="Int32" Nullable="false" />
+          <Property Name="DCOrderId" Type="Int32" Nullable="false" />
           <Property Name="PaymentCrAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PaymentDrAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -1571,7 +1572,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DCPaymentDetails_DCOrder">
-          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="0..1" />
+          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="1" />
           <End Role="DCPaymentDetail" Type="Self.DCPaymentDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DCOrder">
@@ -1595,7 +1596,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DCPaymentDetail_DistributionCenter">
-          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="0..1" />
+          <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="1" />
           <End Role="DCPaymentDetail" Type="Self.DCPaymentDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DistributionCenter">
@@ -1882,7 +1883,6 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="PlatformDBModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="FatherName" ColumnName="FatherName" />
@@ -1908,6 +1908,7 @@
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

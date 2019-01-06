@@ -15,7 +15,7 @@ namespace Platform.DTO
 
         //    ResponseDTO GetDistributionCenterByVLCId(int vlcId, int? PageNumber);
 
-        ResponseDTO GetDCAddressListByDCId(int dcId);
+      //  ResponseDTO GetDCAddressListByDCId(int dcId);
 
         ResponseDTO GetDefaultDCAddressByDCId(int dcId);
 
@@ -25,7 +25,7 @@ namespace Platform.DTO
 
         ResponseDTO AddDCAddress(DCAddressDTO dcAddressDTO);
 
-        ResponseDTO UpadeDCAddress(DCAddressDTO dcAddressDTO);
+        ResponseDTO UpdateDCAddress(DCAddressDTO dcAddressDTO);
 
         ResponseDTO DeleteDCAddress(int id);
 

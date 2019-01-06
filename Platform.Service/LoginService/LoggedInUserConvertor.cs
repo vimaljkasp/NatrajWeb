@@ -41,7 +41,7 @@ namespace Platform.Service
             loggedInUserDTO.Contact = distributionCenter.Contact;
             loggedInUserDTO.LoginStatus = true;
             loggedInUserDTO.Email = distributionCenter.Email;
-            DCAddress dCAddress = distributionCenter.DCAddresses.Where(d => d.IsDefaultAddress.GetValueOrDefault()).FirstOrDefault();
+            DCAddress dCAddress = distributionCenter.DCAddresses.Where(d => d.IsDefaultAddress).FirstOrDefault();
             if (dCAddress != null)
             {
                 loggedInUserDTO.Address = dCAddress.Address;

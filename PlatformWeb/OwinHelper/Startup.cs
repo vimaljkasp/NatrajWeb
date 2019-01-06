@@ -117,6 +117,9 @@ namespace PlatformWeb
 
             //// Distribution Center
             container.RegisterType<IDistributionCenterService, DistributionCenterService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDCAddressService, DCAddressServices>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDCOrderService, DCOrderService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDCPaymentService, DCPaymentService>(new HierarchicalLifetimeManager());
 
 
             config.DependencyResolver = new UnityResolver(container);

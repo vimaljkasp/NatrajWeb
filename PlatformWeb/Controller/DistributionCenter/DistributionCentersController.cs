@@ -36,41 +36,28 @@ namespace PlatformWeb.Controller
 
         }
 
-        //[HttpPost]
-        //[Route("api/GetCustomerListByVLCId/{id}")]
-        //public IHttpActionResult GetCustomerListByVLCId(int id, [FromUri] int pageNumber)
-        //{
-        //    try
-        //    {
-        //        return Ok(_customerService.GetCustomerListByVLCId(id, pageNumber));
-        //    }
-        //    catch (PlatformModuleException ex)
-        //    {
-        //        return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
-        //    }
+        [HttpPost]
+        [Route("api/GetDCCentersByCity")]
+        public IHttpActionResult GetDCCentersByCity([FromUri] string dcCity, [FromUri] int pageNumber)
+        {
+            try
+            {
+                return Ok(_distributionCenterService.GetDistributionCentersByCity(dcCity, pageNumber));
+            }
+            catch (PlatformModuleException ex)
+            {
+                return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
+            }
 
-        //}
+        }
 
 
-        //[HttpPost]
-        //[Route("api/GetCustomerDetailsByCustomerId/{id}")]
-        //public IHttpActionResult GetCustomerDetailsByCustomerId(int id)
-        //{
-        //    try
-        //    {
-        //        return Ok(_customerService.GetCustomerDetailsByCustomerId(id));
-        //    }
-        //    catch (PlatformModuleException ex)
-        //    {
-        //        return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
-        //    }
-
-        //}
 
 
         //GET api/Customer/id
-        [Route("api/DistributionCenters/{id}")]
-        public IHttpActionResult Get(int id)
+        [HttpPost]
+        [Route("api/GetDistributionCentersByDCId/{id}")]
+        public IHttpActionResult GetDistributionCentersByDCId(int id)
         {
             try
             {
@@ -102,9 +89,9 @@ namespace PlatformWeb.Controller
             }
         }
 
-        //Put api/Customer/5
+        //Post api/Customer/5
         [Route("api/DistributionCenters/{id}")]
-        public IHttpActionResult Put(int id, [FromBody]DistributionCenterDTO distributionCenterDTO)
+        public IHttpActionResult Post(int id, [FromBody]DistributionCenterDTO distributionCenterDTO)
         {
             try
             {
@@ -112,9 +99,9 @@ namespace PlatformWeb.Controller
                 if (distributionCenterDTO == null)
                     Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
                 //Update New Customer
-                _distributionCenterService.UpdateDistributionCenter(distributionCenterDTO);
+             
 
-                return Ok();
+                return Ok(_distributionCenterService.UpdateDistributionCenter(distributionCenterDTO));
             }
             catch (PlatformModuleException ex)
             {
@@ -123,14 +110,15 @@ namespace PlatformWeb.Controller
             }
         }
 
-        [Route("api/DistributionCenters/id/{id}")]
-        public IHttpActionResult Delete(int id)
+        [Route("api/DeleteDistributionCenters/{id}")]
+        [HttpPost]
+        public IHttpActionResult DeleteDistributionCenter(int id)
         {
             try
             {
                 //Delete Customer
-                _distributionCenterService.DeleteDistriubtionCenter(id);
-                return Ok();
+               
+                return Ok(_distributionCenterService.DeleteDistriubtionCenter(id));
             }
             catch (PlatformModuleException ex)
             {

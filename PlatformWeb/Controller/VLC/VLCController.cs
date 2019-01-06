@@ -84,7 +84,7 @@ namespace PlatformWeb.Controller
             }
         }
 
-        //Put api/Customer/5
+        //Post api/Customer/5
         [Route("api/vlcs/{id}")]
         public IHttpActionResult Post(int id, [FromBody]VLCDTO vLCDTO)
         {

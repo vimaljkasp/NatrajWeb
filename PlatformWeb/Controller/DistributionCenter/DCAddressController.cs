@@ -102,19 +102,18 @@ namespace PlatformWeb.Controller
             }
         }
 
-        //Put api/Customer/5
+        //Post api/Customer/5
         [Route("api/DCAddresses/{id}")]
-        public IHttpActionResult Put(int id, [FromBody]DCAddressDTO dCAddressDTO)
+        public IHttpActionResult Post(int id, [FromBody]DCAddressDTO dCAddressDTO)
         {
             try
             {
-                dCAddressDTO.DCAddressId = id;
+                dCAddressDTO.DCId = id;
                 if (dCAddressDTO == null)
                     Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
-                //Update New Customer
-                _dCAddressService.UpadeDCAddress(dCAddressDTO);
+               
 
-                return Ok();
+                return Ok(_dCAddressService.UpdateDCAddress(dCAddressDTO));
             }
             catch (PlatformModuleException ex)
             {

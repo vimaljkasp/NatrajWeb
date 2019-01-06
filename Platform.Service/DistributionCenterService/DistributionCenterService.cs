@@ -1,6 +1,7 @@
 ﻿using Platform.DTO;
 using Platform.Repository;
 using Platform.Sql;
+using Platform.Utilities.Encryption;
 using Platform.Utilities.ExceptionHandler;
 using System;
 using System.Collections.Generic;
@@ -154,45 +155,103 @@ namespace Platform.Service
             ResponseDTO responseDTO = new ResponseDTO();
             DistributionCenter distributionCenter = new DistributionCenter();
             distributionCenter.DCId = unitOfWork.DashboardRepository.NextNumberGenerator("DistributionCenter");
-
+            distributionCenterDTO.Password = EncryptionHelper.Encryptword(distributionCenterDTO.Password);
             DistributionCenterConvertor.ConvertToDistributionCenterEntity(ref distributionCenter, distributionCenterDTO, false);
             //   customer.CustomerCode = unitOfWork.CustomerRepository.GetCustomerCodeIdByVLC(customerDto.VLCId);
+            distributionCenter.DCCode = "DC" + distributionCenter.DCId.ToString();
             distributionCenter.CreatedDate = DateTime.Now;
             distributionCenter.ModifiedDate = DateTime.Now;
             distributionCenter.CreatedBy = distributionCenter.ModifiedBy = "Admin";
                // unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerDto.VLCId);
             distributionCenter.DateOfRegistration = DateTime.Now.Date;
             distributionCenter.IsDeleted = false;
+            distributionCenterDTO.DCId = distributionCenter.DCId;
             unitOfWork.DistributionCenterRepository.Add(distributionCenter);
             //creating Distribution Center wallet with Distribution Center 
+            AddDistributionCenterWallet(distributionCenter);
+            AddDistributionCenterAddress(distributionCenterDTO);
+            
+            unitOfWork.SaveChanges();
+            responseDTO.Status = true;
+            responseDTO.Message = String.Format("Distribution Center Successfully Created");
+            responseDTO.Data = DistributionCenterConvertor.ConvertToDistributionCenterDto(distributionCenter);
+            return responseDTO;
+
+        }
+
+        public ResponseDTO UpdateDistributionCenter(DistributionCenterDTO distributionCenterDTO)
+        {
+            var distributionCenter = unitOfWork.DistributionCenterRepository.GetById(distributionCenterDTO.DCId);
+            if (distributionCenter != null)
+            {
+                DistributionCenterConvertor.ConvertToDistributionCenterEntity(ref distributionCenter, distributionCenterDTO, true);
+                distributionCenter.ModifiedBy = distributionCenter.AgentName;
+                distributionCenter.ModifiedDate = DateTime.Now;
+                unitOfWork.DistributionCenterRepository.Update(distributionCenter);
+                unitOfWork.SaveChanges();
+                ResponseDTO responseDTO = new ResponseDTO();
+                responseDTO.Status = true;
+                responseDTO.Message = "Distribution Center Succesfully Updated";
+                responseDTO.Data = DistributionCenterConvertor.ConvertToDistributionCenterDto(distributionCenter);
+                return responseDTO;
+            }
+            else
+            {
+                throw new PlatformModuleException("Distribution Center Not Found with given DC Id");
+            }
+            
+        }
+
+        public void AddDistributionCenterAddress(DistributionCenterDTO distributionCenterDTO)
+        {
+            if(distributionCenterDTO.DCAddressDTO !=null)
+            {
+                distributionCenterDTO.DCAddressDTO.DCId = distributionCenterDTO.DCId;
+                distributionCenterDTO.DCAddressDTO.Contact = distributionCenterDTO.Contact;
+                DCAddress dCAddress = new DCAddress();
+                dCAddress.DCAddressId= unitOfWork.DashboardRepository.NextNumberGenerator("DCAddress");
+
+                dCAddress.AddressTypeId = 1;
+                dCAddress.IsDefaultAddress = true;
+                DCAddressConvertor.ConvertToDCAddressEntity(ref dCAddress, distributionCenterDTO.DCAddressDTO, false);
+                unitOfWork.DCAddressRepository.Add(dCAddress);
+
+            }
+        }
+
+        public void AddDistributionCenterWallet(DistributionCenter distributionCenter)
+        {
             DCWallet dCWallet = new DCWallet();
             dCWallet.WalletId = unitOfWork.DashboardRepository.NextNumberGenerator("DCWallet");
             dCWallet.DCId = distributionCenter.DCId;
             dCWallet.WalletBalance = 0;
             dCWallet.AmountDueDate = DateTime.Now.AddDays(10);
             unitOfWork.DCWalletRepository.Add(dCWallet);
-            distributionCenterDTO = DistributionCenterConvertor.ConvertToDistributionCenterDto(distributionCenter);
-            unitOfWork.SaveChanges();
-            responseDTO.Status = true;
-            responseDTO.Message = String.Format("Distribution Center Successfully Created");
-            responseDTO.Data = distributionCenterDTO;
-            return responseDTO;
-
-
         }
 
         private void CheckForExisitngDistributionCenter(DistributionCenterDTO distributionCenterDTO)
         {
-            var existingDistributionCenter= unitOfWork.DistributionCenterRepository.GetDistributionCenterByCode(distributionCenterDTO.DCCode);
-            if (existingDistributionCenter != null)
-                throw new PlatformModuleException("Distribution Center Already Exist with given DC Code");
-            existingDistributionCenter = unitOfWork.DistributionCenterRepository.GetDistributionCenterByMobileNumber(distributionCenterDTO.Contact);
-           
-            if (existingDistributionCenter != null)
-                throw new PlatformModuleException("Distribution Center Already Exist with given Mobile Number");
-            existingDistributionCenter = unitOfWork.DistributionCenterRepository.GetDistributionCenterByEmail(distributionCenterDTO.Email);
-            if (distributionCenterDTO != null)
-                throw new PlatformModuleException("Distribution Center Already Exist with given Email");
+            DistributionCenter existingDistributionCenter = null;
+            if (string.IsNullOrWhiteSpace(distributionCenterDTO.DCCode) == false)
+            {
+                 existingDistributionCenter = unitOfWork.DistributionCenterRepository.GetDistributionCenterByCode(distributionCenterDTO.DCCode);
+                if (existingDistributionCenter != null)
+                    throw new PlatformModuleException("Distribution Center Already Exist with given DC Code");
+            }
+                if (string.IsNullOrWhiteSpace(distributionCenterDTO.Contact) == false)
+                {
+                    existingDistributionCenter = unitOfWork.DistributionCenterRepository.GetDistributionCenterByMobileNumber(distributionCenterDTO.Contact);
+
+                    if (existingDistributionCenter != null)
+                        throw new PlatformModuleException("Distribution Center Already Exist with given Mobile Number");
+                }
+
+                if (string.IsNullOrWhiteSpace(distributionCenterDTO.Email) == false)
+                {
+                    existingDistributionCenter = unitOfWork.DistributionCenterRepository.GetDistributionCenterByEmail(distributionCenterDTO.Email);
+                    if (distributionCenterDTO != null)
+                        throw new PlatformModuleException("Distribution Center Already Exist with given Email");
+                }
 
 
         }
@@ -269,12 +328,14 @@ namespace Platform.Service
 
        
 
-        public ResponseDTO UpdateDistributionCenter(DistributionCenterDTO distributionCenterDTO)
+      
+
+        public ResponseDTO DeleteDistriubtionCenter(int id)
         {
             throw new NotImplementedException();
         }
 
-        public ResponseDTO DeleteDistriubtionCenter(int id)
+        public ResponseDTO GetDistributionCentersByCity(string city, int? pageNumber)
         {
             throw new NotImplementedException();
         }

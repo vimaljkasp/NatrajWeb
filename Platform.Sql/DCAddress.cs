@@ -23,7 +23,7 @@ namespace Platform.Sql
         public int DCAddressId { get; set; }
         public int DCId { get; set; }
         public int AddressTypeId { get; set; }
-        public Nullable<bool> IsDefaultAddress { get; set; }
+        public bool IsDefaultAddress { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string District { get; set; }

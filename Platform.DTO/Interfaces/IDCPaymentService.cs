@@ -15,7 +15,7 @@ namespace Platform.DTO
 
         //    ResponseDTO GetDistributionCenterByVLCId(int vlcId, int? PageNumber);
 
-        ResponseDTO GetDCPayementsByDCId(int dcId);
+        ResponseDTO GetAllDCPayementsByDCId(int dcId);
 
         //  List<CustomerDto> GetCustomerDetailsByVLCCode(string vlcCode);
 
@@ -23,7 +23,7 @@ namespace Platform.DTO
 
         ResponseDTO AddDCPaymentDetail(DCPaymentDTO dCPaymentDTO);
 
-        ResponseDTO UpadeDCPaymentDetail(DCPaymentDTO dCPaymentDTO);
+        ResponseDTO UpdateDCPaymentDetail(DCPaymentDTO dCPaymentDTO);
 
         ResponseDTO DeleteDCPaymentDetail(int id);
 

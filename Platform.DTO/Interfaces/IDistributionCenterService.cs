@@ -18,6 +18,8 @@ namespace Platform.DTO
 
         ResponseDTO GetDistributionCenterByCenterId(int dcId);
 
+        ResponseDTO GetDistributionCentersByCity(string city,int? pageNumber);
+
       //  List<CustomerDto> GetCustomerDetailsByVLCCode(string vlcCode);
 
      //   ResponseDTO GetCustomerByCustomerId(int customerId);

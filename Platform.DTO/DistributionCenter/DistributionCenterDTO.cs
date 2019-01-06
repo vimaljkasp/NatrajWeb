@@ -31,6 +31,9 @@ namespace Platform.DTO
         public bool IsDeleted { get; set; }
         public string ModifiedBy { get; set; }
         public DateTime ModifiedDate { get; set; }
+    
+        public DCAddressDTO DCAddressDTO { get; set; }
+
     }
 
 
@@ -41,7 +44,7 @@ namespace Platform.DTO
             RuleFor(x => x.DCName).NotEmpty().MinimumLength(3).MaximumLength(100).WithMessage("The DC name is cannot be blank.");
             RuleFor(x => x.AgentName).NotNull().WithMessage("Customer Name Cannot be NULL");
             RuleFor(x => x.Email).EmailAddress().WithMessage("Given Email Is Not Valid.");
-            RuleFor(x => x.Password).NotNull().WithMessage("Password Cannnot be blank");
+        //    RuleFor(x => x.Password).NotNull().WithMessage("Password Cannnot be blank");
           //  RuleFor(x=>x.Contact).
             //      RuleFor(x => x.WalletBalance).NotEmpty().WithMessage("The Password cannot be blank.");
 

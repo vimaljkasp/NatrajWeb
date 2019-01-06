@@ -24,7 +24,7 @@ namespace Platform.Repository
 
         public DCAddress GetDefaultAddressByDCId(int dCid)
         {
-            var dcAddress = _repository.DCAddresses.Where(v => v.DCId == dCid && v.IsDefaultAddress.GetValueOrDefault()).FirstOrDefault();
+            var dcAddress = _repository.DCAddresses.Where(v => v.DCId == dCid && v.IsDefaultAddress).FirstOrDefault();
             return dcAddress;
         }
 

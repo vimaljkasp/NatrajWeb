@@ -31,7 +31,7 @@ namespace Platform.Repository
         {
             var takePage = pageNumber ?? PagingConstant.DefaultPageNumber;
             var takeCount = PagingConstant.DefaultRecordCount;
-            var dcIds = _repository.DCAddresses.Where(d => d.IsDefaultAddress.GetValueOrDefault()).Select(d => d.DCId).ToList();
+            var dcIds = _repository.DCAddresses.Where(d => d.IsDefaultAddress).Select(d => d.DCId).ToList();
             var distributionCenters = _repository.DistributionCenters
                  .Where(d=>d.DCId.Equals(dcIds))
                 .OrderBy(c => c.DateOfRegistration)

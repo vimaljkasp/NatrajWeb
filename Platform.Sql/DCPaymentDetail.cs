@@ -15,8 +15,8 @@ namespace Platform.Sql
     public partial class DCPaymentDetail
     {
         public int DCPaymentId { get; set; }
-        public Nullable<int> DCId { get; set; }
-        public Nullable<int> DCOrderId { get; set; }
+        public int DCId { get; set; }
+        public int DCOrderId { get; set; }
         public Nullable<decimal> PaymentCrAmount { get; set; }
         public Nullable<decimal> PaymentDrAmount { get; set; }
         public System.DateTime PaymentDate { get; set; }
@@ -29,7 +29,7 @@ namespace Platform.Sql
         public System.DateTime CreatedDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public string ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public System.DateTime ModifiedDate { get; set; }
     
         public virtual DCOrder DCOrder { get; set; }
         public virtual DistributionCenter DistributionCenter { get; set; }
