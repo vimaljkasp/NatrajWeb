@@ -164,13 +164,15 @@ namespace Platform.Service
             distributionCenter.CreatedBy = distributionCenter.ModifiedBy = "Admin";
                // unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerDto.VLCId);
             distributionCenter.DateOfRegistration = DateTime.Now.Date;
-            distributionCenter.IsDeleted = false;
+            distributionCenter.IsDeleted = true;
             distributionCenterDTO.DCId = distributionCenter.DCId;
-            unitOfWork.DistributionCenterRepository.Add(distributionCenter);
+          
             //creating Distribution Center wallet with Distribution Center 
             AddDistributionCenterWallet(distributionCenter);
-            AddDistributionCenterAddress(distributionCenterDTO);
-            
+           DCAddress dCAddress= AddDistributionCenterAddress(distributionCenterDTO);
+            if (dCAddress != null)
+                distributionCenter.DCAddresses.Add(dCAddress);
+            unitOfWork.DistributionCenterRepository.Add(distributionCenter);
             unitOfWork.SaveChanges();
             responseDTO.Status = true;
             responseDTO.Message = String.Format("Distribution Center Successfully Created");
@@ -202,21 +204,24 @@ namespace Platform.Service
             
         }
 
-        public void AddDistributionCenterAddress(DistributionCenterDTO distributionCenterDTO)
+        public DCAddress AddDistributionCenterAddress(DistributionCenterDTO distributionCenterDTO)
         {
-            if(distributionCenterDTO.DCAddressDTO !=null)
+            if (distributionCenterDTO.DCAddressDTO != null)
             {
                 distributionCenterDTO.DCAddressDTO.DCId = distributionCenterDTO.DCId;
                 distributionCenterDTO.DCAddressDTO.Contact = distributionCenterDTO.Contact;
                 DCAddress dCAddress = new DCAddress();
-                dCAddress.DCAddressId= unitOfWork.DashboardRepository.NextNumberGenerator("DCAddress");
+                dCAddress.DCAddressId = unitOfWork.DashboardRepository.NextNumberGenerator("DCAddress");
 
                 dCAddress.AddressTypeId = 1;
                 dCAddress.IsDefaultAddress = true;
                 DCAddressConvertor.ConvertToDCAddressEntity(ref dCAddress, distributionCenterDTO.DCAddressDTO, false);
-                unitOfWork.DCAddressRepository.Add(dCAddress);
+                //   unitOfWork.DCAddressRepository.Add(dCAddress);
+                return dCAddress;
 
             }
+            else
+                return null;
         }
 
         public void AddDistributionCenterWallet(DistributionCenter distributionCenter)
@@ -226,7 +231,8 @@ namespace Platform.Service
             dCWallet.DCId = distributionCenter.DCId;
             dCWallet.WalletBalance = 0;
             dCWallet.AmountDueDate = DateTime.Now.AddDays(10);
-            unitOfWork.DCWalletRepository.Add(dCWallet);
+            distributionCenter.DCWallets.Add(dCWallet);
+          //  unitOfWork.DCWalletRepository.Add(dCWallet);
         }
 
         private void CheckForExisitngDistributionCenter(DistributionCenterDTO distributionCenterDTO)
@@ -323,7 +329,21 @@ namespace Platform.Service
 
         public ResponseDTO GetDistributionCenterByCenterId(int dcId)
         {
-            throw new NotImplementedException();
+            ResponseDTO responseDTO = new ResponseDTO();
+            DistributionCenterDTO distributionCenterDTO = null;
+            var distributionCenter = unitOfWork.DistributionCenterRepository.GetById(dcId);
+            if (distributionCenter != null)
+            {
+                distributionCenterDTO = DistributionCenterConvertor.ConvertToDistributionCenterDto(distributionCenter);
+                responseDTO.Status = true;
+                responseDTO.Message = "Distribution Center Details By DC Id";
+                responseDTO.Data = distributionCenterDTO;
+            }
+            else
+            {
+                throw new PlatformModuleException("Distribution Center Details Not Found");
+            }
+            return responseDTO;
         }
 
        

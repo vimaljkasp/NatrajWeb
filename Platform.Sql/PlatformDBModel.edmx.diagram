@@ -4,59 +4,59 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="688306dbd0984cea9f0361ccb4d19d8d" Name="Diagram1">
-        <EntityTypeShape EntityType="PlatformDBModel.Customer" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.CustomerAgriculture" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.CustomerBank" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.DCAddress" Width="1.5" PointX="15" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.DCOrder" Width="1.5" PointX="17.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.DCOrderDtl" Width="1.5" PointX="19.5" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.DCPaymentDetail" Width="1.5" PointX="19.5" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.DCWallet" Width="1.5" PointX="15" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.DistributionCenter" Width="1.5" PointX="12.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.DockMilkCollection" Width="1.5" PointX="7.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.DockMilkCollectionDetail" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.DockRejectedMilk" Width="1.5" PointX="3" PointY="19.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.Message" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.MilkProcessing" Width="1.5" PointX="20.25" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.NumberMaster" Width="1.5" PointX="2.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.OrderStatu" Width="1.5" PointX="4.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.Product" Width="1.5" PointX="17.25" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.ProductBatch" Width="1.5" PointX="22.5" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.ProductBatchDetail" Width="1.5" PointX="24.75" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.ProductBatchQuality" Width="1.5" PointX="24.75" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.ProductCategory" Width="1.5" PointX="12.75" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.ProductSubCategory" Width="1.5" PointX="15" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.Role" Width="1.5" PointX="7.75" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.ScreenSecurityCode" Width="1.5" PointX="9.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.UserPermission" Width="1.5" PointX="9.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.User" Width="1.5" PointX="5.75" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.VLC" Width="1.5" PointX="0.75" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.VLCMilkCollection" Width="1.5" PointX="8.25" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlatformDBModel.VLCMilkCollectionDtl" Width="1.5" PointX="10.5" PointY="10.25" IsExpanded="true" />
-        <AssociationConnector Association="PlatformDBModel.FK_Customer_VLC" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_CustomerAgriculture_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_CustomerBank_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_VLCMilkCollection_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.fk_DCAddress_DistributionCenter" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.fk_DCOrder_DCAddress" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.fk_DCOrder_DistributionCenter" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.fk_DCOrderDtl_DCOrder" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_DCPaymentDetails_DCOrder" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.fk_DCOrderDtl_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_DCPaymentDetail_DistributionCenter" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_DCWallet_DCId" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_DockMilkCollectionDetails_VLC" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_DockRejectedMilk_VLC" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_ProductBatch_MilkProcessing" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_Product_ProductCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_Product_ProductSubCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_ProductBatch_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_ProductBatchDetails_ProductBatch" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_ProductBatchQuality_ProductBatch" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_ProductSubCategory_ProductCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_VLCMilkCollection_VLC" ManuallyRouted="false" />
-        <AssociationConnector Association="PlatformDBModel.FK_VLCMilkCollectiondtl_VLCMilkCollection" ManuallyRouted="false" />
+      <Diagram DiagramId="34abcde5316b4756b4ea130c96976de3" Name="Diagram1">
+        <EntityTypeShape EntityType="NatrajModel.Customer" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.CustomerAgriculture" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.CustomerBank" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DCAddress" Width="1.5" PointX="15" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DCOrder" Width="1.5" PointX="17.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DCOrderDtl" Width="1.5" PointX="19.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DCPaymentDetail" Width="1.5" PointX="19.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DCWallet" Width="1.5" PointX="15" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DistributionCenter" Width="1.5" PointX="12.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DockMilkCollection" Width="1.5" PointX="7.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DockMilkCollectionDetail" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.DockRejectedMilk" Width="1.5" PointX="3" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.Message" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.MilkProcessing" Width="1.5" PointX="20.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.NumberMaster" Width="1.5" PointX="2.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.OrderStatu" Width="1.5" PointX="4.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.Product" Width="1.5" PointX="17.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.ProductBatch" Width="1.5" PointX="22.5" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.ProductBatchDetail" Width="1.5" PointX="24.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.ProductBatchQuality" Width="1.5" PointX="24.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.ProductCategory" Width="1.5" PointX="12.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.ProductSubCategory" Width="1.5" PointX="15" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.Role" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.ScreenSecurityCode" Width="1.5" PointX="9.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.UserPermission" Width="1.5" PointX="9.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.User" Width="1.5" PointX="5.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.VLC" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.VLCMilkCollection" Width="1.5" PointX="8.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="NatrajModel.VLCMilkCollectionDtl" Width="1.5" PointX="10.5" PointY="10.625" IsExpanded="true" />
+        <AssociationConnector Association="NatrajModel.FK_Customer_VLC" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_CustomerAgriculture_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_CustomerBank_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_VLCMilkCollection_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.fk_DCAddress_DistributionCenter" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.fk_DCOrder_DCAddress" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.fk_DCOrder_DistributionCenter" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.fk_DCOrderDtl_DCOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_DCPaymentDetails_DCOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.fk_DCOrderDtl_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_DCPaymentDetail_DistributionCenter" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_DCWallet_DCId" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_DockMilkCollectionDetails_VLC" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_DockRejectedMilk_VLC" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_ProductBatch_MilkProcessing" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_Product_ProductCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_Product_ProductSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_ProductBatch_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_ProductBatchDetails_ProductBatch" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_ProductBatchQuality_ProductBatch" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_ProductSubCategory_ProductCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_VLCMilkCollection_VLC" ManuallyRouted="false" />
+        <AssociationConnector Association="NatrajModel.FK_VLCMilkCollectiondtl_VLCMilkCollection" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

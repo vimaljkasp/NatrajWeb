@@ -175,6 +175,7 @@
     <Compile Include="Controller\DistributionCenter\DCAddressController.cs" />
     <Compile Include="Controller\DistributionCenter\DCOrdersController.cs" />
     <Compile Include="Controller\DistributionCenter\DCPaymentsController.cs" />
+    <Compile Include="Controller\DistributionCenter\DCProductController.cs" />
     <Compile Include="Controller\DistributionCenter\DistributionCentersController.cs" />
     <Compile Include="Controller\LoginController\LoginController.cs" />
     <Compile Include="Controller\User\UserController.cs" />
@@ -215,6 +216,9 @@
       <Project>{1aead882-4708-469f-8825-e12997f5df1d}</Project>
       <Name>Platform.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controller\ProductController\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

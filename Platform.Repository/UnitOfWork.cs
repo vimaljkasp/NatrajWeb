@@ -26,11 +26,16 @@ namespace Platform.Service
         private DCWalletRepository dCWalletRepository;
         private DCPaymentDetailRepository dCPaymentDetailRepository;
 
+        private ProductRepository productRepository;
+        private ProductCategoryRepository productCategoryRepository;
+
+        public String ImagePath { get; set; }
 
         PlatformDBEntities _repository;
         public UnitOfWork()
         {
             _repository= new PlatformDBEntities();
+            ImagePath = @"http://service.natrajdairy.com/img/";
         }
 
 
@@ -229,6 +234,29 @@ namespace Platform.Service
                 {
                     return messageRepository;
                 }
+            }
+        }
+
+
+        public ProductRepository ProductRepository
+        {
+            get
+            {
+                if (productRepository == null)
+                    return productRepository = new ProductRepository(_repository);
+                else
+                    return productRepository;
+            }
+        }
+
+        public ProductCategoryRepository ProductCategoryRepository
+        {
+            get
+            {
+                if (productCategoryRepository == null)
+                    return productCategoryRepository = new ProductCategoryRepository(_repository);
+                else
+                    return productCategoryRepository;
             }
         }
 

@@ -60,6 +60,8 @@
     <Compile Include="DistributionCenter\DistributionCenterRepository.cs" />
     <Compile Include="MessageRepository.cs" />
     <Compile Include="PagingConstant.cs" />
+    <Compile Include="Product\ProductCategoryRepository.cs" />
+    <Compile Include="Product\ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="UserRepository.cs" />

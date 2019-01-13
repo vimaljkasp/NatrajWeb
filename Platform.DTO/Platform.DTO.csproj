@@ -57,10 +57,13 @@
     <Compile Include="Customer\CustomerSearchDTO.cs" />
     <Compile Include="Customer\CustomerWalletDTO.cs" />
     <Compile Include="Common\LoginType.cs" />
+    <Compile Include="DistributionCenter\CreateDCOrderDTO.cs" />
     <Compile Include="DistributionCenter\DCAddressDTO.cs" />
     <Compile Include="DistributionCenter\DCOrderDTO.cs" />
+    <Compile Include="DistributionCenter\DCOrderStatusDTO.cs" />
     <Compile Include="DistributionCenter\DCPaymentDTO.cs" />
     <Compile Include="DistributionCenter\DistributionCenterDTO.cs" />
+    <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Interfaces\ICustomerAgricultureService.cs" />
     <Compile Include="Interfaces\ICustomerBankService.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
@@ -69,9 +72,12 @@
     <Compile Include="Interfaces\IDCPaymentService.cs" />
     <Compile Include="Interfaces\IDistributionCenterService.cs" />
     <Compile Include="Interfaces\ILoginService.cs" />
+    <Compile Include="Interfaces\IProductService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Interfaces\IVLCMilkCollectionService.cs" />
     <Compile Include="Interfaces\IVLCService.cs" />
+    <Compile Include="Product\ProductCategoryDTO.cs" />
+    <Compile Include="Product\ProductShoppingDTO.cs" />
     <Compile Include="ReadDTO\DashboardDTO.cs" />
     <Compile Include="Employee\EmployeeDTO.cs" />
     <Compile Include="Employee\EmployeeRoleDTO.cs" />

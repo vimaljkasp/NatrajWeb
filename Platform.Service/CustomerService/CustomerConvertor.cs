@@ -93,6 +93,14 @@ namespace Platform.Service
                 customer.District = customerdto.District;
 
             }
+
+
+            if (string.IsNullOrWhiteSpace(customerdto.Gender) == false)
+            {
+                customer.Gender = customerdto.Gender;
+
+            }
+
             if (string.IsNullOrWhiteSpace(customerdto.AddressState) == false)
             {
                 customer.AddressState = customerdto.AddressState;
@@ -127,6 +135,8 @@ namespace Platform.Service
             {
                 customer.Occupation = customerdto.Occupation;
             }
+
+            
             customer.DOB = customerdto.DOB.HasValue ? customerdto.DOB.Value: (DateTime ?)null;
             customer.Aniversary = customerdto.Aniversary.HasValue ? customerdto.Aniversary.Value : (DateTime?)null;
 

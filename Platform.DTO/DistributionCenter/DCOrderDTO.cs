@@ -15,31 +15,25 @@ namespace Platform.DTO
         public int DCOrderId { get; set; }
         public string DCOrderNumber { get; set; }
         public System.DateTime OrderDate { get; set; }
-        public string BillNumber { get; set; }
         public int DCId { get; set; }
-        public int OrderAddressId { get; set; }
-        public decimal OrderPrice { get; set; }
-        public decimal SGST { get; set; }
-        public decimal CGST { get; set; }
-        public decimal IGST { get; set; }
-        public decimal OrderTax { get; set; }
+        //public decimal OrderPrice { get; set; }
+    
+        //public decimal OrderTax { get; set; }
         public decimal OrderDiscount { get; set; }
         public decimal OrderTotalPrice { get; set; }
         public decimal OrderPaidAmount { get; set; }
         public decimal TotalOrderQuantity { get; set; }
-        public decimal TotalActualQuantity { get; set; }
-        public int OrderStatusId { get; set; }
+        //public decimal TotalActualQuantity { get; set; }
+        public string OrderStatus { get; set; }
         public DateTime DeliveryExpectedDate { get; set; }
         public DateTime DeliveredDate { get; set; }
         public string DeliveredBy { get; set; }
         public string OrderComments { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public bool IsDeleted { get; set; }
-        public string ModifiedBy { get; set; }
-        public DateTime ModifiedDate { get; set; }
+    
 
-        List<DCOrderDtlDTO> dcOrderDtlList { get; set; }
+        public List<DCOrderDtlDTO> dcOrderDtlList { get; set; }
+
+        public DCAddressDTO dCAddressDTO { get; set; }
     }
 
     public class DCOrderValidator : AbstractValidator<DCOrderDTO>
@@ -67,13 +61,14 @@ namespace Platform.DTO
         public int DCOrderDtlId { get; set; }
         public int DCOrderId { get; set; }
         public int ProductId { get; set; }
+        public string ProductName { get; set; }
+        public string ProductDescription { get; set; }
+        public string ProductImageUrl { get; set; }
         public decimal QuantityOrdered { get; set; }
-        public decimal ActualQuantity { get; set; }
-        public decimal UnitPrice { get; set; }
-        public decimal OrderTotal { get; set; }
-        public decimal OrderTax { get; set; }
-        public decimal OrderTotalPrice { get; set; }
-        public string Ref1 { get; set; }
-        public string Ref2 { get; set; }
+        //public decimal ActualQuantity { get; set; }
+        //public decimal Price { get; set; }
+        //public decimal OrderTax { get; set; }
+        public decimal TotalPrice { get; set; }
+       
     }
 }

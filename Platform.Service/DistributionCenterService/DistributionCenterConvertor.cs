@@ -30,9 +30,7 @@ namespace Platform.Service
             distributionCenterDTO.ModifiedBy = distributionCenter.ModifiedBy;
             distributionCenterDTO.ModifiedDate = distributionCenter.ModifiedDate.HasValue ? distributionCenter.ModifiedDate.Value : DateTime.MinValue;
             distributionCenterDTO.NoOfEmployee = distributionCenter.NoOfEmployee.GetValueOrDefault();
-            distributionCenterDTO.Password = distributionCenter.Password;
-            distributionCenterDTO.Pin = distributionCenter.Pin;
-
+          
 
             return distributionCenterDTO;
         }

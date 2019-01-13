@@ -92,7 +92,7 @@ namespace PlatformWeb
             //container.RegisterType<ISiteConfigurationService, SiteConfigurationService>(new HierarchicalLifetimeManager());
 
             ////Product
-            //container.RegisterType<IProductService, ProductService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IProductService, ProductService>(new HierarchicalLifetimeManager());
             //container.RegisterType<IProductSiteMappingService, ProductSiteMappingService>(new HierarchicalLifetimeManager());
             //container.RegisterType<IProductOrderService, ProductOrderService>(new HierarchicalLifetimeManager());
             //container.RegisterType<IProductOrderDtlService, ProductOrderDtlService>(new HierarchicalLifetimeManager());
@@ -120,8 +120,7 @@ namespace PlatformWeb
             container.RegisterType<IDCAddressService, DCAddressServices>(new HierarchicalLifetimeManager());
             container.RegisterType<IDCOrderService, DCOrderService>(new HierarchicalLifetimeManager());
             container.RegisterType<IDCPaymentService, DCPaymentService>(new HierarchicalLifetimeManager());
-
-
+        
             config.DependencyResolver = new UnityResolver(container);
             
         }

@@ -13,15 +13,15 @@ namespace Platform.DTO
     {
         public int DCAddressId { get; set; }
         public int DCId { get; set; }
-        public string AddressTypeId { get; set; }
-        public bool IsDefaultAddress { get; set; }
+        //public string AddressTypeId { get; set; }
+        //public bool IsDefaultAddress { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string District { get; set; }
         public string State { get; set; }
         public string PostalCode { get; set; }
         public string Contact { get; set; }
-        public bool IsDeleted { get; set; }
+        //public bool IsDeleted { get; set; }
     }
 
     public class DCAddressValidator : AbstractValidator<DCAddressDTO>

@@ -22,12 +22,12 @@ namespace Platform.Sql
         }
     
         public int ProductId { get; set; }
-        public Nullable<int> CategoryId { get; set; }
-        public Nullable<int> SubCategoryId { get; set; }
+        public int CategoryId { get; set; }
+        public int SubCategoryId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Nullable<decimal> Unit { get; set; }
-        public Nullable<decimal> Rate { get; set; }
+        public decimal Unit { get; set; }
+        public decimal Rate { get; set; }
         public Nullable<decimal> SGST { get; set; }
         public Nullable<decimal> CGST { get; set; }
         public Nullable<decimal> IGST { get; set; }
@@ -41,6 +41,7 @@ namespace Platform.Sql
         public Nullable<bool> IsDeleted { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public decimal DiscountedRate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DCOrderDtl> DCOrderDtls { get; set; }

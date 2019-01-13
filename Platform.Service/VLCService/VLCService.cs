@@ -82,12 +82,12 @@ namespace Platform.Service
             ResponseDTO responseDTO = new ResponseDTO();
             VLC vLC = new VLC();
             vLC.VLCId = unitOfWork.DashboardRepository.NextNumberGenerator("VLC");
-            vlcDto.CreatedDate = DateTime.Now.Date;
-            vlcDto.ModifiedDate = DateTime.Now.Date;
-            vlcDto.CreatedBy = vlcDto.ModifiedBy = "Vimal";
-            vlcDto.VLCEnrollmentDate = DateTime.Now.Date;
-            vlcDto.IsDeleted = false;
-            vlcDto.Password = EncryptionHelper.Encryptword(vlcDto.Password);
+            vLC.CreatedDate = DateTime.Now.Date;
+            vLC.ModifiedDate = DateTime.Now.Date;
+            vLC.CreatedBy = vlcDto.ModifiedBy = "Vimal";
+            vLC.VLCEnrollmentDate = DateTime.Now.Date;
+            vLC.IsDeleted = false;
+            vLC.Password = EncryptionHelper.Encryptword(vlcDto.Password);
             VLCConvertor.ConvertToVLCEntity(ref vLC, vlcDto, false);
             unitOfWork.VLCRepository.Add(vLC);
             //creating customer wallet with customer 
@@ -99,7 +99,7 @@ namespace Platform.Service
             //unitOfWork.CustomerWalletRepository.Add(customerWallet);
             responseDTO.Status = true;
             responseDTO.Message = "VLC Succesfully Created";
-            responseDTO.Data = null;
+            responseDTO.Data = VLCConvertor.ConvertToVLCDto(vLC);
             unitOfWork.SaveChanges();
             return responseDTO;
             

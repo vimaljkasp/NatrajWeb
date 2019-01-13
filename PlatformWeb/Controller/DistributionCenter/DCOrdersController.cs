@@ -84,7 +84,7 @@ namespace PlatformWeb.Controller
 
         //Post api/Customer
 
-        public IHttpActionResult Post([FromBody]DCOrderDTO dCOrderDTO)
+        public IHttpActionResult Post([FromBody]CreateDCOrderDTO dCOrderDTO)
         {
             try
             {
@@ -113,6 +113,26 @@ namespace PlatformWeb.Controller
                     Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
                 //Update New Customer
                 _dCOrderService.UpdateDCOrder(dCOrderDTO);
+
+                return Ok();
+            }
+            catch (PlatformModuleException ex)
+            {
+                //Write Log Here
+                return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
+            }
+        }
+
+        [Route("api/UpdateDCOrderStatus/{id}")]
+        public IHttpActionResult PostUpdateOrderStatus(int id, [FromBody]DCOrderStatusDTO dCOrderDTO)
+        {
+            try
+            {
+                dCOrderDTO.DCOrderId = id;
+                if (dCOrderDTO == null)
+                    Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
+                //Update New Customer
+                _dCOrderService.UpdateDCOrderStatus(dCOrderDTO);
 
                 return Ok();
             }

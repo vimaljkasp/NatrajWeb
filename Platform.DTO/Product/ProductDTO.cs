@@ -12,15 +12,14 @@ namespace Platform.DTO
     public class ProductDTO
     {
         public Int32 ProductId { get; set; }
-        public int ProductMappingId { get; set; }
-        public string ProductCode { get; set; }
+        public int CategoryId { get; set; }
+        public String CategoryName { get; set; }
         public string ProductName { get; set; }
-        public string ProductDescription { get; set; }
-        public decimal ProductQuantity { get; set; }
+        public string  ProductQuantityDescription{ get; set; }
         public decimal ProductPrice { get; set; }
-        public bool IsActive { get; set; }
-        public string Ref1 { get; set; }
-        public string Ref2 { get; set; }
+        public decimal DiscountedProductPrice { get; set; }
+        
+   
     }
 
     public class ProductValidator : AbstractValidator<ProductDTO>

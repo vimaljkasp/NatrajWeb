@@ -61,46 +61,46 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2018 00:01:42</publishTime>
     </File>
     <File Include="bin/Platform.DTO.dll">
-      <publishTime>01/05/2019 14:00:08</publishTime>
+      <publishTime>01/13/2019 20:21:43</publishTime>
     </File>
     <File Include="bin/Platform.DTO.pdb">
-      <publishTime>01/05/2019 14:00:08</publishTime>
+      <publishTime>01/13/2019 20:21:43</publishTime>
     </File>
     <File Include="bin/Platform.Repository.dll">
-      <publishTime>01/05/2019 14:00:08</publishTime>
+      <publishTime>01/13/2019 20:21:43</publishTime>
     </File>
     <File Include="bin/Platform.Repository.dll.config">
       <publishTime>12/19/2018 20:15:01</publishTime>
     </File>
     <File Include="bin/Platform.Repository.pdb">
-      <publishTime>01/05/2019 14:00:08</publishTime>
+      <publishTime>01/13/2019 20:21:43</publishTime>
     </File>
     <File Include="bin/Platform.Service.dll">
-      <publishTime>01/05/2019 14:00:08</publishTime>
+      <publishTime>01/13/2019 20:21:44</publishTime>
     </File>
     <File Include="bin/Platform.Service.pdb">
-      <publishTime>01/05/2019 14:00:08</publishTime>
+      <publishTime>01/13/2019 20:21:44</publishTime>
     </File>
     <File Include="bin/Platform.Sql.dll">
-      <publishTime>01/05/2019 14:00:07</publishTime>
+      <publishTime>01/13/2019 12:12:48</publishTime>
     </File>
     <File Include="bin/Platform.Sql.dll.config">
-      <publishTime>01/05/2019 11:46:03</publishTime>
+      <publishTime>01/06/2019 15:16:01</publishTime>
     </File>
     <File Include="bin/Platform.Sql.pdb">
-      <publishTime>01/05/2019 14:00:07</publishTime>
+      <publishTime>01/13/2019 12:12:48</publishTime>
     </File>
     <File Include="bin/Platform.Utilities.dll">
-      <publishTime>01/04/2019 20:54:15</publishTime>
+      <publishTime>01/07/2019 19:34:38</publishTime>
     </File>
     <File Include="bin/Platform.Utilities.pdb">
-      <publishTime>01/04/2019 20:54:15</publishTime>
+      <publishTime>01/07/2019 19:34:38</publishTime>
     </File>
     <File Include="bin/PlatformWeb.dll">
-      <publishTime>01/06/2019 10:54:05</publishTime>
+      <publishTime>01/13/2019 20:21:48</publishTime>
     </File>
     <File Include="bin/PlatformWeb.pdb">
-      <publishTime>01/06/2019 10:54:05</publishTime>
+      <publishTime>01/13/2019 20:21:48</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>09/13/2018 00:01:41</publishTime>
@@ -319,7 +319,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2018 00:01:43</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/04/2019 20:54:22</publishTime>
+      <publishTime>01/13/2019 12:13:01</publishTime>
     </File>
   </ItemGroup>
 </Project>

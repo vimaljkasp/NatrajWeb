@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="NatrajModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -78,7 +78,7 @@
           <Property Name="DCAddressId" Type="int" Nullable="false" />
           <Property Name="DCId" Type="int" Nullable="false" />
           <Property Name="AddressTypeId" Type="int" Nullable="false" />
-          <Property Name="IsDefaultAddress" Type="bit" />
+          <Property Name="IsDefaultAddress" Type="bit" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="200" />
           <Property Name="City" Type="nvarchar" MaxLength="60" />
           <Property Name="District" Type="nvarchar" MaxLength="60" />
@@ -153,7 +153,7 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
-          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="DCWallet">
           <Key>
@@ -304,12 +304,12 @@
             <PropertyRef Name="ProductId" />
           </Key>
           <Property Name="ProductId" Type="int" Nullable="false" />
-          <Property Name="CategoryId" Type="int" />
-          <Property Name="SubCategoryId" Type="int" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="SubCategoryId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" />
           <Property Name="Description" Type="nvarchar" MaxLength="250" />
-          <Property Name="Unit" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Unit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="SGST" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CGST" Type="decimal" Precision="18" Scale="2" />
           <Property Name="IGST" Type="decimal" Precision="18" Scale="2" />
@@ -323,6 +323,7 @@
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="DiscountedRate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductBatch">
           <Key>
@@ -378,25 +379,15 @@
             <PropertyRef Name="CategoryId" />
           </Key>
           <Property Name="CategoryId" Type="int" Nullable="false" />
-          <Property Name="CategoryName" Type="nvarchar" MaxLength="150" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
-          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductSubCategory">
           <Key>
             <PropertyRef Name="SubCategoryId" />
           </Key>
           <Property Name="SubCategoryId" Type="int" Nullable="false" />
-          <Property Name="SubCategoryName" Type="nvarchar" MaxLength="150" />
+          <Property Name="SubCategoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="CategoryId" Type="int" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
-          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -672,7 +663,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_ProductCategory">
-          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductCategory">
@@ -684,7 +675,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_ProductSubCategory">
-          <End Role="ProductSubCategory" Type="Self.ProductSubCategory" Multiplicity="0..1" />
+          <End Role="ProductSubCategory" Type="Self.ProductSubCategory" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductSubCategory">
@@ -791,7 +782,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PlatformDBModelStoreContainer">
+        <EntityContainer Name="NatrajModelStoreContainer">
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerAgriculture" EntityType="Self.CustomerAgriculture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerBank" EntityType="Self.CustomerBank" Schema="dbo" store:Type="Tables" />
@@ -918,7 +909,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="PlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="NatrajModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -998,7 +989,7 @@
           <Property Name="DCAddressId" Type="Int32" Nullable="false" />
           <Property Name="DCId" Type="Int32" Nullable="false" />
           <Property Name="AddressTypeId" Type="Int32" Nullable="false" />
-          <Property Name="IsDefaultAddress" Type="Boolean" />
+          <Property Name="IsDefaultAddress" Type="Boolean" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="District" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
@@ -1081,7 +1072,7 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="DCOrder" Relationship="Self.FK_DCPaymentDetails_DCOrder" FromRole="DCPaymentDetail" ToRole="DCOrder" />
           <NavigationProperty Name="DistributionCenter" Relationship="Self.FK_DCPaymentDetail_DistributionCenter" FromRole="DCPaymentDetail" ToRole="DistributionCenter" />
         </EntityType>
@@ -1242,12 +1233,12 @@
             <PropertyRef Name="ProductId" />
           </Key>
           <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="CategoryId" Type="Int32" />
-          <Property Name="SubCategoryId" Type="Int32" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Unit" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Unit" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="SGST" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CGST" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="IGST" Type="Decimal" Precision="18" Scale="2" />
@@ -1261,6 +1252,7 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="DiscountedRate" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <NavigationProperty Name="DCOrderDtls" Relationship="Self.fk_DCOrderDtl_Product" FromRole="Product" ToRole="DCOrderDtl" />
           <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
           <NavigationProperty Name="ProductSubCategory" Relationship="Self.FK_Product_ProductSubCategory" FromRole="Product" ToRole="ProductSubCategory" />
@@ -1326,12 +1318,7 @@
             <PropertyRef Name="CategoryId" />
           </Key>
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="CategoryName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
           <NavigationProperty Name="ProductSubCategories" Relationship="Self.FK_ProductSubCategory_ProductCategory" FromRole="ProductCategory" ToRole="ProductSubCategory" />
         </EntityType>
@@ -1340,13 +1327,8 @@
             <PropertyRef Name="SubCategoryId" />
           </Key>
           <Property Name="SubCategoryId" Type="Int32" Nullable="false" />
-          <Property Name="SubCategoryName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SubCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CategoryId" Type="Int32" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductSubCategory" FromRole="ProductSubCategory" ToRole="Product" />
           <NavigationProperty Name="ProductCategory" Relationship="Self.FK_ProductSubCategory_ProductCategory" FromRole="ProductSubCategory" ToRole="ProductCategory" />
         </EntityType>
@@ -1656,7 +1638,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_ProductCategory">
-          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductCategory">
@@ -1668,7 +1650,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_ProductSubCategory">
-          <End Role="ProductSubCategory" Type="Self.ProductSubCategory" Multiplicity="0..1" />
+          <End Role="ProductSubCategory" Type="Self.ProductSubCategory" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductSubCategory">
@@ -1879,9 +1861,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PlatformDBModelStoreContainer" CdmEntityContainer="PlatformDBEntities">
+        <EntityContainerMapping StorageEntityContainer="NatrajModelStoreContainer" CdmEntityContainer="PlatformDBEntities">
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="PlatformDBModel.Customer">
+            <EntityTypeMapping TypeName="NatrajModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
@@ -1913,7 +1895,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CustomerAgricultures">
-            <EntityTypeMapping TypeName="PlatformDBModel.CustomerAgriculture">
+            <EntityTypeMapping TypeName="NatrajModel.CustomerAgriculture">
               <MappingFragment StoreEntitySet="CustomerAgriculture">
                 <ScalarProperty Name="CustAgriId" ColumnName="CustAgriId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
@@ -1931,7 +1913,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CustomerBanks">
-            <EntityTypeMapping TypeName="PlatformDBModel.CustomerBank">
+            <EntityTypeMapping TypeName="NatrajModel.CustomerBank">
               <MappingFragment StoreEntitySet="CustomerBank">
                 <ScalarProperty Name="CustomerBankId" ColumnName="CustomerBankId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
@@ -1950,7 +1932,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DCAddresses">
-            <EntityTypeMapping TypeName="PlatformDBModel.DCAddress">
+            <EntityTypeMapping TypeName="NatrajModel.DCAddress">
               <MappingFragment StoreEntitySet="DCAddress">
                 <ScalarProperty Name="DCAddressId" ColumnName="DCAddressId" />
                 <ScalarProperty Name="DCId" ColumnName="DCId" />
@@ -1967,7 +1949,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DCOrders">
-            <EntityTypeMapping TypeName="PlatformDBModel.DCOrder">
+            <EntityTypeMapping TypeName="NatrajModel.DCOrder">
               <MappingFragment StoreEntitySet="DCOrder">
                 <ScalarProperty Name="DCOrderId" ColumnName="DCOrderId" />
                 <ScalarProperty Name="DCOrderNumber" ColumnName="DCOrderNumber" />
@@ -1999,7 +1981,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DCOrderDtls">
-            <EntityTypeMapping TypeName="PlatformDBModel.DCOrderDtl">
+            <EntityTypeMapping TypeName="NatrajModel.DCOrderDtl">
               <MappingFragment StoreEntitySet="DCOrderDtl">
                 <ScalarProperty Name="DCOrderDtlId" ColumnName="DCOrderDtlId" />
                 <ScalarProperty Name="DCOrderId" ColumnName="DCOrderId" />
@@ -2016,7 +1998,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DCPaymentDetails">
-            <EntityTypeMapping TypeName="PlatformDBModel.DCPaymentDetail">
+            <EntityTypeMapping TypeName="NatrajModel.DCPaymentDetail">
               <MappingFragment StoreEntitySet="DCPaymentDetail">
                 <ScalarProperty Name="DCPaymentId" ColumnName="DCPaymentId" />
                 <ScalarProperty Name="DCId" ColumnName="DCId" />
@@ -2038,7 +2020,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DCWallets">
-            <EntityTypeMapping TypeName="PlatformDBModel.DCWallet">
+            <EntityTypeMapping TypeName="NatrajModel.DCWallet">
               <MappingFragment StoreEntitySet="DCWallet">
                 <ScalarProperty Name="WalletId" ColumnName="WalletId" />
                 <ScalarProperty Name="DCId" ColumnName="DCId" />
@@ -2048,7 +2030,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DistributionCenters">
-            <EntityTypeMapping TypeName="PlatformDBModel.DistributionCenter">
+            <EntityTypeMapping TypeName="NatrajModel.DistributionCenter">
               <MappingFragment StoreEntitySet="DistributionCenter">
                 <ScalarProperty Name="DCId" ColumnName="DCId" />
                 <ScalarProperty Name="DCCode" ColumnName="DCCode" />
@@ -2074,7 +2056,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DockMilkCollections">
-            <EntityTypeMapping TypeName="PlatformDBModel.DockMilkCollection">
+            <EntityTypeMapping TypeName="NatrajModel.DockMilkCollection">
               <MappingFragment StoreEntitySet="DockMilkCollection">
                 <ScalarProperty Name="DockMilkCollectionId" ColumnName="DockMilkCollectionId" />
                 <ScalarProperty Name="CollectionDate" ColumnName="CollectionDate" />
@@ -2094,7 +2076,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DockMilkCollectionDetails">
-            <EntityTypeMapping TypeName="PlatformDBModel.DockMilkCollectionDetail">
+            <EntityTypeMapping TypeName="NatrajModel.DockMilkCollectionDetail">
               <MappingFragment StoreEntitySet="DockMilkCollectionDetails">
                 <ScalarProperty Name="DMCDId" ColumnName="DMCDId" />
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
@@ -2119,7 +2101,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DockRejectedMilks">
-            <EntityTypeMapping TypeName="PlatformDBModel.DockRejectedMilk">
+            <EntityTypeMapping TypeName="NatrajModel.DockRejectedMilk">
               <MappingFragment StoreEntitySet="DockRejectedMilk">
                 <ScalarProperty Name="DockRejectedMilkId" ColumnName="DockRejectedMilkId" />
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
@@ -2144,7 +2126,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Messages">
-            <EntityTypeMapping TypeName="PlatformDBModel.Message">
+            <EntityTypeMapping TypeName="NatrajModel.Message">
               <MappingFragment StoreEntitySet="Message">
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
                 <ScalarProperty Name="MessageCode" ColumnName="MessageCode" />
@@ -2153,7 +2135,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MilkProcessings">
-            <EntityTypeMapping TypeName="PlatformDBModel.MilkProcessing">
+            <EntityTypeMapping TypeName="NatrajModel.MilkProcessing">
               <MappingFragment StoreEntitySet="MilkProcessing">
                 <ScalarProperty Name="ProcessingId" ColumnName="ProcessingId" />
                 <ScalarProperty Name="ProcessCode" ColumnName="ProcessCode" />
@@ -2170,7 +2152,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NumberMasters">
-            <EntityTypeMapping TypeName="PlatformDBModel.NumberMaster">
+            <EntityTypeMapping TypeName="NatrajModel.NumberMaster">
               <MappingFragment StoreEntitySet="NumberMaster">
                 <ScalarProperty Name="EntityCode" ColumnName="EntityCode" />
                 <ScalarProperty Name="NextNumber" ColumnName="NextNumber" />
@@ -2178,7 +2160,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OrderStatus">
-            <EntityTypeMapping TypeName="PlatformDBModel.OrderStatu">
+            <EntityTypeMapping TypeName="NatrajModel.OrderStatu">
               <MappingFragment StoreEntitySet="OrderStatus">
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
@@ -2191,7 +2173,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="PlatformDBModel.Product">
+            <EntityTypeMapping TypeName="NatrajModel.Product">
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
@@ -2213,11 +2195,12 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="DiscountedRate" ColumnName="DiscountedRate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductBatches">
-            <EntityTypeMapping TypeName="PlatformDBModel.ProductBatch">
+            <EntityTypeMapping TypeName="NatrajModel.ProductBatch">
               <MappingFragment StoreEntitySet="ProductBatch">
                 <ScalarProperty Name="BatchId" ColumnName="BatchId" />
                 <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
@@ -2235,7 +2218,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductBatchDetails">
-            <EntityTypeMapping TypeName="PlatformDBModel.ProductBatchDetail">
+            <EntityTypeMapping TypeName="NatrajModel.ProductBatchDetail">
               <MappingFragment StoreEntitySet="ProductBatchDetails">
                 <ScalarProperty Name="BatchDetailId" ColumnName="BatchDetailId" />
                 <ScalarProperty Name="BatchId" ColumnName="BatchId" />
@@ -2251,7 +2234,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductBatchQualities">
-            <EntityTypeMapping TypeName="PlatformDBModel.ProductBatchQuality">
+            <EntityTypeMapping TypeName="NatrajModel.ProductBatchQuality">
               <MappingFragment StoreEntitySet="ProductBatchQuality">
                 <ScalarProperty Name="QualityId" ColumnName="QualityId" />
                 <ScalarProperty Name="BatchId" ColumnName="BatchId" />
@@ -2269,34 +2252,24 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductCategories">
-            <EntityTypeMapping TypeName="PlatformDBModel.ProductCategory">
+            <EntityTypeMapping TypeName="NatrajModel.ProductCategory">
               <MappingFragment StoreEntitySet="ProductCategory">
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductSubCategories">
-            <EntityTypeMapping TypeName="PlatformDBModel.ProductSubCategory">
+            <EntityTypeMapping TypeName="NatrajModel.ProductSubCategory">
               <MappingFragment StoreEntitySet="ProductSubCategory">
                 <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
                 <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="PlatformDBModel.Role">
+            <EntityTypeMapping TypeName="NatrajModel.Role">
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
@@ -2309,7 +2282,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ScreenSecurityCodes">
-            <EntityTypeMapping TypeName="PlatformDBModel.ScreenSecurityCode">
+            <EntityTypeMapping TypeName="NatrajModel.ScreenSecurityCode">
               <MappingFragment StoreEntitySet="ScreenSecurityCodes">
                 <ScalarProperty Name="ScreenId" ColumnName="ScreenId" />
                 <ScalarProperty Name="ScreenName" ColumnName="ScreenName" />
@@ -2323,7 +2296,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserPermissions">
-            <EntityTypeMapping TypeName="PlatformDBModel.UserPermission">
+            <EntityTypeMapping TypeName="NatrajModel.UserPermission">
               <MappingFragment StoreEntitySet="UserPermissions">
                 <ScalarProperty Name="UserPermissionId" ColumnName="UserPermissionId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -2340,7 +2313,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="PlatformDBModel.User">
+            <EntityTypeMapping TypeName="NatrajModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -2360,7 +2333,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VLCs">
-            <EntityTypeMapping TypeName="PlatformDBModel.VLC">
+            <EntityTypeMapping TypeName="NatrajModel.VLC">
               <MappingFragment StoreEntitySet="VLC">
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
                 <ScalarProperty Name="VLCCode" ColumnName="VLCCode" />
@@ -2388,7 +2361,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VLCMilkCollections">
-            <EntityTypeMapping TypeName="PlatformDBModel.VLCMilkCollection">
+            <EntityTypeMapping TypeName="NatrajModel.VLCMilkCollection">
               <MappingFragment StoreEntitySet="VLCMilkCollection">
                 <ScalarProperty Name="VLCMilkCollectionId" ColumnName="VLCMilkCollectionId" />
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
@@ -2406,7 +2379,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VLCMilkCollectionDtls">
-            <EntityTypeMapping TypeName="PlatformDBModel.VLCMilkCollectionDtl">
+            <EntityTypeMapping TypeName="NatrajModel.VLCMilkCollectionDtl">
               <MappingFragment StoreEntitySet="VLCMilkCollectionDtl">
                 <ScalarProperty Name="VLCMilkCollectionDtlId" ColumnName="VLCMilkCollectionDtlId" />
                 <ScalarProperty Name="VLCMilkCollectionId" ColumnName="VLCMilkCollectionId" />

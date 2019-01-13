@@ -33,9 +33,9 @@ namespace Platform.Sql
         public Nullable<decimal> IGST { get; set; }
         public Nullable<decimal> OrderTax { get; set; }
         public Nullable<decimal> OrderDiscount { get; set; }
-        public Nullable<decimal> OrderTotalPrice { get; set; }
+        public decimal OrderTotalPrice { get; set; }
         public Nullable<decimal> OrderPaidAmount { get; set; }
-        public Nullable<decimal> TotalOrderQuantity { get; set; }
+        public decimal TotalOrderQuantity { get; set; }
         public Nullable<decimal> TotalActualQuantity { get; set; }
         public Nullable<int> OrderStatusId { get; set; }
         public Nullable<System.DateTime> DeliveryExpectedDate { get; set; }

@@ -17,12 +17,12 @@ namespace Platform.Sql
         public int DCOrderDtlId { get; set; }
         public int DCOrderId { get; set; }
         public int ProductId { get; set; }
-        public Nullable<decimal> QuantityOrdered { get; set; }
-        public Nullable<decimal> ActualQuantity { get; set; }
+        public decimal QuantityOrdered { get; set; }
+        public decimal ActualQuantity { get; set; }
         public Nullable<decimal> UnitPrice { get; set; }
-        public Nullable<decimal> OrderTotal { get; set; }
-        public Nullable<decimal> OrderTax { get; set; }
-        public Nullable<decimal> OrderTotalPrice { get; set; }
+        public decimal OrderTotal { get; set; }
+        public decimal OrderTax { get; set; }
+        public decimal OrderTotalPrice { get; set; }
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }
     

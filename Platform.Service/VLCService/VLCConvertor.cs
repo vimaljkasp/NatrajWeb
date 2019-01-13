@@ -42,8 +42,7 @@ namespace Platform.Service
 
         public static void ConvertToVLCEntity(ref VLC vLC, VLCDTO vlcDTO, bool isUpdate)
         {
-            if (isUpdate)
-                vLC.VLCId = vlcDTO.VLCId;
+        
             if (string.IsNullOrWhiteSpace(vlcDTO.VLCCode) == false)
                 vLC.VLCCode = vlcDTO.VLCCode;
             if (string.IsNullOrWhiteSpace(vlcDTO.VLCName) == false)

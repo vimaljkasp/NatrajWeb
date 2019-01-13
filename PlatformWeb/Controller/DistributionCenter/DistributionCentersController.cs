@@ -55,9 +55,8 @@ namespace PlatformWeb.Controller
 
 
         //GET api/Customer/id
-        [HttpPost]
-        [Route("api/GetDistributionCentersByDCId/{id}")]
-        public IHttpActionResult GetDistributionCentersByDCId(int id)
+        [Route("api/DistributionCenters/{id}")]
+        public IHttpActionResult Get(int id)
         {
             try
             {

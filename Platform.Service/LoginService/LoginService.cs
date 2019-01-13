@@ -23,7 +23,11 @@ namespace Platform.Service
             if (distributionCenters.Where(v => v.Contact.Equals(userName, StringComparison.CurrentCultureIgnoreCase)
               && v.Password.Equals(password, StringComparison.CurrentCultureIgnoreCase)).Any())
             {
+           
                 var dcEmployee = distributionCenters.Where(e => e.Contact.Equals(userName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                if(dcEmployee.IsDeleted.GetValueOrDefault())
+                    throw new PlatformModuleException("Your account is not active. Please Contact Administrator");
+
                 loggedInUserDTO = LoggedInUserConvertor.ConvertToLoggedInDistributionCenterDTO(dcEmployee);
                 loggedInUserDTO.LoginType = LoginType.DistributionCenter.ToString();
                 return loggedInUserDTO;

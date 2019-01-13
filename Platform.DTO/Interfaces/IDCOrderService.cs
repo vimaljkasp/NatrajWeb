@@ -17,13 +17,18 @@ namespace Platform.DTO
 
         ResponseDTO GetDCOrdersById(int dcId);
 
+
+
+
         //  List<CustomerDto> GetCustomerDetailsByVLCCode(string vlcCode);
 
         //   ResponseDTO GetCustomerByCustomerId(int customerId);
 
-        ResponseDTO AddDCOrder(DCOrderDTO dCPaymentDTO);
+        ResponseDTO AddDCOrder(CreateDCOrderDTO dcOrderDTO);
 
         ResponseDTO UpdateDCOrder(DCOrderDTO dCPaymentDTO);
+
+        ResponseDTO UpdateDCOrderStatus(DCOrderStatusDTO dCPaymentDTO);
 
         ResponseDTO DeleteDCOrder(int id);
 

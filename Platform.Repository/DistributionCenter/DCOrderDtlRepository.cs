@@ -14,5 +14,53 @@ namespace Platform.Repository
         {
             _repository = repository;
         }
+
+
+        public List<DCOrderDtl> GetAll()
+        {
+            var dcOrderDtls = _repository.DCOrderDtls.ToList<Sql.DCOrderDtl>();
+            return dcOrderDtls;
+        }
+
+
+
+        //public List<DCOrder> GetAllDCOrderDtlsByDCId(int dCid)
+        //{
+        //    var dcOrderDtls = _repository.DCOrderDtls.Where(v => v.DCId == dCid).ToList<Sql.DCOrder>();
+        //    return dcOrderDtls;
+        //}
+
+        public void Add(DCOrderDtl dCOrderDtl)
+        {
+            if (dCOrderDtl != null)
+            {
+                _repository.DCOrderDtls.Add(dCOrderDtl);
+
+            }
+        }
+
+        public void Update(DCOrderDtl dCOrderDtl)
+        {
+
+            if (dCOrderDtl != null)
+            {
+                _repository.Entry<Sql.DCOrderDtl>(dCOrderDtl).State = System.Data.Entity.EntityState.Modified;
+
+            }
+
+
+
+        }
+
+        public void Delete(int id)
+        {
+            var dCOrderDtl = _repository.DCOrderDtls.Where(x => x.DCOrderId == id).FirstOrDefault();
+            if (dCOrderDtl != null)
+                _repository.DCOrderDtls.Remove(dCOrderDtl);
+
+            // _repository.SaveChanges();
+
+        }
     }
 }
+
