@@ -75,7 +75,7 @@ namespace Platform.Repository
         public DistributionCenter GetById(int id)
         {
 
-            var distributionCenter = _repository.DistributionCenters.Include("DCAddresses").FirstOrDefault(x => x.DCId == id);
+            var distributionCenter = _repository.DistributionCenters.Include("DCAddresses").Include("DCWallets").FirstOrDefault(x => x.DCId == id);
 
 
 

@@ -30,15 +30,16 @@ namespace Platform.Service
             distributionCenterDTO.ModifiedBy = distributionCenter.ModifiedBy;
             distributionCenterDTO.ModifiedDate = distributionCenter.ModifiedDate.HasValue ? distributionCenter.ModifiedDate.Value : DateTime.MinValue;
             distributionCenterDTO.NoOfEmployee = distributionCenter.NoOfEmployee.GetValueOrDefault();
-          
+            if (distributionCenter.DCWallets != null)
+                distributionCenterDTO.DcWalletBalance = distributionCenter.DCWallets.FirstOrDefault().WalletBalance;
+            if (distributionCenter.DCAddresses != null)
+                distributionCenterDTO.DCAddressDTO = DCAddressConvertor.ConvertToDCAddressDTO(distributionCenter.DCAddresses.FirstOrDefault());
 
             return distributionCenterDTO;
         }
 
         public static void ConvertToDistributionCenterEntity(ref DistributionCenter distributionCenter, DistributionCenterDTO distributionCenterDTO, bool isUpdate)
         {
-           
-            
 
             if (string.IsNullOrWhiteSpace(distributionCenterDTO.AADHAR) == false)
                 distributionCenter.AADHAR = distributionCenterDTO.AADHAR;

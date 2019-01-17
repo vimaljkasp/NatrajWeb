@@ -33,5 +33,15 @@ namespace Platform.Service
             productCategoryDTO.CategoryName = productCategory.CategoryName;
             return productCategoryDTO;
         }
+
+        public static void ConvertProductDTOToProductEntity(ref Product product,ProductDTO productDTO)
+        {
+            product.CategoryId = productDTO.CategoryId;
+            product.Description = productDTO.ProductQuantityDescription;
+            product.DiscountedRate = productDTO.DiscountedProductPrice;
+            product.Rate = productDTO.ProductPrice;
+            product.SubCategoryId = product.CategoryId;
+            
+        }
     }
 }

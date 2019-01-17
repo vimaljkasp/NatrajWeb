@@ -36,36 +36,8 @@ namespace PlatformWeb.Controller
 
         }
 
-        //[HttpPost]
-        //[Route("api/GetCustomerListByVLCId/{id}")]
-        //public IHttpActionResult GetCustomerListByVLCId(int id, [FromUri] int pageNumber)
-        //{
-        //    try
-        //    {
-        //        return Ok(_customerService.GetCustomerListByVLCId(id, pageNumber));
-        //    }
-        //    catch (PlatformModuleException ex)
-        //    {
-        //        return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
-        //    }
-
-        //}
-
-
-        //[HttpPost]
-        //[Route("api/GetCustomerDetailsByCustomerId/{id}")]
-        //public IHttpActionResult GetCustomerDetailsByCustomerId(int id)
-        //{
-        //    try
-        //    {
-        //        return Ok(_customerService.GetCustomerDetailsByCustomerId(id));
-        //    }
-        //    catch (PlatformModuleException ex)
-        //    {
-        //        return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
-        //    }
-
-        //}
+     
+      
 
 
         //GET api/Customer/id

@@ -31,8 +31,8 @@ namespace Platform.Repository
 
         public List<DCPaymentDetail> GetAllDCPaymentDetailByDCId(int dCid)
         {
-            var dcAddress = _repository.DCPaymentDetails.Where(v => v.DCId == dCid).ToList<Sql.DCPaymentDetail>();
-            return dcAddress;
+            var dcPayments = _repository.DCPaymentDetails.Where(v => v.DCId == dCid).ToList<Sql.DCPaymentDetail>();
+            return dcPayments;
         }
 
         public List<DCPaymentDetail> GetAllDCPaymentDetailByOrderId(int orderId)

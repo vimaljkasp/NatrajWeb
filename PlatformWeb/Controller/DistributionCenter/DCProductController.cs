@@ -81,75 +81,22 @@ namespace PlatformWeb.Controller
 
         }
 
-
-        ////GET api/Customer/id
-        //[Route("api/DCAddresses/{id}")]
-        //public IHttpActionResult Get(int id)
-        //{
-        //    try
-        //    {
-        //        return Ok(_dCAddressService.GetDefaultDCAddressByDCId(id));
-        //    }
-        //    catch (PlatformModuleException ex)
-        //    {
-        //        return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
-        //    }
-        //}
-
-        ////Post api/Customer
-
-        //public IHttpActionResult Post([FromBody]DCAddressDTO dCAddressDTO)
-        //{
-        //    try
-        //    {
-        //        if (dCAddressDTO == null)
-        //            Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
-        //        //Create New Distribution Center
-        //        ResponseDTO responseDTO = _dCAddressService.AddDCAddress(dCAddressDTO);
-
-        //        return Ok(responseDTO);
-        //    }
-        //    catch (PlatformModuleException ex)
-        //    {
-        //        //Write Log Here
-        //        return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
-        //    }
-        //}
-
-        ////Post api/Customer/5
-        //[Route("api/DCAddresses/{id}")]
-        //public IHttpActionResult Post(int id, [FromBody]DCAddressDTO dCAddressDTO)
-        //{
-        //    try
-        //    {
-        //        dCAddressDTO.DCId = id;
-        //        if (dCAddressDTO == null)
-        //            Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
+        public IHttpActionResult Post(ProductDTO productDTO)
+        {
+            try
+            {
+                if (productDTO == null)
+                    Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
+                ResponseDTO responseDTO = _productService.AddProduct(productDTO);
+                return Ok(responseDTO);
+            }
+            catch (PlatformModuleException ex)
+            {
+                return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
+            }
+        }
 
 
-        //        return Ok(_dCAddressService.UpdateDCAddress(dCAddressDTO));
-        //    }
-        //    catch (PlatformModuleException ex)
-        //    {
-        //        //Write Log Here
-        //        return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
-        //    }
-        //}
-
-        //[Route("api/DCAddresses/id/{id}")]
-        //public IHttpActionResult Delete(int id)
-        //{
-        //    try
-        //    {
-        //        //Delete Customer
-        //        _dCAddressService.DeleteDCAddress(id);
-        //        return Ok();
-        //    }
-        //    catch (PlatformModuleException ex)
-        //    {
-        //        //Write Log Here
-        //        return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
-        //    }
-        //}
+  
     }
 }

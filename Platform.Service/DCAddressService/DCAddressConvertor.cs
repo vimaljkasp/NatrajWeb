@@ -30,9 +30,7 @@ namespace Platform.Service
         public static void ConvertToDCAddressEntity(ref DCAddress dCAddress, DCAddressDTO dCAddressDTO, bool isUpdate)
         {
            
-         
-
-            if (string.IsNullOrWhiteSpace(dCAddressDTO.Address)==false)
+        if (string.IsNullOrWhiteSpace(dCAddressDTO.Address)==false)
             dCAddress.Address = dCAddressDTO.Address;
            
             if (string.IsNullOrWhiteSpace(dCAddressDTO.City) == false)

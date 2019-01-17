@@ -21,7 +21,7 @@ namespace PlatformWeb.Controller
             _dCPaymentService = dCPaymentService;
         }
 
-        // GET api/Customer
+        
 
         public IHttpActionResult Get()
         {
@@ -36,39 +36,9 @@ namespace PlatformWeb.Controller
 
         }
 
-        //[HttpPost]
-        //[Route("api/GetCustomerListByVLCId/{id}")]
-        //public IHttpActionResult GetCustomerListByVLCId(int id, [FromUri] int pageNumber)
-        //{
-        //    try
-        //    {
-        //        return Ok(_customerService.GetCustomerListByVLCId(id, pageNumber));
-        //    }
-        //    catch (PlatformModuleException ex)
-        //    {
-        //        return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
-        //    }
+     
 
-        //}
-
-
-        //[HttpPost]
-        //[Route("api/GetCustomerDetailsByCustomerId/{id}")]
-        //public IHttpActionResult GetCustomerDetailsByCustomerId(int id)
-        //{
-        //    try
-        //    {
-        //        return Ok(_customerService.GetCustomerDetailsByCustomerId(id));
-        //    }
-        //    catch (PlatformModuleException ex)
-        //    {
-        //        return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
-        //    }
-
-        //}
-
-
-        //GET api/Customer/id
+       
         [Route("api/DCPayments/{id}")]
         public IHttpActionResult Get(int id)
         {
@@ -82,7 +52,7 @@ namespace PlatformWeb.Controller
             }
         }
 
-        //Post api/Customer
+       
 
         public IHttpActionResult Post([FromBody]DCPaymentDTO dCPaymentDTO)
         {
@@ -102,7 +72,7 @@ namespace PlatformWeb.Controller
             }
         }
 
-        //Post api/Customer/5
+       
         [Route("api/DCPayments/{id}")]
         public IHttpActionResult Post(int id, [FromBody]DCPaymentDTO dCPaymentDTO)
         {

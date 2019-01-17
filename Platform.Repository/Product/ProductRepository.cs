@@ -15,6 +15,11 @@ namespace Platform.Repository
             _repository = repository;
         }
 
+        public void Add(Product product)
+        {
+            _repository.Products.Add(product);
+        }
+
         public List<Product> GetAllProducts()
         {
             var products = _repository.Products.Include("ProductCategory").ToList();

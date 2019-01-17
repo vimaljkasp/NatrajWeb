@@ -1,4 +1,5 @@
 ﻿using Platform.DTO;
+using Platform.Sql;
 using Platform.Utilities.ExceptionHandler;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,15 @@ namespace Platform.Service
 
         public ResponseDTO AddProduct(ProductDTO productDTO)
         {
-            throw new NotImplementedException();
+            ResponseDTO responseDTO = new ResponseDTO();
+            Product product = new Product();
+            product.ProductId = unitOfWork.DashboardRepository.NextNumberGenerator("Product");
+            ProductConvertor.ConvertProductDTOToProductEntity(ref product, productDTO);
+            unitOfWork.ProductRepository.Add(product);
+            unitOfWork.SaveChanges();
+            responseDTO.Status = true;
+            responseDTO.Message = "Product   Added Successfully";
+            return responseDTO;
         }
 
         public ResponseDTO DeleteProduct(int id)

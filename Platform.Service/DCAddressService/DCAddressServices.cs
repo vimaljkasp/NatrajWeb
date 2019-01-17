@@ -32,24 +32,7 @@ namespace Platform.Service
 
         }
 
-        //public List<DCAddressDTO> GetDCAddressByPageCount(int? pageNumber, int? count)
-        //{
-        //    List<DCAddressDTO> dCAddressList = new List<DCAddressDTO>();
-        //    var dCAddresss = unitOfWork.DCAddressRepository.GetCustomerByCount(pageNumber, count);
-        //    if (dCAddresss != null)
-        //    {
-        //        foreach (var dCAddress in dCAddresss)
-        //        {
-        //            dCAddressList.Add(DCAddressConvertor.ConvertTodCAddressDto(dCAddress));
-        //        }
-
-        //    }
-
-        //    return dCAddressList;
-
-        //}
-
-
+    
         public ResponseDTO GetDefaultDCAddressByDCId(int dcId)
         {
             ResponseDTO responseDTO = new ResponseDTO();
@@ -108,7 +91,7 @@ namespace Platform.Service
             ResponseDTO responseDTO = new ResponseDTO();
             var dCAddress = unitOfWork.DCAddressRepository.GetDefaultAddressByDCId(dCAddressDto.DCId);
             if (dCAddress == null)
-                throw new PlatformModuleException("DC Address Details not Found for given DC");
+                return AddDCAddress(dCAddressDto);
 
             DCAddressConvertor.ConvertToDCAddressEntity(ref dCAddress, dCAddressDto, true);
            
@@ -129,11 +112,7 @@ namespace Platform.Service
             UnitOfWork unitOfWork = new UnitOfWork();
             //get dCAddress
             var dCAddress = unitOfWork.DCAddressRepository.GetDefaultAddressByDCId(id);
-            //if((dCAddress.ProductOrders !=null && dCAddress.ProductOrders.Count()>0) || (dCAddress.CustomerWallets !=null && 
-            //    dCAddress.CustomerWallets.Count()>0 && dCAddress.CustomerWallets.FirstOrDefault().WalletBalance>0))
-            //    {
-            //    throw new PlatformModuleException("DCAddress Account Cannot be deleted as it is associated with orders");
-            //}
+         
             dCAddress.IsDeleted = true;
             unitOfWork.DCAddressRepository.Update(dCAddress);
             unitOfWork.SaveChanges();

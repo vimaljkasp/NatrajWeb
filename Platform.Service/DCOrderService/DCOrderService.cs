@@ -93,7 +93,7 @@ namespace Platform.Service
         public void UpdateOrderPaymentDetailsForOrder(DistributionCenter distributionCenter,DCOrder dCOrder)
         {
             DCPaymentDetail dCPaymentDetail = new DCPaymentDetail();
-            dCPaymentDetail.DCPaymentId = unitOfWork.DashboardRepository.NextNumberGenerator("DCPayemnt");
+            dCPaymentDetail.DCPaymentId = unitOfWork.DashboardRepository.NextNumberGenerator("DCPaymentDetail");
             dCPaymentDetail.CreatedDate=dCPaymentDetail.ModifiedDate = DateTime.Now;
             dCPaymentDetail.CreatedBy = dCPaymentDetail.ModifiedBy= distributionCenter.AgentName;
             dCPaymentDetail.DCId = distributionCenter.DCId;
@@ -168,6 +168,9 @@ namespace Platform.Service
             throw new NotImplementedException();
         }
 
-      
+        public ResponseDTO GetDCOrdersByOrderStatus(int dcId, string orderStatus)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

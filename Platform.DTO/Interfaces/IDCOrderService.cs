@@ -10,19 +10,9 @@ namespace Platform.DTO
     {
         List<DCOrderDTO> GetAllDCOrders();
 
-        //     List<DCPaymentDTO> GetDistributionCentersByPageCount(int? pageNumber, int? count);
+      ResponseDTO GetDCOrdersById(int dcId);
 
-
-        //    ResponseDTO GetDistributionCenterByVLCId(int vlcId, int? PageNumber);
-
-        ResponseDTO GetDCOrdersById(int dcId);
-
-
-
-
-        //  List<CustomerDto> GetCustomerDetailsByVLCCode(string vlcCode);
-
-        //   ResponseDTO GetCustomerByCustomerId(int customerId);
+        ResponseDTO GetDCOrdersByOrderStatus(int dcId,string orderStatus);
 
         ResponseDTO AddDCOrder(CreateDCOrderDTO dcOrderDTO);
 

@@ -21,7 +21,7 @@ namespace PlatformWeb.Controller
             _dCOrderService = dCOrderService;
         }
 
-        // GET api/Customer
+     
 
         public IHttpActionResult Get()
         {
@@ -36,39 +36,7 @@ namespace PlatformWeb.Controller
 
         }
 
-        //[HttpPost]
-        //[Route("api/GetCustomerListByVLCId/{id}")]
-        //public IHttpActionResult GetCustomerListByVLCId(int id, [FromUri] int pageNumber)
-        //{
-        //    try
-        //    {
-        //        return Ok(_customerService.GetCustomerListByVLCId(id, pageNumber));
-        //    }
-        //    catch (PlatformModuleException ex)
-        //    {
-        //        return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
-        //    }
 
-        //}
-
-
-        //[HttpPost]
-        //[Route("api/GetCustomerDetailsByCustomerId/{id}")]
-        //public IHttpActionResult GetCustomerDetailsByCustomerId(int id)
-        //{
-        //    try
-        //    {
-        //        return Ok(_customerService.GetCustomerDetailsByCustomerId(id));
-        //    }
-        //    catch (PlatformModuleException ex)
-        //    {
-        //        return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
-        //    }
-
-        //}
-
-
-        //GET api/Customer/id
         [Route("api/DCOrders/{id}")]
         public IHttpActionResult Get(int id)
         {
@@ -81,6 +49,24 @@ namespace PlatformWeb.Controller
                 return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
             }
         }
+
+
+
+        [Route("api/GetDCOrdersByStatus/{id}")]
+        public IHttpActionResult GetDCOrdersByStatus(int id,[FromUri] string orderStatus)
+        {
+            try
+            {
+                return Ok(_dCOrderService.GetDCOrdersByOrderStatus(id,orderStatus));
+            }
+            catch (PlatformModuleException ex)
+            {
+                return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
+            }
+        }
+
+
+
 
         //Post api/Customer
 
@@ -111,10 +97,10 @@ namespace PlatformWeb.Controller
                 dCOrderDTO.DCOrderId = id;
                 if (dCOrderDTO == null)
                     Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
-                //Update New Customer
-                _dCOrderService.UpdateDCOrder(dCOrderDTO);
+               
+            var responseDTO= _dCOrderService.UpdateDCOrder(dCOrderDTO);
 
-                return Ok();
+                return Ok(responseDTO);
             }
             catch (PlatformModuleException ex)
             {
@@ -131,7 +117,7 @@ namespace PlatformWeb.Controller
                 dCOrderDTO.DCOrderId = id;
                 if (dCOrderDTO == null)
                     Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
-                //Update New Customer
+                
                 _dCOrderService.UpdateDCOrderStatus(dCOrderDTO);
 
                 return Ok();
@@ -148,9 +134,9 @@ namespace PlatformWeb.Controller
         {
             try
             {
-                //Delete Customer
-                _dCOrderService.DeleteDCOrder(id);
-                return Ok();
+                
+              
+                return Ok(_dCOrderService.DeleteDCOrder(id));
             }
             catch (PlatformModuleException ex)
             {

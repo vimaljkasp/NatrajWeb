@@ -39,12 +39,12 @@ namespace Platform.Service
         public static void ConvertToDCPaymentDetailEntity(ref DCPaymentDetail dCPaymentDetail, DCPaymentDTO dCPaymentDTO, bool isUpdate)
         {
             dCPaymentDetail.DCId = dCPaymentDTO.DCId;
-            dCPaymentDetail.DCOrderId = dCPaymentDTO.DCOrderId;
+           if(string.IsNullOrWhiteSpace(dCPaymentDTO.PaymentComments)==false)
             dCPaymentDetail.PaymentComments = dCPaymentDTO.PaymentComments;
-            dCPaymentDetail.PaymentCrAmount = dCPaymentDTO.PaymentCrAmount;
-            dCPaymentDetail.PaymentDrAmount = dCPaymentDTO.PaymentDrAmount;
-            dCPaymentDetail.PaymentMode = dCPaymentDTO.PaymentMode;
-            dCPaymentDetail.PaymentReceivedBy = dCPaymentDTO.PaymentReceivedBy;
+            if (string.IsNullOrWhiteSpace(dCPaymentDTO.PaymentMode) == false)
+                dCPaymentDetail.PaymentMode = dCPaymentDTO.PaymentMode;
+            if (string.IsNullOrWhiteSpace(dCPaymentDTO.PaymentReceivedBy) == false)
+                dCPaymentDetail.PaymentReceivedBy = dCPaymentDTO.PaymentReceivedBy;
         }
     }
 }

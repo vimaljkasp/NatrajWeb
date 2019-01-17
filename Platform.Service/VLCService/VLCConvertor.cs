@@ -23,6 +23,7 @@ namespace Platform.Service
             vlcDto.VLCAddress = vLC.VLCAddress;
             vlcDto.Village = vLC.Village;
             vlcDto.City = vLC.City;
+            vlcDto.VLCState = vLC.VLCState;
             vlcDto.Password = vLC.Password;
             vlcDto.AlternateContact = vLC.AlternateContact;
             vlcDto.CreatedBy = vLC.CreatedBy;
@@ -59,6 +60,8 @@ namespace Platform.Service
                 vLC.Village = vlcDTO.Village;
             if (string.IsNullOrWhiteSpace(vlcDTO.City) == false)
                 vLC.City = vlcDTO.City;
+            if (string.IsNullOrWhiteSpace(vlcDTO.VLCState) == false)
+                vLC.VLCState = vlcDTO.VLCState;
             if (string.IsNullOrWhiteSpace(vlcDTO.Password) == false)
                 vLC.Password = vlcDTO.Password;
             if (string.IsNullOrWhiteSpace(vlcDTO.AlternateContact) == false)

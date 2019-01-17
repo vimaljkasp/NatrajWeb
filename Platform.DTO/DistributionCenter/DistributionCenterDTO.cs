@@ -12,6 +12,7 @@ namespace Platform.DTO
     public class DistributionCenterDTO
     {
         public int DCId { get; set; }
+        public decimal DcWalletBalance { get; set; }
         public string DCCode { get; set; }
         public string DCName { get; set; }
         public string AgentName { get; set; }
