@@ -63,7 +63,9 @@
     <Compile Include="DistributionCenter\DCOrderStatusDTO.cs" />
     <Compile Include="DistributionCenter\DCPaymentDTO.cs" />
     <Compile Include="DistributionCenter\DistributionCenterDTO.cs" />
+    <Compile Include="Enums\NatrajComponent.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
+    <Compile Include="Enums\SMSType.cs" />
     <Compile Include="Interfaces\ICustomerAgricultureService.cs" />
     <Compile Include="Interfaces\ICustomerBankService.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />

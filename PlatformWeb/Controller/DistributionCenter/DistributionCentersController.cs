@@ -38,11 +38,11 @@ namespace PlatformWeb.Controller
 
         [HttpPost]
         [Route("api/GetDCCentersByCity")]
-        public IHttpActionResult GetDCCentersByCity([FromUri] string dcCity, [FromUri] int pageNumber)
+        public IHttpActionResult GetDCCentersByCity([FromUri] string city, [FromUri] int pageNumber)
         {
             try
             {
-                return Ok(_distributionCenterService.GetDistributionCentersByCity(dcCity, pageNumber));
+                return Ok(_distributionCenterService.GetDistributionCentersByCity(city, pageNumber));
             }
             catch (PlatformModuleException ex)
             {
@@ -108,6 +108,30 @@ namespace PlatformWeb.Controller
                 return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
             }
         }
+
+
+        [HttpPost]
+        [Route("api/UpdateDCStatus/{id}")]
+        public IHttpActionResult UpdateDCStatus(int id, [FromUri]bool isActive)
+        {
+            try
+            {
+               
+                if (id <= 0)
+                    Ok(ResponseHelper.CreateResponseDTOForException("DC Id Not Valid"));
+                //Update New Customer
+
+
+                return Ok(_distributionCenterService.UpdateDistributionCenterStatus(id, isActive));
+            }
+            catch (PlatformModuleException ex)
+            {
+                //Write Log Here
+                return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
+            }
+        }
+
+
 
         [Route("api/DeleteDistributionCenters/{id}")]
         [HttpPost]

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NatrajModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -103,9 +103,9 @@
           <Property Name="IGST" Type="decimal" Precision="18" Scale="2" />
           <Property Name="OrderTax" Type="decimal" Precision="18" Scale="2" />
           <Property Name="OrderDiscount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="OrderTotalPrice" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="OrderPaidAmount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="TotalOrderQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTotalPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="OrderPaidAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalOrderQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalActualQuantity" Type="decimal" Precision="18" Scale="2" />
           <Property Name="OrderStatusId" Type="int" />
           <Property Name="DeliveryExpectedDate" Type="datetime" />
@@ -125,12 +125,12 @@
           <Property Name="DCOrderDtlId" Type="int" Nullable="false" />
           <Property Name="DCOrderId" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
-          <Property Name="QuantityOrdered" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="ActualQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="QuantityOrdered" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ActualQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="OrderTotal" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="OrderTax" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="OrderTotalPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="OrderTax" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="OrderTotalPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
           <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -279,6 +279,18 @@
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
           <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="NatrajConfigurations">
+          <Key>
+            <PropertyRef Name="KeyData" />
+            <PropertyRef Name="KeyName" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="KeyData" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="KeyName" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="DataVal" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="DefaultVal" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="NumberMaster">
           <Key>
@@ -505,6 +517,19 @@
           <Property Name="RatePerUnit" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ProductId" Type="int" />
+        </EntityType>
+        <EntityType Name="NatrajSMSLog">
+          <Key>
+            <PropertyRef Name="SMSId" />
+          </Key>
+          <Property Name="SMSId" Type="int" Nullable="false" />
+          <Property Name="ComponentId" Type="int" Nullable="false" />
+          <Property Name="SMSTypeId" Type="int" Nullable="false" />
+          <Property Name="Sender" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Receiver" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SMSMessage" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SMSSentTime" Type="datetime" />
+          <Property Name="SMSErrorMsg" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <Association Name="FK_Customer_VLC">
           <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
@@ -782,7 +807,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="NatrajModelStoreContainer">
+        <Function Name="GetNextEntityNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityName" Type="nvarchar" Mode="In" />
+          <Parameter Name="NextNumber" Type="int" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="PlatformDBModelStoreContainer">
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerAgriculture" EntityType="Self.CustomerAgriculture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerBank" EntityType="Self.CustomerBank" Schema="dbo" store:Type="Tables" />
@@ -797,6 +826,7 @@
           <EntitySet Name="DockRejectedMilk" EntityType="Self.DockRejectedMilk" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MilkProcessing" EntityType="Self.MilkProcessing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NatrajConfigurations" EntityType="Self.NatrajConfigurations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NumberMaster" EntityType="Self.NumberMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -812,6 +842,7 @@
           <EntitySet Name="VLC" EntityType="Self.VLC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VLCMilkCollection" EntityType="Self.VLCMilkCollection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VLCMilkCollectionDtl" EntityType="Self.VLCMilkCollectionDtl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NatrajSMSLog" EntityType="Self.NatrajSMSLog" Schema="vimal" store:Type="Tables" />
           <AssociationSet Name="FK_Customer_VLC" Association="Self.FK_Customer_VLC">
             <End Role="VLC" EntitySet="VLC" />
             <End Role="Customer" EntitySet="Customer" />
@@ -905,11 +936,10 @@
             <End Role="VLCMilkCollectionDtl" EntitySet="VLCMilkCollectionDtl" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="NatrajModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="PlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -1016,9 +1046,9 @@
           <Property Name="IGST" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="OrderTax" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="OrderDiscount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="OrderTotalPrice" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="OrderPaidAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TotalOrderQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTotalPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="OrderPaidAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalOrderQuantity" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalActualQuantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="OrderStatusId" Type="Int32" />
           <Property Name="DeliveryExpectedDate" Type="DateTime" Precision="3" />
@@ -1042,12 +1072,12 @@
           <Property Name="DCOrderDtlId" Type="Int32" Nullable="false" />
           <Property Name="DCOrderId" Type="Int32" Nullable="false" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="QuantityOrdered" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ActualQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="QuantityOrdered" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ActualQuantity" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="OrderTotal" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="OrderTax" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="OrderTotalPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="OrderTax" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="OrderTotalPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DCOrder" Relationship="Self.fk_DCOrderDtl_DCOrder" FromRole="DCOrderDtl" ToRole="DCOrder" />
@@ -1457,6 +1487,19 @@
           <Property Name="ProductId" Type="Int32" />
           <NavigationProperty Name="VLCMilkCollection" Relationship="Self.FK_VLCMilkCollectiondtl_VLCMilkCollection" FromRole="VLCMilkCollectionDtl" ToRole="VLCMilkCollection" />
         </EntityType>
+        <EntityType Name="NatrajSMSLog">
+          <Key>
+            <PropertyRef Name="SMSId" />
+          </Key>
+          <Property Name="SMSId" Type="Int32" Nullable="false" />
+          <Property Name="ComponentId" Type="Int32" Nullable="false" />
+          <Property Name="SMSTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Sender" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Receiver" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SMSMessage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SMSSentTime" Type="DateTime" Precision="3" />
+          <Property Name="SMSErrorMsg" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
         <Association Name="FK_Customer_VLC">
           <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
@@ -1763,6 +1806,7 @@
           <EntitySet Name="VLCs" EntityType="Self.VLC" />
           <EntitySet Name="VLCMilkCollections" EntityType="Self.VLCMilkCollection" />
           <EntitySet Name="VLCMilkCollectionDtls" EntityType="Self.VLCMilkCollectionDtl" />
+          <EntitySet Name="NatrajSMSLogs" EntityType="Self.NatrajSMSLog" />
           <AssociationSet Name="FK_Customer_VLC" Association="Self.FK_Customer_VLC">
             <End Role="VLC" EntitySet="VLCs" />
             <End Role="Customer" EntitySet="Customers" />
@@ -1855,15 +1899,32 @@
             <End Role="VLCMilkCollection" EntitySet="VLCMilkCollections" />
             <End Role="VLCMilkCollectionDtl" EntitySet="VLCMilkCollectionDtls" />
           </AssociationSet>
+          <FunctionImport Name="GetNextEntityNumber">
+            <Parameter Name="EntityName" Mode="In" Type="String" />
+            <Parameter Name="NextNumber" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="NatrajConfigurations" EntityType="PlatformDBModel.NatrajConfiguration" />
         </EntityContainer>
+        <EntityType Name="NatrajConfiguration">
+          <Key>
+            <PropertyRef Name="KeyData" />
+            <PropertyRef Name="KeyName" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="KeyData" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="KeyName" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="DataVal" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultVal" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="NatrajModelStoreContainer" CdmEntityContainer="PlatformDBEntities">
+        <EntityContainerMapping StorageEntityContainer="PlatformDBModelStoreContainer" CdmEntityContainer="PlatformDBEntities">
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="NatrajModel.Customer">
+            <EntityTypeMapping TypeName="PlatformDBModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
@@ -1895,7 +1956,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CustomerAgricultures">
-            <EntityTypeMapping TypeName="NatrajModel.CustomerAgriculture">
+            <EntityTypeMapping TypeName="PlatformDBModel.CustomerAgriculture">
               <MappingFragment StoreEntitySet="CustomerAgriculture">
                 <ScalarProperty Name="CustAgriId" ColumnName="CustAgriId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
@@ -1913,7 +1974,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CustomerBanks">
-            <EntityTypeMapping TypeName="NatrajModel.CustomerBank">
+            <EntityTypeMapping TypeName="PlatformDBModel.CustomerBank">
               <MappingFragment StoreEntitySet="CustomerBank">
                 <ScalarProperty Name="CustomerBankId" ColumnName="CustomerBankId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
@@ -1932,7 +1993,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DCAddresses">
-            <EntityTypeMapping TypeName="NatrajModel.DCAddress">
+            <EntityTypeMapping TypeName="PlatformDBModel.DCAddress">
               <MappingFragment StoreEntitySet="DCAddress">
                 <ScalarProperty Name="DCAddressId" ColumnName="DCAddressId" />
                 <ScalarProperty Name="DCId" ColumnName="DCId" />
@@ -1949,7 +2010,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DCOrders">
-            <EntityTypeMapping TypeName="NatrajModel.DCOrder">
+            <EntityTypeMapping TypeName="PlatformDBModel.DCOrder">
               <MappingFragment StoreEntitySet="DCOrder">
                 <ScalarProperty Name="DCOrderId" ColumnName="DCOrderId" />
                 <ScalarProperty Name="DCOrderNumber" ColumnName="DCOrderNumber" />
@@ -1981,7 +2042,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DCOrderDtls">
-            <EntityTypeMapping TypeName="NatrajModel.DCOrderDtl">
+            <EntityTypeMapping TypeName="PlatformDBModel.DCOrderDtl">
               <MappingFragment StoreEntitySet="DCOrderDtl">
                 <ScalarProperty Name="DCOrderDtlId" ColumnName="DCOrderDtlId" />
                 <ScalarProperty Name="DCOrderId" ColumnName="DCOrderId" />
@@ -1998,7 +2059,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DCPaymentDetails">
-            <EntityTypeMapping TypeName="NatrajModel.DCPaymentDetail">
+            <EntityTypeMapping TypeName="PlatformDBModel.DCPaymentDetail">
               <MappingFragment StoreEntitySet="DCPaymentDetail">
                 <ScalarProperty Name="DCPaymentId" ColumnName="DCPaymentId" />
                 <ScalarProperty Name="DCId" ColumnName="DCId" />
@@ -2020,7 +2081,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DCWallets">
-            <EntityTypeMapping TypeName="NatrajModel.DCWallet">
+            <EntityTypeMapping TypeName="PlatformDBModel.DCWallet">
               <MappingFragment StoreEntitySet="DCWallet">
                 <ScalarProperty Name="WalletId" ColumnName="WalletId" />
                 <ScalarProperty Name="DCId" ColumnName="DCId" />
@@ -2030,7 +2091,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DistributionCenters">
-            <EntityTypeMapping TypeName="NatrajModel.DistributionCenter">
+            <EntityTypeMapping TypeName="PlatformDBModel.DistributionCenter">
               <MappingFragment StoreEntitySet="DistributionCenter">
                 <ScalarProperty Name="DCId" ColumnName="DCId" />
                 <ScalarProperty Name="DCCode" ColumnName="DCCode" />
@@ -2056,7 +2117,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DockMilkCollections">
-            <EntityTypeMapping TypeName="NatrajModel.DockMilkCollection">
+            <EntityTypeMapping TypeName="PlatformDBModel.DockMilkCollection">
               <MappingFragment StoreEntitySet="DockMilkCollection">
                 <ScalarProperty Name="DockMilkCollectionId" ColumnName="DockMilkCollectionId" />
                 <ScalarProperty Name="CollectionDate" ColumnName="CollectionDate" />
@@ -2076,7 +2137,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DockMilkCollectionDetails">
-            <EntityTypeMapping TypeName="NatrajModel.DockMilkCollectionDetail">
+            <EntityTypeMapping TypeName="PlatformDBModel.DockMilkCollectionDetail">
               <MappingFragment StoreEntitySet="DockMilkCollectionDetails">
                 <ScalarProperty Name="DMCDId" ColumnName="DMCDId" />
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
@@ -2101,7 +2162,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DockRejectedMilks">
-            <EntityTypeMapping TypeName="NatrajModel.DockRejectedMilk">
+            <EntityTypeMapping TypeName="PlatformDBModel.DockRejectedMilk">
               <MappingFragment StoreEntitySet="DockRejectedMilk">
                 <ScalarProperty Name="DockRejectedMilkId" ColumnName="DockRejectedMilkId" />
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
@@ -2126,7 +2187,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Messages">
-            <EntityTypeMapping TypeName="NatrajModel.Message">
+            <EntityTypeMapping TypeName="PlatformDBModel.Message">
               <MappingFragment StoreEntitySet="Message">
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
                 <ScalarProperty Name="MessageCode" ColumnName="MessageCode" />
@@ -2135,7 +2196,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MilkProcessings">
-            <EntityTypeMapping TypeName="NatrajModel.MilkProcessing">
+            <EntityTypeMapping TypeName="PlatformDBModel.MilkProcessing">
               <MappingFragment StoreEntitySet="MilkProcessing">
                 <ScalarProperty Name="ProcessingId" ColumnName="ProcessingId" />
                 <ScalarProperty Name="ProcessCode" ColumnName="ProcessCode" />
@@ -2152,7 +2213,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NumberMasters">
-            <EntityTypeMapping TypeName="NatrajModel.NumberMaster">
+            <EntityTypeMapping TypeName="PlatformDBModel.NumberMaster">
               <MappingFragment StoreEntitySet="NumberMaster">
                 <ScalarProperty Name="EntityCode" ColumnName="EntityCode" />
                 <ScalarProperty Name="NextNumber" ColumnName="NextNumber" />
@@ -2160,7 +2221,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OrderStatus">
-            <EntityTypeMapping TypeName="NatrajModel.OrderStatu">
+            <EntityTypeMapping TypeName="PlatformDBModel.OrderStatu">
               <MappingFragment StoreEntitySet="OrderStatus">
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
@@ -2173,7 +2234,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="NatrajModel.Product">
+            <EntityTypeMapping TypeName="PlatformDBModel.Product">
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
@@ -2200,7 +2261,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductBatches">
-            <EntityTypeMapping TypeName="NatrajModel.ProductBatch">
+            <EntityTypeMapping TypeName="PlatformDBModel.ProductBatch">
               <MappingFragment StoreEntitySet="ProductBatch">
                 <ScalarProperty Name="BatchId" ColumnName="BatchId" />
                 <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
@@ -2218,7 +2279,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductBatchDetails">
-            <EntityTypeMapping TypeName="NatrajModel.ProductBatchDetail">
+            <EntityTypeMapping TypeName="PlatformDBModel.ProductBatchDetail">
               <MappingFragment StoreEntitySet="ProductBatchDetails">
                 <ScalarProperty Name="BatchDetailId" ColumnName="BatchDetailId" />
                 <ScalarProperty Name="BatchId" ColumnName="BatchId" />
@@ -2234,7 +2295,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductBatchQualities">
-            <EntityTypeMapping TypeName="NatrajModel.ProductBatchQuality">
+            <EntityTypeMapping TypeName="PlatformDBModel.ProductBatchQuality">
               <MappingFragment StoreEntitySet="ProductBatchQuality">
                 <ScalarProperty Name="QualityId" ColumnName="QualityId" />
                 <ScalarProperty Name="BatchId" ColumnName="BatchId" />
@@ -2252,7 +2313,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductCategories">
-            <EntityTypeMapping TypeName="NatrajModel.ProductCategory">
+            <EntityTypeMapping TypeName="PlatformDBModel.ProductCategory">
               <MappingFragment StoreEntitySet="ProductCategory">
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
@@ -2260,7 +2321,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductSubCategories">
-            <EntityTypeMapping TypeName="NatrajModel.ProductSubCategory">
+            <EntityTypeMapping TypeName="PlatformDBModel.ProductSubCategory">
               <MappingFragment StoreEntitySet="ProductSubCategory">
                 <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
                 <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
@@ -2269,7 +2330,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="NatrajModel.Role">
+            <EntityTypeMapping TypeName="PlatformDBModel.Role">
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
@@ -2282,7 +2343,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ScreenSecurityCodes">
-            <EntityTypeMapping TypeName="NatrajModel.ScreenSecurityCode">
+            <EntityTypeMapping TypeName="PlatformDBModel.ScreenSecurityCode">
               <MappingFragment StoreEntitySet="ScreenSecurityCodes">
                 <ScalarProperty Name="ScreenId" ColumnName="ScreenId" />
                 <ScalarProperty Name="ScreenName" ColumnName="ScreenName" />
@@ -2296,7 +2357,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserPermissions">
-            <EntityTypeMapping TypeName="NatrajModel.UserPermission">
+            <EntityTypeMapping TypeName="PlatformDBModel.UserPermission">
               <MappingFragment StoreEntitySet="UserPermissions">
                 <ScalarProperty Name="UserPermissionId" ColumnName="UserPermissionId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -2313,7 +2374,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="NatrajModel.User">
+            <EntityTypeMapping TypeName="PlatformDBModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -2333,7 +2394,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VLCs">
-            <EntityTypeMapping TypeName="NatrajModel.VLC">
+            <EntityTypeMapping TypeName="PlatformDBModel.VLC">
               <MappingFragment StoreEntitySet="VLC">
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
                 <ScalarProperty Name="VLCCode" ColumnName="VLCCode" />
@@ -2361,7 +2422,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VLCMilkCollections">
-            <EntityTypeMapping TypeName="NatrajModel.VLCMilkCollection">
+            <EntityTypeMapping TypeName="PlatformDBModel.VLCMilkCollection">
               <MappingFragment StoreEntitySet="VLCMilkCollection">
                 <ScalarProperty Name="VLCMilkCollectionId" ColumnName="VLCMilkCollectionId" />
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
@@ -2379,7 +2440,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VLCMilkCollectionDtls">
-            <EntityTypeMapping TypeName="NatrajModel.VLCMilkCollectionDtl">
+            <EntityTypeMapping TypeName="PlatformDBModel.VLCMilkCollectionDtl">
               <MappingFragment StoreEntitySet="VLCMilkCollectionDtl">
                 <ScalarProperty Name="VLCMilkCollectionDtlId" ColumnName="VLCMilkCollectionDtlId" />
                 <ScalarProperty Name="VLCMilkCollectionId" ColumnName="VLCMilkCollectionId" />
@@ -2389,6 +2450,33 @@
                 <ScalarProperty Name="RatePerUnit" ColumnName="RatePerUnit" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NatrajSMSLogs">
+            <EntityTypeMapping TypeName="PlatformDBModel.NatrajSMSLog">
+              <MappingFragment StoreEntitySet="NatrajSMSLog">
+                <ScalarProperty Name="SMSId" ColumnName="SMSId" />
+                <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
+                <ScalarProperty Name="SMSTypeId" ColumnName="SMSTypeId" />
+                <ScalarProperty Name="Sender" ColumnName="Sender" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="SMSMessage" ColumnName="SMSMessage" />
+                <ScalarProperty Name="SMSSentTime" ColumnName="SMSSentTime" />
+                <ScalarProperty Name="SMSErrorMsg" ColumnName="SMSErrorMsg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetNextEntityNumber" FunctionName="PlatformDBModel.Store.GetNextEntityNumber" />
+          <EntitySetMapping Name="NatrajConfigurations">
+            <EntityTypeMapping TypeName="PlatformDBModel.NatrajConfiguration">
+              <MappingFragment StoreEntitySet="NatrajConfigurations">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DefaultVal" ColumnName="DefaultVal" />
+                <ScalarProperty Name="DataVal" ColumnName="DataVal" />
+                <ScalarProperty Name="KeyName" ColumnName="KeyName" />
+                <ScalarProperty Name="KeyData" ColumnName="KeyData" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

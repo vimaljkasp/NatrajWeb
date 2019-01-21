@@ -26,7 +26,6 @@ namespace Platform.Sql
         public int VLCId { get; set; }
         public string VLCCode { get; set; }
         public string VLCName { get; set; }
-        
         public Nullable<System.DateTime> VLCEnrollmentDate { get; set; }
         public string AgentName { get; set; }
         public string Contact { get; set; }

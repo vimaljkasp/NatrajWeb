@@ -15,7 +15,10 @@ namespace Platform.Service
         private CustomerAgricultureRepository customerAgricultureRepository;
         private DashboardRepository dashboardRepository;
         private UserRepository userRepository;
+
         private MessageRepository messageRepository;
+        private SMSRepository sMSRepository;
+
         private VLCRepository vLCRepository;
         private VLCMilkCollectionRepository vLCMilkCollectionRepository;
         private VLCMilkCollectionDtlRepository vLCMilkCollectionDtlRepository;
@@ -237,6 +240,19 @@ namespace Platform.Service
             }
         }
 
+
+        public SMSRepository SMSRepository
+        {
+            get
+            {
+                if (sMSRepository == null)
+                    return sMSRepository = new SMSRepository(_repository);
+                else
+                {
+                    return sMSRepository;
+                }
+            }
+        }
 
         public ProductRepository ProductRepository
         {

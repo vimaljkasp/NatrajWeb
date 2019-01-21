@@ -146,14 +146,44 @@ namespace Platform.Service
             GC.SuppressFinalize(this);
         }
 
-        public List<DistributionCenterDTO> GetAllDistributionCenters()
+        public ResponseDTO GetAllDistributionCenters()
         {
-            throw new NotImplementedException();
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.Message = "Distribution Center Details";
+            responseDTO.Status = true;
+            List<DistributionCenterDTO> dcList = new List<DistributionCenterDTO>();
+            var distributionCenters = unitOfWork.DistributionCenterRepository.GetAll();
+            if (distributionCenters != null)
+            {
+                foreach (var dc in distributionCenters)
+                {
+                    dcList.Add(DistributionCenterConvertor.ConvertToDistributionCenterDto(dc));
+                }
+
+            }
+
+            responseDTO.Data = dcList;
+            return responseDTO;
         }
 
-        public List<DistributionCenterDTO> GetDistributionCentersByPageCount(int? pageNumber, int? count)
+        public ResponseDTO GetDistributionCentersByPageCount(int? pageNumber, int? count)
         {
-            throw new NotImplementedException();
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.Message = "Distribution Center Details";
+            responseDTO.Status = true;
+            List<DistributionCenterDTO> dcList = new List<DistributionCenterDTO>();
+            var distributionCenters = unitOfWork.DistributionCenterRepository.GetDistributionCenterByCount(pageNumber, count);
+            if (distributionCenters != null)
+            {
+                foreach (var dc in distributionCenters)
+                {
+                    dcList.Add(DistributionCenterConvertor.ConvertToDistributionCenterDto(dc));
+                }
+
+            }
+
+            responseDTO.Data = dcList;
+            return responseDTO;
         }
 
         public ResponseDTO GetDistributionCenterByCenterId(int dcId)
@@ -181,12 +211,60 @@ namespace Platform.Service
 
         public ResponseDTO DeleteDistriubtionCenter(int id)
         {
-            throw new NotImplementedException();
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.Message = "Distribution Center Details by city";
+            responseDTO.Status = true;
+            var dc = unitOfWork.DistributionCenterRepository.GetById(id);
+            if (dc != null)
+            {
+                dc.IsDeleted = true;
+                unitOfWork.SaveChanges();
+                responseDTO.Data = DistributionCenterConvertor.ConvertToDistributionCenterDto(dc);
+                return responseDTO;
+            }
+            else
+            {
+                throw new PlatformModuleException("Distribution Center Details Not Found");
+            }
         }
 
         public ResponseDTO GetDistributionCentersByCity(string city, int? pageNumber)
         {
-            throw new NotImplementedException();
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.Message = "Distribution Center Details by city";
+            responseDTO.Status = true;
+            List<DistributionCenterDTO> dcList = new List<DistributionCenterDTO>();
+            var distributionCenters = unitOfWork.DistributionCenterRepository.GetDistributionCenterListByCity(city, pageNumber);
+            if (distributionCenters != null)
+            {
+                foreach (var dc in distributionCenters)
+                {
+                    dcList.Add(DistributionCenterConvertor.ConvertToDistributionCenterDto(dc));
+                }
+
+            }
+
+            responseDTO.Data= dcList;
+            return responseDTO;
+        }
+
+        public ResponseDTO UpdateDistributionCenterStatus(int dcId, bool status)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.Message = "Distribution Center Details by city";
+            responseDTO.Status = true;
+            var dc = unitOfWork.DistributionCenterRepository.GetById(dcId);
+            if(dc!=null)
+            {
+                dc.IsDeleted = !status;
+                unitOfWork.SaveChanges();
+                responseDTO.Data = DistributionCenterConvertor.ConvertToDistributionCenterDto(dc);
+                return responseDTO;
+            }
+            else
+            {
+                throw new PlatformModuleException("Distribution Center Details Not Found");
+            }
         }
     }
 }

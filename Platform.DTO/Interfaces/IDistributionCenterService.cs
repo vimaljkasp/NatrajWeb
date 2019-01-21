@@ -9,7 +9,7 @@ namespace Platform.DTO
 {
     public interface IDistributionCenterService
     {
-        List<DistributionCenterDTO> GetAllDistributionCenters();
+        ResponseDTO GetAllDistributionCenters();
 
       //  List<DistributionCenterDTO> GetDistributionCentersByPageCount(int? pageNumber, int? count);
 
@@ -27,6 +27,8 @@ namespace Platform.DTO
         ResponseDTO AddDistributionCenter(DistributionCenterDTO distributionCenterDTO);
 
         ResponseDTO UpdateDistributionCenter(DistributionCenterDTO distributionCenterDTO);
+
+        ResponseDTO UpdateDistributionCenterStatus(int dcId,bool status);
 
         ResponseDTO DeleteDistriubtionCenter(int id);
 

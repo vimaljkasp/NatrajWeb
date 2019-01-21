@@ -92,6 +92,12 @@
     <Compile Include="MilkProcessing.cs">
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="NatrajConfiguration.cs">
+      <DependentUpon>PlatformDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NatrajSMSLog.cs">
+      <DependentUpon>PlatformDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="NumberMaster.cs">
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>

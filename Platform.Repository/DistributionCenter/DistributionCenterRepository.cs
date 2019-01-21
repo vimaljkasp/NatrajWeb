@@ -31,13 +31,16 @@ namespace Platform.Repository
         {
             var takePage = pageNumber ?? PagingConstant.DefaultPageNumber;
             var takeCount = PagingConstant.DefaultRecordCount;
-            var dcIds = _repository.DCAddresses.Where(d => d.IsDefaultAddress).Select(d => d.DCId).ToList();
-            var distributionCenters = _repository.DistributionCenters
-                 .Where(d=>d.DCId.Equals(dcIds))
+         //   var dcIds = _repository.DCAddresses.Where(d => d.IsDefaultAddress && d.City.Contains(city)).Select(d => d.DCId).ToList();
+            var distributionCenters = _repository.DistributionCenters.Include("DCAddresses")
+                 .Where(d=>d.DCAddresses.Any(
+              c=>c.City!=null && c.City.Contains(city) && c.IsDefaultAddress))
                 .OrderBy(c => c.DateOfRegistration)
                 .Skip((takePage - 1) * takeCount)
                                 .Take(takeCount)
                                 .ToList<Sql.DistributionCenter>();
+
+     
             return distributionCenters;
         }
 
