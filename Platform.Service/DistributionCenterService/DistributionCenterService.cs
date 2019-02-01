@@ -121,7 +121,7 @@ namespace Platform.Service
                 if (string.IsNullOrWhiteSpace(distributionCenterDTO.Email) == false)
                 {
                     existingDistributionCenter = unitOfWork.DistributionCenterRepository.GetDistributionCenterByEmail(distributionCenterDTO.Email);
-                    if (distributionCenterDTO != null)
+                    if (existingDistributionCenter != null)
                         throw new PlatformModuleException("Distribution Center Already Exist with given Email");
                 }
 

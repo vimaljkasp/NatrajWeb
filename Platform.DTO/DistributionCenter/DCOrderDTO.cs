@@ -16,8 +16,9 @@ namespace Platform.DTO
         public string DCOrderNumber { get; set; }
         public System.DateTime OrderDate { get; set; }
         public int DCId { get; set; }
-        //public decimal OrderPrice { get; set; }
-    
+
+        public String DCName { get; set; }
+
         //public decimal OrderTax { get; set; }
         public decimal OrderDiscount { get; set; }
         public decimal OrderTotalPrice { get; set; }

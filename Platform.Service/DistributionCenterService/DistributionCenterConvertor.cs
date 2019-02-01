@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Platform.Service
 {
-   public class DistributionCenterConvertor
+    public class DistributionCenterConvertor
     {
         public static DistributionCenterDTO ConvertToDistributionCenterDto(DistributionCenter distributionCenter)
         {
@@ -33,7 +33,7 @@ namespace Platform.Service
             distributionCenterDTO.IsActive = distributionCenter.IsDeleted.GetValueOrDefault();
             if (distributionCenter.DCWallets != null)
                 distributionCenterDTO.DcWalletBalance = distributionCenter.DCWallets.FirstOrDefault().WalletBalance;
-            if (distributionCenter.DCAddresses != null)
+            if (distributionCenter.DCAddresses != null && distributionCenter.DCAddresses.Count > 0)
                 distributionCenterDTO.DCAddressDTO = DCAddressConvertor.ConvertToDCAddressDTO(distributionCenter.DCAddresses.FirstOrDefault());
 
             return distributionCenterDTO;
@@ -51,8 +51,8 @@ namespace Platform.Service
             if (string.IsNullOrWhiteSpace(distributionCenterDTO.AlternateContact) == false)
                 distributionCenter.AlternateContact = distributionCenterDTO.AlternateContact;
 
-            if(distributionCenterDTO.Anniversary.Date !=DateTime.MinValue.Date)
-              distributionCenter.Anniversary = distributionCenterDTO.Anniversary;
+            if (distributionCenterDTO.Anniversary.Date != DateTime.MinValue.Date)
+                distributionCenter.Anniversary = distributionCenterDTO.Anniversary;
 
             if (string.IsNullOrWhiteSpace(distributionCenterDTO.Contact) == false)
                 distributionCenter.Contact = distributionCenterDTO.Contact;
@@ -68,9 +68,9 @@ namespace Platform.Service
 
             if (string.IsNullOrWhiteSpace(distributionCenterDTO.FatherName) == false)
                 distributionCenter.FatherName = distributionCenterDTO.FatherName;
-           
 
-            if (distributionCenterDTO.NoOfEmployee>0)
+
+            if (distributionCenterDTO.NoOfEmployee > 0)
                 distributionCenter.NoOfEmployee = distributionCenterDTO.NoOfEmployee;
 
 
@@ -80,6 +80,22 @@ namespace Platform.Service
 
             if (string.IsNullOrWhiteSpace(distributionCenterDTO.Pin) == false)
                 distributionCenter.Pin = distributionCenterDTO.Pin;
+
+
+            //DC Address to Entity While Creating DC
+            if (string.IsNullOrWhiteSpace(distributionCenterDTO.DCAddressDTO.Address) == false)
+            {
+                distributionCenter.DCAddresses.Add(new DCAddress
+                {
+                    Address = distributionCenterDTO.DCAddressDTO.Address,
+                    AddressTypeId = 1,
+                    City = distributionCenterDTO.DCAddressDTO.City,
+                    District = distributionCenterDTO.DCAddressDTO.District,
+                    PostalCode = distributionCenterDTO.DCAddressDTO.PostalCode,
+                    State = distributionCenterDTO.DCAddressDTO.State,
+                    Contact = distributionCenterDTO.DCAddressDTO.Contact
+                });
+            }
         }
     }
 }
