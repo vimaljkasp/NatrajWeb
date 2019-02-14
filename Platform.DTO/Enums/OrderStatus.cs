@@ -11,7 +11,8 @@ namespace Platform.DTO
         Placed=1,
         Confirmed,
         Dispatched,
-        Delivered
+        Received,
+
 
     }
 }

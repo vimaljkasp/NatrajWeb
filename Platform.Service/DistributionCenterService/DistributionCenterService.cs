@@ -1,11 +1,13 @@
 ﻿using Platform.DTO;
 using Platform.Repository;
 using Platform.Sql;
+using Platform.Utilities;
 using Platform.Utilities.Encryption;
 using Platform.Utilities.ExceptionHandler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,8 +33,9 @@ namespace Platform.Service
                // unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerDto.VLCId);
             distributionCenter.DateOfRegistration = DateTime.Now.Date;
             distributionCenter.IsDeleted = true;
+            distributionCenter.Pin = OTPGenerator.GetSixDigitOTP();
             distributionCenterDTO.DCId = distributionCenter.DCId;
-          
+            
             //creating Distribution Center wallet with Distribution Center 
             AddDistributionCenterWallet(distributionCenter);
            DCAddress dCAddress= AddDistributionCenterAddress(distributionCenterDTO);
@@ -45,6 +48,14 @@ namespace Platform.Service
             responseDTO.Data = DistributionCenterConvertor.ConvertToDistributionCenterDto(distributionCenter);
             return responseDTO;
 
+        }
+
+        public void SendSMSForMobileNumberVerfication(DistributionCenter distributionCenter)
+        {
+            SMSService sMSService = new SMSService();
+            string message =string.Format(unitOfWork.MessageRepository.GetMessageByMessageCode("DCSignUp", NatrajMessages.DCSignUpMessage),distributionCenter.Pin);
+
+            sMSService.SendMessage(NatrajComponent.DC, SMSType.SignUp, distributionCenter.Contact, message);
         }
 
         public ResponseDTO UpdateDistributionCenter(DistributionCenterDTO distributionCenterDTO)
@@ -87,7 +98,7 @@ namespace Platform.Service
 
             }
             else
-                return null;
+                throw new PlatformModuleException("Distribution Center Address Details Not Provided");
         }
 
         public void AddDistributionCenterWallet(DistributionCenter distributionCenter)

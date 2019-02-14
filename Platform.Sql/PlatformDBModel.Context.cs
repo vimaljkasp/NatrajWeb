@@ -12,8 +12,6 @@ namespace Platform.Sql
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
     public partial class PlatformDBEntities : DbContext
     {
@@ -41,6 +39,7 @@ namespace Platform.Sql
         public virtual DbSet<DockRejectedMilk> DockRejectedMilks { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<MilkProcessing> MilkProcessings { get; set; }
+        public virtual DbSet<NatrajConfiguration> NatrajConfigurations { get; set; }
         public virtual DbSet<NumberMaster> NumberMasters { get; set; }
         public virtual DbSet<OrderStatu> OrderStatus { get; set; }
         public virtual DbSet<Product> Products { get; set; }
@@ -57,15 +56,5 @@ namespace Platform.Sql
         public virtual DbSet<VLCMilkCollection> VLCMilkCollections { get; set; }
         public virtual DbSet<VLCMilkCollectionDtl> VLCMilkCollectionDtls { get; set; }
         public virtual DbSet<NatrajSMSLog> NatrajSMSLogs { get; set; }
-        public virtual DbSet<NatrajConfiguration> NatrajConfigurations { get; set; }
-    
-        public virtual int GetNextEntityNumber(string entityName, ObjectParameter nextNumber)
-        {
-            var entityNameParameter = entityName != null ?
-                new ObjectParameter("EntityName", entityName) :
-                new ObjectParameter("EntityName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetNextEntityNumber", entityNameParameter, nextNumber);
-        }
     }
 }

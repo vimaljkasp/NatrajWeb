@@ -49,6 +49,7 @@
     <Compile Include="Common\ChangePasswordDTO.cs" />
     <Compile Include="Common\LoggedInUserDTO.cs" />
     <Compile Include="Common\ResponseDTO.cs" />
+    <Compile Include="Constants\NatrajMessages.cs" />
     <Compile Include="Customer\CustomerAgricultureDTO.cs" />
     <Compile Include="Customer\CustomerBankDTO.cs" />
     <Compile Include="Customer\CustomerDetailsDTO.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Interfaces\IDistributionCenterService.cs" />
     <Compile Include="Interfaces\ILoginService.cs" />
     <Compile Include="Interfaces\IProductService.cs" />
+    <Compile Include="Interfaces\ISMSService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Interfaces\IVLCMilkCollectionService.cs" />
     <Compile Include="Interfaces\IVLCService.cs" />

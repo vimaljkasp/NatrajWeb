@@ -1,3 +1,13 @@
 
 Platform.DTO/bin/
 Platform.DTO/obj/
+Platform.Repository/bin/
+Platform.Repository/obj/
+Platform.Service/bin/
+Platform.Service/obj/
+Platform.Sql/bin/
+Platform.Sql/obj/
+Platform.Utilities/bin/
+Platform.Utilities/obj/
+PlatformWeb/bin/
+PlatformWeb/obj/

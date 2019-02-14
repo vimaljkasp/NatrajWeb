@@ -31,7 +31,6 @@ namespace Platform.Sql
         public string ModifiedBy { get; set; }
         public System.DateTime ModifiedDate { get; set; }
     
-        public virtual DCOrder DCOrder { get; set; }
         public virtual DistributionCenter DistributionCenter { get; set; }
     }
 }

@@ -80,34 +80,35 @@ namespace Platform.Service
         public ResponseDTO AddDCPaymentDetail(DCPaymentDTO dCPaymentDTO)
         {
             ResponseDTO responseDTO = new ResponseDTO();
-
+            DCPaymentDetail dCPaymentDetail;
             if (dCPaymentDTO.PaymentCrAmount > 0)
             {
               UpdateDCWalletForOrder(dCPaymentDTO.DCId, dCPaymentDTO.PaymentCrAmount, true);
-                AddOrderPaymentDetail(dCPaymentDTO, 0, dCPaymentDTO.PaymentCrAmount);
+                dCPaymentDetail= AddOrderPaymentDetail(dCPaymentDTO, 0, dCPaymentDTO.PaymentCrAmount);
             }
             else
             {
                 UpdateDCWalletForOrder(dCPaymentDTO.DCId, dCPaymentDTO.PaymentDrAmount, false);
-                AddOrderPaymentDetail(dCPaymentDTO,0, dCPaymentDTO.PaymentDrAmount);
+                dCPaymentDetail= AddOrderPaymentDetail(dCPaymentDTO,0, dCPaymentDTO.PaymentDrAmount);
             }
             unitOfWork.SaveChanges();
-            //dCPaymentDTO = DCPaymentConvertor.ConvertToDCPaymentDTO(dCPaymentDetail);
-
+           dCPaymentDTO = DCPaymentConvertor.ConvertToDCPaymentDTO(dCPaymentDetail);
+           
             responseDTO.Status = true;
             responseDTO.Message = "DC Payment Detail Added Successfully";
             responseDTO.Data = dCPaymentDTO;
             return responseDTO;
         }
 
-        public void AddOrderPaymentDetail(DCPaymentDTO dCPaymentDTO,int orderId,decimal paidAmount)
+        public DCPaymentDetail AddOrderPaymentDetail(DCPaymentDTO dCPaymentDTO,int orderId,decimal paidAmount)
         {
             DCPaymentDetail dCPaymentDetail = new DCPaymentDetail();
             dCPaymentDetail.DCPaymentId = unitOfWork.DashboardRepository.NextNumberGenerator("DCPaymentDetail");
+            var dc = unitOfWork.DistributionCenterRepository.GetById(dCPaymentDTO.DCId);
             DCPaymentConvertor.ConvertToDCPaymentDetailEntity(ref dCPaymentDetail, dCPaymentDTO, false);
             dCPaymentDetail.DCOrderId = orderId;
              dCPaymentDetail.IsDeleted = false;
-            dCPaymentDetail.CreatedBy = dCPaymentDetail.ModifiedBy = "Admin";
+            dCPaymentDetail.CreatedBy = dCPaymentDetail.ModifiedBy = dc.AgentName;
             dCPaymentDetail.CreatedDate = dCPaymentDetail.ModifiedDate = DateTime.Now;
             if (dCPaymentDTO.PaymentDate != DateTime.MinValue)
                 dCPaymentDetail.PaymentDate = DateTime.Now.Date;
@@ -115,7 +116,7 @@ namespace Platform.Service
                 dCPaymentDetail.PaymentDate = dCPaymentDTO.PaymentDate;
             dCPaymentDetail.PaymentCrAmount = paidAmount;
             unitOfWork.DCPaymentDetailRepository.Add(dCPaymentDetail);
-          
+            return dCPaymentDetail;
         }
 
         public void UpdateDCWalletForOrder(int dcId, decimal orderAmount, bool isCredit)

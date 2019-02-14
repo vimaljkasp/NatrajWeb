@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -639,18 +639,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DCPaymentDetails_DCOrder">
-          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="1" />
-          <End Role="DCPaymentDetail" Type="Self.DCPaymentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DCOrder">
-              <PropertyRef Name="DCOrderId" />
-            </Principal>
-            <Dependent Role="DCPaymentDetail">
-              <PropertyRef Name="DCOrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DCWallet_DCId">
           <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="1" />
           <End Role="DCWallet" Type="Self.DCWallet" Multiplicity="*" />
@@ -807,10 +795,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetNextEntityNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EntityName" Type="nvarchar" Mode="In" />
-          <Parameter Name="NextNumber" Type="int" Mode="InOut" />
-        </Function>
         <EntityContainer Name="PlatformDBModelStoreContainer">
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerAgriculture" EntityType="Self.CustomerAgriculture" Schema="dbo" store:Type="Tables" />
@@ -879,10 +863,6 @@
             <End Role="DistributionCenter" EntitySet="DistributionCenter" />
             <End Role="DCPaymentDetail" EntitySet="DCPaymentDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_DCPaymentDetails_DCOrder" Association="Self.FK_DCPaymentDetails_DCOrder">
-            <End Role="DCOrder" EntitySet="DCOrder" />
-            <End Role="DCPaymentDetail" EntitySet="DCPaymentDetail" />
-          </AssociationSet>
           <AssociationSet Name="FK_DCWallet_DCId" Association="Self.FK_DCWallet_DCId">
             <End Role="DistributionCenter" EntitySet="DistributionCenter" />
             <End Role="DCWallet" EntitySet="DCWallet" />
@@ -936,7 +916,8 @@
             <End Role="VLCMilkCollectionDtl" EntitySet="VLCMilkCollectionDtl" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1063,7 +1044,6 @@
           <NavigationProperty Name="DCAddress" Relationship="Self.fk_DCOrder_DCAddress" FromRole="DCOrder" ToRole="DCAddress" />
           <NavigationProperty Name="DistributionCenter" Relationship="Self.fk_DCOrder_DistributionCenter" FromRole="DCOrder" ToRole="DistributionCenter" />
           <NavigationProperty Name="DCOrderDtls" Relationship="Self.fk_DCOrderDtl_DCOrder" FromRole="DCOrder" ToRole="DCOrderDtl" />
-          <NavigationProperty Name="DCPaymentDetails" Relationship="Self.FK_DCPaymentDetails_DCOrder" FromRole="DCOrder" ToRole="DCPaymentDetail" />
         </EntityType>
         <EntityType Name="DCOrderDtl">
           <Key>
@@ -1103,7 +1083,6 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="DCOrder" Relationship="Self.FK_DCPaymentDetails_DCOrder" FromRole="DCPaymentDetail" ToRole="DCOrder" />
           <NavigationProperty Name="DistributionCenter" Relationship="Self.FK_DCPaymentDetail_DistributionCenter" FromRole="DCPaymentDetail" ToRole="DistributionCenter" />
         </EntityType>
         <EntityType Name="DCWallet">
@@ -1238,6 +1217,18 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ProductBatches" Relationship="Self.FK_ProductBatch_MilkProcessing" FromRole="MilkProcessing" ToRole="ProductBatch" />
+        </EntityType>
+        <EntityType Name="NatrajConfiguration">
+          <Key>
+            <PropertyRef Name="KeyData" />
+            <PropertyRef Name="KeyName" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="KeyData" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KeyName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DataVal" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DefaultVal" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="NumberMaster">
           <Key>
@@ -1596,18 +1587,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DCPaymentDetails_DCOrder">
-          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="1" />
-          <End Role="DCPaymentDetail" Type="Self.DCPaymentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DCOrder">
-              <PropertyRef Name="DCOrderId" />
-            </Principal>
-            <Dependent Role="DCPaymentDetail">
-              <PropertyRef Name="DCOrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_DCOrderDtl_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="DCOrderDtl" Type="Self.DCOrderDtl" Multiplicity="*" />
@@ -1791,6 +1770,7 @@
           <EntitySet Name="DockRejectedMilks" EntityType="Self.DockRejectedMilk" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="MilkProcessings" EntityType="Self.MilkProcessing" />
+          <EntitySet Name="NatrajConfigurations" EntityType="Self.NatrajConfiguration" />
           <EntitySet Name="NumberMasters" EntityType="Self.NumberMaster" />
           <EntitySet Name="OrderStatus" EntityType="Self.OrderStatu" />
           <EntitySet Name="Products" EntityType="Self.Product" />
@@ -1838,10 +1818,6 @@
           <AssociationSet Name="fk_DCOrderDtl_DCOrder" Association="Self.fk_DCOrderDtl_DCOrder">
             <End Role="DCOrder" EntitySet="DCOrders" />
             <End Role="DCOrderDtl" EntitySet="DCOrderDtls" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DCPaymentDetails_DCOrder" Association="Self.FK_DCPaymentDetails_DCOrder">
-            <End Role="DCOrder" EntitySet="DCOrders" />
-            <End Role="DCPaymentDetail" EntitySet="DCPaymentDetails" />
           </AssociationSet>
           <AssociationSet Name="fk_DCOrderDtl_Product" Association="Self.fk_DCOrderDtl_Product">
             <End Role="Product" EntitySet="Products" />
@@ -1899,24 +1875,7 @@
             <End Role="VLCMilkCollection" EntitySet="VLCMilkCollections" />
             <End Role="VLCMilkCollectionDtl" EntitySet="VLCMilkCollectionDtls" />
           </AssociationSet>
-          <FunctionImport Name="GetNextEntityNumber">
-            <Parameter Name="EntityName" Mode="In" Type="String" />
-            <Parameter Name="NextNumber" Mode="InOut" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="NatrajConfigurations" EntityType="PlatformDBModel.NatrajConfiguration" />
         </EntityContainer>
-        <EntityType Name="NatrajConfiguration">
-          <Key>
-            <PropertyRef Name="KeyData" />
-            <PropertyRef Name="KeyName" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="KeyData" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="KeyName" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="DataVal" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="DefaultVal" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2212,6 +2171,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="NatrajConfigurations">
+            <EntityTypeMapping TypeName="PlatformDBModel.NatrajConfiguration">
+              <MappingFragment StoreEntitySet="NatrajConfigurations">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KeyData" ColumnName="KeyData" />
+                <ScalarProperty Name="KeyName" ColumnName="KeyName" />
+                <ScalarProperty Name="DataVal" ColumnName="DataVal" />
+                <ScalarProperty Name="DefaultVal" ColumnName="DefaultVal" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="NumberMasters">
             <EntityTypeMapping TypeName="PlatformDBModel.NumberMaster">
               <MappingFragment StoreEntitySet="NumberMaster">
@@ -2464,19 +2435,6 @@
                 <ScalarProperty Name="SMSMessage" ColumnName="SMSMessage" />
                 <ScalarProperty Name="SMSSentTime" ColumnName="SMSSentTime" />
                 <ScalarProperty Name="SMSErrorMsg" ColumnName="SMSErrorMsg" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetNextEntityNumber" FunctionName="PlatformDBModel.Store.GetNextEntityNumber" />
-          <EntitySetMapping Name="NatrajConfigurations">
-            <EntityTypeMapping TypeName="PlatformDBModel.NatrajConfiguration">
-              <MappingFragment StoreEntitySet="NatrajConfigurations">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DefaultVal" ColumnName="DefaultVal" />
-                <ScalarProperty Name="DataVal" ColumnName="DataVal" />
-                <ScalarProperty Name="KeyName" ColumnName="KeyName" />
-                <ScalarProperty Name="KeyData" ColumnName="KeyData" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

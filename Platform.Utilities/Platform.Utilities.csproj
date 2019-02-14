@@ -43,6 +43,7 @@
     <Compile Include="Encryption\EncryptionHelper.cs" />
     <Compile Include="ExceptionHandler\PlatformModuleException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="OTPGenerator.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

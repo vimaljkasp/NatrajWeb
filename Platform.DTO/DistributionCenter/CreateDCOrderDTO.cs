@@ -11,12 +11,11 @@ namespace Platform.DTO
     [Validator(typeof(CreateDCOrderDTOValidator))]
     public class CreateDCOrderDTO
     {
-
-        
-      
-        public int DCId { get; set; }
+      public int DCId { get; set; }
        
-    
+        public int DCOrderId { get; set; }
+
+
        public string OrderComments { get; set; }
      
         public List<CreateDCOrderDtlDTO> CreateDCOrderDtlList { get; set; }
@@ -25,7 +24,10 @@ namespace Platform.DTO
 
     public class CreateDCOrderDtlDTO
     {
+        public int DCOrderDtlId { get; set; }
         public int ProductId { get; set; }
+        public decimal UnitPrice { get; set; }
+
         public decimal QuantityOrdered { get; set; }
         public decimal ActualQuantity { get; set; }
        public decimal TotalPrice { get; set; }

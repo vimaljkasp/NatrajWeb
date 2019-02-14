@@ -23,7 +23,7 @@ namespace Platform.DTO
         public decimal OrderTotalPrice { get; set; }
         public decimal OrderPaidAmount { get; set; }
         public decimal TotalOrderQuantity { get; set; }
-        //public decimal TotalActualQuantity { get; set; }
+        public decimal TotalActualQuantity { get; set; }
         public string OrderStatus { get; set; }
         public DateTime DeliveryExpectedDate { get; set; }
         public DateTime DeliveredDate { get; set; }
@@ -61,10 +61,13 @@ namespace Platform.DTO
         public int DCOrderDtlId { get; set; }
         public int DCOrderId { get; set; }
         public int ProductId { get; set; }
+        public decimal UnitPrice { get; set; }
+
         public string ProductName { get; set; }
         public string ProductDescription { get; set; }
         public string ProductImageUrl { get; set; }
         public decimal QuantityOrdered { get; set; }
+        public decimal ActualQuantity { get; set; }
         //public decimal ActualQuantity { get; set; }
         //public decimal Price { get; set; }
         //public decimal OrderTax { get; set; }

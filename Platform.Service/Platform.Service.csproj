@@ -82,7 +82,6 @@
     <Compile Include="LoginService\LoggedInUserConvertor.cs" />
     <Compile Include="ProductService\ProductConvertor.cs" />
     <Compile Include="ProductService\ProductService.cs" />
-    <Compile Include="SMSService\ISMSService.cs" />
     <Compile Include="SMSService\SMSService.cs" />
     <Compile Include="UserService\UserConvertor.cs" />
     <Compile Include="UserService\UserService.cs" />

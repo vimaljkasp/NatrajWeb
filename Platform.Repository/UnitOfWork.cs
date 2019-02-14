@@ -18,6 +18,7 @@ namespace Platform.Service
 
         private MessageRepository messageRepository;
         private SMSRepository sMSRepository;
+        private ConfigurationRepository configurationRepository;
 
         private VLCRepository vLCRepository;
         private VLCMilkCollectionRepository vLCMilkCollectionRepository;
@@ -33,6 +34,8 @@ namespace Platform.Service
         private ProductCategoryRepository productCategoryRepository;
 
         public String ImagePath { get; set; }
+
+        public string Sender { get; set; }
 
         PlatformDBEntities _repository;
         public UnitOfWork()
@@ -250,6 +253,19 @@ namespace Platform.Service
                 else
                 {
                     return sMSRepository;
+                }
+            }
+        }
+
+        public ConfigurationRepository ConfigurationRepository
+        {
+            get
+            {
+                if (configurationRepository == null)
+                    return configurationRepository = new ConfigurationRepository(_repository);
+                else
+                {
+                    return configurationRepository;
                 }
             }
         }
