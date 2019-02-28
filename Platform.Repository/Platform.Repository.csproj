@@ -59,7 +59,10 @@
     <Compile Include="DistributionCenter\DCPaymentDetailRepository.cs" />
     <Compile Include="DistributionCenter\DCWalletRepository.cs" />
     <Compile Include="DistributionCenter\DistributionCenterRepository.cs" />
+    <Compile Include="Dock\DockMilkCollectionRepository.cs" />
     <Compile Include="MessageRepository.cs" />
+    <Compile Include="MilkRateRepository.cs" />
+    <Compile Include="NatrajConfiguration.cs" />
     <Compile Include="PagingConstant.cs" />
     <Compile Include="Product\ProductCategoryRepository.cs" />
     <Compile Include="Product\ProductRepository.cs" />
@@ -67,6 +70,7 @@
     <Compile Include="SMSRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="UserRepository.cs" />
+    <Compile Include="Reports\VLCReportRepository.cs" />
     <Compile Include="VLC\VLCMilkCollectionDtlRepository.cs" />
     <Compile Include="VLC\VLCMilkCollectionRepository.cs" />
     <Compile Include="VLC\VLCRepository.cs" />

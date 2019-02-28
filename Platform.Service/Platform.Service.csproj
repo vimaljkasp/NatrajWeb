@@ -53,6 +53,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Http, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
@@ -64,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminService\VLCAdminService.cs" />
     <Compile Include="CustomerAgricultureService\CustomerAgricultureConvertor.cs" />
     <Compile Include="CustomerAgricultureService\CustomerAgricultureService.cs" />
     <Compile Include="CustomerBankService\CustomerBankConvertor.cs" />
@@ -79,9 +81,12 @@
     <Compile Include="DistributionCenterService\DCWalletService.cs" />
     <Compile Include="DistributionCenterService\DistributionCenterConvertor.cs" />
     <Compile Include="DistributionCenterService\DistributionCenterService.cs" />
+    <Compile Include="DockCollectionService\DockCollectionConvertor.cs" />
+    <Compile Include="DockCollectionService\DockCollectionService.cs" />
     <Compile Include="LoginService\LoggedInUserConvertor.cs" />
     <Compile Include="ProductService\ProductConvertor.cs" />
     <Compile Include="ProductService\ProductService.cs" />
+    <Compile Include="SMSService\SMSConvertor.cs" />
     <Compile Include="SMSService\SMSService.cs" />
     <Compile Include="UserService\UserConvertor.cs" />
     <Compile Include="UserService\UserService.cs" />
@@ -116,6 +121,35 @@
   <ItemGroup>
     <Folder Include="CommonService\" />
     <Folder Include="LoggerService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

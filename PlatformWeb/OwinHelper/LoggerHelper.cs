@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Platform.Utilities;
+using System;
 using System.Configuration;
 using System.IO;
 using System.Net.Http;
@@ -25,7 +26,7 @@ namespace PlatformWeb
             
             ErrorLocation = ex.Message.ToString();
             requestMethod = requestMessage.Method.Method;
-            requestTimestamp = DateTime.Now;
+            requestTimestamp = DateTimeHelper.GetISTDateTime();
             requestUri = requestMessage.RequestUri.ToString();
             requestBody= requestMessage.Content.ReadAsStringAsync().Result;
             try
@@ -45,7 +46,7 @@ namespace PlatformWeb
                 }
                 using (StreamWriter sw = File.AppendText(filepath))
                 {
-                    string error = "Log Written Date:" + " " + DateTime.Now.ToString() + line
+                    string error = "Log Written Date:" + " " + DateTimeHelper.GetISTDateTime().ToString() + line
                         + "Error Line No :" + " " + ErrorlineNo + line 
                         + "Error Message:" + " " + Errormsg + line
                         + "Exception Type:" + " " + extype + line
@@ -53,7 +54,7 @@ namespace PlatformWeb
                         + " Error Page Url:" + " " + requestUri + line 
                         + " Method Type:"+ requestMethod + line 
                         + "User Host IP:" + " "  + line;
-                    sw.WriteLine("-----------Exception Details on " + " " + DateTime.Now.ToString() + "-----------------");
+                    sw.WriteLine("-----------Exception Details on " + " " + DateTimeHelper.GetISTDateTime().ToString() + "-----------------");
                     sw.WriteLine("-------------------------------------------------------------------------------------");
                     sw.WriteLine(line);
                     sw.WriteLine(error);

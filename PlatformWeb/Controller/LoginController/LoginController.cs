@@ -1,17 +1,14 @@
-﻿
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
-using Platform.Service;
-using Platform.Utilities.ExceptionHandler;
 using System.Configuration;
 using Platform.DTO;
+using Platform.Utilities;
 
 namespace PlatformWeb.Controller
 {
@@ -48,7 +45,7 @@ namespace PlatformWeb.Controller
                             issuer: baseAddress,
                             audience: baseAddress,
                             claims: new List<Claim>(),
-                            expires: DateTime.Now.AddMinutes(6),
+                            expires: DateTimeHelper.GetISTDateTime().AddMinutes(6),
                             signingCredentials: signingCredientials);
                         var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
                         loggedInUserDTO.TokenString = tokenString;

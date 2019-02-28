@@ -18,9 +18,10 @@ namespace Platform.Sql
         public VLC()
         {
             this.Customers = new HashSet<Customer>();
-            this.DockMilkCollectionDetails = new HashSet<DockMilkCollectionDetail>();
-            this.DockRejectedMilks = new HashSet<DockRejectedMilk>();
+            this.DockMilkCollections = new HashSet<DockMilkCollection>();
             this.VLCMilkCollections = new HashSet<VLCMilkCollection>();
+            this.VLCPaymentDetails = new HashSet<VLCPaymentDetail>();
+            this.VLCWallets = new HashSet<VLCWallet>();
         }
     
         public int VLCId { get; set; }
@@ -45,14 +46,21 @@ namespace Platform.Sql
         public Nullable<decimal> CLR { get; set; }
         public Nullable<decimal> FAT { get; set; }
         public Nullable<decimal> DifferenceCLR { get; set; }
+        public int ApplicableRate { get; set; }
+        public Nullable<int> CurrentShift { get; set; }
+        public Nullable<decimal> MilkCommission { get; set; }
+        public Nullable<decimal> HouseRent { get; set; }
+        public Nullable<decimal> MachineRent { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer> Customers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DockMilkCollectionDetail> DockMilkCollectionDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DockRejectedMilk> DockRejectedMilks { get; set; }
+        public virtual ICollection<DockMilkCollection> DockMilkCollections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VLCMilkCollection> VLCMilkCollections { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VLCPaymentDetail> VLCPaymentDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VLCWallet> VLCWallets { get; set; }
     }
 }

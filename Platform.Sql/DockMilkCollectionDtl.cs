@@ -12,21 +12,20 @@ namespace Platform.Sql
     using System;
     using System.Collections.Generic;
     
-    public partial class DockRejectedMilk
+    public partial class DockMilkCollectionDtl
     {
-        public int DockRejectedMilkId { get; set; }
-        public Nullable<int> VLCId { get; set; }
-        public Nullable<int> TotalRejectedCan { get; set; }
-        public Nullable<int> ReturnedCan { get; set; }
-        public Nullable<int> NoOfProcessCan { get; set; }
-        public Nullable<decimal> QuantityRejected { get; set; }
-        public Nullable<decimal> QuantityProcessed { get; set; }
+        public int DockMilkCollectionDtlI { get; set; }
+        public int DockMilkCollectionId { get; set; }
+        public Nullable<int> ProductId { get; set; }
         public Nullable<decimal> FAT { get; set; }
-        public Nullable<decimal> SNF { get; set; }
+        public Nullable<decimal> CLR { get; set; }
+        public Nullable<int> TotalCan { get; set; }
+        public Nullable<int> TotalRejectedCan { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
+        public Nullable<decimal> RejectedQuantity { get; set; }
         public Nullable<decimal> RatePerUnit { get; set; }
         public Nullable<decimal> TotalAmount { get; set; }
-        public Nullable<System.DateTime> RejectionDate { get; set; }
-        public string ReasonForRejection { get; set; }
+        public string RejectedReason { get; set; }
         public string Comments { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
@@ -34,6 +33,6 @@ namespace Platform.Sql
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual VLC VLC { get; set; }
+        public virtual DockMilkCollection DockMilkCollection { get; set; }
     }
 }

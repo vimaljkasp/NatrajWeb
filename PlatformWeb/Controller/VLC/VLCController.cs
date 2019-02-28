@@ -1,11 +1,5 @@
 ﻿using Platform.DTO;
-using Platform.Service;
-using Platform.Utilities.ExceptionHandler;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Platform.Utilities;
 using System.Web.Http;
 
 namespace PlatformWeb.Controller
@@ -57,6 +51,33 @@ namespace PlatformWeb.Controller
             try
             {
                 return Ok(_vlcService.GetVLCById(id));
+            }
+            catch (PlatformModuleException ex)
+            {
+                return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
+            }
+        }
+
+        [Route("api/GetVLCCollectionSummary/{id}")]
+        public IHttpActionResult GetVLCCollectionSummary(int id)
+        {
+            try
+            {
+                return Ok(_vlcService.GetVLCCollectionSummary(id));
+            }
+            catch (PlatformModuleException ex)
+            {
+                return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
+            }
+        }
+
+
+        [Route("api/GetCustomerCollectionSummary/{id}")]
+        public IHttpActionResult GetCustomerCollectionSummary(int id)
+        {
+            try
+            {
+                return Ok(_vlcService.GetCustomerCollectionSummary(id));
             }
             catch (PlatformModuleException ex)
             {

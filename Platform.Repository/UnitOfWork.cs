@@ -1,4 +1,4 @@
-﻿using Platform.Repository;
+﻿
 using Platform.Sql;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Platform.Service
+namespace Platform.Repository
 {
     public class UnitOfWork : IDisposable
     {
@@ -19,6 +19,8 @@ namespace Platform.Service
         private MessageRepository messageRepository;
         private SMSRepository sMSRepository;
         private ConfigurationRepository configurationRepository;
+        private MilkRateRepository milkRateRepository;
+        private VLCReportRepository vLCReportRepository;
 
         private VLCRepository vLCRepository;
         private VLCMilkCollectionRepository vLCMilkCollectionRepository;
@@ -29,19 +31,41 @@ namespace Platform.Service
         private DCOrderDtlRepository dCOrderDtlRepository;
         private DCWalletRepository dCWalletRepository;
         private DCPaymentDetailRepository dCPaymentDetailRepository;
-
+        private DockMilkCollectionRepository dockMilkCollectionRepository;
         private ProductRepository productRepository;
         private ProductCategoryRepository productCategoryRepository;
 
-        public String ImagePath { get; set; }
-
-        public string Sender { get; set; }
+        private NatrajConfigurationSettings natrajConfigurationSettings; 
 
         PlatformDBEntities _repository;
         public UnitOfWork()
         {
             _repository= new PlatformDBEntities();
-            ImagePath = @"http://service.natrajdairy.com/img/";
+           
+        }
+
+
+        public NatrajConfigurationSettings NatrajConfigurationSettings
+        {
+            get
+            {
+                if (natrajConfigurationSettings == null)
+                {
+                    return natrajConfigurationSettings = new NatrajConfigurationSettings()
+                    {
+                        ImagePath = @"http://service.natrajdairy.com/img/",
+                        MilkRatePath = @"http://service.natrajdairy.com/MilkRate/",
+                        SenderMobileNumber = this.ConfigurationRepository.GetConfiguration("SMS", "SenderNumber", "9566812835"),
+                        SMSServiceUserName = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "adam"),
+                        SMSServicePassword = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "12345"),
+                        VLCCollectionMessage = "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}"
+                    };
+                }
+                else
+                {
+                    return natrajConfigurationSettings;
+                }
+            }
         }
 
 
@@ -256,6 +280,45 @@ namespace Platform.Service
                 }
             }
         }
+
+        public MilkRateRepository MilkRateRepository
+        {
+            get
+            {
+                if (milkRateRepository == null)
+                    return milkRateRepository = new MilkRateRepository(_repository);
+                else
+                {
+                    return milkRateRepository;
+                }
+            }
+        }
+
+        public VLCReportRepository VLCReportRepository
+        {
+            get
+            {
+                if (vLCReportRepository == null)
+                    return vLCReportRepository = new VLCReportRepository(_repository);
+                else
+                {
+                    return vLCReportRepository;
+                }
+            }
+        }
+
+        public DockMilkCollectionRepository DockMilkCollectionRepository
+        {
+            get
+            {
+                if (dockMilkCollectionRepository == null)
+                    return dockMilkCollectionRepository = new DockMilkCollectionRepository(_repository);
+                else
+                    return dockMilkCollectionRepository;
+            }
+
+        }
+
 
         public ConfigurationRepository ConfigurationRepository
         {

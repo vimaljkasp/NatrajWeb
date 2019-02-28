@@ -169,6 +169,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Admin\VLCAdminsController.cs" />
     <Compile Include="Controller\Customer\CustomerAgriculturesController.cs" />
     <Compile Include="Controller\Customer\CustomerBanksController.cs" />
     <Compile Include="Controller\Customer\CustomersController.cs" />

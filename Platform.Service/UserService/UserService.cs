@@ -1,14 +1,10 @@
-﻿
-using Platform.DTO;
+﻿using Platform.DTO;
 using Platform.Repository;
 using Platform.Sql;
-using Platform.Utilities.Encryption;
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Platform.Service
 {
@@ -103,7 +99,7 @@ namespace Platform.Service
             //EmployeeSession employeeSession = new EmployeeSession();
             //employeeSession.SiteId = logindto.SiteId;
             //employeeSession.EmployeeId = employee.EmployeeId;
-            //employeeSession.SessionStartDtm = DateTime.Now;
+            //employeeSession.SessionStartDtm = DateTimeHelper.GetISTDateTime();
             //employeeSession.SessionEndDtm = DateTime.MaxValue;
             //employeeSession.IsLogout = false;
             //unitOfWork.EmployeeSessionRepository.Add(employeeSession);

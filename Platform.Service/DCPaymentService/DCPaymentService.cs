@@ -1,12 +1,10 @@
 ﻿using Platform.DTO;
 using Platform.Repository;
 using Platform.Sql;
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Platform.Service
 {
@@ -109,9 +107,9 @@ namespace Platform.Service
             dCPaymentDetail.DCOrderId = orderId;
              dCPaymentDetail.IsDeleted = false;
             dCPaymentDetail.CreatedBy = dCPaymentDetail.ModifiedBy = dc.AgentName;
-            dCPaymentDetail.CreatedDate = dCPaymentDetail.ModifiedDate = DateTime.Now;
+            dCPaymentDetail.CreatedDate = dCPaymentDetail.ModifiedDate = DateTimeHelper.GetISTDateTime();
             if (dCPaymentDTO.PaymentDate != DateTime.MinValue)
-                dCPaymentDetail.PaymentDate = DateTime.Now.Date;
+                dCPaymentDetail.PaymentDate = DateTimeHelper.GetISTDateTime().Date;
             else
                 dCPaymentDetail.PaymentDate = dCPaymentDTO.PaymentDate;
             dCPaymentDetail.PaymentCrAmount = paidAmount;
@@ -147,7 +145,7 @@ namespace Platform.Service
             dcPayment.PaymentCrAmount = dCPaymentDTO.PaymentCrAmount;
             dcPayment.PaymentDrAmount = dCPaymentDTO.PaymentDrAmount;
             dcPayment.ModifiedBy = "Admin";
-            dcPayment.ModifiedDate = DateTime.Now;
+            dcPayment.ModifiedDate = DateTimeHelper.GetISTDateTime();
 
             unitOfWork.DCPaymentDetailRepository.Update(dcPayment);
             unitOfWork.SaveChanges();

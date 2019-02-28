@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Platform.Utilities.ExceptionHandler
+namespace Platform.Utilities
 {
     public class PlatformModuleException : Exception
     {

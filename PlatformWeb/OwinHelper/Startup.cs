@@ -109,6 +109,7 @@ namespace PlatformWeb
             container.RegisterType<IVLCService, VLCService>(new HierarchicalLifetimeManager());
             container.RegisterType<IVLCMilkCollectionService, VLCMilkCollectionService>(new HierarchicalLifetimeManager());
 
+            container.RegisterType<IVLCAdminService, VLCAdminService>(new HierarchicalLifetimeManager());
 
             ////Dashboard
 

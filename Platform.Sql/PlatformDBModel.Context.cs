@@ -35,8 +35,7 @@ namespace Platform.Sql
         public virtual DbSet<DCWallet> DCWallets { get; set; }
         public virtual DbSet<DistributionCenter> DistributionCenters { get; set; }
         public virtual DbSet<DockMilkCollection> DockMilkCollections { get; set; }
-        public virtual DbSet<DockMilkCollectionDetail> DockMilkCollectionDetails { get; set; }
-        public virtual DbSet<DockRejectedMilk> DockRejectedMilks { get; set; }
+        public virtual DbSet<DockMilkCollectionDtl> DockMilkCollectionDtls { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<MilkProcessing> MilkProcessings { get; set; }
         public virtual DbSet<NatrajConfiguration> NatrajConfigurations { get; set; }
@@ -55,6 +54,9 @@ namespace Platform.Sql
         public virtual DbSet<VLC> VLCs { get; set; }
         public virtual DbSet<VLCMilkCollection> VLCMilkCollections { get; set; }
         public virtual DbSet<VLCMilkCollectionDtl> VLCMilkCollectionDtls { get; set; }
+        public virtual DbSet<VLCPaymentDetail> VLCPaymentDetails { get; set; }
+        public virtual DbSet<VLCWallet> VLCWallets { get; set; }
+        public virtual DbSet<MilkRate> MilkRates { get; set; }
         public virtual DbSet<NatrajSMSLog> NatrajSMSLogs { get; set; }
     }
 }

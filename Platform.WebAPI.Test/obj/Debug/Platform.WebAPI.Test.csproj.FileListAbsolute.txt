@@ -1,0 +1,7 @@
+F:\GitHub\Natraj\PlatformWeb\Platform.WebAPI.Test\bin\Debug\Platform.WebAPI.Test.exe.config
+F:\GitHub\Natraj\PlatformWeb\Platform.WebAPI.Test\bin\Debug\Platform.WebAPI.Test.exe
+F:\GitHub\Natraj\PlatformWeb\Platform.WebAPI.Test\bin\Debug\Platform.WebAPI.Test.pdb
+F:\GitHub\Natraj\PlatformWeb\Platform.WebAPI.Test\obj\Debug\Platform.WebAPI.Test.csprojAssemblyReference.cache
+F:\GitHub\Natraj\PlatformWeb\Platform.WebAPI.Test\obj\Debug\Platform.WebAPI.Test.csproj.CoreCompileInputs.cache
+F:\GitHub\Natraj\PlatformWeb\Platform.WebAPI.Test\obj\Debug\Platform.WebAPI.Test.exe
+F:\GitHub\Natraj\PlatformWeb\Platform.WebAPI.Test\obj\Debug\Platform.WebAPI.Test.pdb

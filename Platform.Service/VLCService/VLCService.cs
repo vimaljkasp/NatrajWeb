@@ -1,13 +1,10 @@
 ﻿using Platform.DTO;
 using Platform.Repository;
 using Platform.Sql;
-using Platform.Utilities.Encryption;
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Platform.Service
 {
@@ -82,21 +79,15 @@ namespace Platform.Service
             ResponseDTO responseDTO = new ResponseDTO();
             VLC vLC = new VLC();
             vLC.VLCId = unitOfWork.DashboardRepository.NextNumberGenerator("VLC");
-            vLC.CreatedDate = DateTime.Now.Date;
-            vLC.ModifiedDate = DateTime.Now.Date;
+            vLC.CreatedDate = DateTimeHelper.GetISTDateTime();
+            vLC.ModifiedDate = DateTimeHelper.GetISTDateTime();
             vLC.CreatedBy = vlcDto.ModifiedBy = "Vimal";
-            vLC.VLCEnrollmentDate = DateTime.Now.Date;
+            vLC.VLCEnrollmentDate = DateTimeHelper.GetISTDateTime().Date;
             vLC.IsDeleted = false;
             vLC.Password = EncryptionHelper.Encryptword(vlcDto.Password);
             VLCConvertor.ConvertToVLCEntity(ref vLC, vlcDto, false);
             unitOfWork.VLCRepository.Add(vLC);
-            //creating customer wallet with customer 
-            //CustomerWallet customerWallet = new CustomerWallet();
-            //customerWallet.WalletId = unitOfWork.DashboardRepository.NextNumberGenerator("CustomerWallet");
-            //customerWallet.CustomerId = customer.CustomerId;
-            //customerWallet.WalletBalance = 0;
-            //customerWallet.AmountDueDate = DateTime.Now.AddDays(10);
-            //unitOfWork.CustomerWalletRepository.Add(customerWallet);
+    
             responseDTO.Status = true;
             responseDTO.Message = "VLC Succesfully Created";
             responseDTO.Data = VLCConvertor.ConvertToVLCDto(vLC);
@@ -113,7 +104,7 @@ namespace Platform.Service
             var vlc = unitOfWork.VLCRepository.GetById(vlcDto.VLCId);
             VLCConvertor.ConvertToVLCEntity(ref vlc, vlcDto, true);
             vlc.ModifiedBy = vlc.AgentName;
-            vlc.ModifiedDate = DateTime.Now;
+            vlc.ModifiedDate = DateTimeHelper.GetISTDateTime();
             unitOfWork.VLCRepository.Update(vlc);
             unitOfWork.SaveChanges();
             ResponseDTO responseDTO = new ResponseDTO();
@@ -128,11 +119,7 @@ namespace Platform.Service
             UnitOfWork unitOfWork = new UnitOfWork();
             //get customer
             var vlc = unitOfWork.VLCRepository.GetById(id);
-            //if((customer.ProductOrders !=null && customer.ProductOrders.Count()>0) || (customer.CustomerWallets !=null && 
-            //    customer.CustomerWallets.Count()>0 && customer.CustomerWallets.FirstOrDefault().WalletBalance>0))
-            //    {
-            //    throw new PlatformModuleException("Customer Account Cannot be deleted as it is associated with orders");
-            //}
+        
             unitOfWork.VLCRepository.Delete(id);
             unitOfWork.SaveChanges();
   
@@ -153,6 +140,24 @@ namespace Platform.Service
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public ResponseDTO GetVLCCollectionSummary(int vlcId)
+        {
+            ResponseDTO responseDTO=new ResponseDTO();
+            responseDTO.Data = unitOfWork.VLCReportRepository.GetCollectionSummaryReportByVLC(vlcId);
+            responseDTO.Status = true;
+            responseDTO.Message = "VLC Collection Summary Report";
+            return responseDTO;
+        }
+
+        public ResponseDTO GetCustomerCollectionSummary(int customerId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.Data = unitOfWork.VLCReportRepository.GetCollectionSummaryReportByCustomer(customerId);
+            responseDTO.Status = true;
+            responseDTO.Message = "Customer Collection Summary Report";
+            return responseDTO;
         }
 
 

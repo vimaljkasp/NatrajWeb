@@ -10,6 +10,8 @@ namespace Platform.DTO
     {
         SignUp=1,
         DCOrderConfirmation=2,
+        VLCMilkCollection=3,
+        DockMilkCollection
 
     }
 }

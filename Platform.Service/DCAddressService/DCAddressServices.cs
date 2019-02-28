@@ -1,12 +1,10 @@
 ﻿using Platform.DTO;
 using Platform.Repository;
 using Platform.Sql;
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Platform.Service
 {
@@ -54,7 +52,29 @@ namespace Platform.Service
             return responseDTO;
         }
 
-
+        public ResponseDTO GetAllDCAddressByDCId(int dcId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            List<DCAddressDTO> dCAddresses = new List<DCAddressDTO>();
+            List<DCAddress> dCAddressAll = unitOfWork.DCAddressRepository.GetAllDCAddressByDCId(dcId);
+            if (dCAddressAll != null)
+            {
+                foreach (var address in dCAddressAll)
+                {
+                    dCAddresses.Add(DCAddressConvertor.ConvertToDCAddressDTO(address));
+                }
+                responseDTO.Status = true;
+                responseDTO.Message = "DC Address Details For Distribution Center";
+                responseDTO.Data = dCAddresses;
+            }
+            else
+            {
+                responseDTO.Status = false;
+                responseDTO.Message = String.Format("DC Address Details with DC ID {0} not found", dcId);
+                responseDTO.Data = new object();
+            }
+            return responseDTO;
+        }
 
         public ResponseDTO AddDCAddress(DCAddressDTO dCAddressDto)
         {

@@ -14,19 +14,37 @@ namespace Platform.Sql
     
     public partial class DockMilkCollection
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DockMilkCollection()
+        {
+            this.DockMilkCollectionDtls = new HashSet<DockMilkCollectionDtl>();
+            this.VLCPaymentDetails = new HashSet<VLCPaymentDetail>();
+        }
+    
         public int DockMilkCollectionId { get; set; }
-        public Nullable<System.DateTime> CollectionDate { get; set; }
-        public Nullable<int> TotalNoOfCan { get; set; }
+        public int VLCId { get; set; }
+        public System.DateTime CollectionDateTime { get; set; }
+        public int ShiftId { get; set; }
+        public Nullable<int> TotalCan { get; set; }
         public Nullable<int> TotalRejectedCan { get; set; }
-        public Nullable<decimal> TotalQuantity { get; set; }
-        public Nullable<decimal> AverageFAT { get; set; }
-        public Nullable<decimal> AverageSNF { get; set; }
-        public Nullable<decimal> TotalRejectedQuantity { get; set; }
+        public decimal TotalQuantity { get; set; }
+        public Nullable<decimal> RejectedQuantity { get; set; }
+        public decimal Amount { get; set; }
+        public Nullable<decimal> Commission { get; set; }
+        public decimal TotalAmount { get; set; }
+        public string BillNumber { get; set; }
+        public string ReceiverName { get; set; }
         public string Comments { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+    
+        public virtual VLC VLC { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DockMilkCollectionDtl> DockMilkCollectionDtls { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VLCPaymentDetail> VLCPaymentDetails { get; set; }
     }
 }

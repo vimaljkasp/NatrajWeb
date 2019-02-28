@@ -1,11 +1,11 @@
 ﻿using Platform.DTO;
+using Platform.Repository;
 using Platform.Sql;
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Platform.Service
 {
@@ -58,13 +58,13 @@ namespace Platform.Service
                 dcOrder.DCOrderNumber = distributionCenter.DCCode + "OD" + dcOrder.DCOrderId.ToString();
                 dcOrder.DCId = dCOrderDTO.DCId;
                    dcOrder.OrderAddressId = distributionCenter.DCAddresses.FirstOrDefault().DCAddressId;
-                dcOrder.OrderDate = DateTime.Now;
-                dcOrder.CreatedDate = DateTime.Now;
-                dcOrder.ModifiedDate = DateTime.Now;
+                dcOrder.OrderDate = DateTimeHelper.GetISTDateTime(); 
+                dcOrder.CreatedDate = DateTimeHelper.GetISTDateTime();
+                dcOrder.ModifiedDate = DateTimeHelper.GetISTDateTime();
                 dcOrder.CreatedBy = dcOrder.ModifiedBy = distributionCenter.AgentName;
                 dcOrder.IsDeleted = false;
                 dcOrder.OrderStatusId = (int)OrderStatus.Placed;
-                dcOrder.DeliveryExpectedDate = DateTime.Now.AddDays(1);
+                dcOrder.DeliveryExpectedDate = DateTimeHelper.GetISTDateTime().AddDays(1);
                 dcOrder.OrderComments = dCOrderDTO.OrderComments;
                 if (dCOrderDTO.CreateDCOrderDtlList != null)
                 {
@@ -110,11 +110,11 @@ namespace Platform.Service
             if (dcOrder != null && dCOrderDTO!=null && dCOrderDTO.CreateDCOrderDtlList != null)
             {
               
-                dcOrder.ModifiedDate = DateTime.Now;
+                dcOrder.ModifiedDate = DateTimeHelper.GetISTDateTime();
                 dcOrder.ModifiedBy = distributionCenter.AgentName;
                  dcOrder.OrderStatusId = (int)OrderStatus.Received;
-                dcOrder.DeliveryExpectedDate = DateTime.Now;
-                dcOrder.DeliveredDate = DateTime.Now;
+                dcOrder.DeliveryExpectedDate = DateTimeHelper.GetISTDateTime();
+                dcOrder.DeliveredDate = DateTimeHelper.GetISTDateTime();
                 if(string.IsNullOrWhiteSpace(dCOrderDTO.OrderComments)==false)
                 dcOrder.OrderComments = dCOrderDTO.OrderComments;
                 if (dCOrderDTO.CreateDCOrderDtlList != null)
@@ -166,13 +166,13 @@ namespace Platform.Service
         {
             DCPaymentDetail dCPaymentDetail = new DCPaymentDetail();
             dCPaymentDetail.DCPaymentId = unitOfWork.DashboardRepository.NextNumberGenerator("DCPaymentDetail");
-            dCPaymentDetail.CreatedDate=dCPaymentDetail.ModifiedDate = DateTime.Now;
+            dCPaymentDetail.CreatedDate=dCPaymentDetail.ModifiedDate = DateTimeHelper.GetISTDateTime();
             dCPaymentDetail.CreatedBy = dCPaymentDetail.ModifiedBy= distributionCenter.AgentName;
             dCPaymentDetail.DCId = distributionCenter.DCId;
             dCPaymentDetail.DCOrderId = dCOrder.DCOrderId;
             dCPaymentDetail.IsDeleted = false;
             dCPaymentDetail.PaymentComments = "Initial Order Amount";
-            dCPaymentDetail.PaymentDate = DateTime.Now;
+            dCPaymentDetail.PaymentDate = DateTimeHelper.GetISTDateTime();
             dCPaymentDetail.PaymentDrAmount = dCOrder.OrderTotalPrice;
             unitOfWork.DCPaymentDetailRepository.Add(dCPaymentDetail);
             UpdateDCWalletForOrder(distributionCenter.DCId, dCOrder.OrderTotalPrice, false);
@@ -188,7 +188,7 @@ namespace Platform.Service
             List<DCOrderDTO> dcOrderDTOList = new List<DCOrderDTO>();
             foreach(var dcOrder in dcOrders)
             {
-                dcOrderDTOList.Add(DCOrderConvertor.ConvertToDCOrderDto(dcOrder,unitOfWork.ImagePath));
+                dcOrderDTOList.Add(DCOrderConvertor.ConvertToDCOrderDto(dcOrder,unitOfWork.NatrajConfigurationSettings.ImagePath));
             }
             responseDTO.Data = dcOrderDTOList;
             return responseDTO;
@@ -199,7 +199,7 @@ namespace Platform.Service
             
             var dcOrder = unitOfWork.DCOrderRepository.GetDCOrderByOrderId(orderId);
          
-            DCOrderDTO dCOrderDTO = DCOrderConvertor.ConvertToDCOrderDto(dcOrder, unitOfWork.ImagePath);
+            DCOrderDTO dCOrderDTO = DCOrderConvertor.ConvertToDCOrderDto(dcOrder, unitOfWork.NatrajConfigurationSettings.ImagePath);
        
             return dCOrderDTO;
         }

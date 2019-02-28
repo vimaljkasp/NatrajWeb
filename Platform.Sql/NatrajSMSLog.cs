@@ -22,5 +22,6 @@ namespace Platform.Sql
         public string SMSMessage { get; set; }
         public Nullable<System.DateTime> SMSSentTime { get; set; }
         public string SMSErrorMsg { get; set; }
+        public int SMSStatus { get; set; }
     }
 }

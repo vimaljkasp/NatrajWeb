@@ -12,4 +12,11 @@ namespace Platform.DTO
         VLC,
         CRM,
     }
+
+    public enum SMSStatusId
+    {
+        Queue=1,
+        Successfull,
+        Failed,
+    }
 }

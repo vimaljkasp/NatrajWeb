@@ -2,14 +2,9 @@
 using Platform.Repository;
 using Platform.Sql;
 using Platform.Utilities;
-using Platform.Utilities.Encryption;
-using Platform.Utilities.ExceptionHandler;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Platform.Service
 {
@@ -27,11 +22,11 @@ namespace Platform.Service
             DistributionCenterConvertor.ConvertToDistributionCenterEntity(ref distributionCenter, distributionCenterDTO, false);
             //   customer.CustomerCode = unitOfWork.CustomerRepository.GetCustomerCodeIdByVLC(customerDto.VLCId);
             distributionCenter.DCCode = "DC" + distributionCenter.DCId.ToString();
-            distributionCenter.CreatedDate = DateTime.Now;
-            distributionCenter.ModifiedDate = DateTime.Now;
+            distributionCenter.CreatedDate = DateTimeHelper.GetISTDateTime();
+            distributionCenter.ModifiedDate = DateTimeHelper.GetISTDateTime();
             distributionCenter.CreatedBy = distributionCenter.ModifiedBy = "Admin";
                // unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerDto.VLCId);
-            distributionCenter.DateOfRegistration = DateTime.Now.Date;
+            distributionCenter.DateOfRegistration = DateTimeHelper.GetISTDateTime().Date;
             distributionCenter.IsDeleted = true;
             distributionCenter.Pin = OTPGenerator.GetSixDigitOTP();
             distributionCenterDTO.DCId = distributionCenter.DCId;
@@ -65,7 +60,7 @@ namespace Platform.Service
             {
                 DistributionCenterConvertor.ConvertToDistributionCenterEntity(ref distributionCenter, distributionCenterDTO, true);
                 distributionCenter.ModifiedBy = distributionCenter.AgentName;
-                distributionCenter.ModifiedDate = DateTime.Now;
+                distributionCenter.ModifiedDate = DateTimeHelper.GetISTDateTime();
                 unitOfWork.DistributionCenterRepository.Update(distributionCenter);
                 unitOfWork.SaveChanges();
                 ResponseDTO responseDTO = new ResponseDTO();
@@ -107,7 +102,7 @@ namespace Platform.Service
             dCWallet.WalletId = unitOfWork.DashboardRepository.NextNumberGenerator("DCWallet");
             dCWallet.DCId = distributionCenter.DCId;
             dCWallet.WalletBalance = 0;
-            dCWallet.AmountDueDate = DateTime.Now.AddDays(10);
+            dCWallet.AmountDueDate = DateTimeHelper.GetISTDateTime().AddDays(10);
             distributionCenter.DCWallets.Add(dCWallet);
           //  unitOfWork.DCWalletRepository.Add(dCWallet);
         }
