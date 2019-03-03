@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -815,18 +815,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VLCPaymentDetail_DockMilkCollection">
-          <End Role="DockMilkCollection" Type="Self.DockMilkCollection" Multiplicity="1" />
-          <End Role="VLCPaymentDetail" Type="Self.VLCPaymentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DockMilkCollection">
-              <PropertyRef Name="DockMilkCollectionId" />
-            </Principal>
-            <Dependent Role="VLCPaymentDetail">
-              <PropertyRef Name="DockMilkCollectionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_VLCPaymentDetail_VLC">
           <End Role="VLC" Type="Self.VLC" Multiplicity="1" />
           <End Role="VLCPaymentDetail" Type="Self.VLCPaymentDetail" Multiplicity="*" />
@@ -973,10 +961,6 @@
             <End Role="VLCMilkCollection" EntitySet="VLCMilkCollection" />
             <End Role="VLCMilkCollectionDtl" EntitySet="VLCMilkCollectionDtl" />
           </AssociationSet>
-          <AssociationSet Name="FK_VLCPaymentDetail_DockMilkCollection" Association="Self.FK_VLCPaymentDetail_DockMilkCollection">
-            <End Role="DockMilkCollection" EntitySet="DockMilkCollection" />
-            <End Role="VLCPaymentDetail" EntitySet="VLCPaymentDetail" />
-          </AssociationSet>
           <AssociationSet Name="FK_VLCPaymentDetail_VLC" Association="Self.FK_VLCPaymentDetail_VLC">
             <End Role="VLC" EntitySet="VLC" />
             <End Role="VLCPaymentDetail" EntitySet="VLCPaymentDetail" />
@@ -986,7 +970,8 @@
             <End Role="VLCWallet" EntitySet="VLCWallet" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1218,7 +1203,6 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="VLC" Relationship="Self.FK_DockMilkCollection_VLC" FromRole="DockMilkCollection" ToRole="VLC" />
           <NavigationProperty Name="DockMilkCollectionDtls" Relationship="Self.FK_DockMilkCollectionDtl_DockMilkCollection" FromRole="DockMilkCollection" ToRole="DockMilkCollectionDtl" />
-          <NavigationProperty Name="VLCPaymentDetails" Relationship="Self.FK_VLCPaymentDetail_DockMilkCollection" FromRole="DockMilkCollection" ToRole="VLCPaymentDetail" />
         </EntityType>
         <EntityType Name="DockMilkCollectionDtl">
           <Key>
@@ -1237,11 +1221,6 @@
           <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="RejectedReason" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="DockMilkCollection" Relationship="Self.FK_DockMilkCollectionDtl_DockMilkCollection" FromRole="DockMilkCollectionDtl" ToRole="DockMilkCollection" />
         </EntityType>
         <EntityType Name="Message">
@@ -1555,7 +1534,6 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="DockMilkCollection" Relationship="Self.FK_VLCPaymentDetail_DockMilkCollection" FromRole="VLCPaymentDetail" ToRole="DockMilkCollection" />
           <NavigationProperty Name="VLC" Relationship="Self.FK_VLCPaymentDetail_VLC" FromRole="VLCPaymentDetail" ToRole="VLC" />
         </EntityType>
         <EntityType Name="VLCWallet">
@@ -1747,10 +1725,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VLCPaymentDetail_DockMilkCollection">
-          <End Role="DockMilkCollection" Type="Self.DockMilkCollection" Multiplicity="1" />
-          <End Role="VLCPaymentDetail" Type="Self.VLCPaymentDetail" Multiplicity="*" />
-        </Association>
         <Association Name="FK_ProductBatch_MilkProcessing">
           <End Role="MilkProcessing" Type="Self.MilkProcessing" Multiplicity="0..1" />
           <End Role="ProductBatch" Type="Self.ProductBatch" Multiplicity="*" />
@@ -1883,7 +1857,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="PlatformDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="CustomerAgricultures" EntityType="Self.CustomerAgriculture" />
           <EntitySet Name="CustomerBanks" EntityType="Self.CustomerBank" />
@@ -1969,10 +1943,6 @@
             <End Role="DockMilkCollection" EntitySet="DockMilkCollections" />
             <End Role="DockMilkCollectionDtl" EntitySet="DockMilkCollectionDtls" />
           </AssociationSet>
-          <AssociationSet Name="FK_VLCPaymentDetail_DockMilkCollection" Association="Self.FK_VLCPaymentDetail_DockMilkCollection">
-            <End Role="DockMilkCollection" EntitySet="DockMilkCollections" />
-            <End Role="VLCPaymentDetail" EntitySet="VLCPaymentDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProductBatch_MilkProcessing" Association="Self.FK_ProductBatch_MilkProcessing">
             <End Role="MilkProcessing" EntitySet="MilkProcessings" />
             <End Role="ProductBatch" EntitySet="ProductBatches" />
@@ -2023,7 +1993,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PlatformDBModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="PlatformDBModelStoreContainer" CdmEntityContainer="PlatformDBEntities">
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="PlatformDBModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
@@ -2258,7 +2228,7 @@
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="RejectedReason" ColumnName="RejectedReason" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
-                </MappingFragment>
+              </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Messages">

@@ -30,7 +30,7 @@ namespace Platform.DTO
         public bool IsDeleted { get; set; }
         public string ModifiedBy { get; set; }
         public DateTime ModifiedDate { get; set; }
-        public List<VLCMilkCollectionDtlDTO> vLCMilkCollectionDtlDTOList { get; set; }
+        public List<DockMilkCollectionDtlDTO> dockMilkCollectionList { get; set; }
 
 
     }

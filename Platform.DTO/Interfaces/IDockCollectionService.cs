@@ -9,19 +9,20 @@ namespace Platform.DTO
 {
     public interface IDockMilkCollectionService
     {
-        List<DockMilkCollectionDTO> GetAllDockMilkMilkCollection();
+        List<DockMilkCollectionDTO> GetAllDockMilkCollection();
 
-        List<DockMilkCollectionDTO> GetAllDockMilkMilkCollectionByPageCount(int? pageNumber, int? count);
+        List<DockMilkCollectionDTO> GetAllDockMilkCollectionByPageCount(int? pageNumber, int? count);
 
-        DockMilkCollectionDTO GetDockMilkMilkCollectionById(int vlcId);
+        DockMilkCollectionDTO GetDockMilkCollectionById(int vlcId);
+        
 
         ResponseDTO GetDockMilkCollectionsByDateAndShift(int DockMilkCollectionId, DateTime collectionDate, int shift, int? PageNumber);
 
-        ResponseDTO AddDockMilkMilkCollection(DockMilkCollectionDTO DockMilkCollectionDTO);
+        ResponseDTO AddDockMilkCollection(DockMilkCollectionDTO DockMilkCollectionDTO);
 
-        ResponseDTO UpdateDockMilkMilkCollection(DockMilkCollectionDTO DockMilkCollectionDTO);
+        ResponseDTO UpdateDockMilkCollection(DockMilkCollectionDTO DockMilkCollectionDTO);
 
-        ResponseDTO DeleteDockMilkMilkCollection(int id);
+        ResponseDTO DeleteDockMilkCollection(int id);
 
     }
 }

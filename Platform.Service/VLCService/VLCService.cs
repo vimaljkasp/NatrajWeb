@@ -81,13 +81,13 @@ namespace Platform.Service
             vLC.VLCId = unitOfWork.DashboardRepository.NextNumberGenerator("VLC");
             vLC.CreatedDate = DateTimeHelper.GetISTDateTime();
             vLC.ModifiedDate = DateTimeHelper.GetISTDateTime();
-            vLC.CreatedBy = vlcDto.ModifiedBy = "Vimal";
+            vLC.CreatedBy = vlcDto.ModifiedBy = "Admin";
             vLC.VLCEnrollmentDate = DateTimeHelper.GetISTDateTime().Date;
             vLC.IsDeleted = false;
             vLC.Password = EncryptionHelper.Encryptword(vlcDto.Password);
             VLCConvertor.ConvertToVLCEntity(ref vLC, vlcDto, false);
             unitOfWork.VLCRepository.Add(vLC);
-    
+            AddVLCWallet(vLC);
             responseDTO.Status = true;
             responseDTO.Message = "VLC Succesfully Created";
             responseDTO.Data = VLCConvertor.ConvertToVLCDto(vLC);
@@ -96,7 +96,16 @@ namespace Platform.Service
             
         }
 
-    
+        public void AddVLCWallet(VLC vLC)
+        {
+            VLCWallet vLCWallet = new VLCWallet();
+            vLCWallet.WalletId = unitOfWork.DashboardRepository.NextNumberGenerator("VLCWallet");
+            vLCWallet.VLCId = vLC.VLCId;
+            vLCWallet.WalletBalance = 0;
+            vLCWallet.AmountDueDate = DateTimeHelper.GetISTDateTime().AddDays(10);
+            unitOfWork.VLCWalletRepository.Add(vLCWallet);
+            
+        }
 
         public ResponseDTO UpdateVLC(VLCDTO vlcDto)
         {

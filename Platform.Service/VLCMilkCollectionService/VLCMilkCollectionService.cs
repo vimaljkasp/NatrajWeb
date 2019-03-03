@@ -97,7 +97,7 @@ namespace Platform.Service
         //        vLCMilkCollection.CollectionDateTime = DateTimeHelper.GetISTDateTime();
         //        vLCMilkCollection.CreatedDate = DateTimeHelper.GetISTDateTime();
         //        vLCMilkCollection.ModifiedDate = DateTimeHelper.GetISTDateTime();
-        //        vLCMilkCollection.CreatedBy = vLCMilkCollectionDTO.ModifiedBy = "Vimal";
+        //        vLCMilkCollection.CreatedBy = vLCMilkCollectionDTO.ModifiedBy = "Admin";
         //        vLCMilkCollection.IsDeleted = false;
         //        VLCMilkCollectionConvertor.ConvertToVLCMilkCollectionEntity(ref vLCMilkCollection, vLCMilkCollectionDTO, false);
         //        if (vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList != null)
@@ -159,7 +159,7 @@ namespace Platform.Service
             vLCMilkCollection.CollectionDateTime = DateTimeHelper.GetISTDateTime();
             vLCMilkCollection.CreatedDate = DateTimeHelper.GetISTDateTime();
             vLCMilkCollection.ModifiedDate = DateTimeHelper.GetISTDateTime();
-            vLCMilkCollection.CreatedBy = vLCMilkCollectionDTO.ModifiedBy = "Vimal";
+            vLCMilkCollection.CreatedBy = vLCMilkCollectionDTO.ModifiedBy = "Admin";
             vLCMilkCollection.IsDeleted = false;
             VLCMilkCollectionConvertor.ConvertToVLCMilkCollectionEntity(ref vLCMilkCollection, vLCMilkCollectionDTO, false);
             if (vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList != null)
@@ -212,7 +212,7 @@ namespace Platform.Service
            if(vlcMilkCollection==null)
                 throw new PlatformModuleException(string.Format("VLC Milk Collection Detail Not Found with Collection Id {0}", vLCMilkCollectionDTO.VLCMilkCollectionId));
             vlcMilkCollection.ModifiedDate = DateTimeHelper.GetISTDateTime();
-            vlcMilkCollection.ModifiedBy = "vimal";
+            vlcMilkCollection.ModifiedBy = "Admin";
             //    VLCMilkCollectionConvertor.ConvertToVLCMilkCollectionEntity(ref vlcMilkCollection, vLCMilkCollectionDTO, true);
 
                 var detailList = unitOfWork.VLCMilkCollectionDtlRepository.GetById(vLCMilkCollectionDTO.VLCMilkCollectionId);

@@ -15,32 +15,32 @@ namespace Platform.Service
     {
         private UnitOfWork unitOfWork = new UnitOfWork();
 
-        public List<DockMilkCollectionDTO> GetAllDockMilkMilkCollection()
+        public List<DockMilkCollectionDTO> GetAllDockMilkCollection()
         {
-            List<DockMilkCollectionDTO> DockMilkCollectionList = new List<DockMilkCollectionDTO>();
-            var DockMilkCollections = unitOfWork.DockMilkCollectionRepository.GetAll();
-            if (DockMilkCollections != null)
+            List<DockMilkCollectionDTO> dockMilkCollectionList = new List<DockMilkCollectionDTO>();
+            var dockMilkCollections = unitOfWork.DockMilkCollectionRepository.GetAll();
+            if (dockMilkCollections != null)
             {
-                foreach (var vlcMilkCollection in DockMilkCollections)
+                foreach (var dockMilkCollection in dockMilkCollections)
                 {
-                    DockMilkCollectionList.Add(DockMilkCollectionConvertor.ConvertToDockMilkCollectionDto(vlcMilkCollection));
+                    dockMilkCollectionList.Add(DockMilkCollectionConvertor.ConvertToDockMilkCollectionDto(dockMilkCollection));
                 }
 
             }
 
-            return DockMilkCollectionList;
+            return dockMilkCollectionList;
 
         }
 
-        public List<DockMilkCollectionDTO> GetAllDockMilkMilkCollectionByPageCount(int? pageNumber, int? count)
+        public List<DockMilkCollectionDTO> GetAllDockMilkCollectionByPageCount(int? pageNumber, int? count)
         {
             List<DockMilkCollectionDTO> DockMilkCollectionList = new List<DockMilkCollectionDTO>();
             var DockMilkCollections = unitOfWork.DockMilkCollectionRepository.GetDockMilkCollectionByCount(pageNumber, count);
             if (DockMilkCollections != null)
             {
-                foreach (var vlc in DockMilkCollections)
+                foreach (var dock in DockMilkCollections)
                 {
-                    DockMilkCollectionList.Add(DockMilkCollectionConvertor.ConvertToDockMilkCollectionDto(vlc));
+                    DockMilkCollectionList.Add(DockMilkCollectionConvertor.ConvertToDockMilkCollectionDto(dock));
                 }
 
             }
@@ -49,171 +49,169 @@ namespace Platform.Service
 
         }
 
-        public List<VLCCustomerCollectionDTO> GetVLCCustomerCollectionByDateAndShift(int vlcId, DateTime collectionDate, int shift, int? pageNumber)
+        public List<DockVLCCollectionDTO> GetDockCollectionByDateAndShift(int dockMilkCollectionId, DateTime collectionDate, int shift, int? pageNumber)
         {
-            List<VLCCustomerCollectionDTO> vlcCustomerMilkCollection = new List<VLCCustomerCollectionDTO>();
+            List<DockVLCCollectionDTO> dockVLCCollectionList = new List<DockVLCCollectionDTO>();
 
-            var vLCMilkCollection = unitOfWork.DockMilkCollectionRepository.GetByVLCIdAndCollectionDateShift(vlcId, collectionDate, shift, pageNumber);
-            if (vLCMilkCollection != null)
+            var dockMilkCollections = unitOfWork.DockMilkCollectionRepository.GetDockCollectionByDateShift(dockMilkCollectionId, collectionDate, shift, pageNumber);
+            if (dockMilkCollections != null)
             {
-                foreach (var vlcMilk in vLCMilkCollection)
+                foreach (var dockmilkCollection in dockMilkCollections)
                 {
                   //  vlcCustomerMilkCollection.Add(DockMilkCollectionConvertor.ConvertToVLCCustomerCollectionDTO(vlcMilk));
                 }
 
             }
 
-            return vlcCustomerMilkCollection;
+            return dockVLCCollectionList;
         }
 
-        public ResponseDTO GetVLCCustomerCollectionsByDateAndShift(int vlcId, DateTime collectionDate, int shift, int? pageNumber)
+        public ResponseDTO GetDockMilkCollectionsByDateAndShift(int dockMilkCollectionId, DateTime collectionDate, int shift, int? pageNumber)
         {
             ResponseDTO responseDTO = new ResponseDTO();
             responseDTO.Status = true;
-            responseDTO.Message = "Customer Collections";
-            responseDTO.Data = this.GetVLCCustomerCollectionByDateAndShift(vlcId, collectionDate, shift, pageNumber);
+            responseDTO.Message = "Dock  Collections";
+            responseDTO.Data = this.GetDockCollectionByDateAndShift(dockMilkCollectionId, collectionDate, shift, pageNumber);
             return responseDTO;
         }
 
-        public DockMilkCollectionDTO GetDockMilkCollectionById(int vlcMilkCollectionId)
+        public DockMilkCollectionDTO GetDockMilkCollectionById(int dockCollectionId)
         {
-            DockMilkCollectionDTO vlcMilkCollectionDto = null;
-            var vlcMilkCollection = unitOfWork.DockMilkCollectionRepository.GetById(vlcMilkCollectionId);
-            if (vlcMilkCollection != null)
+            DockMilkCollectionDTO dockMilkCollectionDTO = new DockMilkCollectionDTO();
+            var dockMilkCollection = unitOfWork.DockMilkCollectionRepository.GetById(dockCollectionId);
+            if (dockMilkCollection != null)
             {
              //   vlcMilkCollectionDto = DockMilkCollectionConvertor.ConvertToDockMilkCollectionDto(vlcMilkCollection);
             }
-            return vlcMilkCollectionDto;
+            return dockMilkCollectionDTO;
         }
 
-        //public ResponseDTO AddDockMilkCollectionNew(DockMilkCollectionDTO vLCMilkCollectionDTO)
-        //{
-        //    var customer = unitOfWork.CustomerRepository.GetById(vLCMilkCollectionDTO.CustomerId);
-        //    if (customer != null)
-        //    {
-        //        ResponseDTO responseDTO = new ResponseDTO();
-        //        DockMilkCollection vLCMilkCollection = new DockMilkCollection();
-        //        vLCMilkCollection.DockMilkCollectionId = unitOfWork.DashboardRepository.NextNumberGenerator("DockMilkCollection");
-        //        vLCMilkCollection.CollectionDateTime = DateTimeHelper.GetISTDateTime();
-        //        vLCMilkCollection.CreatedDate = DateTimeHelper.GetISTDateTime();
-        //        vLCMilkCollection.ModifiedDate = DateTimeHelper.GetISTDateTime();
-        //        vLCMilkCollection.CreatedBy = vLCMilkCollectionDTO.ModifiedBy = "Vimal";
-        //        vLCMilkCollection.IsDeleted = false;
-        //        DockMilkCollectionConvertor.ConvertToDockMilkCollectionEntity(ref vLCMilkCollection, vLCMilkCollectionDTO, false);
-        //        if (vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList != null)
-        //        {
-        //            foreach (var vlcCollectionDtlDTO in vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList)
-        //            {
-        //                this.CheckForExistingCollectionDetailByDateShiftProduct(vLCMilkCollection.CollectionDateTime.Value.Date, vLCMilkCollectionDTO.ShiftId, vlcCollectionDtlDTO.ProductId, vLCMilkCollectionDTO.CustomerId);
-        //                DockMilkCollectionDtl vLCMilkCollectionDtl = new DockMilkCollectionDtl();
-        //                vLCMilkCollectionDtl.DockMilkCollectionDtlId = unitOfWork.DashboardRepository.NextNumberGenerator("DockMilkCollectionDtl");
-        //                vLCMilkCollectionDtl.DockMilkCollectionId = vLCMilkCollection.DockMilkCollectionId;
-        //                DockMilkCollectionConvertor.ConvertToDockMilkCollectionDtlEntity(ref vLCMilkCollectionDtl, vlcCollectionDtlDTO, false);
-        //                vLCMilkCollectionDtl.RatePerUnit = unitOfWork.MilkRateRepository.GetMilkRateByApplicableRate(customer.ApplicableRate, vlcCollectionDtlDTO.FAT.GetValueOrDefault(), vlcCollectionDtlDTO.CLR.GetValueOrDefault());
-        //                vlcCollectionDtlDTO.Amount=vLCMilkCollectionDtl.Amount = vLCMilkCollectionDtl.RatePerUnit * vLCMilkCollectionDtl.Qunatity;
-        //                unitOfWork.DockMilkCollectionDtlRepository.Add(vLCMilkCollectionDtl);
-        //            }
+        
 
-        //            vLCMilkCollection.TotalAmount = vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList.Sum(s => s.Amount);
-        //            vLCMilkCollection.TotalQuantity = vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList.Sum(s => s.Quantity);
-        //        }
-        //        else
-        //        {
-        //            throw new PlatformModuleException("Milk Collection Detail Not Found");
-        //        }
-        //        unitOfWork.DockMilkCollectionRepository.Add(vLCMilkCollection);
-        //        string vlcMessage=string.Format(unitOfWork.NatrajConfigurationSettings.VLCCollectionMessage, vLCMilkCollection.CollectionDateTime.Value.Date, vLCMilkCollection.TotalQuantity,vLCMilkCollection.TotalAmount);
-        //        var natrajSMSLog = this.SendSMS(customer.Contact, vlcMessage);
-        //        unitOfWork.SMSRepository.Add(natrajSMSLog);
-        //        unitOfWork.SaveChanges();
-        //        new SMSService().SendEmailInBackgroundThread(natrajSMSLog);
-        //        responseDTO.Status = true;
-        //        responseDTO.Message = String.Format("Milk Collection Detail Added Successfully ");
-        //        responseDTO.Data = this.GetVLCCustomerCollectionByDateAndShift(vLCMilkCollectionDTO.VLCId, DateTimeHelper.GetISTDateTime().Date, vLCMilkCollectionDTO.ShiftId, 1);
-        //        return responseDTO;
-
-        //    }
-        //    else
-        //    {
-        //        throw new PlatformModuleException(string.Format("Customer Details Not Found with Customer Id {0}", vLCMilkCollectionDTO.CustomerId));
-        //    }
-
-
-        //}
+  
 
         public NatrajSMSLog SendSMS(string mobileNumber, string message)
         {
             NatrajSMSLog natrajSMSLog = new NatrajSMSLog();
-            natrajSMSLog.SMSId = unitOfWork.DashboardRepository.NextNumberGenerator("");
-            SMSConvertor.ConvertToSMSMessage(ref natrajSMSLog, NatrajComponent.VLC, SMSType.DockMilkCollection, mobileNumber, message);
+            natrajSMSLog.SMSId = unitOfWork.DashboardRepository.NextNumberGenerator("NatrajSMSLog");
+            SMSConvertor.ConvertToSMSMessage(ref natrajSMSLog, NatrajComponent.CRM, SMSType.DockMilkCollection, mobileNumber, message);
 
             return natrajSMSLog;
         }
 
-        public ResponseDTO AddDockMilkCollection(DockMilkCollectionDTO vLCMilkCollectionDTO)
+        public ResponseDTO AddDockMilkCollection(DockMilkCollectionDTO dockMilkCollectionDTO)
         {
-            ResponseDTO responseDTO = new ResponseDTO();
-            //  this.CheckForExisitngCustomer(vlcDto.MobileNumber);
-            DockMilkCollection vLCMilkCollection = new DockMilkCollection();
-            vLCMilkCollection.DockMilkCollectionId = unitOfWork.DashboardRepository.NextNumberGenerator("DockMilkCollection");
-         //   vLCMilkCollection.CollectionDateTime = DateTimeHelper.GetISTDateTime();
-            vLCMilkCollection.CreatedDate = DateTimeHelper.GetISTDateTime();
-            vLCMilkCollection.ModifiedDate = DateTimeHelper.GetISTDateTime();
-            vLCMilkCollection.CreatedBy = vLCMilkCollectionDTO.ModifiedBy = "Vimal";
-            vLCMilkCollection.IsDeleted = false;
-            DockMilkCollectionConvertor.ConvertToDockMilkCollectionEntity(ref vLCMilkCollection, vLCMilkCollectionDTO, false);
-            if (vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList != null)
+            var vlc = unitOfWork.VLCRepository.GetById(dockMilkCollectionDTO.VLCId);
+            if (vlc != null)
             {
-                foreach (var vlcCollectionDtlDTO in vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList)
+                ResponseDTO responseDTO = new ResponseDTO();
+                DockMilkCollection dockMilkCollection = new DockMilkCollection();
+                dockMilkCollection.DockMilkCollectionId = unitOfWork.DashboardRepository.NextNumberGenerator("DockMilkCollection");
+                dockMilkCollection.CollectionDateTime = DateTimeHelper.GetISTDateTime();
+                dockMilkCollection.CreatedDate = DateTimeHelper.GetISTDateTime();
+                dockMilkCollection.ModifiedDate = DateTimeHelper.GetISTDateTime();
+                dockMilkCollection.CreatedBy = dockMilkCollectionDTO.ModifiedBy = "Admin";
+                dockMilkCollection.IsDeleted = false;
+                DockMilkCollectionConvertor.ConvertToDockMilkCollectionEntity(ref dockMilkCollection, dockMilkCollectionDTO, false);
+                if (dockMilkCollectionDTO.dockMilkCollectionList != null)
                 {
-                    //    this.CheckForExistingCollectionDetailByDateShiftProduct(vLCMilkCollection.CollectionDateTime.Value.Date, vLCMilkCollectionDTO.ShiftId, vlcCollectionDtlDTO.ProductId, vLCMilkCollectionDTO.CustomerId);
-                    //    DockMilkCollectionDtl vLCMilkCollectionDtl = new DockMilkCollectionDtl();
-                    //    vLCMilkCollectionDtl.DockMilkCollectionDtlId = unitOfWork.DashboardRepository.NextNumberGenerator("DockMilkCollectionDtl");
-                    //    vLCMilkCollectionDtl.DockMilkCollectionId = vLCMilkCollection.DockMilkCollectionId;
-                    //    DockMilkCollectionConvertor.ConvertToDockMilkCollectionDtlEntity(ref vLCMilkCollectionDtl, vlcCollectionDtlDTO, false);
-                    //    unitOfWork.DockMilkCollectionDtlRepository.Add(vLCMilkCollectionDtl);
-                    //}
-                }
+                    foreach (var dockMilkCollectionDtlDto in dockMilkCollectionDTO.dockMilkCollectionList)
 
-             //   vLCMilkCollection.TotalAmount = vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList.Sum(s => s.Amount);
-                vLCMilkCollection.TotalQuantity = vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList.Sum(s => s.Quantity).GetValueOrDefault();
+                    {
+                        this.CheckForExistingCollectionDetailByDateShiftProduct(dockMilkCollection.CollectionDateTime.Date, dockMilkCollection.ShiftId, dockMilkCollectionDtlDto.ProductId, dockMilkCollection.VLCId);
+                        DockMilkCollectionDtl dockMilkCollectionDtl = new DockMilkCollectionDtl();
+                        dockMilkCollectionDtl.DockMilkCollectionDtlI = unitOfWork.DashboardRepository.NextNumberGenerator("DockMilkCollectionDtl");
+                        dockMilkCollectionDtl.DockMilkCollectionId = dockMilkCollection.DockMilkCollectionId;
+                        DockMilkCollectionConvertor.ConvertToDockMilkCollectionDtlEntity(ref dockMilkCollectionDtl, dockMilkCollectionDtlDto, false);
+                        dockMilkCollectionDtl.RatePerUnit = unitOfWork.MilkRateRepository.GetMilkRateByApplicableRate(vlc.ApplicableRate, dockMilkCollectionDtlDto.FAT.GetValueOrDefault(), dockMilkCollectionDtlDto.CLR.GetValueOrDefault());
+                        dockMilkCollectionDtlDto.TotalAmount = dockMilkCollectionDtl.TotalAmount = dockMilkCollectionDtl.RatePerUnit * dockMilkCollectionDtlDto.Quantity;
+                                  
+                        unitOfWork.DockMilkCollectionDtlRepository.Add(dockMilkCollectionDtl);
+
+                    }
+                    dockMilkCollection.TotalCan= dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalCan).GetValueOrDefault();
+                    dockMilkCollection.TotalRejectedCan = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalRejectedCan).GetValueOrDefault();
+                    dockMilkCollection.Amount = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalAmount).GetValueOrDefault();
+                    dockMilkCollection.TotalQuantity = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.Quantity).GetValueOrDefault();
+                    dockMilkCollection.Commission = dockMilkCollection.TotalQuantity * vlc.MilkCommission;
+                    dockMilkCollection.TotalAmount = dockMilkCollection.Amount + dockMilkCollection.Commission.GetValueOrDefault();
+                  
+
+                }
+                else
+                {
+                    throw new PlatformModuleException("Dock Milk Collection Detail Not Found");
+                }
+                unitOfWork.DockMilkCollectionRepository.Add(dockMilkCollection);
+                UpdateVLCPaymentDetailsForDockCollection(vlc, dockMilkCollection);
+                string dockMessage = string.Format(unitOfWork.NatrajConfigurationSettings.DockCollectionMessage, dockMilkCollection.CollectionDateTime.Date, dockMilkCollection.TotalQuantity, dockMilkCollection.TotalAmount);
+                var natrajSMSLog = this.SendSMS(vlc.Contact, dockMessage);
+                unitOfWork.SMSRepository.Add(natrajSMSLog);
+                unitOfWork.SaveChanges();
+                new SMSService().SendEmailInBackgroundThread(natrajSMSLog);
+
+                unitOfWork.SaveChanges();
+                responseDTO.Status = true;
+                responseDTO.Message = String.Format("Dock Milk Collection Detail Added Successfully ");
+                responseDTO.Data = this.GetDockCollectionByDateAndShift(dockMilkCollectionDTO.DockMilkCollectionId, DateTimeHelper.GetISTDateTime().Date, dockMilkCollection.ShiftId, 1);
+
+                return responseDTO;
             }
             else
             {
-                throw new PlatformModuleException("Milk Collection Detail Not Found");
+                throw new PlatformModuleException("VLC Collection Details Not Found");
             }
-         //   unitOfWork.DockMilkCollectionRepository.Add(vLCMilkCollection);
-
-            unitOfWork.SaveChanges();
-            responseDTO.Status = true;
-            responseDTO.Message = String.Format("Milk Collection Detail Added Successfully ");
-            responseDTO.Data = this.GetVLCCustomerCollectionByDateAndShift(vLCMilkCollectionDTO.VLCId, DateTimeHelper.GetISTDateTime().Date, vLCMilkCollectionDTO.ShiftId, 1);
-
-            return responseDTO;
-
 
         }
 
-        public void CheckForExistingCollectionDetailByDateShiftProduct(DateTime collectionDate, int shift, int product, int customerId)
+
+        public void UpdateVLCWalletForDockCollection(int vlcId, decimal totalAmount, bool isCredit)
         {
-            var existingCollection = unitOfWork.DockMilkCollectionRepository.GetCollectionByShiftDateProduct(collectionDate, shift, product, customerId);
+            var vlcWallet = unitOfWork.VLCWalletRepository.GetByVLCId(vlcId);
+            if (isCredit)
+                vlcWallet.WalletBalance -= totalAmount;
+            else
+                vlcWallet.WalletBalance += totalAmount;
+            vlcWallet.AmountDueDate = vlcWallet.AmountDueDate.AddDays(10);
+            unitOfWork.VLCWalletRepository.Update(vlcWallet);
+        }
+
+        public void UpdateVLCPaymentDetailsForDockCollection(VLC vlc, DockMilkCollection dockMilkCollection)
+        {
+            VLCPaymentDetail vLCPaymentDetail = new VLCPaymentDetail();
+            vLCPaymentDetail.VLCPaymentId = unitOfWork.DashboardRepository.NextNumberGenerator("VLCPaymentDetail");
+            vLCPaymentDetail.CreatedDate = vLCPaymentDetail.ModifiedDate = DateTimeHelper.GetISTDateTime();
+            vLCPaymentDetail.CreatedBy = vLCPaymentDetail.ModifiedBy = "Admin";
+            vLCPaymentDetail.VLCId = dockMilkCollection.VLCId;
+            vLCPaymentDetail.DockMilkCollectionId = dockMilkCollection.DockMilkCollectionId;
+            vLCPaymentDetail.IsDeleted = false;
+            vLCPaymentDetail.PaymentComments = "Initial Dock Amount";
+            vLCPaymentDetail.PaymentDate = DateTimeHelper.GetISTDateTime();
+            vLCPaymentDetail.PaymentDrAmount = dockMilkCollection.TotalAmount;
+            unitOfWork.VLCPaymentDetailRepository.Add(vLCPaymentDetail);
+            UpdateVLCWalletForDockCollection(vlc.VLCId, dockMilkCollection.TotalAmount, false);
+        }
+
+        public void CheckForExistingCollectionDetailByDateShiftProduct(DateTime collectionDate, int shift, int product, int vlcId)
+        {
+            var existingCollection = unitOfWork.DockMilkCollectionRepository.GetCollectionByShiftDateProduct(collectionDate, shift, product, vlcId);
             if (existingCollection != null)
-                throw new PlatformModuleException("Customer Collection Already Exist with given Details");
+                throw new PlatformModuleException("VLC Collection Already Exist with given Details");
 
         }
 
 
 
-        public ResponseDTO UpdateDockMilkCollection(DockMilkCollectionDTO vLCMilkCollectionDTO)
+        public ResponseDTO UpdateDockMilkCollection(DockMilkCollectionDTO dockMilkCollectionDTO)
         {
             ResponseDTO responseDTO = new ResponseDTO();
             //Will update the method when required
-            var vlcMilkCollection = unitOfWork.DockMilkCollectionRepository.GetById(vLCMilkCollectionDTO.DockMilkCollectionId);
-            var customer = unitOfWork.CustomerRepository.GetById(vlcMilkCollection.CustomerId.GetValueOrDefault());
-            if (vlcMilkCollection == null)
-                throw new PlatformModuleException(string.Format("VLC Milk Collection Detail Not Found with Collection Id {0}", vLCMilkCollectionDTO.DockMilkCollectionId));
-            vlcMilkCollection.ModifiedDate = DateTimeHelper.GetISTDateTime();
-            vlcMilkCollection.ModifiedBy = "vimal";
+            var dockMilkCollection = unitOfWork.DockMilkCollectionRepository.GetById(dockMilkCollectionDTO.DockMilkCollectionId);
+            var vlc = unitOfWork.VLCRepository.GetById(dockMilkCollection.VLCId);
+            if (dockMilkCollection == null)
+                throw new PlatformModuleException(string.Format("Dock Milk Collection Detail Not Found with Collection Id {0}", dockMilkCollectionDTO.DockMilkCollectionId));
+            dockMilkCollection.ModifiedDate = DateTimeHelper.GetISTDateTime();
+            dockMilkCollection.ModifiedBy = "Admin";
             //    DockMilkCollectionConvertor.ConvertToDockMilkCollectionEntity(ref vlcMilkCollection, vLCMilkCollectionDTO, true);
 
             //var detailList = unitOfWork.DockMilkCollectionDtlRepository.GetById(vLCMilkCollectionDTO.DockMilkCollectionId);
@@ -245,11 +243,11 @@ namespace Platform.Service
             //else
             //    throw new PlatformModuleException("VLC Milk Collection Details Not Found");
 
-            unitOfWork.DockMilkCollectionRepository.Update(vlcMilkCollection);
+            unitOfWork.DockMilkCollectionRepository.Update(dockMilkCollection);
             unitOfWork.SaveChanges();
             responseDTO.Status = true;
             responseDTO.Message = String.Format("Milk Collection Detail Updated Successfully");
-            responseDTO.Data = this.GetVLCCustomerCollectionByDateAndShift(vlcMilkCollection.VLCId.GetValueOrDefault(), DateTimeHelper.GetISTDateTime().Date, vlcMilkCollection.ShiftId.GetValueOrDefault(), 1);
+            responseDTO.Data = this.GetDockCollectionByDateAndShift(dockMilkCollection.DockMilkCollectionId, DateTimeHelper.GetISTDateTime().Date, dockMilkCollection.ShiftId, 1);
             return responseDTO;
         }
 
@@ -257,7 +255,7 @@ namespace Platform.Service
         {
             ResponseDTO responseDTO = new ResponseDTO();
             UnitOfWork unitOfWork = new UnitOfWork();
-            var vLCMilkCollection = unitOfWork.DockMilkCollectionRepository.GetById(id);
+            var dockMilkCollection = unitOfWork.DockMilkCollectionRepository.GetById(id);
             //if (vLCMilkCollection != null)
             //{
             //    var detailList = unitOfWork.DockMilkCollectionDtlRepository.GetById(id);
@@ -324,40 +322,10 @@ namespace Platform.Service
             GC.SuppressFinalize(this);
         }
 
-        public void AddDockMilkCollectionDtl(DockMilkCollectionDtlDTO vlcMilkCollectionDtlDto)
-        {
-            throw new NotImplementedException();
-        }
+       
 
-        public void UpdateDockMilkCollectionDtl(DockMilkCollectionDtlDTO vlcMilkCollectionDtlDto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DockMilkCollectionDTO GetDockMilkMilkCollectionById(int vlcId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ResponseDTO GetDockMilkCollectionsByDateAndShift(int DockMilkCollectionId, DateTime collectionDate, int shift, int? PageNumber)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ResponseDTO AddDockMilkMilkCollection(DockMilkCollectionDTO DockMilkCollectionDTO)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ResponseDTO UpdateDockMilkMilkCollection(DockMilkCollectionDTO DockMilkCollectionDTO)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ResponseDTO DeleteDockMilkMilkCollection(int id)
-        {
-            throw new NotImplementedException();
-        }
+      
+   
     }
 }
 

@@ -23,6 +23,8 @@ namespace Platform.Repository
         private VLCReportRepository vLCReportRepository;
 
         private VLCRepository vLCRepository;
+        private VLCWalletRepository vLCWalletRepository;
+        private VLCPaymentDetailRepository vLCPaymentDetailRepository;
         private VLCMilkCollectionRepository vLCMilkCollectionRepository;
         private VLCMilkCollectionDtlRepository vLCMilkCollectionDtlRepository;
         private DistributionCenterRepository distributionCenterRepository;
@@ -31,7 +33,9 @@ namespace Platform.Repository
         private DCOrderDtlRepository dCOrderDtlRepository;
         private DCWalletRepository dCWalletRepository;
         private DCPaymentDetailRepository dCPaymentDetailRepository;
+
         private DockMilkCollectionRepository dockMilkCollectionRepository;
+        private DockMilkCollectionDtlRepository dockMilkCollectionDtlRepository;
         private ProductRepository productRepository;
         private ProductCategoryRepository productCategoryRepository;
 
@@ -58,7 +62,8 @@ namespace Platform.Repository
                         SenderMobileNumber = this.ConfigurationRepository.GetConfiguration("SMS", "SenderNumber", "9566812835"),
                         SMSServiceUserName = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "adam"),
                         SMSServicePassword = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "12345"),
-                        VLCCollectionMessage = "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}"
+                        VLCCollectionMessage = "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}",
+                        DockCollectionMessage= "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}"
                     };
                 }
                 else
@@ -144,6 +149,36 @@ namespace Platform.Repository
                 }
             }
         }
+
+
+        public VLCWalletRepository VLCWalletRepository
+        {
+            get
+            {
+                if (vLCWalletRepository == null)
+                    return vLCWalletRepository = new VLCWalletRepository(_repository);
+
+                else
+                {
+                    return vLCWalletRepository;
+                }
+            }
+        }
+
+        public VLCPaymentDetailRepository VLCPaymentDetailRepository
+        {
+            get
+            {
+                if (vLCPaymentDetailRepository == null)
+                    return vLCPaymentDetailRepository = new VLCPaymentDetailRepository(_repository);
+
+                else
+                {
+                    return vLCPaymentDetailRepository;
+                }
+            }
+        }
+
 
         public VLCMilkCollectionRepository VLCMilkCollectionRepository
         {
@@ -315,6 +350,19 @@ namespace Platform.Repository
                     return dockMilkCollectionRepository = new DockMilkCollectionRepository(_repository);
                 else
                     return dockMilkCollectionRepository;
+            }
+
+        }
+
+
+        public DockMilkCollectionDtlRepository DockMilkCollectionDtlRepository
+        {
+            get
+            {
+                if (dockMilkCollectionDtlRepository == null)
+                    return dockMilkCollectionDtlRepository = new DockMilkCollectionDtlRepository(_repository);
+                else
+                    return dockMilkCollectionDtlRepository;
             }
 
         }

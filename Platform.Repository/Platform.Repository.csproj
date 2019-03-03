@@ -59,6 +59,7 @@
     <Compile Include="DistributionCenter\DCPaymentDetailRepository.cs" />
     <Compile Include="DistributionCenter\DCWalletRepository.cs" />
     <Compile Include="DistributionCenter\DistributionCenterRepository.cs" />
+    <Compile Include="Dock\DockMilkCollectionDtlRepository.cs" />
     <Compile Include="Dock\DockMilkCollectionRepository.cs" />
     <Compile Include="MessageRepository.cs" />
     <Compile Include="MilkRateRepository.cs" />
@@ -73,7 +74,9 @@
     <Compile Include="Reports\VLCReportRepository.cs" />
     <Compile Include="VLC\VLCMilkCollectionDtlRepository.cs" />
     <Compile Include="VLC\VLCMilkCollectionRepository.cs" />
+    <Compile Include="VLC\VLCPaymentDetailRepository.cs" />
     <Compile Include="VLC\VLCRepository.cs" />
+    <Compile Include="VLC\VLCWalletRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Platform.DTO\Platform.DTO.csproj">

@@ -30,28 +30,6 @@ namespace Platform.Service
 
         }
 
-    
-        public ResponseDTO GetDefaultDCAddressByDCId(int dcId)
-        {
-            ResponseDTO responseDTO = new ResponseDTO();
-            DCAddressDTO dCAddressDto = null;
-            var dCAddress = unitOfWork.DCAddressRepository.GetDefaultAddressByDCId(dcId);
-            if (dCAddress != null)
-            {
-                dCAddressDto = DCAddressConvertor.ConvertToDCAddressDTO(dCAddress);
-                responseDTO.Status = true;
-                responseDTO.Message = "DC Address Details For Distribution Center";
-                responseDTO.Data = dCAddressDto;
-            }
-            else
-            {
-                responseDTO.Status = false;
-                responseDTO.Message = String.Format("DC Address Details with DC ID {0} not found", dcId);
-                responseDTO.Data = new object();
-            }
-            return responseDTO;
-        }
-
         public ResponseDTO GetAllDCAddressByDCId(int dcId)
         {
             ResponseDTO responseDTO = new ResponseDTO();
@@ -75,6 +53,29 @@ namespace Platform.Service
             }
             return responseDTO;
         }
+
+        public ResponseDTO GetDefaultDCAddressByDCId(int dcId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            DCAddressDTO dCAddressDto = null;
+            var dCAddress = unitOfWork.DCAddressRepository.GetDefaultAddressByDCId(dcId);
+            if (dCAddress != null)
+            {
+                dCAddressDto = DCAddressConvertor.ConvertToDCAddressDTO(dCAddress);
+                responseDTO.Status = true;
+                responseDTO.Message = "DC Address Details For Distribution Center";
+                responseDTO.Data = dCAddressDto;
+            }
+            else
+            {
+                responseDTO.Status = false;
+                responseDTO.Message = String.Format("DC Address Details with DC ID {0} not found", dcId);
+                responseDTO.Data = new object();
+            }
+            return responseDTO;
+        }
+
+
 
         public ResponseDTO AddDCAddress(DCAddressDTO dCAddressDto)
         {

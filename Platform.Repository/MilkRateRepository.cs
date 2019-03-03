@@ -37,6 +37,8 @@ namespace Platform.Repository
                 return 0;
         }
 
+       
+
 
         public void AddMilkRates(List<MilkRate> milkRates)
         {

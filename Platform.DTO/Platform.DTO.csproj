@@ -37,6 +37,7 @@
       <HintPath>..\PlatformCommonDlls\FluentValidation.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -66,6 +67,7 @@
     <Compile Include="DistributionCenter\DistributionCenterDTO.cs" />
     <Compile Include="DockCollection\DockMilkCollectionDtlDTO.cs" />
     <Compile Include="DockCollection\DockMilkCollectionDTO.cs" />
+    <Compile Include="DockCollection\DockVLCCollectionDTO.cs" />
     <Compile Include="Enums\ApplicableType.cs" />
     <Compile Include="Enums\NatrajComponent.cs" />
     <Compile Include="Enums\OrderStatus.cs" />

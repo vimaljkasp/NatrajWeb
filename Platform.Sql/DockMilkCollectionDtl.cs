@@ -27,11 +27,6 @@ namespace Platform.Sql
         public Nullable<decimal> TotalAmount { get; set; }
         public string RejectedReason { get; set; }
         public string Comments { get; set; }
-        public string CreatedBy { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
-        public string ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual DockMilkCollection DockMilkCollection { get; set; }
     }

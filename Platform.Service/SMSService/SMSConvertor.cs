@@ -16,7 +16,7 @@ namespace Platform.Service
             natrajSMSLog.SMSSentTime = DateTimeHelper.GetISTDateTime();
             natrajSMSLog.SMSTypeId = (int)sMSType;
             natrajSMSLog.SMSStatus = (int)SMSStatusId.Queue;
- 
+            natrajSMSLog.Sender = "9566812835";
           
         }
 

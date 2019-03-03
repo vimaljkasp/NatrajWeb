@@ -19,5 +19,7 @@ namespace Platform.Repository
         public string SMSServicePassword { get; set; }
 
         public string VLCCollectionMessage { get; set; }
+
+        public string DockCollectionMessage { get; set; }
     }
 }

@@ -18,7 +18,6 @@ namespace Platform.Sql
         public DockMilkCollection()
         {
             this.DockMilkCollectionDtls = new HashSet<DockMilkCollectionDtl>();
-            this.VLCPaymentDetails = new HashSet<VLCPaymentDetail>();
         }
     
         public int DockMilkCollectionId { get; set; }
@@ -44,7 +43,5 @@ namespace Platform.Sql
         public virtual VLC VLC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DockMilkCollectionDtl> DockMilkCollectionDtls { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VLCPaymentDetail> VLCPaymentDetails { get; set; }
     }
 }

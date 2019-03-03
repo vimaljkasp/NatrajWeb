@@ -178,6 +178,7 @@
     <Compile Include="Controller\DistributionCenter\DCPaymentsController.cs" />
     <Compile Include="Controller\DistributionCenter\DCProductController.cs" />
     <Compile Include="Controller\DistributionCenter\DistributionCentersController.cs" />
+    <Compile Include="Controller\DockCollection\DockMilkCollectionController.cs" />
     <Compile Include="Controller\LoginController\LoginController.cs" />
     <Compile Include="Controller\User\UserController.cs" />
     <Compile Include="Controller\VLC\VLCController.cs" />

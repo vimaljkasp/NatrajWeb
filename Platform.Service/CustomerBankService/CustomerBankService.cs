@@ -83,10 +83,10 @@ namespace Platform.Service
 
             customerBank.CustomerBankId = unitOfWork.DashboardRepository.NextNumberGenerator("CustomerBank");
             CustomerBankConvertor.ConvertToCustomerBankEntity(ref customerBank, customerBankDto, false);
-            customerBank.CreatedBy = "Vimal";
+            customerBank.CreatedBy = "Admin";
             customerBank.CreatedDate = DateTimeHelper.GetISTDateTime();
             customerBank.IsDeleted = false;
-            customerBank.ModifiedBy = "Vimal";
+            customerBank.ModifiedBy = "Admin";
             customerBank.ModifiedDate = DateTimeHelper.GetISTDateTime();
             unitOfWork.CustomerBankRepository.Add(customerBank);
             unitOfWork.SaveChanges();

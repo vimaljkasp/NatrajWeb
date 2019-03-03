@@ -2,6 +2,7 @@
 using FluentValidation.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,23 @@ namespace Platform.DTO
     public class DCOrderDTO
     {
 
+        public DCOrderDTO()
+        {
+            dcOrderDtlList = new List<DCOrderDtlDTO>() { new DCOrderDtlDTO {
+                ProductDescription = "",
+                ProductId = 0,
+                ProductImageUrl = "",
+                TotalPrice = 0,
+                QuantityOrdered = 0,
+                ProductName = "",
+                UnitPrice = 0 } };
+            dCAddressDTO = new DCAddressDTO();
+        }
+
         public int DCOrderId { get; set; }
         public string DCOrderNumber { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime OrderDate { get; set; }
         public int DCId { get; set; }
         //public decimal OrderPrice { get; set; }

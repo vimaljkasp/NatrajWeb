@@ -33,25 +33,37 @@ namespace Platform.Service
         {
             if (isUpdate)
                 DockMilkCollection.DockMilkCollectionId = DockMilkCollectionDTO.DockMilkCollectionId;
-            //DockMilkCollection.VLCId = DockMilkCollectionDTO.VLCId;
-            //DockMilkCollection.CustomerId = DockMilkCollectionDTO.CustomerId;
-            //DockMilkCollection.ShiftId = DockMilkCollectionDTO.ShiftId;
+              DockMilkCollection.VLCId = DockMilkCollectionDTO.VLCId;
+            if(DockMilkCollectionDTO.ShiftId>0)
+              DockMilkCollection.ShiftId = DockMilkCollectionDTO.ShiftId;
+            if (string.IsNullOrWhiteSpace(DockMilkCollectionDTO.Comments) == false)
+                DockMilkCollection.Comments = DockMilkCollectionDTO.Comments;
+            if (string.IsNullOrWhiteSpace(DockMilkCollectionDTO.ReceiverName) == false)
+                DockMilkCollection.ReceiverName = DockMilkCollectionDTO.ReceiverName;
+
 
 
         }
 
-        //public static void ConvertToDockMilkCollectionDtlEntity(ref DockMilkCollectionDtl DockMilkCollectionDtl, DockMilkCollectionDtlDTO DockMilkCollectionDtlDTO, bool isUpdate)
-        //{
-        //    if (isUpdate)
-        //        DockMilkCollectionDtl.Do = DockMilkCollectionDtlDTO.DockMilkCollectionDtlId;
-        //    //DockMilkCollectionDtl.CLR = DockMilkCollectionDtlDTO.CLR;
-        //    //DockMilkCollectionDtl.FAT = DockMilkCollectionDtlDTO.FAT;
-        //    //DockMilkCollectionDtl.Qunatity = DockMilkCollectionDtlDTO.Quantity;
-        //    //DockMilkCollectionDtl.Amount = DockMilkCollectionDtlDTO.Amount;
-        //    //DockMilkCollectionDtl.ProductId = DockMilkCollectionDtlDTO.ProductId;
+        public static void ConvertToDockMilkCollectionDtlEntity(ref DockMilkCollectionDtl DockMilkCollectionDtl, DockMilkCollectionDtlDTO DockMilkCollectionDtlDTO, bool isUpdate)
+        {
+            if (isUpdate)
+                DockMilkCollectionDtl.DockMilkCollectionDtlI = DockMilkCollectionDtlDTO.DockMilkCollectionDtlId;
+            DockMilkCollectionDtl.CLR = DockMilkCollectionDtlDTO.CLR;
+            DockMilkCollectionDtl.FAT = DockMilkCollectionDtlDTO.FAT;
+            DockMilkCollectionDtl.Quantity = DockMilkCollectionDtlDTO.Quantity;
+            DockMilkCollectionDtl.RejectedQuantity = DockMilkCollectionDtlDTO.RejectedQuantity;
+            DockMilkCollectionDtl.TotalCan = DockMilkCollectionDtlDTO.TotalCan;
+            DockMilkCollectionDtl.TotalRejectedCan = DockMilkCollectionDtlDTO.TotalRejectedCan;
+            DockMilkCollectionDtl.ProductId = DockMilkCollectionDtlDTO.ProductId;
+            DockMilkCollectionDtl.TotalAmount = DockMilkCollectionDtlDTO.TotalAmount;
+            if (string.IsNullOrWhiteSpace(DockMilkCollectionDtlDTO.Comments)==false)
+                DockMilkCollectionDtl.Comments = DockMilkCollectionDtlDTO.Comments;
 
-
-        //}
+            if (string.IsNullOrWhiteSpace(DockMilkCollectionDtlDTO.RejectedReason) == false
+                )
+                DockMilkCollectionDtl.RejectedReason = DockMilkCollectionDtlDTO.RejectedReason;
+        }
 
 
         //public static VLCCustomerCollectionDTO ConvertToVLCCustomerCollectionDTO(DockMilkCollection vLCMilkCollection)
