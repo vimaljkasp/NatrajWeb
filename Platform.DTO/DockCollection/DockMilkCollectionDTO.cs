@@ -10,6 +10,7 @@ namespace Platform.DTO
     {
         public int DockMilkCollectionId { get; set; }
         public int VLCId { get; set; }
+        public string VLCName { get; set; }
         public int DockMilkId { get; set; }
         public Nullable<int> TotalCan { get; set; }
         public Nullable<int> TotalRejectedCan { get; set; }

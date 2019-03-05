@@ -15,7 +15,7 @@ namespace Platform.Service
             DockMilkCollectionDTO dockMilkCollectionDTO = new DockMilkCollectionDTO();
             dockMilkCollectionDTO.DockMilkCollectionId = dockMilkCollection.DockMilkCollectionId;
             dockMilkCollectionDTO.VLCId = dockMilkCollection.VLCId;
-           
+            dockMilkCollectionDTO.VLCName = dockMilkCollection.VLC != null ? dockMilkCollection.VLC.VLCName : string.Empty;
             dockMilkCollectionDTO.CollectionDateTime = dockMilkCollection.CollectionDateTime;
             dockMilkCollectionDTO.TotalQuantity = dockMilkCollection.TotalQuantity;
             dockMilkCollectionDTO.CollectionShift = dockMilkCollection.ShiftId == 1 ? "Morning" : "Evening";
@@ -32,7 +32,14 @@ namespace Platform.Service
             dockMilkCollectionDTO.IsDeleted = dockMilkCollection.IsDeleted.GetValueOrDefault();
             dockMilkCollectionDTO.ModifiedBy = dockMilkCollection.ModifiedBy;
             dockMilkCollectionDTO.ModifiedDate = dockMilkCollection.ModifiedDate.GetValueOrDefault();
-
+            if(dockMilkCollection.DockMilkCollectionDtls !=null && dockMilkCollection.DockMilkCollectionDtls.Count()>0)
+            {
+                dockMilkCollectionDTO.dockMilkCollectionList = new List<DockMilkCollectionDtlDTO>();
+                foreach(DockMilkCollectionDtl dockMilkCollectionDtl in dockMilkCollection.DockMilkCollectionDtls)
+                {
+                    dockMilkCollectionDTO.dockMilkCollectionList.Add(ConvertToDockMilkCollectionDtlDTO(dockMilkCollectionDtl));
+                }
+            }
             return dockMilkCollectionDTO;
 
         }
