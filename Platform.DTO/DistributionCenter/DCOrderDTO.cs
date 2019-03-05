@@ -37,6 +37,8 @@ namespace Platform.DTO
         //public decimal OrderTax { get; set; }
         public decimal OrderDiscount { get; set; }
         public decimal OrderTotalPrice { get; set; }
+        public String DCName { get; set; }
+
         public decimal OrderPaidAmount { get; set; }
         public decimal TotalOrderQuantity { get; set; }
         public decimal TotalActualQuantity { get; set; }

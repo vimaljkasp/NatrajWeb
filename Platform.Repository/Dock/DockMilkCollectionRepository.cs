@@ -60,15 +60,14 @@ namespace Platform.Repository
         }
 
 
-        public List<DockMilkCollection> GetDockCollectionByDateShift(int dockMilkCOllectionId, DateTime collectionDate, int shift, int? pageNumber)
+        public List<DockMilkCollection> GetDockCollectionByDateShift( DateTime collectionDate, int shift, int? pageNumber)
         {
             DateTime collectionDat = Convert.ToDateTime(collectionDate).Date;
 
             var takePage = pageNumber ?? PagingConstant.DefaultPageNumber;
             var takeCount = PagingConstant.DefaultRecordCount;
             var dockMilkCollection = _repository.DockMilkCollections
-                 .Where(x => x.DockMilkCollectionId == dockMilkCOllectionId
-                 && System.Data.Entity.DbFunctions.TruncateTime(x.CollectionDateTime) == collectionDat
+                 .Where(x => System.Data.Entity.DbFunctions.TruncateTime(x.CollectionDateTime) == collectionDat
                  && x.ShiftId == shift)
 
                 .OrderByDescending(x => x.CollectionDateTime)

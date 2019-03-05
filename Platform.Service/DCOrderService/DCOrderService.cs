@@ -178,6 +178,7 @@ namespace Platform.Service
             UpdateDCWalletForOrder(distributionCenter.DCId, dCOrder.OrderTotalPrice, false);
         }
 
+  
         public ResponseDTO GetDCOrdersById(int dcId)
         {
             ResponseDTO responseDTO = new ResponseDTO();
@@ -194,14 +195,16 @@ namespace Platform.Service
             return responseDTO;
         }
 
-        public DCOrderDTO GetOrderDetailsByOrderId(int orderId)
+        public ResponseDTO GetOrderDetailsByOrderId(int orderId)
         {
-            
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.Status = true;
+            responseDTO.Message = String.Format("DC Order Details");
             var dcOrder = unitOfWork.DCOrderRepository.GetDCOrderByOrderId(orderId);
          
             DCOrderDTO dCOrderDTO = DCOrderConvertor.ConvertToDCOrderDto(dcOrder, unitOfWork.NatrajConfigurationSettings.ImagePath);
-       
-            return dCOrderDTO;
+            responseDTO.Data = dCOrderDTO;
+            return responseDTO;
         }
 
         public ResponseDTO DeleteDCOrder(int id)

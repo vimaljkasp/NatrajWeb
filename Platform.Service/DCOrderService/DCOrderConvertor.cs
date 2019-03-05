@@ -24,6 +24,7 @@ namespace Platform.Service
             dCOrderDTO.TotalOrderQuantity = dCOrder.TotalOrderQuantity;
             dCOrderDTO.TotalActualQuantity = dCOrder.TotalActualQuantity.GetValueOrDefault();
             dCOrderDTO.OrderStatus = ((OrderStatus)dCOrder.OrderStatusId).ToString();
+            dCOrderDTO.DCName = dCOrder.DistributionCenter != null ? dCOrder.DistributionCenter.DCName : string.Empty;
             if (dCOrder.DCAddress != null)
              dCOrderDTO.dCAddressDTO =DCAddressConvertor.ConvertToDCAddressDTO(dCOrder.DCAddress);
             if (dCOrder.DCOrderDtls != null)

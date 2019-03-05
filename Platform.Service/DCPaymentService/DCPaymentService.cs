@@ -61,13 +61,13 @@ namespace Platform.Service
                     
                 }
                 responseDTO.Status = true;
-                responseDTO.Message = "DC Address Details For Distribution Center";
+                responseDTO.Message = "DC Payemnts Details For Distribution Center";
                 responseDTO.Data = dCPaymentDetailList;
             }
             else
             {
                 responseDTO.Status = false;
-                responseDTO.Message = String.Format("DC Address Details with DC ID {0} not found", dcId);
+                responseDTO.Message = String.Format("DC Payemnts Details with DC ID {0} not found", dcId);
                 responseDTO.Data = new object();
             }
             return responseDTO;

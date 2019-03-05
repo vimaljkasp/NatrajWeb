@@ -18,7 +18,7 @@ namespace Platform.DTO
 
         ResponseDTO UpdateDCOrder(CreateDCOrderDTO dCPaymentDTO);
 
-      
+        ResponseDTO GetOrderDetailsByOrderId(int orderId);
 
         ResponseDTO UpdateDCOrderStatus(DCOrderStatusDTO dCPaymentDTO);
 

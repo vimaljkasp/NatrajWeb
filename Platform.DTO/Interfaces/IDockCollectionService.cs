@@ -16,7 +16,7 @@ namespace Platform.DTO
         DockMilkCollectionDTO GetDockMilkCollectionById(int vlcId);
         
 
-        ResponseDTO GetDockMilkCollectionsByDateAndShift(int DockMilkCollectionId, DateTime collectionDate, int shift, int? PageNumber);
+        ResponseDTO GetDockMilkCollectionsByDateAndShift(DateTime collectionDate, int shift, int? PageNumber);
 
         ResponseDTO AddDockMilkCollection(DockMilkCollectionDTO DockMilkCollectionDTO);
 
