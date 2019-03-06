@@ -1,4 +1,4 @@
-﻿using Platform.Repository;
+﻿
 using Platform.Sql;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Platform.Service
+namespace Platform.Repository
 {
     public class UnitOfWork : IDisposable
     {
@@ -18,8 +18,13 @@ namespace Platform.Service
 
         private MessageRepository messageRepository;
         private SMSRepository sMSRepository;
+        private ConfigurationRepository configurationRepository;
+        private MilkRateRepository milkRateRepository;
+        private VLCReportRepository vLCReportRepository;
 
         private VLCRepository vLCRepository;
+        private VLCWalletRepository vLCWalletRepository;
+        private VLCPaymentDetailRepository vLCPaymentDetailRepository;
         private VLCMilkCollectionRepository vLCMilkCollectionRepository;
         private VLCMilkCollectionDtlRepository vLCMilkCollectionDtlRepository;
         private DistributionCenterRepository distributionCenterRepository;
@@ -29,16 +34,43 @@ namespace Platform.Service
         private DCWalletRepository dCWalletRepository;
         private DCPaymentDetailRepository dCPaymentDetailRepository;
 
+        private DockMilkCollectionRepository dockMilkCollectionRepository;
+        private DockMilkCollectionDtlRepository dockMilkCollectionDtlRepository;
         private ProductRepository productRepository;
         private ProductCategoryRepository productCategoryRepository;
 
-        public String ImagePath { get; set; }
+        private NatrajConfigurationSettings natrajConfigurationSettings; 
 
         PlatformDBEntities _repository;
         public UnitOfWork()
         {
             _repository= new PlatformDBEntities();
-            ImagePath = @"http://service.natrajdairy.com/img/";
+           
+        }
+
+
+        public NatrajConfigurationSettings NatrajConfigurationSettings
+        {
+            get
+            {
+                if (natrajConfigurationSettings == null)
+                {
+                    return natrajConfigurationSettings = new NatrajConfigurationSettings()
+                    {
+                        ImagePath = @"http://service.natrajdairy.com/img/",
+                        MilkRatePath = @"http://service.natrajdairy.com/MilkRate/",
+                        SenderMobileNumber = this.ConfigurationRepository.GetConfiguration("SMS", "SenderNumber", "9566812835"),
+                        SMSServiceUserName = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "adam"),
+                        SMSServicePassword = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "12345"),
+                        VLCCollectionMessage = "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}",
+                        DockCollectionMessage= "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}"
+                    };
+                }
+                else
+                {
+                    return natrajConfigurationSettings;
+                }
+            }
         }
 
 
@@ -117,6 +149,36 @@ namespace Platform.Service
                 }
             }
         }
+
+
+        public VLCWalletRepository VLCWalletRepository
+        {
+            get
+            {
+                if (vLCWalletRepository == null)
+                    return vLCWalletRepository = new VLCWalletRepository(_repository);
+
+                else
+                {
+                    return vLCWalletRepository;
+                }
+            }
+        }
+
+        public VLCPaymentDetailRepository VLCPaymentDetailRepository
+        {
+            get
+            {
+                if (vLCPaymentDetailRepository == null)
+                    return vLCPaymentDetailRepository = new VLCPaymentDetailRepository(_repository);
+
+                else
+                {
+                    return vLCPaymentDetailRepository;
+                }
+            }
+        }
+
 
         public VLCMilkCollectionRepository VLCMilkCollectionRepository
         {
@@ -250,6 +312,71 @@ namespace Platform.Service
                 else
                 {
                     return sMSRepository;
+                }
+            }
+        }
+
+        public MilkRateRepository MilkRateRepository
+        {
+            get
+            {
+                if (milkRateRepository == null)
+                    return milkRateRepository = new MilkRateRepository(_repository);
+                else
+                {
+                    return milkRateRepository;
+                }
+            }
+        }
+
+        public VLCReportRepository VLCReportRepository
+        {
+            get
+            {
+                if (vLCReportRepository == null)
+                    return vLCReportRepository = new VLCReportRepository(_repository);
+                else
+                {
+                    return vLCReportRepository;
+                }
+            }
+        }
+
+        public DockMilkCollectionRepository DockMilkCollectionRepository
+        {
+            get
+            {
+                if (dockMilkCollectionRepository == null)
+                    return dockMilkCollectionRepository = new DockMilkCollectionRepository(_repository);
+                else
+                    return dockMilkCollectionRepository;
+            }
+
+        }
+
+
+        public DockMilkCollectionDtlRepository DockMilkCollectionDtlRepository
+        {
+            get
+            {
+                if (dockMilkCollectionDtlRepository == null)
+                    return dockMilkCollectionDtlRepository = new DockMilkCollectionDtlRepository(_repository);
+                else
+                    return dockMilkCollectionDtlRepository;
+            }
+
+        }
+
+
+        public ConfigurationRepository ConfigurationRepository
+        {
+            get
+            {
+                if (configurationRepository == null)
+                    return configurationRepository = new ConfigurationRepository(_repository);
+                else
+                {
+                    return configurationRepository;
                 }
             }
         }

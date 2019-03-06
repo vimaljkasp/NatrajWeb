@@ -1,11 +1,5 @@
 ﻿using Platform.DTO;
-using Platform.Service;
-using Platform.Utilities.ExceptionHandler;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Platform.Utilities;
 using System.Web.Http;
 
 namespace PlatformWeb.Controller
@@ -90,7 +84,7 @@ namespace PlatformWeb.Controller
 
         //Post api/Customer/5
         [Route("api/DCOrders/{id}")]
-        public IHttpActionResult Post(int id, [FromBody]DCOrderDTO dCOrderDTO)
+        public IHttpActionResult Post(int id, [FromBody]CreateDCOrderDTO dCOrderDTO)
         {
             try
             {
@@ -110,17 +104,18 @@ namespace PlatformWeb.Controller
         }
 
         [Route("api/UpdateDCOrderStatus/{id}")]
-        public IHttpActionResult PostUpdateOrderStatus(int id, [FromBody]DCOrderStatusDTO dCOrderDTO)
+        public IHttpActionResult UpdateDCOrderStatus(int id,[FromBody] DCOrderStatusDTO dCOrderStatusDTO)
         {
             try
             {
-                dCOrderDTO.DCOrderId = id;
-                if (dCOrderDTO == null)
+               
+                dCOrderStatusDTO.DCOrderId = id;
+                if (dCOrderStatusDTO == null)
                     Ok(ResponseHelper.CreateResponseDTOForException("Argument Null"));
                 
-                _dCOrderService.UpdateDCOrderStatus(dCOrderDTO);
+                
 
-                return Ok();
+                return Ok(_dCOrderService.UpdateDCOrderStatus(dCOrderStatusDTO));
             }
             catch (PlatformModuleException ex)
             {

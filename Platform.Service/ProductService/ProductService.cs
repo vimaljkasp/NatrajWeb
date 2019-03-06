@@ -1,11 +1,10 @@
 ﻿using Platform.DTO;
+using Platform.Repository;
 using Platform.Sql;
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Platform.Service
 {
@@ -60,7 +59,7 @@ namespace Platform.Service
             if(products !=null)
             {
                 foreach (var product in products)
-                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product,unitOfWork.ImagePath));
+                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product,unitOfWork.NatrajConfigurationSettings.ImagePath));
                 responseDTO.Status = true;
                 responseDTO.Message = "Product List";
                 responseDTO.Data = productList;
@@ -81,7 +80,7 @@ namespace Platform.Service
             if (products != null)
             {
                 foreach (var product in products)
-                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product, unitOfWork.ImagePath));
+                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product, unitOfWork.NatrajConfigurationSettings.ImagePath));
                 responseDTO.Status = true;
                 responseDTO.Message = "Product List By Category";
                 responseDTO.Data = productList;
@@ -107,7 +106,7 @@ namespace Platform.Service
             if (products != null)
             {
                 foreach (var product in products)
-                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product,unitOfWork.ImagePath));
+                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product,unitOfWork.NatrajConfigurationSettings.ImagePath));
                 responseDTO.Status = true;
                 responseDTO.Message = "Product List";
                 responseDTO.Data = productList;

@@ -1,12 +1,11 @@
 ﻿using Platform.DTO;
 using Platform.Repository;
 using Platform.Sql;
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Platform.Service
 {
@@ -80,10 +79,10 @@ namespace Platform.Service
             CustomerAgriculture customerAgriculture = new CustomerAgriculture();
             customerAgriculture.CustAgriId = unitOfWork.DashboardRepository.NextNumberGenerator("CustomerAgriculture");
            
-            customerAgriculture.CreatedDate = DateTime.Now;
+            customerAgriculture.CreatedDate = DateTimeHelper.GetISTDateTime();
             customerAgriculture.IsDeleted = false;
             customerAgriculture.ModifiedBy = customerAgriculture.CreatedBy = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerAgricultureDTO.VLCId);
-            customerAgriculture.ModifiedDate = DateTime.Now;
+            customerAgriculture.ModifiedDate = DateTimeHelper.GetISTDateTime();
 
             CustomerAgricultureConvertor.ConvertToCustomerAgriCultureEntity(ref customerAgriculture, customerAgricultureDTO, false);
             unitOfWork.CustomerAgricultureRepository.Add(customerAgriculture);
@@ -116,7 +115,7 @@ namespace Platform.Service
 
             CustomerAgricultureConvertor.ConvertToCustomerAgriCultureEntity(ref customerAgriculture, customerAgricultureDTO, true);
          //   customerAgriculture.ModifiedBy  = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerAgriculture.Customer.VLCId.GetValueOrDefault());
-            customerAgriculture.ModifiedDate = DateTime.Now;
+            customerAgriculture.ModifiedDate = DateTimeHelper.GetISTDateTime();
             unitOfWork.CustomerAgricultureRepository.Update(customerAgriculture);
             unitOfWork.SaveChanges();
             customerAgricultureDTO = CustomerAgricultureConvertor.ConvertToCustomerAgriCultureDto(customerAgriculture);

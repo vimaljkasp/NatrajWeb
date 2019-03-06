@@ -80,16 +80,16 @@
     <Compile Include="DockMilkCollection.cs">
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DockMilkCollectionDetail.cs">
-      <DependentUpon>PlatformDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DockRejectedMilk.cs">
+    <Compile Include="DockMilkCollectionDtl.cs">
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Message.cs">
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MilkProcessing.cs">
+      <DependentUpon>PlatformDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MilkRate.cs">
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="NatrajConfiguration.cs">
@@ -157,6 +157,12 @@
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="VLCMilkCollectionDtl.cs">
+      <DependentUpon>PlatformDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VLCPaymentDetail.cs">
+      <DependentUpon>PlatformDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VLCWallet.cs">
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>

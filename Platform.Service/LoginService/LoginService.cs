@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Platform.DTO;
+using Platform.Repository;
 using Platform.Sql;
-using Platform.Utilities.Encryption;
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
 
 namespace Platform.Service
 {

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Platform.Service.SMSService
+namespace Platform.DTO
 {
-    public interface ISMSService
+    public enum MilkApplicableRate
     {
-        void SendMessage();
+        Fixed = 1,
+        RateChart
+       
     }
 }

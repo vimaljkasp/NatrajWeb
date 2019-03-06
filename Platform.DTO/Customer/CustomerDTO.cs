@@ -28,6 +28,7 @@ namespace Platform.DTO
         public string Password { get; set; }
         public string Contact { get; set; }
 
+        public int ApplicableRate { get; set; }
         
         public string AlternateContact { get; set; }
         public string Email { get; set; }

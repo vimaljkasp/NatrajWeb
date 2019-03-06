@@ -23,6 +23,11 @@ namespace Platform.Repository
         }
 
 
+        public DCOrderDtl GetById(int id)
+        {
+            var dcOrderDtl = _repository.DCOrderDtls.Where(o=>o.DCOrderDtlId==id).FirstOrDefault();
+            return dcOrderDtl;
+        }
 
         //public List<DCOrder> GetAllDCOrderDtlsByDCId(int dCid)
         //{

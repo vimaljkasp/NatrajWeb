@@ -30,7 +30,7 @@ namespace Platform.Repository
 
         public List<DCOrder> GetAllDCOrdersByDCId(int dCid)
         {
-            var dCOrders = _repository.DCOrders.Include("DCAddress").Include("DCOrderDtls.Product").Where(v => v.DCId == dCid).ToList<Sql.DCOrder>();
+            var dCOrders = _repository.DCOrders.Include("DCAddress").Include("DCOrderDtls.Product").Where(v => v.DCId == dCid).OrderByDescending(v=>v.OrderDate).ToList<Sql.DCOrder>();
             return dCOrders;
         }
 

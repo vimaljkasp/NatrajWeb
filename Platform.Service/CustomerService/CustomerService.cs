@@ -1,12 +1,11 @@
 ﻿using Platform.DTO;
 using Platform.Repository;
 using Platform.Sql;
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Platform.Service
 {
@@ -174,21 +173,28 @@ namespace Platform.Service
             ResponseDTO responseDTO = new ResponseDTO();
             Customer customer = new Customer();
            customer.CustomerId = unitOfWork.DashboardRepository.NextNumberGenerator("Customer");
-          
-            CustomerConvertor.ConvertToCustomerEntity(ref customer, customerDto, false);
-            customer.CustomerCode = unitOfWork.CustomerRepository.GetCustomerCodeIdByVLC(customerDto.VLCId);
-            customer.CreatedDate = DateTime.Now;
-            customer.ModifiedDate = DateTime.Now;
-            customer.CreatedBy = customer.ModifiedBy = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerDto.VLCId);
-            customer.DateOfJoinVLC = DateTime.Now.Date;
-            customer.IsDeleted = false;
-            customer.VLCId = customerDto.VLCId;
-            unitOfWork.CustomerRepository.Add(customer);
-           customerDto=CustomerConvertor.ConvertToCustomerDto(customer);
-            unitOfWork.SaveChanges();
-            responseDTO.Status = true;
-            responseDTO.Message = String.Format("Customer Successfully Created");
-            responseDTO.Data = customerDto;
+            var vlc = unitOfWork.VLCRepository.GetById(customerDto.VLCId);
+            if (vlc != null)
+            {
+                CustomerConvertor.ConvertToCustomerEntity(ref customer, customerDto, false);
+                customer.CustomerCode = unitOfWork.CustomerRepository.GetCustomerCodeIdByVLC(customerDto.VLCId);
+                customer.CreatedDate = DateTimeHelper.GetISTDateTime();
+                customer.ModifiedDate = DateTimeHelper.GetISTDateTime();
+                customer.CreatedBy = customer.ModifiedBy = vlc.AgentName ?? "System";
+                customer.DateOfJoinVLC = DateTimeHelper.GetISTDateTime().Date;
+                customer.IsDeleted = false;
+                customer.VLCId = customerDto.VLCId;
+               unitOfWork.CustomerRepository.Add(customer);
+                customerDto = CustomerConvertor.ConvertToCustomerDto(customer);
+                unitOfWork.SaveChanges();
+                responseDTO.Status = true;
+                responseDTO.Message = String.Format("Customer Successfully Created");
+                responseDTO.Data = customerDto;
+            }
+            else
+            {
+                throw new PlatformModuleException("VLC Details Not Found");
+            }
             return responseDTO;
 
 
@@ -214,7 +220,7 @@ namespace Platform.Service
                 throw new PlatformModuleException(string.Format("Customer Account Not Found with Customer Id {0}",customerDto.CustomerId));
             CustomerConvertor.ConvertToCustomerEntity(ref customer, customerDto, true);
            
-            customer.ModifiedDate = DateTime.Now;
+            customer.ModifiedDate = DateTimeHelper.GetISTDateTime();
             customer.ModifiedBy = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customer.VLCId.GetValueOrDefault());
           
             unitOfWork.CustomerRepository.Update(customer);

@@ -18,7 +18,6 @@ namespace Platform.Sql
         public DCOrder()
         {
             this.DCOrderDtls = new HashSet<DCOrderDtl>();
-            this.DCPaymentDetails = new HashSet<DCPaymentDetail>();
         }
     
         public int DCOrderId { get; set; }
@@ -52,7 +51,5 @@ namespace Platform.Sql
         public virtual DistributionCenter DistributionCenter { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DCOrderDtl> DCOrderDtls { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DCPaymentDetail> DCPaymentDetails { get; set; }
     }
 }

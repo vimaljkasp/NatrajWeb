@@ -24,7 +24,8 @@ namespace Platform.Service
             vlcMilkCollectionDTO.IsDeleted = vlcMilkCollection.IsDeleted.GetValueOrDefault();
             vlcMilkCollectionDTO.ModifiedBy = vlcMilkCollection.ModifiedBy;
             vlcMilkCollectionDTO.ModifiedDate = vlcMilkCollection.ModifiedDate.GetValueOrDefault();
-          
+            vlcMilkCollectionDTO.CustomerName = vlcMilkCollection.Customer.CustomerName.ToString();
+            vlcMilkCollectionDTO.VLCName = vlcMilkCollection.VLC.VLCName.ToString();
             return vlcMilkCollectionDTO;
 
     }

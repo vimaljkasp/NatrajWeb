@@ -62,7 +62,7 @@ namespace PlatformWeb
             FluentValidationModelValidatorProvider.Configure(config);
             appBuilder.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
-        appBuilder.UseWebApi(config);
+           appBuilder.UseWebApi(config);
             appBuilder.Run(sample =>
 
             {
@@ -109,6 +109,7 @@ namespace PlatformWeb
             container.RegisterType<IVLCService, VLCService>(new HierarchicalLifetimeManager());
             container.RegisterType<IVLCMilkCollectionService, VLCMilkCollectionService>(new HierarchicalLifetimeManager());
 
+            container.RegisterType<IVLCAdminService, VLCAdminService>(new HierarchicalLifetimeManager());
 
             ////Dashboard
 
@@ -120,6 +121,9 @@ namespace PlatformWeb
             container.RegisterType<IDCAddressService, DCAddressServices>(new HierarchicalLifetimeManager());
             container.RegisterType<IDCOrderService, DCOrderService>(new HierarchicalLifetimeManager());
             container.RegisterType<IDCPaymentService, DCPaymentService>(new HierarchicalLifetimeManager());
+
+            //Dock Collection
+            container.RegisterType<IDockMilkCollectionService, DockMilkCollectionService>(new HierarchicalLifetimeManager());
         
             config.DependencyResolver = new UnityResolver(container);
             

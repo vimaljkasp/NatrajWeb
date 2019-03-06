@@ -1,7 +1,7 @@
 ﻿using Platform.DTO;
 using Platform.Repository;
 using Platform.Sql;
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,11 +83,11 @@ namespace Platform.Service
 
             customerBank.CustomerBankId = unitOfWork.DashboardRepository.NextNumberGenerator("CustomerBank");
             CustomerBankConvertor.ConvertToCustomerBankEntity(ref customerBank, customerBankDto, false);
-            customerBank.CreatedBy = "Vimal";
-            customerBank.CreatedDate = DateTime.Now;
+            customerBank.CreatedBy = "Admin";
+            customerBank.CreatedDate = DateTimeHelper.GetISTDateTime();
             customerBank.IsDeleted = false;
-            customerBank.ModifiedBy = "Vimal";
-            customerBank.ModifiedDate = DateTime.Now;
+            customerBank.ModifiedBy = "Admin";
+            customerBank.ModifiedDate = DateTimeHelper.GetISTDateTime();
             unitOfWork.CustomerBankRepository.Add(customerBank);
             unitOfWork.SaveChanges();
             customerBankDto = CustomerBankConvertor.ConvertTocustomerBankDto(customerBank);
@@ -114,7 +114,7 @@ namespace Platform.Service
                return AddCustomerBank(customerBankDto);
             
             CustomerBankConvertor.ConvertToCustomerBankEntity(ref customerBank, customerBankDto, true);
-            customerBank.ModifiedDate = DateTime.Now;
+            customerBank.ModifiedDate = DateTimeHelper.GetISTDateTime();
         //    customerBank.ModifiedBy = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerBank.Customer.VLCId.GetValueOrDefault());
 
             unitOfWork.CustomerBankRepository.Update(customerBank);

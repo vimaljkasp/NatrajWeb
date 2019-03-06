@@ -169,6 +169,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Admin\VLCAdminsController.cs" />
     <Compile Include="Controller\Customer\CustomerAgriculturesController.cs" />
     <Compile Include="Controller\Customer\CustomerBanksController.cs" />
     <Compile Include="Controller\Customer\CustomersController.cs" />
@@ -177,10 +178,12 @@
     <Compile Include="Controller\DistributionCenter\DCPaymentsController.cs" />
     <Compile Include="Controller\DistributionCenter\DCProductController.cs" />
     <Compile Include="Controller\DistributionCenter\DistributionCentersController.cs" />
+    <Compile Include="Controller\DockMilkCollection\DockMilkCollectionController.cs" />
     <Compile Include="Controller\LoginController\LoginController.cs" />
     <Compile Include="Controller\User\UserController.cs" />
     <Compile Include="Controller\VLC\VLCController.cs" />
     <Compile Include="Controller\VLC\VLCMilkCollectionsController.cs" />
+    <Compile Include="Controller\VLC\VLCPaymentsController.cs" />
     <Compile Include="OwinHelper\GlobalErrorLogger.cs" />
     <Compile Include="OwinHelper\GlobalExceptionHandler.cs" />
     <Compile Include="OwinHelper\LoggerHelper.cs" />

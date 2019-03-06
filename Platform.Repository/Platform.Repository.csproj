@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigurationRepository.cs" />
     <Compile Include="Customer\CustomerAgricultureRepository.cs" />
     <Compile Include="Customer\CustomerBankRepository.cs" />
     <Compile Include="Customer\CustomerRepository.cs" />
@@ -58,7 +59,11 @@
     <Compile Include="DistributionCenter\DCPaymentDetailRepository.cs" />
     <Compile Include="DistributionCenter\DCWalletRepository.cs" />
     <Compile Include="DistributionCenter\DistributionCenterRepository.cs" />
+    <Compile Include="Dock\DockMilkCollectionDtlRepository.cs" />
+    <Compile Include="Dock\DockMilkCollectionRepository.cs" />
     <Compile Include="MessageRepository.cs" />
+    <Compile Include="MilkRateRepository.cs" />
+    <Compile Include="NatrajConfiguration.cs" />
     <Compile Include="PagingConstant.cs" />
     <Compile Include="Product\ProductCategoryRepository.cs" />
     <Compile Include="Product\ProductRepository.cs" />
@@ -66,9 +71,12 @@
     <Compile Include="SMSRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="UserRepository.cs" />
+    <Compile Include="Reports\VLCReportRepository.cs" />
     <Compile Include="VLC\VLCMilkCollectionDtlRepository.cs" />
     <Compile Include="VLC\VLCMilkCollectionRepository.cs" />
+    <Compile Include="VLC\VLCPaymentDetailRepository.cs" />
     <Compile Include="VLC\VLCRepository.cs" />
+    <Compile Include="VLC\VLCWalletRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Platform.DTO\Platform.DTO.csproj">

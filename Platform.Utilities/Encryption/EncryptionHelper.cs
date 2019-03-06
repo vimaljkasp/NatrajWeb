@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Platform.Utilities.Encryption
+namespace Platform.Utilities
 {
     public static class EncryptionHelper
     {

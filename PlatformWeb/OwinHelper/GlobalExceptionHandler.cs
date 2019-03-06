@@ -1,6 +1,6 @@
 ﻿
 
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
 using System.Configuration;
 using System.Net;
 using System.Net.Http;

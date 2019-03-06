@@ -20,14 +20,25 @@ namespace Platform.Repository
             return messages;
         }
 
-        public List<Message> GetMessageByMessageId(string messageId)
+        public string GetMessageByMessageCode(string messageCode,string defaultMsg)
         {
-            var messages = _repository.Messages.Where(v => v.MessageId == messageId).ToList<Sql.Message>();
-            return messages;
+            var messages = _repository.Messages.Where(v => v.MessageId == messageCode).FirstOrDefault();
+            if (messages != null)
+                return messages.MessageString;
+            else
+                return defaultMsg;
         }
 
-       
 
+        public void Update(Message message)
+        {
+            if (message != null)
+            {
+                _repository.Entry<Sql.Message>(message).State = System.Data.Entity.EntityState.Modified;
+              
+            }
+
+        }
 
 
     }

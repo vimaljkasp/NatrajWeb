@@ -1,12 +1,10 @@
 ﻿using Platform.DTO;
 using Platform.Repository;
 using Platform.Sql;
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Platform.Service
 {
@@ -63,13 +61,13 @@ namespace Platform.Service
                     
                 }
                 responseDTO.Status = true;
-                responseDTO.Message = "DC Address Details For Distribution Center";
+                responseDTO.Message = "DC Payemnts Details For Distribution Center";
                 responseDTO.Data = dCPaymentDetailList;
             }
             else
             {
                 responseDTO.Status = false;
-                responseDTO.Message = String.Format("DC Address Details with DC ID {0} not found", dcId);
+                responseDTO.Message = String.Format("DC Payemnts Details with DC ID {0} not found", dcId);
                 responseDTO.Data = new object();
             }
             return responseDTO;
@@ -80,42 +78,43 @@ namespace Platform.Service
         public ResponseDTO AddDCPaymentDetail(DCPaymentDTO dCPaymentDTO)
         {
             ResponseDTO responseDTO = new ResponseDTO();
-
+            DCPaymentDetail dCPaymentDetail;
             if (dCPaymentDTO.PaymentCrAmount > 0)
             {
               UpdateDCWalletForOrder(dCPaymentDTO.DCId, dCPaymentDTO.PaymentCrAmount, true);
-                AddOrderPaymentDetail(dCPaymentDTO, 0, dCPaymentDTO.PaymentCrAmount);
+                dCPaymentDetail= AddOrderPaymentDetail(dCPaymentDTO, 0, dCPaymentDTO.PaymentCrAmount);
             }
             else
             {
                 UpdateDCWalletForOrder(dCPaymentDTO.DCId, dCPaymentDTO.PaymentDrAmount, false);
-                AddOrderPaymentDetail(dCPaymentDTO,0, dCPaymentDTO.PaymentDrAmount);
+                dCPaymentDetail= AddOrderPaymentDetail(dCPaymentDTO,0, dCPaymentDTO.PaymentDrAmount);
             }
             unitOfWork.SaveChanges();
-            //dCPaymentDTO = DCPaymentConvertor.ConvertToDCPaymentDTO(dCPaymentDetail);
-
+           dCPaymentDTO = DCPaymentConvertor.ConvertToDCPaymentDTO(dCPaymentDetail);
+           
             responseDTO.Status = true;
             responseDTO.Message = "DC Payment Detail Added Successfully";
             responseDTO.Data = dCPaymentDTO;
             return responseDTO;
         }
 
-        public void AddOrderPaymentDetail(DCPaymentDTO dCPaymentDTO,int orderId,decimal paidAmount)
+        public DCPaymentDetail AddOrderPaymentDetail(DCPaymentDTO dCPaymentDTO,int orderId,decimal paidAmount)
         {
             DCPaymentDetail dCPaymentDetail = new DCPaymentDetail();
             dCPaymentDetail.DCPaymentId = unitOfWork.DashboardRepository.NextNumberGenerator("DCPaymentDetail");
+            var dc = unitOfWork.DistributionCenterRepository.GetById(dCPaymentDTO.DCId);
             DCPaymentConvertor.ConvertToDCPaymentDetailEntity(ref dCPaymentDetail, dCPaymentDTO, false);
             dCPaymentDetail.DCOrderId = orderId;
              dCPaymentDetail.IsDeleted = false;
-            dCPaymentDetail.CreatedBy = dCPaymentDetail.ModifiedBy = "Admin";
-            dCPaymentDetail.CreatedDate = dCPaymentDetail.ModifiedDate = DateTime.Now;
+            dCPaymentDetail.CreatedBy = dCPaymentDetail.ModifiedBy = dc.AgentName;
+            dCPaymentDetail.CreatedDate = dCPaymentDetail.ModifiedDate = DateTimeHelper.GetISTDateTime();
             if (dCPaymentDTO.PaymentDate != DateTime.MinValue)
-                dCPaymentDetail.PaymentDate = DateTime.Now.Date;
+                dCPaymentDetail.PaymentDate = DateTimeHelper.GetISTDateTime().Date;
             else
                 dCPaymentDetail.PaymentDate = dCPaymentDTO.PaymentDate;
             dCPaymentDetail.PaymentCrAmount = paidAmount;
             unitOfWork.DCPaymentDetailRepository.Add(dCPaymentDetail);
-          
+            return dCPaymentDetail;
         }
 
         public void UpdateDCWalletForOrder(int dcId, decimal orderAmount, bool isCredit)
@@ -146,7 +145,7 @@ namespace Platform.Service
             dcPayment.PaymentCrAmount = dCPaymentDTO.PaymentCrAmount;
             dcPayment.PaymentDrAmount = dCPaymentDTO.PaymentDrAmount;
             dcPayment.ModifiedBy = "Admin";
-            dcPayment.ModifiedDate = DateTime.Now;
+            dcPayment.ModifiedDate = DateTimeHelper.GetISTDateTime();
 
             unitOfWork.DCPaymentDetailRepository.Update(dcPayment);
             unitOfWork.SaveChanges();

@@ -22,7 +22,9 @@ namespace Platform.Service
             dCOrderDTO.OrderDate = dCOrder.OrderDate;
             dCOrderDTO.OrderTotalPrice = dCOrder.OrderTotalPrice;
             dCOrderDTO.TotalOrderQuantity = dCOrder.TotalOrderQuantity;
+            dCOrderDTO.TotalActualQuantity = dCOrder.TotalActualQuantity.GetValueOrDefault();
             dCOrderDTO.OrderStatus = ((OrderStatus)dCOrder.OrderStatusId).ToString();
+            dCOrderDTO.DCName = dCOrder.DistributionCenter != null ? dCOrder.DistributionCenter.DCName : string.Empty;
             if (dCOrder.DCAddress != null)
              dCOrderDTO.dCAddressDTO =DCAddressConvertor.ConvertToDCAddressDTO(dCOrder.DCAddress);
             if (dCOrder.DCOrderDtls != null)
@@ -45,7 +47,9 @@ namespace Platform.Service
             dCOrderDtlDTO.ProductDescription= dCOrderDtl.Product.Description;
             dCOrderDtlDTO.ProductImageUrl = Path.Combine(path, "PROD" + dCOrderDtl.ProductId.ToString() + ".jpg");
             dCOrderDtlDTO.QuantityOrdered = dCOrderDtl.QuantityOrdered;
+            dCOrderDtlDTO.ActualQuantity = dCOrderDtl.ActualQuantity;
             dCOrderDtlDTO.TotalPrice = dCOrderDtl.OrderTotalPrice;
+            dCOrderDtlDTO.UnitPrice = dCOrderDtl.UnitPrice.GetValueOrDefault();
             return dCOrderDtlDTO;
         }
             //public static void ConvertToDCOrderEntity(ref DCOrder dcOrder, CreateDCOrderDTO dcOrderDTO, bool isUpdate)
@@ -61,19 +65,19 @@ namespace Platform.Service
             public static void ConvertToDCOrderDtlEntity(ref DCOrderDtl dcOrderDtl, CreateDCOrderDtlDTO dCOrderDtlDTO, bool isUpdate)
         {
             if(dCOrderDtlDTO.ActualQuantity>0)
-            dcOrderDtl.ActualQuantity = dCOrderDtlDTO.ActualQuantity;
+              dcOrderDtl.ActualQuantity = dCOrderDtlDTO.ActualQuantity;
             else
                 dcOrderDtl.ActualQuantity= dCOrderDtlDTO.QuantityOrdered;
 
             if (dCOrderDtlDTO.QuantityOrdered > 0)
                 dcOrderDtl.QuantityOrdered = dCOrderDtlDTO.QuantityOrdered;
           
-
-
+            
             if (dCOrderDtlDTO.ProductId > 0)
                 dcOrderDtl.ProductId = dCOrderDtlDTO.ProductId;
 
-
+            if (dCOrderDtlDTO.UnitPrice > 0)
+                dcOrderDtl.UnitPrice = dCOrderDtlDTO.UnitPrice;
             if (dCOrderDtlDTO.TotalPrice > 0)
                 dcOrderDtl.OrderTotalPrice = dCOrderDtlDTO.TotalPrice;
 
@@ -81,6 +85,7 @@ namespace Platform.Service
 
         }
 
+     
 
         public static VLCCustomerCollectionDTO ConvertToVLCCustomerCollectionDTO(VLCMilkCollection vLCMilkCollection)
         {

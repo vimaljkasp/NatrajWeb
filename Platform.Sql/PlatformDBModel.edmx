@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -194,13 +194,18 @@
             <PropertyRef Name="DockMilkCollectionId" />
           </Key>
           <Property Name="DockMilkCollectionId" Type="int" Nullable="false" />
-          <Property Name="CollectionDate" Type="date" />
-          <Property Name="TotalNoOfCan" Type="int" />
+          <Property Name="VLCId" Type="int" Nullable="false" />
+          <Property Name="CollectionDateTime" Type="datetime" Nullable="false" />
+          <Property Name="ShiftId" Type="int" Nullable="false" />
+          <Property Name="TotalCan" Type="int" />
           <Property Name="TotalRejectedCan" Type="int" />
-          <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="AverageFAT" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="AverageSNF" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="TotalRejectedQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="RejectedQuantity" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Commission" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="BillNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReceiverName" Type="nvarchar" MaxLength="50" />
           <Property Name="Comments" Type="nvarchar" MaxLength="200" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
@@ -208,53 +213,23 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="DockMilkCollectionDetails">
+        <EntityType Name="DockMilkCollectionDtl">
           <Key>
-            <PropertyRef Name="DMCDId" />
+            <PropertyRef Name="DockMilkCollectionDtlI" />
           </Key>
-          <Property Name="DMCDId" Type="int" Nullable="false" />
-          <Property Name="VLCId" Type="int" />
-          <Property Name="TotalNoOfCan" Type="int" />
+          <Property Name="DockMilkCollectionDtlI" Type="int" Nullable="false" />
+          <Property Name="DockMilkCollectionId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="FAT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CLR" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalCan" Type="int" />
           <Property Name="TotalRejectedCan" Type="int" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="FAT" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="SNF" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RejectedQuantity" Type="decimal" Precision="18" Scale="2" />
           <Property Name="RatePerUnit" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="MilkCollectionDate" Type="date" />
-          <Property Name="MileCollectionTime" Type="time" Precision="7" />
-          <Property Name="CarrierName" Type="nvarchar" MaxLength="60" />
-          <Property Name="DockReceiverName" Type="nvarchar" MaxLength="60" />
+          <Property Name="RejectedReason" Type="nvarchar" MaxLength="200" />
           <Property Name="Comments" Type="nvarchar" MaxLength="200" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
-          <Property Name="ModifiedDate" Type="datetime" />
-        </EntityType>
-        <EntityType Name="DockRejectedMilk">
-          <Key>
-            <PropertyRef Name="DockRejectedMilkId" />
-          </Key>
-          <Property Name="DockRejectedMilkId" Type="int" Nullable="false" />
-          <Property Name="VLCId" Type="int" />
-          <Property Name="TotalRejectedCan" Type="int" />
-          <Property Name="ReturnedCan" Type="int" />
-          <Property Name="NoOfProcessCan" Type="int" />
-          <Property Name="QuantityRejected" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="QuantityProcessed" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="FAT" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="SNF" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="RatePerUnit" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="RejectionDate" Type="date" />
-          <Property Name="ReasonForRejection" Type="nvarchar" MaxLength="200" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
-          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -487,6 +462,11 @@
           <Property Name="CLR" Type="decimal" Precision="18" Scale="2" />
           <Property Name="FAT" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DifferenceCLR" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ApplicableRate" Type="int" Nullable="false" />
+          <Property Name="CurrentShift" Type="int" />
+          <Property Name="MilkCommission" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HouseRent" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="MachineRent" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="VLCMilkCollection">
           <Key>
@@ -518,6 +498,45 @@
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ProductId" Type="int" />
         </EntityType>
+        <EntityType Name="VLCPaymentDetail">
+          <Key>
+            <PropertyRef Name="VLCPaymentId" />
+          </Key>
+          <Property Name="VLCPaymentId" Type="int" Nullable="false" />
+          <Property Name="VLCId" Type="int" Nullable="false" />
+          <Property Name="DockMilkCollectionId" Type="int" Nullable="false" />
+          <Property Name="PaymentCrAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentDrAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentDate" Type="datetime" Nullable="false" />
+          <Property Name="PaymentReceivedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentMode" Type="nvarchar" MaxLength="10" />
+          <Property Name="PaymentComments" Type="nvarchar" MaxLength="200" />
+          <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VLCWallet">
+          <Key>
+            <PropertyRef Name="WalletId" />
+          </Key>
+          <Property Name="WalletId" Type="int" Nullable="false" />
+          <Property Name="VLCId" Type="int" Nullable="false" />
+          <Property Name="WalletBalance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="AmountDueDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MilkRate">
+          <Key>
+            <PropertyRef Name="Fat" />
+            <PropertyRef Name="CLR" />
+          </Key>
+          <Property Name="Fat" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CLR" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="NatrajSMSLog">
           <Key>
             <PropertyRef Name="SMSId" />
@@ -530,6 +549,7 @@
           <Property Name="SMSMessage" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="SMSSentTime" Type="datetime" />
           <Property Name="SMSErrorMsg" Type="nvarchar" MaxLength="100" />
+          <Property Name="SMSStatus" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Customer_VLC">
           <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
@@ -639,18 +659,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DCPaymentDetails_DCOrder">
-          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="1" />
-          <End Role="DCPaymentDetail" Type="Self.DCPaymentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DCOrder">
-              <PropertyRef Name="DCOrderId" />
-            </Principal>
-            <Dependent Role="DCPaymentDetail">
-              <PropertyRef Name="DCOrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DCWallet_DCId">
           <End Role="DistributionCenter" Type="Self.DistributionCenter" Multiplicity="1" />
           <End Role="DCWallet" Type="Self.DCWallet" Multiplicity="*" />
@@ -663,27 +671,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DockMilkCollectionDetails_VLC">
-          <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
-          <End Role="DockMilkCollectionDetails" Type="Self.DockMilkCollectionDetails" Multiplicity="*" />
+        <Association Name="FK_DockMilkCollection_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="1" />
+          <End Role="DockMilkCollection" Type="Self.DockMilkCollection" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VLC">
               <PropertyRef Name="VLCId" />
             </Principal>
-            <Dependent Role="DockMilkCollectionDetails">
+            <Dependent Role="DockMilkCollection">
               <PropertyRef Name="VLCId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DockRejectedMilk_VLC">
-          <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
-          <End Role="DockRejectedMilk" Type="Self.DockRejectedMilk" Multiplicity="*" />
+        <Association Name="FK_DockMilkCollectionDtl_DockMilkCollection">
+          <End Role="DockMilkCollection" Type="Self.DockMilkCollection" Multiplicity="1" />
+          <End Role="DockMilkCollectionDtl" Type="Self.DockMilkCollectionDtl" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="VLC">
-              <PropertyRef Name="VLCId" />
+            <Principal Role="DockMilkCollection">
+              <PropertyRef Name="DockMilkCollectionId" />
             </Principal>
-            <Dependent Role="DockRejectedMilk">
-              <PropertyRef Name="VLCId" />
+            <Dependent Role="DockMilkCollectionDtl">
+              <PropertyRef Name="DockMilkCollectionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -807,10 +815,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetNextEntityNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EntityName" Type="nvarchar" Mode="In" />
-          <Parameter Name="NextNumber" Type="int" Mode="InOut" />
-        </Function>
+        <Association Name="FK_VLCPaymentDetail_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="1" />
+          <End Role="VLCPaymentDetail" Type="Self.VLCPaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="VLCPaymentDetail">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VLCWaller_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="1" />
+          <End Role="VLCWallet" Type="Self.VLCWallet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="VLCWallet">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="PlatformDBModelStoreContainer">
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerAgriculture" EntityType="Self.CustomerAgriculture" Schema="dbo" store:Type="Tables" />
@@ -822,8 +850,7 @@
           <EntitySet Name="DCWallet" EntityType="Self.DCWallet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistributionCenter" EntityType="Self.DistributionCenter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DockMilkCollection" EntityType="Self.DockMilkCollection" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DockMilkCollectionDetails" EntityType="Self.DockMilkCollectionDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DockRejectedMilk" EntityType="Self.DockRejectedMilk" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DockMilkCollectionDtl" EntityType="Self.DockMilkCollectionDtl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MilkProcessing" EntityType="Self.MilkProcessing" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NatrajConfigurations" EntityType="Self.NatrajConfigurations" Schema="dbo" store:Type="Tables" />
@@ -842,6 +869,9 @@
           <EntitySet Name="VLC" EntityType="Self.VLC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VLCMilkCollection" EntityType="Self.VLCMilkCollection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VLCMilkCollectionDtl" EntityType="Self.VLCMilkCollectionDtl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VLCPaymentDetail" EntityType="Self.VLCPaymentDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VLCWallet" EntityType="Self.VLCWallet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MilkRate" EntityType="Self.MilkRate" Schema="vimal" store:Type="Tables" />
           <EntitySet Name="NatrajSMSLog" EntityType="Self.NatrajSMSLog" Schema="vimal" store:Type="Tables" />
           <AssociationSet Name="FK_Customer_VLC" Association="Self.FK_Customer_VLC">
             <End Role="VLC" EntitySet="VLC" />
@@ -879,21 +909,17 @@
             <End Role="DistributionCenter" EntitySet="DistributionCenter" />
             <End Role="DCPaymentDetail" EntitySet="DCPaymentDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_DCPaymentDetails_DCOrder" Association="Self.FK_DCPaymentDetails_DCOrder">
-            <End Role="DCOrder" EntitySet="DCOrder" />
-            <End Role="DCPaymentDetail" EntitySet="DCPaymentDetail" />
-          </AssociationSet>
           <AssociationSet Name="FK_DCWallet_DCId" Association="Self.FK_DCWallet_DCId">
             <End Role="DistributionCenter" EntitySet="DistributionCenter" />
             <End Role="DCWallet" EntitySet="DCWallet" />
           </AssociationSet>
-          <AssociationSet Name="FK_DockMilkCollectionDetails_VLC" Association="Self.FK_DockMilkCollectionDetails_VLC">
+          <AssociationSet Name="FK_DockMilkCollection_VLC" Association="Self.FK_DockMilkCollection_VLC">
             <End Role="VLC" EntitySet="VLC" />
-            <End Role="DockMilkCollectionDetails" EntitySet="DockMilkCollectionDetails" />
+            <End Role="DockMilkCollection" EntitySet="DockMilkCollection" />
           </AssociationSet>
-          <AssociationSet Name="FK_DockRejectedMilk_VLC" Association="Self.FK_DockRejectedMilk_VLC">
-            <End Role="VLC" EntitySet="VLC" />
-            <End Role="DockRejectedMilk" EntitySet="DockRejectedMilk" />
+          <AssociationSet Name="FK_DockMilkCollectionDtl_DockMilkCollection" Association="Self.FK_DockMilkCollectionDtl_DockMilkCollection">
+            <End Role="DockMilkCollection" EntitySet="DockMilkCollection" />
+            <End Role="DockMilkCollectionDtl" EntitySet="DockMilkCollectionDtl" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_ProductCategory" Association="Self.FK_Product_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
@@ -935,8 +961,17 @@
             <End Role="VLCMilkCollection" EntitySet="VLCMilkCollection" />
             <End Role="VLCMilkCollectionDtl" EntitySet="VLCMilkCollectionDtl" />
           </AssociationSet>
+          <AssociationSet Name="FK_VLCPaymentDetail_VLC" Association="Self.FK_VLCPaymentDetail_VLC">
+            <End Role="VLC" EntitySet="VLC" />
+            <End Role="VLCPaymentDetail" EntitySet="VLCPaymentDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VLCWaller_VLC" Association="Self.FK_VLCWaller_VLC">
+            <End Role="VLC" EntitySet="VLC" />
+            <End Role="VLCWallet" EntitySet="VLCWallet" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1063,7 +1098,6 @@
           <NavigationProperty Name="DCAddress" Relationship="Self.fk_DCOrder_DCAddress" FromRole="DCOrder" ToRole="DCAddress" />
           <NavigationProperty Name="DistributionCenter" Relationship="Self.fk_DCOrder_DistributionCenter" FromRole="DCOrder" ToRole="DistributionCenter" />
           <NavigationProperty Name="DCOrderDtls" Relationship="Self.fk_DCOrderDtl_DCOrder" FromRole="DCOrder" ToRole="DCOrderDtl" />
-          <NavigationProperty Name="DCPaymentDetails" Relationship="Self.FK_DCPaymentDetails_DCOrder" FromRole="DCOrder" ToRole="DCPaymentDetail" />
         </EntityType>
         <EntityType Name="DCOrderDtl">
           <Key>
@@ -1103,7 +1137,6 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="DCOrder" Relationship="Self.FK_DCPaymentDetails_DCOrder" FromRole="DCPaymentDetail" ToRole="DCOrder" />
           <NavigationProperty Name="DistributionCenter" Relationship="Self.FK_DCPaymentDetail_DistributionCenter" FromRole="DCPaymentDetail" ToRole="DistributionCenter" />
         </EntityType>
         <EntityType Name="DCWallet">
@@ -1150,69 +1183,45 @@
             <PropertyRef Name="DockMilkCollectionId" />
           </Key>
           <Property Name="DockMilkCollectionId" Type="Int32" Nullable="false" />
-          <Property Name="CollectionDate" Type="DateTime" Precision="0" />
-          <Property Name="TotalNoOfCan" Type="Int32" />
+          <Property Name="VLCId" Type="Int32" Nullable="false" />
+          <Property Name="CollectionDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ShiftId" Type="Int32" Nullable="false" />
+          <Property Name="TotalCan" Type="Int32" />
           <Property Name="TotalRejectedCan" Type="Int32" />
-          <Property Name="TotalQuantity" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="AverageFAT" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="AverageSNF" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TotalRejectedQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalQuantity" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="RejectedQuantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Commission" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="BillNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiverName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="VLC" Relationship="Self.FK_DockMilkCollection_VLC" FromRole="DockMilkCollection" ToRole="VLC" />
+          <NavigationProperty Name="DockMilkCollectionDtls" Relationship="Self.FK_DockMilkCollectionDtl_DockMilkCollection" FromRole="DockMilkCollection" ToRole="DockMilkCollectionDtl" />
         </EntityType>
-        <EntityType Name="DockMilkCollectionDetail">
+        <EntityType Name="DockMilkCollectionDtl">
           <Key>
-            <PropertyRef Name="DMCDId" />
+            <PropertyRef Name="DockMilkCollectionDtlI" />
           </Key>
-          <Property Name="DMCDId" Type="Int32" Nullable="false" />
-          <Property Name="VLCId" Type="Int32" />
-          <Property Name="TotalNoOfCan" Type="Int32" />
+          <Property Name="DockMilkCollectionDtlI" Type="Int32" Nullable="false" />
+          <Property Name="DockMilkCollectionId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="FAT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CLR" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalCan" Type="Int32" />
           <Property Name="TotalRejectedCan" Type="Int32" />
           <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="FAT" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="SNF" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RejectedQuantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="RatePerUnit" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="MilkCollectionDate" Type="DateTime" Precision="0" />
-          <Property Name="MileCollectionTime" Type="Time" Precision="7" />
-          <Property Name="CarrierName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="DockReceiverName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="RejectedReason" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="VLC" Relationship="Self.FK_DockMilkCollectionDetails_VLC" FromRole="DockMilkCollectionDetails" ToRole="VLC" />
-        </EntityType>
-        <EntityType Name="DockRejectedMilk">
-          <Key>
-            <PropertyRef Name="DockRejectedMilkId" />
-          </Key>
-          <Property Name="DockRejectedMilkId" Type="Int32" Nullable="false" />
-          <Property Name="VLCId" Type="Int32" />
-          <Property Name="TotalRejectedCan" Type="Int32" />
-          <Property Name="ReturnedCan" Type="Int32" />
-          <Property Name="NoOfProcessCan" Type="Int32" />
-          <Property Name="QuantityRejected" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="QuantityProcessed" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="FAT" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="SNF" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="RatePerUnit" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="RejectionDate" Type="DateTime" Precision="0" />
-          <Property Name="ReasonForRejection" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="VLC" Relationship="Self.FK_DockRejectedMilk_VLC" FromRole="DockRejectedMilk" ToRole="VLC" />
+          <NavigationProperty Name="DockMilkCollection" Relationship="Self.FK_DockMilkCollectionDtl_DockMilkCollection" FromRole="DockMilkCollectionDtl" ToRole="DockMilkCollection" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -1238,6 +1247,18 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ProductBatches" Relationship="Self.FK_ProductBatch_MilkProcessing" FromRole="MilkProcessing" ToRole="ProductBatch" />
+        </EntityType>
+        <EntityType Name="NatrajConfiguration">
+          <Key>
+            <PropertyRef Name="KeyData" />
+            <PropertyRef Name="KeyName" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="KeyData" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KeyName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DataVal" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DefaultVal" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="NumberMaster">
           <Key>
@@ -1448,10 +1469,16 @@
           <Property Name="CLR" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="FAT" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="DifferenceCLR" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ApplicableRate" Type="Int32" Nullable="false" />
+          <Property Name="CurrentShift" Type="Int32" />
+          <Property Name="MilkCommission" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HouseRent" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MachineRent" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_VLC" FromRole="VLC" ToRole="Customer" />
-          <NavigationProperty Name="DockMilkCollectionDetails" Relationship="Self.FK_DockMilkCollectionDetails_VLC" FromRole="VLC" ToRole="DockMilkCollectionDetails" />
-          <NavigationProperty Name="DockRejectedMilks" Relationship="Self.FK_DockRejectedMilk_VLC" FromRole="VLC" ToRole="DockRejectedMilk" />
+          <NavigationProperty Name="DockMilkCollections" Relationship="Self.FK_DockMilkCollection_VLC" FromRole="VLC" ToRole="DockMilkCollection" />
           <NavigationProperty Name="VLCMilkCollections" Relationship="Self.FK_VLCMilkCollection_VLC" FromRole="VLC" ToRole="VLCMilkCollection" />
+          <NavigationProperty Name="VLCPaymentDetails" Relationship="Self.FK_VLCPaymentDetail_VLC" FromRole="VLC" ToRole="VLCPaymentDetail" />
+          <NavigationProperty Name="VLCWallets" Relationship="Self.FK_VLCWaller_VLC" FromRole="VLC" ToRole="VLCWallet" />
         </EntityType>
         <EntityType Name="VLCMilkCollection">
           <Key>
@@ -1487,6 +1514,47 @@
           <Property Name="ProductId" Type="Int32" />
           <NavigationProperty Name="VLCMilkCollection" Relationship="Self.FK_VLCMilkCollectiondtl_VLCMilkCollection" FromRole="VLCMilkCollectionDtl" ToRole="VLCMilkCollection" />
         </EntityType>
+        <EntityType Name="VLCPaymentDetail">
+          <Key>
+            <PropertyRef Name="VLCPaymentId" />
+          </Key>
+          <Property Name="VLCPaymentId" Type="Int32" Nullable="false" />
+          <Property Name="VLCId" Type="Int32" Nullable="false" />
+          <Property Name="DockMilkCollectionId" Type="Int32" Nullable="false" />
+          <Property Name="PaymentCrAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentDrAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PaymentReceivedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentMode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentComments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="VLC" Relationship="Self.FK_VLCPaymentDetail_VLC" FromRole="VLCPaymentDetail" ToRole="VLC" />
+        </EntityType>
+        <EntityType Name="VLCWallet">
+          <Key>
+            <PropertyRef Name="WalletId" />
+          </Key>
+          <Property Name="WalletId" Type="Int32" Nullable="false" />
+          <Property Name="VLCId" Type="Int32" Nullable="false" />
+          <Property Name="WalletBalance" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="AmountDueDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="VLC" Relationship="Self.FK_VLCWaller_VLC" FromRole="VLCWallet" ToRole="VLC" />
+        </EntityType>
+        <EntityType Name="MilkRate">
+          <Key>
+            <PropertyRef Name="Fat" />
+            <PropertyRef Name="CLR" />
+          </Key>
+          <Property Name="Fat" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CLR" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="NatrajSMSLog">
           <Key>
             <PropertyRef Name="SMSId" />
@@ -1499,6 +1567,7 @@
           <Property Name="SMSMessage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SMSSentTime" Type="DateTime" Precision="3" />
           <Property Name="SMSErrorMsg" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SMSStatus" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Customer_VLC">
           <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
@@ -1596,18 +1665,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DCPaymentDetails_DCOrder">
-          <End Role="DCOrder" Type="Self.DCOrder" Multiplicity="1" />
-          <End Role="DCPaymentDetail" Type="Self.DCPaymentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DCOrder">
-              <PropertyRef Name="DCOrderId" />
-            </Principal>
-            <Dependent Role="DCPaymentDetail">
-              <PropertyRef Name="DCOrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_DCOrderDtl_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="DCOrderDtl" Type="Self.DCOrderDtl" Multiplicity="*" />
@@ -1644,27 +1701,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DockMilkCollectionDetails_VLC">
-          <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
-          <End Role="DockMilkCollectionDetails" Type="Self.DockMilkCollectionDetail" Multiplicity="*" />
+        <Association Name="FK_DockMilkCollection_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="1" />
+          <End Role="DockMilkCollection" Type="Self.DockMilkCollection" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VLC">
               <PropertyRef Name="VLCId" />
             </Principal>
-            <Dependent Role="DockMilkCollectionDetails">
+            <Dependent Role="DockMilkCollection">
               <PropertyRef Name="VLCId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DockRejectedMilk_VLC">
-          <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
-          <End Role="DockRejectedMilk" Type="Self.DockRejectedMilk" Multiplicity="*" />
+        <Association Name="FK_DockMilkCollectionDtl_DockMilkCollection">
+          <End Role="DockMilkCollection" Type="Self.DockMilkCollection" Multiplicity="1" />
+          <End Role="DockMilkCollectionDtl" Type="Self.DockMilkCollectionDtl" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="VLC">
-              <PropertyRef Name="VLCId" />
+            <Principal Role="DockMilkCollection">
+              <PropertyRef Name="DockMilkCollectionId" />
             </Principal>
-            <Dependent Role="DockRejectedMilk">
-              <PropertyRef Name="VLCId" />
+            <Dependent Role="DockMilkCollectionDtl">
+              <PropertyRef Name="DockMilkCollectionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1764,6 +1821,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VLCPaymentDetail_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="1" />
+          <End Role="VLCPaymentDetail" Type="Self.VLCPaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="VLCPaymentDetail">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VLCWaller_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="1" />
+          <End Role="VLCWallet" Type="Self.VLCWallet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="VLCWallet">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_VLCMilkCollectiondtl_VLCMilkCollection">
           <End Role="VLCMilkCollection" Type="Self.VLCMilkCollection" Multiplicity="1" />
           <End Role="VLCMilkCollectionDtl" Type="Self.VLCMilkCollectionDtl" Multiplicity="*" />
@@ -1787,10 +1868,10 @@
           <EntitySet Name="DCWallets" EntityType="Self.DCWallet" />
           <EntitySet Name="DistributionCenters" EntityType="Self.DistributionCenter" />
           <EntitySet Name="DockMilkCollections" EntityType="Self.DockMilkCollection" />
-          <EntitySet Name="DockMilkCollectionDetails" EntityType="Self.DockMilkCollectionDetail" />
-          <EntitySet Name="DockRejectedMilks" EntityType="Self.DockRejectedMilk" />
+          <EntitySet Name="DockMilkCollectionDtls" EntityType="Self.DockMilkCollectionDtl" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="MilkProcessings" EntityType="Self.MilkProcessing" />
+          <EntitySet Name="NatrajConfigurations" EntityType="Self.NatrajConfiguration" />
           <EntitySet Name="NumberMasters" EntityType="Self.NumberMaster" />
           <EntitySet Name="OrderStatus" EntityType="Self.OrderStatu" />
           <EntitySet Name="Products" EntityType="Self.Product" />
@@ -1806,6 +1887,9 @@
           <EntitySet Name="VLCs" EntityType="Self.VLC" />
           <EntitySet Name="VLCMilkCollections" EntityType="Self.VLCMilkCollection" />
           <EntitySet Name="VLCMilkCollectionDtls" EntityType="Self.VLCMilkCollectionDtl" />
+          <EntitySet Name="VLCPaymentDetails" EntityType="Self.VLCPaymentDetail" />
+          <EntitySet Name="VLCWallets" EntityType="Self.VLCWallet" />
+          <EntitySet Name="MilkRates" EntityType="Self.MilkRate" />
           <EntitySet Name="NatrajSMSLogs" EntityType="Self.NatrajSMSLog" />
           <AssociationSet Name="FK_Customer_VLC" Association="Self.FK_Customer_VLC">
             <End Role="VLC" EntitySet="VLCs" />
@@ -1839,10 +1923,6 @@
             <End Role="DCOrder" EntitySet="DCOrders" />
             <End Role="DCOrderDtl" EntitySet="DCOrderDtls" />
           </AssociationSet>
-          <AssociationSet Name="FK_DCPaymentDetails_DCOrder" Association="Self.FK_DCPaymentDetails_DCOrder">
-            <End Role="DCOrder" EntitySet="DCOrders" />
-            <End Role="DCPaymentDetail" EntitySet="DCPaymentDetails" />
-          </AssociationSet>
           <AssociationSet Name="fk_DCOrderDtl_Product" Association="Self.fk_DCOrderDtl_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="DCOrderDtl" EntitySet="DCOrderDtls" />
@@ -1855,13 +1935,13 @@
             <End Role="DistributionCenter" EntitySet="DistributionCenters" />
             <End Role="DCWallet" EntitySet="DCWallets" />
           </AssociationSet>
-          <AssociationSet Name="FK_DockMilkCollectionDetails_VLC" Association="Self.FK_DockMilkCollectionDetails_VLC">
+          <AssociationSet Name="FK_DockMilkCollection_VLC" Association="Self.FK_DockMilkCollection_VLC">
             <End Role="VLC" EntitySet="VLCs" />
-            <End Role="DockMilkCollectionDetails" EntitySet="DockMilkCollectionDetails" />
+            <End Role="DockMilkCollection" EntitySet="DockMilkCollections" />
           </AssociationSet>
-          <AssociationSet Name="FK_DockRejectedMilk_VLC" Association="Self.FK_DockRejectedMilk_VLC">
-            <End Role="VLC" EntitySet="VLCs" />
-            <End Role="DockRejectedMilk" EntitySet="DockRejectedMilks" />
+          <AssociationSet Name="FK_DockMilkCollectionDtl_DockMilkCollection" Association="Self.FK_DockMilkCollectionDtl_DockMilkCollection">
+            <End Role="DockMilkCollection" EntitySet="DockMilkCollections" />
+            <End Role="DockMilkCollectionDtl" EntitySet="DockMilkCollectionDtls" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductBatch_MilkProcessing" Association="Self.FK_ProductBatch_MilkProcessing">
             <End Role="MilkProcessing" EntitySet="MilkProcessings" />
@@ -1895,28 +1975,19 @@
             <End Role="VLC" EntitySet="VLCs" />
             <End Role="VLCMilkCollection" EntitySet="VLCMilkCollections" />
           </AssociationSet>
+          <AssociationSet Name="FK_VLCPaymentDetail_VLC" Association="Self.FK_VLCPaymentDetail_VLC">
+            <End Role="VLC" EntitySet="VLCs" />
+            <End Role="VLCPaymentDetail" EntitySet="VLCPaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VLCWaller_VLC" Association="Self.FK_VLCWaller_VLC">
+            <End Role="VLC" EntitySet="VLCs" />
+            <End Role="VLCWallet" EntitySet="VLCWallets" />
+          </AssociationSet>
           <AssociationSet Name="FK_VLCMilkCollectiondtl_VLCMilkCollection" Association="Self.FK_VLCMilkCollectiondtl_VLCMilkCollection">
             <End Role="VLCMilkCollection" EntitySet="VLCMilkCollections" />
             <End Role="VLCMilkCollectionDtl" EntitySet="VLCMilkCollectionDtls" />
           </AssociationSet>
-          <FunctionImport Name="GetNextEntityNumber">
-            <Parameter Name="EntityName" Mode="In" Type="String" />
-            <Parameter Name="NextNumber" Mode="InOut" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="NatrajConfigurations" EntityType="PlatformDBModel.NatrajConfiguration" />
         </EntityContainer>
-        <EntityType Name="NatrajConfiguration">
-          <Key>
-            <PropertyRef Name="KeyData" />
-            <PropertyRef Name="KeyName" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="KeyData" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="KeyName" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="DataVal" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="DefaultVal" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2120,13 +2191,18 @@
             <EntityTypeMapping TypeName="PlatformDBModel.DockMilkCollection">
               <MappingFragment StoreEntitySet="DockMilkCollection">
                 <ScalarProperty Name="DockMilkCollectionId" ColumnName="DockMilkCollectionId" />
-                <ScalarProperty Name="CollectionDate" ColumnName="CollectionDate" />
-                <ScalarProperty Name="TotalNoOfCan" ColumnName="TotalNoOfCan" />
+                <ScalarProperty Name="VLCId" ColumnName="VLCId" />
+                <ScalarProperty Name="CollectionDateTime" ColumnName="CollectionDateTime" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="TotalCan" ColumnName="TotalCan" />
                 <ScalarProperty Name="TotalRejectedCan" ColumnName="TotalRejectedCan" />
                 <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
-                <ScalarProperty Name="AverageFAT" ColumnName="AverageFAT" />
-                <ScalarProperty Name="AverageSNF" ColumnName="AverageSNF" />
-                <ScalarProperty Name="TotalRejectedQuantity" ColumnName="TotalRejectedQuantity" />
+                <ScalarProperty Name="RejectedQuantity" ColumnName="RejectedQuantity" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Commission" ColumnName="Commission" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="BillNumber" ColumnName="BillNumber" />
+                <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -2136,53 +2212,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DockMilkCollectionDetails">
-            <EntityTypeMapping TypeName="PlatformDBModel.DockMilkCollectionDetail">
-              <MappingFragment StoreEntitySet="DockMilkCollectionDetails">
-                <ScalarProperty Name="DMCDId" ColumnName="DMCDId" />
-                <ScalarProperty Name="VLCId" ColumnName="VLCId" />
-                <ScalarProperty Name="TotalNoOfCan" ColumnName="TotalNoOfCan" />
+          <EntitySetMapping Name="DockMilkCollectionDtls">
+            <EntityTypeMapping TypeName="PlatformDBModel.DockMilkCollectionDtl">
+              <MappingFragment StoreEntitySet="DockMilkCollectionDtl">
+                <ScalarProperty Name="DockMilkCollectionDtlI" ColumnName="DockMilkCollectionDtlI" />
+                <ScalarProperty Name="DockMilkCollectionId" ColumnName="DockMilkCollectionId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="FAT" ColumnName="FAT" />
+                <ScalarProperty Name="CLR" ColumnName="CLR" />
+                <ScalarProperty Name="TotalCan" ColumnName="TotalCan" />
                 <ScalarProperty Name="TotalRejectedCan" ColumnName="TotalRejectedCan" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="FAT" ColumnName="FAT" />
-                <ScalarProperty Name="SNF" ColumnName="SNF" />
+                <ScalarProperty Name="RejectedQuantity" ColumnName="RejectedQuantity" />
                 <ScalarProperty Name="RatePerUnit" ColumnName="RatePerUnit" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="MilkCollectionDate" ColumnName="MilkCollectionDate" />
-                <ScalarProperty Name="MileCollectionTime" ColumnName="MileCollectionTime" />
-                <ScalarProperty Name="CarrierName" ColumnName="CarrierName" />
-                <ScalarProperty Name="DockReceiverName" ColumnName="DockReceiverName" />
+                <ScalarProperty Name="RejectedReason" ColumnName="RejectedReason" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DockRejectedMilks">
-            <EntityTypeMapping TypeName="PlatformDBModel.DockRejectedMilk">
-              <MappingFragment StoreEntitySet="DockRejectedMilk">
-                <ScalarProperty Name="DockRejectedMilkId" ColumnName="DockRejectedMilkId" />
-                <ScalarProperty Name="VLCId" ColumnName="VLCId" />
-                <ScalarProperty Name="TotalRejectedCan" ColumnName="TotalRejectedCan" />
-                <ScalarProperty Name="ReturnedCan" ColumnName="ReturnedCan" />
-                <ScalarProperty Name="NoOfProcessCan" ColumnName="NoOfProcessCan" />
-                <ScalarProperty Name="QuantityRejected" ColumnName="QuantityRejected" />
-                <ScalarProperty Name="QuantityProcessed" ColumnName="QuantityProcessed" />
-                <ScalarProperty Name="FAT" ColumnName="FAT" />
-                <ScalarProperty Name="SNF" ColumnName="SNF" />
-                <ScalarProperty Name="RatePerUnit" ColumnName="RatePerUnit" />
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="RejectionDate" ColumnName="RejectionDate" />
-                <ScalarProperty Name="ReasonForRejection" ColumnName="ReasonForRejection" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2209,6 +2254,18 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NatrajConfigurations">
+            <EntityTypeMapping TypeName="PlatformDBModel.NatrajConfiguration">
+              <MappingFragment StoreEntitySet="NatrajConfigurations">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KeyData" ColumnName="KeyData" />
+                <ScalarProperty Name="KeyName" ColumnName="KeyName" />
+                <ScalarProperty Name="DataVal" ColumnName="DataVal" />
+                <ScalarProperty Name="DefaultVal" ColumnName="DefaultVal" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2418,6 +2475,11 @@
                 <ScalarProperty Name="CLR" ColumnName="CLR" />
                 <ScalarProperty Name="FAT" ColumnName="FAT" />
                 <ScalarProperty Name="DifferenceCLR" ColumnName="DifferenceCLR" />
+                <ScalarProperty Name="ApplicableRate" ColumnName="ApplicableRate" />
+                <ScalarProperty Name="CurrentShift" ColumnName="CurrentShift" />
+                <ScalarProperty Name="MilkCommission" ColumnName="MilkCommission" />
+                <ScalarProperty Name="HouseRent" ColumnName="HouseRent" />
+                <ScalarProperty Name="MachineRent" ColumnName="MachineRent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2453,6 +2515,47 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="VLCPaymentDetails">
+            <EntityTypeMapping TypeName="PlatformDBModel.VLCPaymentDetail">
+              <MappingFragment StoreEntitySet="VLCPaymentDetail">
+                <ScalarProperty Name="VLCPaymentId" ColumnName="VLCPaymentId" />
+                <ScalarProperty Name="VLCId" ColumnName="VLCId" />
+                <ScalarProperty Name="DockMilkCollectionId" ColumnName="DockMilkCollectionId" />
+                <ScalarProperty Name="PaymentCrAmount" ColumnName="PaymentCrAmount" />
+                <ScalarProperty Name="PaymentDrAmount" ColumnName="PaymentDrAmount" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="PaymentReceivedBy" ColumnName="PaymentReceivedBy" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="PaymentComments" ColumnName="PaymentComments" />
+                <ScalarProperty Name="Ref1" ColumnName="Ref1" />
+                <ScalarProperty Name="Ref2" ColumnName="Ref2" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VLCWallets">
+            <EntityTypeMapping TypeName="PlatformDBModel.VLCWallet">
+              <MappingFragment StoreEntitySet="VLCWallet">
+                <ScalarProperty Name="WalletId" ColumnName="WalletId" />
+                <ScalarProperty Name="VLCId" ColumnName="VLCId" />
+                <ScalarProperty Name="WalletBalance" ColumnName="WalletBalance" />
+                <ScalarProperty Name="AmountDueDate" ColumnName="AmountDueDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MilkRates">
+            <EntityTypeMapping TypeName="PlatformDBModel.MilkRate">
+              <MappingFragment StoreEntitySet="MilkRate">
+                <ScalarProperty Name="Fat" ColumnName="Fat" />
+                <ScalarProperty Name="CLR" ColumnName="CLR" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="NatrajSMSLogs">
             <EntityTypeMapping TypeName="PlatformDBModel.NatrajSMSLog">
               <MappingFragment StoreEntitySet="NatrajSMSLog">
@@ -2464,19 +2567,7 @@
                 <ScalarProperty Name="SMSMessage" ColumnName="SMSMessage" />
                 <ScalarProperty Name="SMSSentTime" ColumnName="SMSSentTime" />
                 <ScalarProperty Name="SMSErrorMsg" ColumnName="SMSErrorMsg" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetNextEntityNumber" FunctionName="PlatformDBModel.Store.GetNextEntityNumber" />
-          <EntitySetMapping Name="NatrajConfigurations">
-            <EntityTypeMapping TypeName="PlatformDBModel.NatrajConfiguration">
-              <MappingFragment StoreEntitySet="NatrajConfigurations">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DefaultVal" ColumnName="DefaultVal" />
-                <ScalarProperty Name="DataVal" ColumnName="DataVal" />
-                <ScalarProperty Name="KeyName" ColumnName="KeyName" />
-                <ScalarProperty Name="KeyData" ColumnName="KeyData" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SMSStatus" ColumnName="SMSStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

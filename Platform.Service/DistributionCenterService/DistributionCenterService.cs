@@ -1,13 +1,10 @@
 ﻿using Platform.DTO;
 using Platform.Repository;
 using Platform.Sql;
-using Platform.Utilities.Encryption;
-using Platform.Utilities.ExceptionHandler;
+using Platform.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Platform.Service
 {
@@ -25,14 +22,15 @@ namespace Platform.Service
             DistributionCenterConvertor.ConvertToDistributionCenterEntity(ref distributionCenter, distributionCenterDTO, false);
             //   customer.CustomerCode = unitOfWork.CustomerRepository.GetCustomerCodeIdByVLC(customerDto.VLCId);
             distributionCenter.DCCode = "DC" + distributionCenter.DCId.ToString();
-            distributionCenter.CreatedDate = DateTime.Now;
-            distributionCenter.ModifiedDate = DateTime.Now;
+            distributionCenter.CreatedDate = DateTimeHelper.GetISTDateTime();
+            distributionCenter.ModifiedDate = DateTimeHelper.GetISTDateTime();
             distributionCenter.CreatedBy = distributionCenter.ModifiedBy = "Admin";
                // unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerDto.VLCId);
-            distributionCenter.DateOfRegistration = DateTime.Now.Date;
+            distributionCenter.DateOfRegistration = DateTimeHelper.GetISTDateTime().Date;
             distributionCenter.IsDeleted = true;
+            distributionCenter.Pin = OTPGenerator.GetSixDigitOTP();
             distributionCenterDTO.DCId = distributionCenter.DCId;
-          
+            
             //creating Distribution Center wallet with Distribution Center 
             AddDistributionCenterWallet(distributionCenter);
            DCAddress dCAddress= AddDistributionCenterAddress(distributionCenterDTO);
@@ -47,6 +45,14 @@ namespace Platform.Service
 
         }
 
+        public void SendSMSForMobileNumberVerfication(DistributionCenter distributionCenter)
+        {
+            SMSService sMSService = new SMSService();
+            string message =string.Format(unitOfWork.MessageRepository.GetMessageByMessageCode("DCSignUp", NatrajMessages.DCSignUpMessage),distributionCenter.Pin);
+
+            sMSService.SendMessage(NatrajComponent.DC, SMSType.SignUp, distributionCenter.Contact, message);
+        }
+
         public ResponseDTO UpdateDistributionCenter(DistributionCenterDTO distributionCenterDTO)
         {
             var distributionCenter = unitOfWork.DistributionCenterRepository.GetById(distributionCenterDTO.DCId);
@@ -54,7 +60,7 @@ namespace Platform.Service
             {
                 DistributionCenterConvertor.ConvertToDistributionCenterEntity(ref distributionCenter, distributionCenterDTO, true);
                 distributionCenter.ModifiedBy = distributionCenter.AgentName;
-                distributionCenter.ModifiedDate = DateTime.Now;
+                distributionCenter.ModifiedDate = DateTimeHelper.GetISTDateTime();
                 unitOfWork.DistributionCenterRepository.Update(distributionCenter);
                 unitOfWork.SaveChanges();
                 ResponseDTO responseDTO = new ResponseDTO();
@@ -87,7 +93,7 @@ namespace Platform.Service
 
             }
             else
-                return null;
+                throw new PlatformModuleException("Distribution Center Address Details Not Provided");
         }
 
         public void AddDistributionCenterWallet(DistributionCenter distributionCenter)
@@ -96,7 +102,7 @@ namespace Platform.Service
             dCWallet.WalletId = unitOfWork.DashboardRepository.NextNumberGenerator("DCWallet");
             dCWallet.DCId = distributionCenter.DCId;
             dCWallet.WalletBalance = 0;
-            dCWallet.AmountDueDate = DateTime.Now.AddDays(10);
+            dCWallet.AmountDueDate = DateTimeHelper.GetISTDateTime().AddDays(10);
             distributionCenter.DCWallets.Add(dCWallet);
           //  unitOfWork.DCWalletRepository.Add(dCWallet);
         }
@@ -121,7 +127,7 @@ namespace Platform.Service
                 if (string.IsNullOrWhiteSpace(distributionCenterDTO.Email) == false)
                 {
                     existingDistributionCenter = unitOfWork.DistributionCenterRepository.GetDistributionCenterByEmail(distributionCenterDTO.Email);
-                    if (distributionCenterDTO != null)
+                    if (existingDistributionCenter != null)
                         throw new PlatformModuleException("Distribution Center Already Exist with given Email");
                 }
 

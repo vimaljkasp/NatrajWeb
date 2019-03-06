@@ -35,7 +35,8 @@ namespace Platform.Service
             vlcDto.CLR = vLC.CLR;
             vlcDto.FAT = vLC.FAT;
             vlcDto.DifferenceCLR = vLC.DifferenceCLR;
-
+            vlcDto.ApplicableRate = vLC.ApplicableRate;
+            vlcDto.Shift = vLC.CurrentShift.GetValueOrDefault();
             return vlcDto;
 
 
@@ -76,6 +77,10 @@ namespace Platform.Service
                 vLC.FAT = vlcDTO.FAT.Value;
             if (vlcDTO.DifferenceCLR.HasValue)
                 vLC.DifferenceCLR = vlcDTO.DifferenceCLR.Value;
+            if (vlcDTO.Shift > 0)
+                vLC.CurrentShift = vlcDTO.Shift;
+            if (vlcDTO.ApplicableRate > 0)
+                vLC.ApplicableRate = vlcDTO.ApplicableRate;
 
         }
     }

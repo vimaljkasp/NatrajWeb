@@ -15,6 +15,10 @@ namespace Platform.DTO
 
         ResponseDTO GetVLCById(int vlcId);
 
+        ResponseDTO GetVLCCollectionSummary(int vlcId);
+
+        ResponseDTO GetCustomerCollectionSummary(int customerId);
+            
         ResponseDTO AddVLC(VLCDTO vlcDto);
 
         ResponseDTO UpdateVLC(VLCDTO vlcDto);

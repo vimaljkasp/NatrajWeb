@@ -37,6 +37,7 @@
       <HintPath>..\PlatformCommonDlls\FluentValidation.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,6 +50,7 @@
     <Compile Include="Common\ChangePasswordDTO.cs" />
     <Compile Include="Common\LoggedInUserDTO.cs" />
     <Compile Include="Common\ResponseDTO.cs" />
+    <Compile Include="Constants\NatrajMessages.cs" />
     <Compile Include="Customer\CustomerAgricultureDTO.cs" />
     <Compile Include="Customer\CustomerBankDTO.cs" />
     <Compile Include="Customer\CustomerDetailsDTO.cs" />
@@ -63,6 +65,10 @@
     <Compile Include="DistributionCenter\DCOrderStatusDTO.cs" />
     <Compile Include="DistributionCenter\DCPaymentDTO.cs" />
     <Compile Include="DistributionCenter\DistributionCenterDTO.cs" />
+    <Compile Include="DockCollection\DockMilkCollectionDtlDTO.cs" />
+    <Compile Include="DockCollection\DockMilkCollectionDTO.cs" />
+    <Compile Include="DockCollection\DockVLCCollectionDTO.cs" />
+    <Compile Include="Enums\ApplicableType.cs" />
     <Compile Include="Enums\NatrajComponent.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\SMSType.cs" />
@@ -73,13 +79,18 @@
     <Compile Include="Interfaces\IDCOrderService.cs" />
     <Compile Include="Interfaces\IDCPaymentService.cs" />
     <Compile Include="Interfaces\IDistributionCenterService.cs" />
+    <Compile Include="Interfaces\IDockCollectionService.cs" />
     <Compile Include="Interfaces\ILoginService.cs" />
     <Compile Include="Interfaces\IProductService.cs" />
+    <Compile Include="Interfaces\ISMSService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Interfaces\IVLCAdminService.cs" />
     <Compile Include="Interfaces\IVLCMilkCollectionService.cs" />
+    <Compile Include="Interfaces\IVLCPaymentService.cs" />
     <Compile Include="Interfaces\IVLCService.cs" />
     <Compile Include="Product\ProductCategoryDTO.cs" />
     <Compile Include="Product\ProductShoppingDTO.cs" />
+    <Compile Include="ReadDTO\CustomerCollectionSummaryDTO.cs" />
     <Compile Include="ReadDTO\DashboardDTO.cs" />
     <Compile Include="Employee\EmployeeDTO.cs" />
     <Compile Include="Employee\EmployeeRoleDTO.cs" />
@@ -92,12 +103,15 @@
     <Compile Include="ReadDTO\CustomerBalance.cs" />
     <Compile Include="ReadDTO\ProductOrders.cs" />
     <Compile Include="ReadDTO\ProductSales.cs" />
+    <Compile Include="ReadDTO\VLCCollectionSummaryDTO.cs" />
     <Compile Include="Site\SiteConfigurationDTO.cs" />
     <Compile Include="Site\SiteDTO.cs" />
     <Compile Include="VLCCustomerCollectionDTO.cs" />
     <Compile Include="VLC\VLCMilkCollectionDtlDTO.cs" />
     <Compile Include="VLC\VLCMilkCollectionDTO.cs" />
     <Compile Include="VLC\VLCDTO.cs" />
+    <Compile Include="VLC\VLCPaymentDetailDTO.cs" />
+    <Compile Include="VLC\VLCWalletDTO.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

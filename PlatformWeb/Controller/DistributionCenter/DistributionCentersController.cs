@@ -1,11 +1,6 @@
 ﻿using Platform.DTO;
-using Platform.Service;
-using Platform.Utilities.ExceptionHandler;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Platform.Utilities;
+
 using System.Web.Http;
 
 namespace PlatformWeb.Controller

@@ -27,7 +27,7 @@ namespace Platform.Service
                 customerDto.Tehsil = customer.Tehsil;
                 customerDto.District = customer.District;
                 customerDto.AddressState = customer.AddressState;
-
+               
                 customerDto.Contact = customer.Contact;
                 customerDto.AlternateContact = customer.AlternateContact;
                 customerDto.Email = customer.Email;
@@ -94,6 +94,7 @@ namespace Platform.Service
 
             }
 
+            
 
             if (string.IsNullOrWhiteSpace(customerdto.Gender) == false)
             {
