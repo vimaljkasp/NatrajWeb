@@ -22,7 +22,5 @@ namespace Platform.DTO
 
         ResponseDTO DeleteDCOrder(int id);
 
-        DCOrderDTO GetOrderDetailsByOrderId(int orderId);        
-
     }
 }

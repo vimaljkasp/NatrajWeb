@@ -24,10 +24,10 @@ namespace Platform.Service
             vlcMilkCollectionDTO.IsDeleted = vlcMilkCollection.IsDeleted.GetValueOrDefault();
             vlcMilkCollectionDTO.ModifiedBy = vlcMilkCollection.ModifiedBy;
             vlcMilkCollectionDTO.ModifiedDate = vlcMilkCollection.ModifiedDate.GetValueOrDefault();
-            vlcMilkCollectionDTO.CustomerName = vlcMilkCollection.Customer.CustomerName.ToString();
-            vlcMilkCollectionDTO.VLCName = vlcMilkCollection.VLC.VLCName.ToString();
+          
             return vlcMilkCollectionDTO;
-        }
+
+    }
 
         public static void ConvertToVLCMilkCollectionEntity(ref VLCMilkCollection vlcMilkCollection, VLCMilkCollectionDTO vlcMilkCollectionDTO, bool isUpdate)
         {
@@ -36,7 +36,7 @@ namespace Platform.Service
             vlcMilkCollection.VLCId = vlcMilkCollectionDTO.VLCId;
             vlcMilkCollection.CustomerId = vlcMilkCollectionDTO.CustomerId;
             vlcMilkCollection.ShiftId = vlcMilkCollectionDTO.ShiftId;
-
+          
 
         }
 
@@ -73,12 +73,12 @@ namespace Platform.Service
                     vLCCustomerCollectionDTO.vLCCustomerCollectionDtlDTOList.Add(ConvertToCustomerCollectionDtlDTO(dtl));
                 }
 
-
+               
             }
             return vLCCustomerCollectionDTO;
         }
 
-        public static VLCCustomerCollectionDtlDTO ConvertToCustomerCollectionDtlDTO(VLCMilkCollectionDtl vLCMilkCollectionDtl)
+        public static VLCCustomerCollectionDtlDTO ConvertToCustomerCollectionDtlDTO( VLCMilkCollectionDtl vLCMilkCollectionDtl)
         {
             VLCCustomerCollectionDtlDTO vLCCustomerCollectionDtlDTO = new VLCCustomerCollectionDtlDTO();
             vLCCustomerCollectionDtlDTO.VLCMilkCollectionDtlId = vLCMilkCollectionDtl.VLCMilkCollectionDtlId;
