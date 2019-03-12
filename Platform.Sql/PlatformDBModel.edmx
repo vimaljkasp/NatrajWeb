@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -467,6 +467,7 @@
           <Property Name="MilkCommission" Type="decimal" Precision="18" Scale="2" />
           <Property Name="HouseRent" Type="decimal" Precision="18" Scale="2" />
           <Property Name="MachineRent" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Pin" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="VLCMilkCollection">
           <Key>
@@ -970,8 +971,7 @@
             <End Role="VLCWallet" EntitySet="VLCWallet" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1479,6 +1479,7 @@
           <NavigationProperty Name="VLCMilkCollections" Relationship="Self.FK_VLCMilkCollection_VLC" FromRole="VLC" ToRole="VLCMilkCollection" />
           <NavigationProperty Name="VLCPaymentDetails" Relationship="Self.FK_VLCPaymentDetail_VLC" FromRole="VLC" ToRole="VLCPaymentDetail" />
           <NavigationProperty Name="VLCWallets" Relationship="Self.FK_VLCWaller_VLC" FromRole="VLC" ToRole="VLCWallet" />
+          <Property Name="Pin" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="VLCMilkCollection">
           <Key>
@@ -2453,6 +2454,7 @@
           <EntitySetMapping Name="VLCs">
             <EntityTypeMapping TypeName="PlatformDBModel.VLC">
               <MappingFragment StoreEntitySet="VLC">
+                <ScalarProperty Name="Pin" ColumnName="Pin" />
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
                 <ScalarProperty Name="VLCCode" ColumnName="VLCCode" />
                 <ScalarProperty Name="VLCName" ColumnName="VLCName" />

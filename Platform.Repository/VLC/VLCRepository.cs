@@ -46,6 +46,13 @@ namespace Platform.Repository
             return vlc;
         }
 
+
+        public VLC GetByUserName(string userName)
+        {
+            var vlc = _repository.VLCs.Where(v => v.VLCName.Equals(userName, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+            return vlc;
+        }
+
         public String GetEmployeeNameByVLCId(int vlcId)
         {
             string vlcAgentName = "System";
