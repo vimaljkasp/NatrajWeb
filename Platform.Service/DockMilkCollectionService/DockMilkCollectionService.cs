@@ -81,7 +81,8 @@ namespace Platform.Service
             var dockMilkCollection = unitOfWork.DockMilkCollectionRepository.GetById(dockCollectionId);
             if (dockMilkCollection != null)
             {
-             //   vlcMilkCollectionDto = DockMilkCollectionConvertor.ConvertToDockMilkCollectionDto(vlcMilkCollection);
+                dockMilkCollectionDTO= DockMilkCollectionConvertor.ConvertToDockMilkCollectionDto(dockMilkCollection);
+                //   vlcMilkCollectionDto = DockMilkCollectionConvertor.ConvertToDockMilkCollectionDto(vlcMilkCollection);
             }
             return dockMilkCollectionDTO;
         }
@@ -118,7 +119,7 @@ namespace Platform.Service
                     foreach (var dockMilkCollectionDtlDto in dockMilkCollectionDTO.dockMilkCollectionList)
 
                     {
-                        this.CheckForExistingCollectionDetailByDateShiftProduct(dockMilkCollection.CollectionDateTime.Date, dockMilkCollection.ShiftId, dockMilkCollectionDtlDto.ProductId, dockMilkCollection.VLCId);
+                        this.CheckForExistingCollectionDetailByDateShiftProduct(dockMilkCollection.CollectionDateTime.Date, dockMilkCollection.ShiftId, (int)dockMilkCollectionDtlDto.ProductId, dockMilkCollection.VLCId);
                         DockMilkCollectionDtl dockMilkCollectionDtl = new DockMilkCollectionDtl();
                         dockMilkCollectionDtl.DockMilkCollectionDtlI = unitOfWork.DashboardRepository.NextNumberGenerator("DockMilkCollectionDtl");
                         dockMilkCollectionDtl.DockMilkCollectionId = dockMilkCollection.DockMilkCollectionId;

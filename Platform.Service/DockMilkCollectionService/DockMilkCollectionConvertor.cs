@@ -18,24 +18,24 @@ namespace Platform.Service
             dockMilkCollectionDTO.VLCName = dockMilkCollection.VLC != null ? dockMilkCollection.VLC.VLCName : string.Empty;
             dockMilkCollectionDTO.CollectionDateTime = dockMilkCollection.CollectionDateTime;
             dockMilkCollectionDTO.TotalQuantity = dockMilkCollection.TotalQuantity;
-            dockMilkCollectionDTO.CollectionShift = dockMilkCollection.ShiftId == 1 ? "Morning" : "Evening";
+            dockMilkCollectionDTO.ShiftId = dockMilkCollection.ShiftId == 1 ? ShiftEnum.Morning : ShiftEnum.Evening;
             dockMilkCollectionDTO.ReceiverName = dockMilkCollection.ReceiverName;
             dockMilkCollectionDTO.RejectedQuantity = dockMilkCollection.RejectedQuantity;
-            dockMilkCollectionDTO.TotalCan = dockMilkCollection.TotalCan;
+            dockMilkCollectionDTO.TotalCan = dockMilkCollection.TotalCan.HasValue ? dockMilkCollection.TotalCan.Value : 0;
             dockMilkCollectionDTO.TotalRejectedCan = dockMilkCollection.TotalRejectedCan;
             dockMilkCollectionDTO.Amount = dockMilkCollection.Amount;
             dockMilkCollectionDTO.Commission = dockMilkCollection.Commission;
             dockMilkCollectionDTO.TotalAmount = dockMilkCollection.TotalAmount;
             dockMilkCollectionDTO.CreatedBy = dockMilkCollection.CreatedBy;
             dockMilkCollectionDTO.CreatedDate = dockMilkCollection.CreatedDate;
-
+            dockMilkCollectionDTO.Comments = dockMilkCollection.Comments;
             dockMilkCollectionDTO.IsDeleted = dockMilkCollection.IsDeleted.GetValueOrDefault();
             dockMilkCollectionDTO.ModifiedBy = dockMilkCollection.ModifiedBy;
             dockMilkCollectionDTO.ModifiedDate = dockMilkCollection.ModifiedDate.GetValueOrDefault();
-            if(dockMilkCollection.DockMilkCollectionDtls !=null && dockMilkCollection.DockMilkCollectionDtls.Count()>0)
+            if (dockMilkCollection.DockMilkCollectionDtls != null && dockMilkCollection.DockMilkCollectionDtls.Count() > 0)
             {
                 dockMilkCollectionDTO.dockMilkCollectionList = new List<DockMilkCollectionDtlDTO>();
-                foreach(DockMilkCollectionDtl dockMilkCollectionDtl in dockMilkCollection.DockMilkCollectionDtls)
+                foreach (DockMilkCollectionDtl dockMilkCollectionDtl in dockMilkCollection.DockMilkCollectionDtls)
                 {
                     dockMilkCollectionDTO.dockMilkCollectionList.Add(ConvertToDockMilkCollectionDtlDTO(dockMilkCollectionDtl));
                 }
@@ -52,11 +52,12 @@ namespace Platform.Service
             dockMilkCollectionDtlDTO.FAT = dockMilkCollectionDtl.FAT.GetValueOrDefault();
             dockMilkCollectionDtlDTO.Quantity = dockMilkCollectionDtl.Quantity.GetValueOrDefault();
             dockMilkCollectionDtlDTO.TotalAmount = dockMilkCollectionDtl.TotalAmount.GetValueOrDefault();
-            dockMilkCollectionDtlDTO.ProductName = dockMilkCollectionDtl.ProductId == 1 ? "Cow Milk" : "Buffalo Milk";
+            dockMilkCollectionDtlDTO.ProductId = dockMilkCollectionDtl.ProductId == 1 ? MilkTypeEnum.CowMilk : dockMilkCollectionDtl.ProductId == 2 ? MilkTypeEnum.BuffeloMilk : MilkTypeEnum.MixedMilk;
             dockMilkCollectionDtlDTO.Comments = dockMilkCollectionDtl.Comments;
             dockMilkCollectionDtlDTO.RatePerUnit = dockMilkCollectionDtl.RatePerUnit.GetValueOrDefault();
             dockMilkCollectionDtlDTO.RejectedQuantity = dockMilkCollectionDtl.RejectedQuantity.GetValueOrDefault();
             dockMilkCollectionDtlDTO.RejectedReason = dockMilkCollectionDtl.RejectedReason;
+            dockMilkCollectionDtlDTO.TotalCan = dockMilkCollectionDtl.TotalCan.HasValue ? dockMilkCollectionDtl.TotalCan.Value : 0;
 
 
 
@@ -68,9 +69,9 @@ namespace Platform.Service
         {
             if (isUpdate)
                 DockMilkCollection.DockMilkCollectionId = DockMilkCollectionDTO.DockMilkCollectionId;
-              DockMilkCollection.VLCId = DockMilkCollectionDTO.VLCId;
-            if(DockMilkCollectionDTO.ShiftId>0)
-              DockMilkCollection.ShiftId = DockMilkCollectionDTO.ShiftId;
+            DockMilkCollection.VLCId = DockMilkCollectionDTO.VLCId;
+            if (DockMilkCollectionDTO.ShiftId > 0)
+                DockMilkCollection.ShiftId = (int)DockMilkCollectionDTO.ShiftId;
             if (string.IsNullOrWhiteSpace(DockMilkCollectionDTO.Comments) == false)
                 DockMilkCollection.Comments = DockMilkCollectionDTO.Comments;
             if (string.IsNullOrWhiteSpace(DockMilkCollectionDTO.ReceiverName) == false)
@@ -90,13 +91,13 @@ namespace Platform.Service
             DockMilkCollectionDtl.RejectedQuantity = DockMilkCollectionDtlDTO.RejectedQuantity;
             DockMilkCollectionDtl.TotalCan = DockMilkCollectionDtlDTO.TotalCan;
             DockMilkCollectionDtl.TotalRejectedCan = DockMilkCollectionDtlDTO.TotalRejectedCan;
-            DockMilkCollectionDtl.ProductId = DockMilkCollectionDtlDTO.ProductId;
+            DockMilkCollectionDtl.ProductId = (int)DockMilkCollectionDtlDTO.ProductId;
             DockMilkCollectionDtl.TotalAmount = DockMilkCollectionDtlDTO.TotalAmount;
-            if (string.IsNullOrWhiteSpace(DockMilkCollectionDtlDTO.Comments)==false)
+            if (string.IsNullOrWhiteSpace(DockMilkCollectionDtlDTO.Comments) == false)
                 DockMilkCollectionDtl.Comments = DockMilkCollectionDtlDTO.Comments;
 
             if (string.IsNullOrWhiteSpace(DockMilkCollectionDtlDTO.RejectedReason) == false)
-                   DockMilkCollectionDtl.RejectedReason = DockMilkCollectionDtlDTO.RejectedReason;
+                DockMilkCollectionDtl.RejectedReason = DockMilkCollectionDtlDTO.RejectedReason;
         }
 
 
@@ -124,6 +125,6 @@ namespace Platform.Service
         //    return vLCCustomerCollectionDTO;
         //}
 
-   
+
     }
 }

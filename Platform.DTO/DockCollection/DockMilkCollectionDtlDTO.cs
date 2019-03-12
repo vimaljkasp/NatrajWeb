@@ -10,7 +10,7 @@ namespace Platform.DTO
     {
         public int DockMilkCollectionDtlId { get; set; }
         public int DockMilkCollectionId { get; set; }
-        public int ProductId { get; set; }
+        public MilkTypeEnum ProductId { get; set; }
         public int TotalCan { get; set; }
         public decimal RejectedQuantity { get; set; }
         public int TotalRejectedCan { get; set; }
