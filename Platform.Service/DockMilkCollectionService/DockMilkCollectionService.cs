@@ -179,18 +179,31 @@ namespace Platform.Service
 
         public void UpdateVLCPaymentDetailsForDockCollection(VLC vlc, DockMilkCollection dockMilkCollection)
         {
-            VLCPaymentDetail vLCPaymentDetail = new VLCPaymentDetail();
-            vLCPaymentDetail.VLCPaymentId = unitOfWork.DashboardRepository.NextNumberGenerator("VLCPaymentDetail");
-            vLCPaymentDetail.CreatedDate = vLCPaymentDetail.ModifiedDate = DateTimeHelper.GetISTDateTime();
-            vLCPaymentDetail.CreatedBy = vLCPaymentDetail.ModifiedBy = "Admin";
-            vLCPaymentDetail.VLCId = dockMilkCollection.VLCId;
-            vLCPaymentDetail.DockMilkCollectionId = dockMilkCollection.DockMilkCollectionId;
-            vLCPaymentDetail.IsDeleted = false;
-            vLCPaymentDetail.PaymentComments = "Initial Dock Amount";
-            vLCPaymentDetail.PaymentDate = DateTimeHelper.GetISTDateTime();
-            vLCPaymentDetail.PaymentDrAmount = dockMilkCollection.TotalAmount;
-            unitOfWork.VLCPaymentDetailRepository.Add(vLCPaymentDetail);
-            UpdateVLCWalletForDockCollection(vlc.VLCId, dockMilkCollection.TotalAmount, false);
+            var OldPaymentDetail = unitOfWork.VLCPaymentDetailRepository.GetVLCPaymentDetailByDockCollectionId(dockMilkCollection.DockMilkCollectionId);
+            if (OldPaymentDetail != null)
+            {
+                decimal oldAmount = OldPaymentDetail.PaymentDrAmount.GetValueOrDefault();
+                OldPaymentDetail.PaymentDrAmount = dockMilkCollection.TotalAmount;
+                OldPaymentDetail.PaymentDate= DateTimeHelper.GetISTDateTime();
+                unitOfWork.VLCPaymentDetailRepository.Update(OldPaymentDetail);
+                UpdateVLCWalletForDockCollection(vlc.VLCId, dockMilkCollection.TotalAmount - oldAmount, false);
+
+            }
+            else
+            {
+                VLCPaymentDetail vLCPaymentDetail = new VLCPaymentDetail();
+                vLCPaymentDetail.VLCPaymentId = unitOfWork.DashboardRepository.NextNumberGenerator("VLCPaymentDetail");
+                vLCPaymentDetail.CreatedDate = vLCPaymentDetail.ModifiedDate = DateTimeHelper.GetISTDateTime();
+                vLCPaymentDetail.CreatedBy = vLCPaymentDetail.ModifiedBy = "Admin";
+                vLCPaymentDetail.VLCId = dockMilkCollection.VLCId;
+                vLCPaymentDetail.DockMilkCollectionId = dockMilkCollection.DockMilkCollectionId;
+                vLCPaymentDetail.IsDeleted = false;
+                vLCPaymentDetail.PaymentComments = "Initial Dock Amount";
+                vLCPaymentDetail.PaymentDate = DateTimeHelper.GetISTDateTime();
+                vLCPaymentDetail.PaymentDrAmount = dockMilkCollection.TotalAmount;
+                unitOfWork.VLCPaymentDetailRepository.Add(vLCPaymentDetail);
+                UpdateVLCWalletForDockCollection(vlc.VLCId, dockMilkCollection.TotalAmount, false);
+            }
         }
 
         public void CheckForExistingCollectionDetailByDateShiftProduct(DateTime collectionDate, int shift, int product, int vlcId)
@@ -213,42 +226,49 @@ namespace Platform.Service
                 throw new PlatformModuleException(string.Format("Dock Milk Collection Detail Not Found with Collection Id {0}", dockMilkCollectionDTO.DockMilkCollectionId));
             dockMilkCollection.ModifiedDate = DateTimeHelper.GetISTDateTime();
             dockMilkCollection.ModifiedBy = "Admin";
-            //    DockMilkCollectionConvertor.ConvertToDockMilkCollectionEntity(ref vlcMilkCollection, vLCMilkCollectionDTO, true);
+            DockMilkCollectionConvertor.ConvertToDockMilkCollectionEntity(ref dockMilkCollection, dockMilkCollectionDTO, true);
 
-            //var detailList = unitOfWork.DockMilkCollectionDtlRepository.GetById(vLCMilkCollectionDTO.DockMilkCollectionId);
 
-            //if (detailList != null && detailList.Count() > 0)
-            //{
-            //    foreach (var collectionDtl in detailList)
-            //        unitOfWork.DockMilkCollectionDtlRepository.Delete(collectionDtl.DockMilkCollectionDtlId);
+            if (dockMilkCollectionDTO.dockMilkCollectionList != null)
+            {
+                foreach (var dockCollectionDtlDTO in dockMilkCollectionDTO.dockMilkCollectionList)
+                {
+                    var dockMilkCollectionDtl = unitOfWork.DockMilkCollectionDtlRepository.GetById(dockCollectionDtlDTO.DockMilkCollectionDtlId);
 
-            //}
+                    DockMilkCollectionConvertor.ConvertToDockMilkCollectionDtlEntity(ref dockMilkCollectionDtl, dockCollectionDtlDTO, false);
+                    dockMilkCollectionDtl.RatePerUnit = unitOfWork.MilkRateRepository.GetMilkRateByApplicableRate(vlc.ApplicableRate, dockCollectionDtlDTO.FAT.GetValueOrDefault(), dockCollectionDtlDTO.CLR.GetValueOrDefault());
+                    dockCollectionDtlDTO.TotalAmount = dockMilkCollectionDtl.TotalAmount = dockMilkCollectionDtl.RatePerUnit * dockCollectionDtlDTO.Quantity;
 
-            //if (vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList != null)
-            //{
-            //    foreach (var vlcCollectionDtlDTO in vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList)
-            //    {
-            //        DockMilkCollectionDtl vLCMilkCollectionDtl = new DockMilkCollectionDtl();
-            //        vLCMilkCollectionDtl.DockMilkCollectionDtlId = unitOfWork.DashboardRepository.NextNumberGenerator("DockMilkCollectionDtl");
-            //        vLCMilkCollectionDtl.DockMilkCollectionId = vlcMilkCollection.DockMilkCollectionId;
-            //        DockMilkCollectionConvertor.ConvertToDockMilkCollectionDtlEntity(ref vLCMilkCollectionDtl, vlcCollectionDtlDTO, false);
-            //        //vLCMilkCollectionDtl.RatePerUnit = unitOfWork.MilkRateRepository.GetMilkRateByApplicableRate(customer.ApplicableRate, vlcCollectionDtlDTO.FAT.GetValueOrDefault(), vlcCollectionDtlDTO.CLR.GetValueOrDefault());
-            //        //vlcCollectionDtlDTO.Amount = vLCMilkCollectionDtl.Amount = vLCMilkCollectionDtl.RatePerUnit * vLCMilkCollectionDtl.Qunatity;
+                    unitOfWork.DockMilkCollectionDtlRepository.Update(dockMilkCollectionDtl);
 
-            //        unitOfWork.DockMilkCollectionDtlRepository.Add(vLCMilkCollectionDtl);
-            //    }
+                }
 
-            //    vlcMilkCollection.TotalAmount = vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList.Sum(s => s.Amount);
-            //    vlcMilkCollection.TotalQuantity = vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList.Sum(s => s.Quantity);
-            //}
-            //else
-            //    throw new PlatformModuleException("VLC Milk Collection Details Not Found");
+                dockMilkCollection.TotalCan = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalCan);
+                dockMilkCollection.TotalRejectedCan = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalRejectedCan);
+                dockMilkCollection.Amount = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalAmount).GetValueOrDefault();
+                dockMilkCollection.TotalQuantity = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.Quantity);
+                dockMilkCollection.Commission = dockMilkCollection.TotalQuantity * vlc.MilkCommission;
+                dockMilkCollection.TotalAmount = dockMilkCollection.Amount + dockMilkCollection.Commission.GetValueOrDefault();
+
+            }
+            else
+                throw new PlatformModuleException("Dock Milk Collection Details Not Found");
 
             unitOfWork.DockMilkCollectionRepository.Update(dockMilkCollection);
+            UpdateVLCPaymentDetailsForDockCollection(vlc, dockMilkCollection);
+      
+
+            string dockMessage = string.Format(unitOfWork.NatrajConfigurationSettings.DockCollectionMessage, dockMilkCollection.CollectionDateTime.Date, dockMilkCollection.TotalQuantity, dockMilkCollection.TotalAmount);
+            var natrajSMSLog = this.SendSMS(vlc.Contact, dockMessage);
+            unitOfWork.SMSRepository.Add(natrajSMSLog);
+            unitOfWork.SaveChanges();
+            new SMSService().SendEmailInBackgroundThread(natrajSMSLog);
+
             unitOfWork.SaveChanges();
             responseDTO.Status = true;
-            responseDTO.Message = String.Format("Milk Collection Detail Updated Successfully");
-            responseDTO.Data = this.GetDockCollectionByDateAndShift( DateTimeHelper.GetISTDateTime().Date, dockMilkCollection.ShiftId, 1);
+            responseDTO.Message = String.Format("Dock Milk Collection Detail Added Successfully ");
+            responseDTO.Data = this.GetDockCollectionByDateAndShift(DateTimeHelper.GetISTDateTime().Date, dockMilkCollection.ShiftId, 1);
+
             return responseDTO;
         }
 
