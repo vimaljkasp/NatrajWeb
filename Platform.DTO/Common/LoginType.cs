@@ -8,7 +8,7 @@ namespace Platform.DTO
 {
     public enum LoginType
     {
-        Customer,
+        Customer=1,
         VLC,
         DistributionCenter,
         UserLogin

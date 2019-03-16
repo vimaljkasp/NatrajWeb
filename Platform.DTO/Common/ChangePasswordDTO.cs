@@ -14,8 +14,6 @@ namespace Platform.DTO
 
         public int Id { get; set; }
 
-        public string VLCCode { get; set; }
-
         public LoginType LoginType { get; set; }
     }
 
@@ -24,9 +22,9 @@ namespace Platform.DTO
     {
         public string OTP { get; set; }
 
-        public int Id { get; set; }
+        public string UserName { get; set; }
 
-        public string Password { get; set; }
+        public string NewPassword { get; set; }
 
         public LoginType LoginType { get; set; }
     }

@@ -24,7 +24,7 @@ namespace PlatformWeb.Controller
         }
 
         [AllowAnonymous]
-        public IHttpActionResult Post([FromUri]String userName,[FromUri]String password)
+        public IHttpActionResult Post([FromUri]String userName, [FromUri]String password)
         {
             try
             {
@@ -67,6 +67,58 @@ namespace PlatformWeb.Controller
             {
                 //Write Log Here
                 return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
+            }
+        }
+
+
+        [AllowAnonymous]
+        [Route("api/ChangePassword")]
+        public IHttpActionResult PostChangePassword([FromBody]ChangePasswordDTO changePasswordDTO)
+        {
+            try
+            {
+                if (changePasswordDTO == null)
+                    throw new ArgumentNullException("NULL");
+                return Ok(_loginService.ChangePassword(changePasswordDTO));
+            }
+            catch (PlatformModuleException exception)
+            {
+                return Ok(ResponseHelper.CreateResponseDTOForException(exception.Message));
+            }
+        }
+
+
+        [AllowAnonymous]
+        [Route("api/ResetPassword")]
+        public IHttpActionResult PostResetPassword([FromBody]ResetPasswordDTO resetPasswordDTO)
+        {
+            try
+            {
+                if (resetPasswordDTO == null)
+                    throw new ArgumentNullException("NULL");
+                return Ok(_loginService.ResetPassword(resetPasswordDTO));
+            }
+            catch (PlatformModuleException exception)
+            {
+                return Ok(ResponseHelper.CreateResponseDTOForException(exception.Message));
+            }
+        }
+
+
+
+        [AllowAnonymous]
+        [Route("api/ForgotPassword")]
+        public IHttpActionResult ForgotPassword([FromBody]ForgotPasswordDTO forgotPasswordDTO)
+        {
+            try
+            {
+                if (forgotPasswordDTO == null)
+                    throw new ArgumentNullException("NULL");
+                return Ok(_loginService.ForgotPassword(forgotPasswordDTO));
+            }
+            catch (PlatformModuleException exception)
+            {
+                return Ok(ResponseHelper.CreateResponseDTOForException(exception.Message));
             }
         }
     }

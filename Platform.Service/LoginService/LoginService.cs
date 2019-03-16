@@ -83,8 +83,9 @@ namespace Platform.Service
 
 
 
-        public bool ChangePassword(ChangePasswordDTO changePasswordDTO)
+        public ResponseDTO ChangePassword(ChangePasswordDTO changePasswordDTO)
         {
+            ResponseDTO responseDTO = new ResponseDTO();
             if (changePasswordDTO.LoginType == LoginType.VLC)
             {
                 VLC vLC = unitOfWork.VLCRepository.GetById(changePasswordDTO.Id);
@@ -96,8 +97,10 @@ namespace Platform.Service
                     unitOfWork.VLCRepository.Update(vLC);
                     unitOfWork.SaveChanges();
                     //    this.CreateEmployeeSession(employee, logindto);
-
-                    return true;
+                    responseDTO.Message = "Password Changed Successfully";
+                    responseDTO.Status = true;
+                    responseDTO.Data = new object();
+                    return responseDTO;
                 }
                 else
 
@@ -117,7 +120,10 @@ namespace Platform.Service
                     unitOfWork.DistributionCenterRepository.Update(distributionCenter);
                     unitOfWork.SaveChanges();
 
-                    return true;
+                    responseDTO.Message = "Password Changed Successfully";
+                    responseDTO.Status = true;
+                    responseDTO.Data = new object();
+                    return responseDTO;
                 }
                 else
 
@@ -150,53 +156,71 @@ namespace Platform.Service
             //    }
             //    return false;
             //}
-
-            return false;
+            else
+            {
+                responseDTO.Message = "Current Password does not match with any account";
+                responseDTO.Status = false;
+                responseDTO.Data = new object();
+                return responseDTO;
+            }
         }
 
 
-        public bool ResetPassword(ResetPasswordDTO resetPasswordDTO)
+        public ResponseDTO ResetPassword(ResetPasswordDTO resetPasswordDTO)
         {
+            ResponseDTO responseDTO = new ResponseDTO();
             if (resetPasswordDTO.LoginType == LoginType.VLC)
             {
-                VLC vLC = unitOfWork.VLCRepository.GetById(resetPasswordDTO.Id);
+                VLC vLC = unitOfWork.VLCRepository.GetByUserName(resetPasswordDTO.UserName);
 
-                if (vLC.Pin.Equals(resetPasswordDTO.OTP, StringComparison.CurrentCultureIgnoreCase))
+                if (vLC !=null && vLC.Pin.Equals(resetPasswordDTO.OTP, StringComparison.CurrentCultureIgnoreCase))
                 {
 
-                    vLC.Password = EncryptionHelper.Encryptword(resetPasswordDTO.Password);
+                    vLC.Password = EncryptionHelper.Encryptword(resetPasswordDTO.NewPassword);
                     unitOfWork.VLCRepository.Update(vLC);
                     unitOfWork.SaveChanges();
                     //    this.CreateEmployeeSession(employee, logindto);
-
-                    return true;
+                    responseDTO.Message = "Password Changed Successfully";
+                    responseDTO.Status = true;
+                    responseDTO.Data = new object();
+                    return responseDTO;
                 }
                 else
 
                 {
-                    throw new PlatformModuleException("The Current Password doesn't match any account");
+                    throw new PlatformModuleException("The OTP doesn't match any account");
                 }
 
 
             }
             else if (resetPasswordDTO.LoginType == LoginType.DistributionCenter)
             {
-                DistributionCenter distributionCenter = unitOfWork.DistributionCenterRepository.GetById(resetPasswordDTO.Id);
-                if (distributionCenter.Pin.Equals(resetPasswordDTO.OTP, StringComparison.CurrentCultureIgnoreCase))
+                DistributionCenter distributionCenter = unitOfWork.DistributionCenterRepository.GetDistributionCenterByMobileNumber(resetPasswordDTO.UserName);
+                if (distributionCenter !=null && distributionCenter.Pin.Equals(resetPasswordDTO.OTP, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    distributionCenter.Password = EncryptionHelper.Encryptword(resetPasswordDTO.Password);
+                    distributionCenter.Password = EncryptionHelper.Encryptword(resetPasswordDTO.NewPassword);
                     unitOfWork.DistributionCenterRepository.Update(distributionCenter);
                     unitOfWork.SaveChanges();
 
-                    return true;
+                    responseDTO.Message = "Password Changed Successfully";
+                    responseDTO.Status = true;
+                    responseDTO.Data = new object();
+                    return responseDTO;
                 }
                 else
 
                 {
-                    throw new PlatformModuleException("The Current Password doesn't match any account");
+                    throw new PlatformModuleException("The OTP doesn't match any account");
                 }
             }
-            return false;
+           else
+            {
+
+                responseDTO.Message = "Current OTP does not match with  account";
+                responseDTO.Status = false;
+                responseDTO.Data = new object();
+                return responseDTO;
+            }
 
         }
 
@@ -215,7 +239,7 @@ namespace Platform.Service
                     unitOfWork.VLCRepository.Update(vLC);
                     unitOfWork.SaveChanges();
                     responseDTO.Status = true;
-                    responseDTO.Message = string.Format("A OTP has been sent to registered mobile number - {0}", vLC.Contact);
+                    responseDTO.Message = string.Format("A OTP has been sent to registered mobile number - {0} OTP -{1}", vLC.Contact, vLC.Pin);
                     responseDTO.Data = new object();
                 }
                 else
@@ -237,7 +261,7 @@ namespace Platform.Service
                     unitOfWork.DistributionCenterRepository.Update(distributionCenter);
                     unitOfWork.SaveChanges();
                     responseDTO.Status = true;
-                    responseDTO.Message = string.Format("A OTP has been sent to registered mobile number - {0}", distributionCenter.Contact);
+                    responseDTO.Message = string.Format("A OTP has been sent to registered mobile number - {0},OTP-{1}", distributionCenter.Contact,distributionCenter.Pin);
                     responseDTO.Data = new object();
                 }
                 else

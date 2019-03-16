@@ -11,5 +11,12 @@ namespace Platform.DTO
     {
 
         LoggedInUserDTO ValidateLoginAndCreateLoginSession(string userName,string password);
+
+        ResponseDTO ChangePassword(ChangePasswordDTO changePasswordDTO);
+
+        ResponseDTO ResetPassword(ResetPasswordDTO resetPasswordDTO);
+
+
+        ResponseDTO ForgotPassword(ForgotPasswordDTO forgotPasswordDTO);
     }
 }

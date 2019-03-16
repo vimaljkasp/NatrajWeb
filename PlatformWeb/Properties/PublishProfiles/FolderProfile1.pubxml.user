@@ -61,25 +61,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2018 00:01:42</publishTime>
     </File>
     <File Include="bin/Platform.DTO.dll">
-      <publishTime>03/09/2019 11:39:12</publishTime>
+      <publishTime>03/16/2019 11:57:02</publishTime>
+    </File>
+    <File Include="bin/Platform.DTO.dll.config">
+      <publishTime>03/12/2019 22:29:45</publishTime>
     </File>
     <File Include="bin/Platform.DTO.pdb">
-      <publishTime>03/09/2019 11:39:12</publishTime>
+      <publishTime>03/16/2019 11:57:02</publishTime>
     </File>
     <File Include="bin/Platform.Repository.dll">
-      <publishTime>03/09/2019 11:39:13</publishTime>
+      <publishTime>03/16/2019 11:57:04</publishTime>
     </File>
     <File Include="bin/Platform.Repository.dll.config">
       <publishTime>12/19/2018 20:15:01</publishTime>
     </File>
     <File Include="bin/Platform.Repository.pdb">
-      <publishTime>03/09/2019 11:39:13</publishTime>
+      <publishTime>03/16/2019 11:57:04</publishTime>
     </File>
     <File Include="bin/Platform.Service.dll">
-      <publishTime>03/09/2019 11:39:14</publishTime>
+      <publishTime>03/16/2019 11:57:06</publishTime>
+    </File>
+    <File Include="bin/Platform.Service.dll.config">
+      <publishTime>03/12/2019 22:29:45</publishTime>
     </File>
     <File Include="bin/Platform.Service.pdb">
-      <publishTime>03/09/2019 11:39:14</publishTime>
+      <publishTime>03/16/2019 11:57:06</publishTime>
     </File>
     <File Include="bin/Platform.Sql.dll">
       <publishTime>03/09/2019 11:39:12</publishTime>
@@ -97,10 +103,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/25/2019 20:16:37</publishTime>
     </File>
     <File Include="bin/PlatformWeb.dll">
-      <publishTime>03/09/2019 11:40:40</publishTime>
+      <publishTime>03/16/2019 11:57:15</publishTime>
     </File>
     <File Include="bin/PlatformWeb.pdb">
-      <publishTime>03/09/2019 11:40:40</publishTime>
+      <publishTime>03/16/2019 11:57:15</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>09/13/2018 00:01:41</publishTime>
