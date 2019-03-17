@@ -21,6 +21,7 @@ namespace Platform.Repository
         private ConfigurationRepository configurationRepository;
         private MilkRateRepository milkRateRepository;
         private VLCReportRepository vLCReportRepository;
+        private DockReportRepository dockReportRepository;
 
         private VLCRepository vLCRepository;
         private VLCWalletRepository vLCWalletRepository;
@@ -151,6 +152,19 @@ namespace Platform.Repository
             }
         }
 
+        public DockReportRepository DockReportRepository
+        {
+            get
+            {
+                if (dockReportRepository == null)
+                    return dockReportRepository = new DockReportRepository(_repository);
+
+                else
+                {
+                    return dockReportRepository;
+                }
+            }
+        }
 
         public VLCWalletRepository VLCWalletRepository
         {

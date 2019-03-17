@@ -180,6 +180,7 @@
     <Compile Include="Controller\DistributionCenter\DistributionCentersController.cs" />
     <Compile Include="Controller\DockMilkCollection\DockMilkCollectionController.cs" />
     <Compile Include="Controller\LoginController\LoginController.cs" />
+    <Compile Include="Controller\ReportController\DockCollectionReportsController.cs" />
     <Compile Include="Controller\User\UserController.cs" />
     <Compile Include="Controller\VLC\VLCController.cs" />
     <Compile Include="Controller\VLC\VLCMilkCollectionsController.cs" />

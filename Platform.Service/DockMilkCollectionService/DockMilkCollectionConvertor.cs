@@ -32,6 +32,8 @@ namespace Platform.Service
             dockMilkCollectionDTO.IsDeleted = dockMilkCollection.IsDeleted.GetValueOrDefault();
             dockMilkCollectionDTO.ModifiedBy = dockMilkCollection.ModifiedBy;
             dockMilkCollectionDTO.ModifiedDate = dockMilkCollection.ModifiedDate.GetValueOrDefault();
+            dockMilkCollectionDTO.BillNumber = dockMilkCollection.BillNumber;
+            
             if (dockMilkCollection.DockMilkCollectionDtls != null && dockMilkCollection.DockMilkCollectionDtls.Count() > 0)
             {
                 dockMilkCollectionDTO.dockMilkCollectionList = new List<DockMilkCollectionDtlDTO>();
@@ -58,6 +60,7 @@ namespace Platform.Service
             dockMilkCollectionDtlDTO.RejectedQuantity = dockMilkCollectionDtl.RejectedQuantity.GetValueOrDefault();
             dockMilkCollectionDtlDTO.RejectedReason = dockMilkCollectionDtl.RejectedReason;
             dockMilkCollectionDtlDTO.TotalCan = dockMilkCollectionDtl.TotalCan.HasValue ? dockMilkCollectionDtl.TotalCan.Value : 0;
+            dockMilkCollectionDtlDTO.TotalRejectedCan = dockMilkCollectionDtl.TotalRejectedCan.GetValueOrDefault();
 
 
 

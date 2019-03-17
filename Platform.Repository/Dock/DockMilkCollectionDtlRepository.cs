@@ -42,7 +42,7 @@ namespace Platform.Repository
             return dockMilkCollection;
         }
 
-        public List<DockMilkCollectionDtl> GetByVLCMilkCollectionId(int dockMilkCollectionId)
+        public List<DockMilkCollectionDtl> GetByDockMilkCollectionId(int dockMilkCollectionId)
         {
             var dockMilkCollectionDtls = _repository.DockMilkCollectionDtls.Where(m => m.DockMilkCollectionId == dockMilkCollectionId).ToList();
 

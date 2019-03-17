@@ -136,6 +136,7 @@ namespace Platform.Service
                     dockMilkCollection.TotalQuantity = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.Quantity);
                     dockMilkCollection.Commission = dockMilkCollection.TotalQuantity * vlc.MilkCommission;
                     dockMilkCollection.TotalAmount = dockMilkCollection.Amount + dockMilkCollection.Commission.GetValueOrDefault();
+                    dockMilkCollection.RejectedQuantity = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.RejectedQuantity);
                   
 
                 }
@@ -249,6 +250,7 @@ namespace Platform.Service
                 dockMilkCollection.TotalQuantity = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.Quantity);
                 dockMilkCollection.Commission = dockMilkCollection.TotalQuantity * vlc.MilkCommission;
                 dockMilkCollection.TotalAmount = dockMilkCollection.Amount + dockMilkCollection.Commission.GetValueOrDefault();
+                dockMilkCollection.RejectedQuantity = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.RejectedQuantity);
 
             }
             else
@@ -277,29 +279,28 @@ namespace Platform.Service
             ResponseDTO responseDTO = new ResponseDTO();
             UnitOfWork unitOfWork = new UnitOfWork();
             var dockMilkCollection = unitOfWork.DockMilkCollectionRepository.GetById(id);
-            //if (vLCMilkCollection != null)
-            //{
-            //    var detailList = unitOfWork.DockMilkCollectionDtlRepository.GetById(id);
+            if (dockMilkCollection != null)
+            {
+                var detailList = unitOfWork.DockMilkCollectionDtlRepository.GetByDockMilkCollectionId(id);
 
-            //    if (detailList != null && detailList.Count() > 0)
-            //    {
-            //        foreach (var collectionDtl in detailList)
-            //            unitOfWork.DockMilkCollectionDtlRepository.Delete(collectionDtl.DockMilkCollectionDtlId);
+                if (detailList != null && detailList.Count() > 0)
+                {
+                    foreach (var collectionDtl in detailList)
+                        unitOfWork.DockMilkCollectionDtlRepository.Delete(collectionDtl.DockMilkCollectionDtlI);
 
-            //    }
-            //    unitOfWork.DockMilkCollectionRepository.Delete(id);
-            //    unitOfWork.SaveChanges();
-            //    responseDTO.Status = true;
-            //    responseDTO.Message = String.Format("Milk Collection Detail Deleted Successfully");
-            //    responseDTO.Data = this.GetVLCCustomerCollectionByDateAndShift(vLCMilkCollection.VLCId.GetValueOrDefault(), DateTimeHelper.GetISTDateTime().Date, vLCMilkCollection.ShiftId.GetValueOrDefault(), 1);
-            //    return responseDTO;
-            //}
-            //else
-            //{
-            //    throw new PlatformModuleException("Milk Collection Detail Not Found ");
-            //}
+                }
+                unitOfWork.DockMilkCollectionRepository.Delete(id);
+                unitOfWork.SaveChanges();
+                responseDTO.Status = true;
+                responseDTO.Message = String.Format("Dock Milk Collection Detail Deleted Successfully");
+                responseDTO.Data = this.GetDockCollectionByDateAndShift(DateTimeHelper.GetISTDateTime().Date, dockMilkCollection.ShiftId, 1);
+                return responseDTO;
+            }
+            else
+            {
+                throw new PlatformModuleException("Milk Collection Detail Not Found ");
+            }
 
-            return responseDTO;
         }
 
 

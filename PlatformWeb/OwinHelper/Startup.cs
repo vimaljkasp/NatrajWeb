@@ -124,6 +124,8 @@ namespace PlatformWeb
 
             //Dock Collection
             container.RegisterType<IDockMilkCollectionService, DockMilkCollectionService>(new HierarchicalLifetimeManager());
+
+            container.RegisterType<IDockCollectionReportService, DockCollectionReportService>(new HierarchicalLifetimeManager());
         
             config.DependencyResolver = new UnityResolver(container);
             

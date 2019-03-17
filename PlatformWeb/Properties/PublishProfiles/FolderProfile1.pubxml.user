@@ -103,10 +103,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/25/2019 20:16:37</publishTime>
     </File>
     <File Include="bin/PlatformWeb.dll">
-      <publishTime>03/16/2019 11:57:15</publishTime>
+      <publishTime>03/16/2019 11:58:27</publishTime>
     </File>
     <File Include="bin/PlatformWeb.pdb">
-      <publishTime>03/16/2019 11:57:15</publishTime>
+      <publishTime>03/16/2019 11:58:27</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>09/13/2018 00:01:41</publishTime>
