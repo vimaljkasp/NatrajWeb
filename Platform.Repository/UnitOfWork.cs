@@ -21,6 +21,7 @@ namespace Platform.Repository
         private ConfigurationRepository configurationRepository;
         private MilkRateRepository milkRateRepository;
         private VLCReportRepository vLCReportRepository;
+        private DockReportRepository dockReportRepository;
 
         private VLCRepository vLCRepository;
         private VLCWalletRepository vLCWalletRepository;
@@ -63,7 +64,8 @@ namespace Platform.Repository
                         SMSServiceUserName = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "adam"),
                         SMSServicePassword = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "12345"),
                         VLCCollectionMessage = "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}",
-                        DockCollectionMessage= "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}"
+                        DockCollectionMessage= "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}",
+                        ForgotPasswordOTPMessage="Dear  Customer,{0} is your one time password (OTP). Please enter the OTP to proceed. Thank You"
                     };
                 }
                 else
@@ -150,6 +152,19 @@ namespace Platform.Repository
             }
         }
 
+        public DockReportRepository DockReportRepository
+        {
+            get
+            {
+                if (dockReportRepository == null)
+                    return dockReportRepository = new DockReportRepository(_repository);
+
+                else
+                {
+                    return dockReportRepository;
+                }
+            }
+        }
 
         public VLCWalletRepository VLCWalletRepository
         {

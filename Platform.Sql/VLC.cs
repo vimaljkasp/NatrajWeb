@@ -51,6 +51,7 @@ namespace Platform.Sql
         public Nullable<decimal> MilkCommission { get; set; }
         public Nullable<decimal> HouseRent { get; set; }
         public Nullable<decimal> MachineRent { get; set; }
+        public string Pin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer> Customers { get; set; }

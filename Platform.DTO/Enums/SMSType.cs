@@ -11,7 +11,8 @@ namespace Platform.DTO
         SignUp=1,
         DCOrderConfirmation=2,
         VLCMilkCollection=3,
-        DockMilkCollection
+        DockMilkCollection=4,
+        ForgotPasswordOTP=5,
 
     }
 }

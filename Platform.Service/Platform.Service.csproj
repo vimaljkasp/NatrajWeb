@@ -94,6 +94,7 @@
     <Compile Include="LoginService\LoggedInUserConvertor.cs" />
     <Compile Include="ProductService\ProductConvertor.cs" />
     <Compile Include="ProductService\ProductService.cs" />
+    <Compile Include="ReportService\DockCollectionReportService.cs" />
     <Compile Include="SMSService\SMSConvertor.cs" />
     <Compile Include="SMSService\SMSService.cs" />
     <Compile Include="UserService\UserConvertor.cs" />

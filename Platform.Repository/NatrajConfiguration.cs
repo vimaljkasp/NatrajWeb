@@ -21,5 +21,7 @@ namespace Platform.Repository
         public string VLCCollectionMessage { get; set; }
 
         public string DockCollectionMessage { get; set; }
+
+        public string ForgotPasswordOTPMessage { get; set; }
     }
 }

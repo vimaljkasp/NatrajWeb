@@ -36,13 +36,13 @@ namespace Platform.Repository
             return dockMilkCollections;
         }
 
-        public List<DockMilkCollectionDtl> GetById(int id)
+        public DockMilkCollectionDtl GetById(int id)
         {
-            var dockMilkCollection = _repository.DockMilkCollectionDtls.Where(x => x.DockMilkCollectionId == id).ToList();
+            var dockMilkCollection = _repository.DockMilkCollectionDtls.Where(x => x.DockMilkCollectionId == id).FirstOrDefault();
             return dockMilkCollection;
         }
 
-        public List<DockMilkCollectionDtl> GetByVLCMilkCollectionId(int dockMilkCollectionId)
+        public List<DockMilkCollectionDtl> GetByDockMilkCollectionId(int dockMilkCollectionId)
         {
             var dockMilkCollectionDtls = _repository.DockMilkCollectionDtls.Where(m => m.DockMilkCollectionId == dockMilkCollectionId).ToList();
 

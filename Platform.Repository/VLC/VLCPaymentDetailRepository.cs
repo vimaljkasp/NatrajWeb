@@ -41,6 +41,12 @@ namespace Platform.Repository
             return vlcPayments;
         }
 
+        public VLCPaymentDetail GetVLCPaymentDetailByDockCollectionId(int dockMilkCollectionId)
+        {
+            var vLCPayments = _repository.VLCPaymentDetails.Where(v => v.DockMilkCollectionId == dockMilkCollectionId).FirstOrDefault();
+            return vLCPayments;
+        }
+
         public void Add(VLCPaymentDetail vlcPaymentDetail)
         {
             if (vlcPaymentDetail != null)
