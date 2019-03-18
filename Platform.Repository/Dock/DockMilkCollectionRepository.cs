@@ -68,8 +68,7 @@ namespace Platform.Repository
             var takeCount = PagingConstant.DefaultRecordCount;
             var dockMilkCollection = _repository.DockMilkCollections
                  .Where(x => System.Data.Entity.DbFunctions.TruncateTime(x.CollectionDateTime) == collectionDat
-                 && x.ShiftId == shift)
-
+                 && x.ShiftId == shift) 
                 .OrderByDescending(x => x.CollectionDateTime)
                 .Skip((takePage - 1) * takeCount)
                 .Take(takeCount)

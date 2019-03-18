@@ -45,6 +45,7 @@ namespace Platform.DTO
         public ShiftEnum ShiftId { get; set; }
         public string BillNumber { get; set; }
         public string ReceiverName { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
