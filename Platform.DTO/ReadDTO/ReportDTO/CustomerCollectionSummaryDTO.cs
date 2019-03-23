@@ -21,5 +21,6 @@ namespace Platform.DTO
         public decimal TotalQuantity { get; set; }
         public decimal TotalAmount { get; set; }
         public string Shift { get; set; }
+        public string MiilkType { get; set; }
     }
 }

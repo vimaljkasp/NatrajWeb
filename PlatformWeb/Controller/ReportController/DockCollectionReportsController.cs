@@ -20,11 +20,12 @@ namespace PlatformWeb.Controller
       
 
         [Route("api/GetDockCollectionSummaryByDate/")]
-        public IHttpActionResult GetDockCollectionSummaryByDate([FromUri] DateTime collectionStartDate, [FromUri] DateTime collectionEndDate)
+        public IHttpActionResult GetDockCollectionSummaryByDate([FromUri] DateTime collectionStartDate, [FromUri] DateTime collectionEndDate,
+            [FromUri] int startShift,[FromUri] int endShift,[FromUri] int milkType)
         {
             try
             {
-                return Ok(_dockCollectionReportService.DockCollectionSummaryByDate(collectionStartDate, collectionEndDate));
+                return Ok(_dockCollectionReportService.DockCollectionSummaryByDate(collectionStartDate, collectionEndDate,startShift,endShift,milkType));
             }
             catch (PlatformModuleException ex)
             {

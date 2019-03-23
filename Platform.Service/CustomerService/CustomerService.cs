@@ -12,7 +12,10 @@ namespace Platform.Service
     public class CustomerService : ICustomerService,IDisposable
     {
         private  UnitOfWork unitOfWork=new UnitOfWork();
-     
+     public CustomerService(LoggerService loggerService)
+        {
+            
+        }
 
         public List<CustomerDto> GetAllCustomers()
         { 

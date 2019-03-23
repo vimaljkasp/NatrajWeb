@@ -96,7 +96,62 @@ namespace Platform.Repository
 
             return customerCollectionSummaryDTO;
         }
+
+
+        public VLCPaymentStatementDTO VLCPaymentSummaryByDate(int vlcId, DateTime startDate, DateTime endDate)
+        {
+
+            VLCPaymentStatementDTO vLCPaymentStatementDTO = new VLCPaymentStatementDTO();
+            vLCPaymentStatementDTO.PaymentStartDate = startDate;
+            vLCPaymentStatementDTO.PaymentEndDate = endDate;
+            vLCPaymentStatementDTO.VLCId = vlcId;
+
+            vLCPaymentStatementDTO.vlcPaymentStatmentListDTO = new List<VLCPaymentStatmentListDTO>();
+
+            // Create a SQL command to execute the sproc 
+            var cmd = _repository.Database.Connection.CreateCommand();
+            cmd.CommandText = "[dbo].[VLCPaymentStatmentSummaryByDate]";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@CollectionStartDate", SqlDbType.DateTime, 4));
+            cmd.Parameters.Add(new SqlParameter("@CollectionEndDate", SqlDbType.DateTime, 4));
+
+            cmd.Parameters.Add(new SqlParameter("@VLCId", SqlDbType.Int, 4));
+            cmd.Parameters["@CollectionStartDate"].Value = startDate;
+            cmd.Parameters["@CollectionEndDate"].Value = endDate;
+            cmd.Parameters["@VLCId"].Value = vlcId;
+            try
+            {
+                // Run the sproc  
+                _repository.Database.Connection.Open();
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                        vLCPaymentStatementDTO.vlcPaymentStatmentListDTO.Add(
+                            new VLCPaymentStatmentListDTO()
+                            {
+                                PaymentDate = Convert.ToDateTime(reader["PaymentDate"]),
+                                PaymentCRAmoumt = Convert.ToDecimal(reader["PaymentCRAmoumt"]),
+                                PaymentDRAmoumt = Convert.ToDecimal(reader["PaymentDRAmoumt"]),
+                                PaymentReceivedBy = Convert.ToString(reader["PaymentReceivedBy"]),
+                                PaymentMode = Convert.ToString(reader["PaymentMode"])
+                               
+                            });
+                }
+
+
+            }
+            finally
+            {
+                _repository.Database.Connection.Close();
+            }
+
+            return vLCPaymentStatementDTO;
+
+        }
     }
+
+     
 
     
     

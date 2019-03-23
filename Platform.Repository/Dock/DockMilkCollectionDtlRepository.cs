@@ -38,7 +38,7 @@ namespace Platform.Repository
 
         public DockMilkCollectionDtl GetById(int id)
         {
-            var dockMilkCollection = _repository.DockMilkCollectionDtls.Where(x => x.DockMilkCollectionId == id).FirstOrDefault();
+            var dockMilkCollection = _repository.DockMilkCollectionDtls.Where(x => x.DockMilkCollectionDtlI == id).FirstOrDefault();
             return dockMilkCollection;
         }
 

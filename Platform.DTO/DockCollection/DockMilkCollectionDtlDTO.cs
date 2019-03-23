@@ -20,6 +20,10 @@ namespace Platform.DTO
         public Nullable<decimal> CLR { get; set; }
        
         public decimal? TotalAmount { get; set; }
+
+        public decimal Amount { get; set; }
+
+        public decimal? Commission { get; set; }
         public string RejectedReason { get; set; }
         public string Comments { get; set; }
         public string ProductName { get; set; }

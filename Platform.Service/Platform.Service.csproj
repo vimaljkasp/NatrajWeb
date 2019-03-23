@@ -85,10 +85,12 @@
     <Compile Include="DistributionCenterService\DistributionCenterService.cs" />
     <Compile Include="DockMilkCollectionService\DockMilkCollectionConvertor.cs" />
     <Compile Include="DockMilkCollectionService\DockMilkCollectionService.cs" />
+    <Compile Include="LoggerService\LoggerService.cs" />
     <Compile Include="LoginService\LoggedInUserConvertor.cs" />
     <Compile Include="ProductService\ProductConvertor.cs" />
     <Compile Include="ProductService\ProductService.cs" />
     <Compile Include="ReportService\DockCollectionReportService.cs" />
+    <Compile Include="ReportService\VLCReportService.cs" />
     <Compile Include="SMSService\SMSConvertor.cs" />
     <Compile Include="SMSService\SMSService.cs" />
     <Compile Include="UserService\UserConvertor.cs" />
@@ -126,7 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CommonService\" />
-    <Folder Include="LoggerService\" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

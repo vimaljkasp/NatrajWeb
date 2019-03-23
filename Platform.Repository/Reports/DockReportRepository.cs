@@ -21,7 +21,8 @@ namespace Platform.Repository
         }
 
 
-        public DockCollectionSummaryDTO DockCollectionSummaryByDate(DateTime collectionStartDate,DateTime collectionEndDate)
+        public DockCollectionSummaryDTO DockCollectionSummaryByDate(DateTime collectionStartDate,DateTime collectionEndDate,
+            int collectionStartShift,int collectionEndShift,int milkType)
         {
             DockCollectionSummaryDTO dockCollectionSummaryDTO = new DockCollectionSummaryDTO();
             dockCollectionSummaryDTO.CollectionFromDate = collectionStartDate;
@@ -34,8 +35,15 @@ namespace Platform.Repository
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@CollectionStartDate", SqlDbType.DateTime, 4));
             cmd.Parameters.Add(new SqlParameter("@CollectionEndDate", SqlDbType.DateTime, 4));
+            cmd.Parameters.Add(new SqlParameter("@CollectionStartShift", SqlDbType.Int, 4));
+            cmd.Parameters.Add(new SqlParameter("@CollectionEndShift", SqlDbType.Int, 4));
+            cmd.Parameters.Add(new SqlParameter("@MilkType", SqlDbType.Int, 4));
             cmd.Parameters["@CollectionStartDate"].Value = collectionStartDate;
             cmd.Parameters["@CollectionEndDate"].Value = collectionEndDate;
+            cmd.Parameters["@CollectionStartShift"].Value = collectionStartShift;
+            cmd.Parameters["@CollectionEndShift"].Value = collectionEndShift;
+            cmd.Parameters["@MilkType"].Value = milkType;
+
             try
             {
                 // Run the sproc  
@@ -48,12 +56,14 @@ namespace Platform.Repository
                             new DockCollectionSummaryListDTO()
                             {
                                 CollectionDate = Convert.ToDateTime(reader["CollectionDate"]),
-                                TotalCan = Convert.ToInt32(reader["TotalCan"]),
-                                TotalRejectedCan = Convert.ToInt32(reader["TotalRejectedCan"]),
+                                 AvgFAT =Convert.ToDecimal(reader["AvgFAT"]),
+                                 AvgCLR= Convert.ToDecimal(reader["AvgCLR"]),
+                                AvgRatePerUnit = Convert.ToDecimal(reader["AvgRatePerUnit"]),
                                 RejectedQuantity = Convert.ToDecimal(reader["TotalRejectedQuantity"]),
+                                MiilkType =((MilkTypeEnum)Convert.ToInt32(reader["ProductId"])).ToString(),
                                 Amount = Convert.ToDecimal(reader["Amount"]),
                                 Commission = Convert.ToDecimal(reader["Commission"]),
-                                Shift = Convert.ToInt32(reader["ShiftId"]) == 1 ? "Morning" : "Evening",
+                                Shift = ((ShiftEnum)Convert.ToInt32(reader["ShiftId"])).ToString(),
                                 TotalQuantity = Convert.ToDecimal(reader["TotalQuantity"]),
                                 TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
                                 TotalVLC = Convert.ToInt32(reader["VLCCount"])

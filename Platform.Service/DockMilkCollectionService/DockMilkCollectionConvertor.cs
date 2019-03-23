@@ -18,7 +18,8 @@ namespace Platform.Service
             dockMilkCollectionDTO.VLCName = dockMilkCollection.VLC != null ? dockMilkCollection.VLC.VLCName : string.Empty;
             dockMilkCollectionDTO.CollectionDateTime = dockMilkCollection.CollectionDateTime;
             dockMilkCollectionDTO.TotalQuantity = dockMilkCollection.TotalQuantity;
-            dockMilkCollectionDTO.ShiftId = dockMilkCollection.ShiftId == 1 ? ShiftEnum.Morning : ShiftEnum.Evening;
+            dockMilkCollectionDTO.ShiftId = dockMilkCollection.ShiftId == 1 ? ShiftEnum.M : ShiftEnum.E;
+            dockMilkCollectionDTO.CollectionShift = dockMilkCollectionDTO.ShiftId.ToString();
             dockMilkCollectionDTO.ReceiverName = dockMilkCollection.ReceiverName;
             dockMilkCollectionDTO.RejectedQuantity = dockMilkCollection.RejectedQuantity;
             dockMilkCollectionDTO.TotalCan = dockMilkCollection.TotalCan.HasValue ? dockMilkCollection.TotalCan.Value : 0;
@@ -54,14 +55,15 @@ namespace Platform.Service
             dockMilkCollectionDtlDTO.FAT = dockMilkCollectionDtl.FAT.GetValueOrDefault();
             dockMilkCollectionDtlDTO.Quantity = dockMilkCollectionDtl.Quantity.GetValueOrDefault();
             dockMilkCollectionDtlDTO.TotalAmount = dockMilkCollectionDtl.TotalAmount.GetValueOrDefault();
-            dockMilkCollectionDtlDTO.ProductId = dockMilkCollectionDtl.ProductId == 1 ? MilkTypeEnum.CowMilk : dockMilkCollectionDtl.ProductId == 2 ? MilkTypeEnum.BuffeloMilk : MilkTypeEnum.MixedMilk;
+            dockMilkCollectionDtlDTO.ProductId = dockMilkCollectionDtl.ProductId == 1 ? MilkTypeEnum.C : dockMilkCollectionDtl.ProductId == 2 ? MilkTypeEnum.B : MilkTypeEnum.M;
             dockMilkCollectionDtlDTO.Comments = dockMilkCollectionDtl.Comments;
             dockMilkCollectionDtlDTO.RatePerUnit = dockMilkCollectionDtl.RatePerUnit.GetValueOrDefault();
             dockMilkCollectionDtlDTO.RejectedQuantity = dockMilkCollectionDtl.RejectedQuantity.GetValueOrDefault();
             dockMilkCollectionDtlDTO.RejectedReason = dockMilkCollectionDtl.RejectedReason;
             dockMilkCollectionDtlDTO.TotalCan = dockMilkCollectionDtl.TotalCan.HasValue ? dockMilkCollectionDtl.TotalCan.Value : 0;
             dockMilkCollectionDtlDTO.TotalRejectedCan = dockMilkCollectionDtl.TotalRejectedCan.GetValueOrDefault();
-
+            dockMilkCollectionDtlDTO.Amount = dockMilkCollectionDtl.Amount;
+            dockMilkCollectionDtlDTO.Commission = dockMilkCollectionDtl.Commission;
 
 
             return dockMilkCollectionDtlDTO;
@@ -88,14 +90,21 @@ namespace Platform.Service
         {
             if (isUpdate)
                 DockMilkCollectionDtl.DockMilkCollectionDtlI = DockMilkCollectionDtlDTO.DockMilkCollectionDtlId;
+            if(DockMilkCollectionDtlDTO.CLR>0)
             DockMilkCollectionDtl.CLR = DockMilkCollectionDtlDTO.CLR;
-            DockMilkCollectionDtl.FAT = DockMilkCollectionDtlDTO.FAT;
-            DockMilkCollectionDtl.Quantity = DockMilkCollectionDtlDTO.Quantity;
-            DockMilkCollectionDtl.RejectedQuantity = DockMilkCollectionDtlDTO.RejectedQuantity;
-            DockMilkCollectionDtl.TotalCan = DockMilkCollectionDtlDTO.TotalCan;
-            DockMilkCollectionDtl.TotalRejectedCan = DockMilkCollectionDtlDTO.TotalRejectedCan;
+            if (DockMilkCollectionDtlDTO.FAT > 0)
+                DockMilkCollectionDtl.FAT = DockMilkCollectionDtlDTO.FAT;
+            if (DockMilkCollectionDtlDTO.Quantity > 0)
+                DockMilkCollectionDtl.Quantity = DockMilkCollectionDtlDTO.Quantity;
+            if (DockMilkCollectionDtlDTO.RejectedQuantity > 0)
+                DockMilkCollectionDtl.RejectedQuantity = DockMilkCollectionDtlDTO.RejectedQuantity;
+            if (DockMilkCollectionDtlDTO.TotalCan > 0)
+                DockMilkCollectionDtl.TotalCan = DockMilkCollectionDtlDTO.TotalCan;
+            if (DockMilkCollectionDtlDTO.TotalRejectedCan > 0)
+                DockMilkCollectionDtl.TotalRejectedCan = DockMilkCollectionDtlDTO.TotalRejectedCan;
             DockMilkCollectionDtl.ProductId = (int)DockMilkCollectionDtlDTO.ProductId;
             DockMilkCollectionDtl.TotalAmount = DockMilkCollectionDtlDTO.TotalAmount;
+           
             if (string.IsNullOrWhiteSpace(DockMilkCollectionDtlDTO.Comments) == false)
                 DockMilkCollectionDtl.Comments = DockMilkCollectionDtlDTO.Comments;
 

@@ -23,5 +23,9 @@ namespace Platform.Repository
         public string DockCollectionMessage { get; set; }
 
         public string ForgotPasswordOTPMessage { get; set; }
+
+        public bool IsDockCommonCommissionEnabled { get; set; }
+
+        public decimal DockCommonCommission { get; set; }
     }
 }

@@ -63,9 +63,13 @@ namespace Platform.Repository
                         SenderMobileNumber = this.ConfigurationRepository.GetConfiguration("SMS", "SenderNumber", "9566812835"),
                         SMSServiceUserName = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "adam"),
                         SMSServicePassword = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "12345"),
+                        IsDockCommonCommissionEnabled=Convert.ToBoolean(this.configurationRepository.GetConfiguration("DockMilkCollection", "IsDockCommonCommissionEnabled","False")),
+                        DockCommonCommission = Convert.ToDecimal(this.configurationRepository.GetConfiguration("DockMilkCollection", "DockCommonCommission", "0.01")),
+
                         VLCCollectionMessage = "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}",
                         DockCollectionMessage= "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}",
                         ForgotPasswordOTPMessage="Dear  Customer,{0} is your one time password (OTP). Please enter the OTP to proceed. Thank You"
+
                     };
                 }
                 else

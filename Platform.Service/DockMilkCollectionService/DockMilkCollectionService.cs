@@ -106,9 +106,18 @@ namespace Platform.Service
             if (vlc != null)
             {
                 ResponseDTO responseDTO = new ResponseDTO();
+                decimal milkCommission = GetCommissionForDockMilkCollection(vlc);
                 DockMilkCollection dockMilkCollection = new DockMilkCollection();
                 dockMilkCollection.DockMilkCollectionId = unitOfWork.DashboardRepository.NextNumberGenerator("DockMilkCollection");
-                dockMilkCollection.CollectionDateTime = DateTimeHelper.GetISTDateTime();
+                if(dockMilkCollectionDTO.CollectionDateTime != DateTime.MinValue)
+                {
+                    dockMilkCollection.CollectionDateTime = dockMilkCollectionDTO.CollectionDateTime;
+                }
+                else
+                {
+                    dockMilkCollection.CollectionDateTime = DateTimeHelper.GetISTDateTime();
+                }
+             
                 dockMilkCollection.CreatedDate = DateTimeHelper.GetISTDateTime();
                 dockMilkCollection.ModifiedDate = DateTimeHelper.GetISTDateTime();
                 dockMilkCollection.CreatedBy = dockMilkCollectionDTO.ModifiedBy = "Admin";
@@ -119,23 +128,30 @@ namespace Platform.Service
                     foreach (var dockMilkCollectionDtlDto in dockMilkCollectionDTO.dockMilkCollectionList)
 
                     {
-                        this.CheckForExistingCollectionDetailByDateShiftProduct(dockMilkCollection.CollectionDateTime.Date, dockMilkCollection.ShiftId, (int)dockMilkCollectionDtlDto.ProductId, dockMilkCollection.VLCId);
-                        DockMilkCollectionDtl dockMilkCollectionDtl = new DockMilkCollectionDtl();
-                        dockMilkCollectionDtl.DockMilkCollectionDtlI = unitOfWork.DashboardRepository.NextNumberGenerator("DockMilkCollectionDtl");
-                        dockMilkCollectionDtl.DockMilkCollectionId = dockMilkCollection.DockMilkCollectionId;
-                        DockMilkCollectionConvertor.ConvertToDockMilkCollectionDtlEntity(ref dockMilkCollectionDtl, dockMilkCollectionDtlDto, false);
-                        dockMilkCollectionDtl.RatePerUnit = unitOfWork.MilkRateRepository.GetMilkRateByApplicableRate(vlc.ApplicableRate, dockMilkCollectionDtlDto.FAT.GetValueOrDefault(), dockMilkCollectionDtlDto.CLR.GetValueOrDefault());
-                        dockMilkCollectionDtlDto.TotalAmount = dockMilkCollectionDtl.TotalAmount = dockMilkCollectionDtl.RatePerUnit * dockMilkCollectionDtlDto.Quantity;
-                                  
-                        unitOfWork.DockMilkCollectionDtlRepository.Add(dockMilkCollectionDtl);
+
+                        if (dockMilkCollectionDtlDto.Quantity > 0 && dockMilkCollectionDtlDto.ProductId > 0)
+                        {
+                            this.CheckForExistingCollectionDetailByDateShiftProduct(dockMilkCollection.CollectionDateTime.Date, dockMilkCollection.ShiftId, (int)dockMilkCollectionDtlDto.ProductId, dockMilkCollection.VLCId);
+                            DockMilkCollectionDtl dockMilkCollectionDtl = new DockMilkCollectionDtl();
+                            dockMilkCollectionDtl.DockMilkCollectionDtlI = unitOfWork.DashboardRepository.NextNumberGenerator("DockMilkCollectionDtl");
+                            dockMilkCollectionDtl.DockMilkCollectionId = dockMilkCollection.DockMilkCollectionId;
+                            DockMilkCollectionConvertor.ConvertToDockMilkCollectionDtlEntity(ref dockMilkCollectionDtl, dockMilkCollectionDtlDto, false);
+                            dockMilkCollectionDtl.RatePerUnit = unitOfWork.MilkRateRepository.GetMilkRateByApplicableRate(vlc.ApplicableRate, dockMilkCollectionDtlDto.FAT.GetValueOrDefault(), dockMilkCollectionDtlDto.CLR.GetValueOrDefault());
+                            dockMilkCollectionDtlDto.Amount = dockMilkCollectionDtl.Amount = dockMilkCollectionDtl.RatePerUnit.GetValueOrDefault() * dockMilkCollectionDtlDto.Quantity;
+                            dockMilkCollectionDtlDto.Commission = dockMilkCollectionDtl.Commission = dockMilkCollectionDtlDto.Quantity * milkCommission;
+                            dockMilkCollectionDtlDto.TotalAmount = dockMilkCollectionDtl.TotalAmount = dockMilkCollectionDtl.Commission.GetValueOrDefault() + dockMilkCollectionDtl.Amount;
+
+                            unitOfWork.DockMilkCollectionDtlRepository.Add(dockMilkCollectionDtl);
+                        }
 
                     }
                     dockMilkCollection.TotalCan= dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalCan);
                     dockMilkCollection.TotalRejectedCan = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalRejectedCan);
-                    dockMilkCollection.Amount = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalAmount).GetValueOrDefault();
+                    dockMilkCollection.Amount = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.Amount);
                     dockMilkCollection.TotalQuantity = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.Quantity);
-                    dockMilkCollection.Commission = dockMilkCollection.TotalQuantity * vlc.MilkCommission;
-                    dockMilkCollection.TotalAmount = dockMilkCollection.Amount + dockMilkCollection.Commission.GetValueOrDefault();
+                    dockMilkCollection.Commission = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.Commission).GetValueOrDefault();
+                    dockMilkCollection.TotalAmount = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalAmount).GetValueOrDefault();
+
                     dockMilkCollection.RejectedQuantity = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.RejectedQuantity);
                   
 
@@ -167,15 +183,39 @@ namespace Platform.Service
         }
 
 
+
+        private decimal GetCommissionForDockMilkCollection(VLC vLC)
+        {
+            if (unitOfWork.NatrajConfigurationSettings.IsDockCommonCommissionEnabled)
+                return unitOfWork.NatrajConfigurationSettings.DockCommonCommission;
+            else
+                return vLC.MilkCommission.GetValueOrDefault();
+
+        }
         public void UpdateVLCWalletForDockCollection(int vlcId, decimal totalAmount, bool isCredit)
         {
             var vlcWallet = unitOfWork.VLCWalletRepository.GetByVLCId(vlcId);
-            if (isCredit)
-                vlcWallet.WalletBalance -= totalAmount;
+            if (vlcWallet != null)
+            {
+                if (isCredit)
+                    vlcWallet.WalletBalance -= totalAmount;
+                else
+                    vlcWallet.WalletBalance += totalAmount;
+                vlcWallet.AmountDueDate = vlcWallet.AmountDueDate.AddDays(10);
+                unitOfWork.VLCWalletRepository.Update(vlcWallet);
+            }
             else
-                vlcWallet.WalletBalance += totalAmount;
-            vlcWallet.AmountDueDate = vlcWallet.AmountDueDate.AddDays(10);
-            unitOfWork.VLCWalletRepository.Update(vlcWallet);
+            {
+                VLCWallet vLCWallet = new VLCWallet();
+                vLCWallet.WalletId = unitOfWork.DashboardRepository.NextNumberGenerator("VLCWallet");
+                vLCWallet.VLCId = vlcId;
+                if (isCredit)
+                    vlcWallet.WalletBalance -= totalAmount;
+                else
+                    vlcWallet.WalletBalance += totalAmount;
+                vLCWallet.AmountDueDate = DateTimeHelper.GetISTDateTime().AddDays(10);
+                unitOfWork.VLCWalletRepository.Add(vLCWallet);
+            }
         }
 
         public void UpdateVLCPaymentDetailsForDockCollection(VLC vlc, DockMilkCollection dockMilkCollection)
@@ -221,12 +261,14 @@ namespace Platform.Service
         {
             ResponseDTO responseDTO = new ResponseDTO();
             //Will update the method when required
+          
             var dockMilkCollection = unitOfWork.DockMilkCollectionRepository.GetById(dockMilkCollectionDTO.DockMilkCollectionId);
             var vlc = unitOfWork.VLCRepository.GetById(dockMilkCollection.VLCId);
             if (dockMilkCollection == null)
                 throw new PlatformModuleException(string.Format("Dock Milk Collection Detail Not Found with Collection Id {0}", dockMilkCollectionDTO.DockMilkCollectionId));
             dockMilkCollection.ModifiedDate = DateTimeHelper.GetISTDateTime();
             dockMilkCollection.ModifiedBy = "Admin";
+            decimal milkCommission = GetCommissionForDockMilkCollection(vlc);
             DockMilkCollectionConvertor.ConvertToDockMilkCollectionEntity(ref dockMilkCollection, dockMilkCollectionDTO, true);
 
 
@@ -235,24 +277,28 @@ namespace Platform.Service
                 foreach (var dockCollectionDtlDTO in dockMilkCollectionDTO.dockMilkCollectionList)
                 {
                     var dockMilkCollectionDtl = unitOfWork.DockMilkCollectionDtlRepository.GetById(dockCollectionDtlDTO.DockMilkCollectionDtlId);
+                    if (dockMilkCollectionDtl != null && dockCollectionDtlDTO.Quantity > 0 && dockCollectionDtlDTO.ProductId > 0)
+                    {
+                        DockMilkCollectionConvertor.ConvertToDockMilkCollectionDtlEntity(ref dockMilkCollectionDtl, dockCollectionDtlDTO, false);
+                        dockMilkCollectionDtl.RatePerUnit = unitOfWork.MilkRateRepository.GetMilkRateByApplicableRate(vlc.ApplicableRate, dockCollectionDtlDTO.FAT.GetValueOrDefault(), dockCollectionDtlDTO.CLR.GetValueOrDefault());
+                        dockCollectionDtlDTO.Amount= dockMilkCollectionDtl.Amount = dockMilkCollectionDtl.Amount = dockMilkCollectionDtl.RatePerUnit.GetValueOrDefault() * dockCollectionDtlDTO.Quantity;
+                        dockCollectionDtlDTO.Commission= dockMilkCollectionDtl.Commission = dockMilkCollectionDtl.Commission = dockCollectionDtlDTO.Quantity * milkCommission;
+                        dockCollectionDtlDTO.TotalAmount= dockMilkCollectionDtl.TotalAmount = dockMilkCollectionDtl.Commission.GetValueOrDefault() + dockMilkCollectionDtl.Amount;
 
-                    DockMilkCollectionConvertor.ConvertToDockMilkCollectionDtlEntity(ref dockMilkCollectionDtl, dockCollectionDtlDTO, false);
-                    dockMilkCollectionDtl.RatePerUnit = unitOfWork.MilkRateRepository.GetMilkRateByApplicableRate(vlc.ApplicableRate, dockCollectionDtlDTO.FAT.GetValueOrDefault(), dockCollectionDtlDTO.CLR.GetValueOrDefault());
-                    dockCollectionDtlDTO.TotalAmount = dockMilkCollectionDtl.TotalAmount = dockMilkCollectionDtl.RatePerUnit * dockCollectionDtlDTO.Quantity;
-
-                    unitOfWork.DockMilkCollectionDtlRepository.Update(dockMilkCollectionDtl);
-
+                        unitOfWork.DockMilkCollectionDtlRepository.Update(dockMilkCollectionDtl);
+                    }
                 }
+  
+            dockMilkCollection.TotalCan = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalCan);
+            dockMilkCollection.TotalRejectedCan = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalRejectedCan);
+            dockMilkCollection.Amount = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.Amount);
+            dockMilkCollection.TotalQuantity = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.Quantity);
+            dockMilkCollection.Commission = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.Commission).GetValueOrDefault();
+            dockMilkCollection.TotalAmount = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalAmount).GetValueOrDefault();
 
-                dockMilkCollection.TotalCan = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalCan);
-                dockMilkCollection.TotalRejectedCan = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalRejectedCan);
-                dockMilkCollection.Amount = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.TotalAmount).GetValueOrDefault();
-                dockMilkCollection.TotalQuantity = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.Quantity);
-                dockMilkCollection.Commission = dockMilkCollection.TotalQuantity * vlc.MilkCommission;
-                dockMilkCollection.TotalAmount = dockMilkCollection.Amount + dockMilkCollection.Commission.GetValueOrDefault();
-                dockMilkCollection.RejectedQuantity = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.RejectedQuantity);
+            dockMilkCollection.RejectedQuantity = dockMilkCollectionDTO.dockMilkCollectionList.Sum(s => s.RejectedQuantity);
 
-            }
+        }
             else
                 throw new PlatformModuleException("Dock Milk Collection Details Not Found");
 

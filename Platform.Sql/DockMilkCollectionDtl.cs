@@ -27,6 +27,8 @@ namespace Platform.Sql
         public Nullable<decimal> TotalAmount { get; set; }
         public string RejectedReason { get; set; }
         public string Comments { get; set; }
+        public Nullable<decimal> Commission { get; set; }
+        public decimal Amount { get; set; }
     
         public virtual DockMilkCollection DockMilkCollection { get; set; }
     }

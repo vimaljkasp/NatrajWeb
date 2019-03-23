@@ -12,11 +12,11 @@ namespace Platform.Service
     {
         private UnitOfWork unitOfWork = new UnitOfWork();
 
-        public ResponseDTO DockCollectionSummaryByDate(DateTime collectionStartDate, DateTime collectionEndDate)
+        public ResponseDTO DockCollectionSummaryByDate(DateTime collectionStartDate, DateTime collectionEndDate,int startShift,int endShift,int milkType)
         {
            
             ResponseDTO responseDTO = new ResponseDTO();
-            responseDTO.Data = unitOfWork.DockReportRepository.DockCollectionSummaryByDate(collectionStartDate, collectionEndDate);
+            responseDTO.Data = unitOfWork.DockReportRepository.DockCollectionSummaryByDate(collectionStartDate, collectionEndDate, startShift, endShift, milkType);
             responseDTO.Status = true;
             responseDTO.Message = "Dock Collection Summary Report By Date";
             return responseDTO;
