@@ -159,6 +159,9 @@
     <Compile Include="VLC.cs">
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="VLCExpenseDetail.cs">
+      <DependentUpon>PlatformDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="VLCMilkCollection.cs">
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
     </Compile>

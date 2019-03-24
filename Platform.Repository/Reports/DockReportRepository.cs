@@ -60,10 +60,10 @@ namespace Platform.Repository
                                  AvgCLR= Convert.ToDecimal(reader["AvgCLR"]),
                                 AvgRatePerUnit = Convert.ToDecimal(reader["AvgRatePerUnit"]),
                                 RejectedQuantity = Convert.ToDecimal(reader["TotalRejectedQuantity"]),
-                                MiilkType =((MilkTypeEnum)Convert.ToInt32(reader["ProductId"])).ToString(),
+                                MiilkType =((ReportMilkTypeEnum)Convert.ToInt32(reader["ProductId"])).ToString(),
                                 Amount = Convert.ToDecimal(reader["Amount"]),
                                 Commission = Convert.ToDecimal(reader["Commission"]),
-                                Shift = ((ShiftEnum)Convert.ToInt32(reader["ShiftId"])).ToString(),
+                                Shift = ((ReportShiftEnum)Convert.ToInt32(reader["ShiftId"])).ToString(),
                                 TotalQuantity = Convert.ToDecimal(reader["TotalQuantity"]),
                                 TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
                                 TotalVLC = Convert.ToInt32(reader["VLCCount"])
@@ -171,7 +171,7 @@ namespace Platform.Repository
                             new DockCollectionSummaryDetailByVLCListDTO()
                             {
                                 CollectionDate = Convert.ToDateTime(reader["CollectionDate"]),
-                                MilkType =(MilkTypeEnum) Convert.ToInt32(reader["ProductId"]) ,
+                                MilkType =(ReportMilkTypeEnum) Convert.ToInt32(reader["ProductId"]) ,
                                 TotalCan = Convert.ToInt32(reader["TotalCan"]),
                                 Fat = Convert.ToDecimal(reader["Fat"]),
                                 CLR = Convert.ToDecimal(reader["CLR"]),

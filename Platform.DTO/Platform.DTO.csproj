@@ -80,6 +80,7 @@
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\ShiftEnum.cs" />
     <Compile Include="Enums\SMSType.cs" />
+    <Compile Include="Enums\VLCExpenseEnum.cs" />
     <Compile Include="Interfaces\Customer\ICustomerAgricultureService.cs" />
     <Compile Include="Interfaces\Customer\ICustomerBankService.cs" />
     <Compile Include="Interfaces\Customer\ICustomerService.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Interfaces\ISMSService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Interfaces\VLC\IVLCAdminService.cs" />
+    <Compile Include="Interfaces\VLC\IVLCExpenseService.cs" />
     <Compile Include="Interfaces\VLC\IVLCMilkCollectionService.cs" />
     <Compile Include="Interfaces\VLC\IVLCPaymentService.cs" />
     <Compile Include="Interfaces\Reports\IVLCReportService.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Site\SiteConfigurationDTO.cs" />
     <Compile Include="Site\SiteDTO.cs" />
     <Compile Include="VLCCustomerCollectionDTO.cs" />
+    <Compile Include="VLC\VLCExpenseDTO.cs" />
     <Compile Include="VLC\VLCMilkCollectionDtlDTO.cs" />
     <Compile Include="VLC\VLCMilkCollectionDTO.cs" />
     <Compile Include="VLC\VLCDTO.cs" />

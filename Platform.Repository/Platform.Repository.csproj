@@ -80,6 +80,7 @@
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="UserRepository.cs" />
     <Compile Include="Reports\VLCReportRepository.cs" />
+    <Compile Include="VLC\VLCExpenseDetailRepository.cs" />
     <Compile Include="VLC\VLCMilkCollectionDtlRepository.cs" />
     <Compile Include="VLC\VLCMilkCollectionRepository.cs" />
     <Compile Include="VLC\VLCPaymentDetailRepository.cs" />

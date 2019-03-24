@@ -9,6 +9,13 @@ namespace Platform.DTO
     public enum ShiftEnum
     {
         None,
+        Morning,
+        Evening
+    }
+
+    public enum ReportShiftEnum
+    {
+        None,
         M,
         E
     }

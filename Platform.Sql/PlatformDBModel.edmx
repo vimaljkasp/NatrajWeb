@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -257,6 +257,15 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="MilkRate">
+          <Key>
+            <PropertyRef Name="Fat" />
+            <PropertyRef Name="CLR" />
+          </Key>
+          <Property Name="Fat" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CLR" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="NatrajConfigurations">
           <Key>
             <PropertyRef Name="KeyData" />
@@ -268,6 +277,20 @@
           <Property Name="DataVal" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="DefaultVal" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="NatrajSMSLog">
+          <Key>
+            <PropertyRef Name="SMSId" />
+          </Key>
+          <Property Name="SMSId" Type="int" Nullable="false" />
+          <Property Name="ComponentId" Type="int" Nullable="false" />
+          <Property Name="SMSTypeId" Type="int" Nullable="false" />
+          <Property Name="Sender" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Receiver" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SMSMessage" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SMSSentTime" Type="datetime" />
+          <Property Name="SMSErrorMsg" Type="nvarchar" MaxLength="100" />
+          <Property Name="SMSStatus" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="NumberMaster">
           <Key>
@@ -471,6 +494,25 @@
           <Property Name="MachineRent" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Pin" Type="nvarchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="VLCExpenseDetail">
+          <Key>
+            <PropertyRef Name="VLCExpenseId" />
+          </Key>
+          <Property Name="VLCExpenseId" Type="int" Nullable="false" />
+          <Property Name="VLCId" Type="int" Nullable="false" />
+          <Property Name="ExpenseReason" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="PaymentCrAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentDrAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ExpenseDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpenseComments" Type="nvarchar" MaxLength="200" />
+          <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="VLCMilkCollection">
           <Key>
             <PropertyRef Name="VLCMilkCollectionId" />
@@ -530,29 +572,6 @@
           <Property Name="VLCId" Type="int" Nullable="false" />
           <Property Name="WalletBalance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="AmountDueDate" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="MilkRate">
-          <Key>
-            <PropertyRef Name="Fat" />
-            <PropertyRef Name="CLR" />
-          </Key>
-          <Property Name="Fat" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="CLR" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-        </EntityType>
-        <EntityType Name="NatrajSMSLog">
-          <Key>
-            <PropertyRef Name="SMSId" />
-          </Key>
-          <Property Name="SMSId" Type="int" Nullable="false" />
-          <Property Name="ComponentId" Type="int" Nullable="false" />
-          <Property Name="SMSTypeId" Type="int" Nullable="false" />
-          <Property Name="Sender" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Receiver" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="SMSMessage" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="SMSSentTime" Type="datetime" />
-          <Property Name="SMSErrorMsg" Type="nvarchar" MaxLength="100" />
-          <Property Name="SMSStatus" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Customer_VLC">
           <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
@@ -856,7 +875,9 @@
           <EntitySet Name="DockMilkCollectionDtl" EntityType="Self.DockMilkCollectionDtl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MilkProcessing" EntityType="Self.MilkProcessing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MilkRate" EntityType="Self.MilkRate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NatrajConfigurations" EntityType="Self.NatrajConfigurations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NatrajSMSLog" EntityType="Self.NatrajSMSLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NumberMaster" EntityType="Self.NumberMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -870,12 +891,11 @@
           <EntitySet Name="UserPermissions" EntityType="Self.UserPermissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VLC" EntityType="Self.VLC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VLCExpenseDetail" EntityType="Self.VLCExpenseDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VLCMilkCollection" EntityType="Self.VLCMilkCollection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VLCMilkCollectionDtl" EntityType="Self.VLCMilkCollectionDtl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VLCPaymentDetail" EntityType="Self.VLCPaymentDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VLCWallet" EntityType="Self.VLCWallet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MilkRate" EntityType="Self.MilkRate" Schema="vimal" store:Type="Tables" />
-          <EntitySet Name="NatrajSMSLog" EntityType="Self.NatrajSMSLog" Schema="vimal" store:Type="Tables" />
           <AssociationSet Name="FK_Customer_VLC" Association="Self.FK_Customer_VLC">
             <End Role="VLC" EntitySet="VLC" />
             <End Role="Customer" EntitySet="Customer" />
@@ -973,7 +993,8 @@
             <End Role="VLCWallet" EntitySet="VLCWallet" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1223,9 +1244,9 @@
           <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="RejectedReason" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DockMilkCollection" Relationship="Self.FK_DockMilkCollectionDtl_DockMilkCollection" FromRole="DockMilkCollectionDtl" ToRole="DockMilkCollection" />
           <Property Name="Commission" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="DockMilkCollection" Relationship="Self.FK_DockMilkCollectionDtl_DockMilkCollection" FromRole="DockMilkCollectionDtl" ToRole="DockMilkCollection" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -1252,6 +1273,15 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ProductBatches" Relationship="Self.FK_ProductBatch_MilkProcessing" FromRole="MilkProcessing" ToRole="ProductBatch" />
         </EntityType>
+        <EntityType Name="MilkRate">
+          <Key>
+            <PropertyRef Name="Fat" />
+            <PropertyRef Name="CLR" />
+          </Key>
+          <Property Name="Fat" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CLR" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="NatrajConfiguration">
           <Key>
             <PropertyRef Name="KeyData" />
@@ -1263,6 +1293,20 @@
           <Property Name="DataVal" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DefaultVal" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="NatrajSMSLog">
+          <Key>
+            <PropertyRef Name="SMSId" />
+          </Key>
+          <Property Name="SMSId" Type="Int32" Nullable="false" />
+          <Property Name="ComponentId" Type="Int32" Nullable="false" />
+          <Property Name="SMSTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Sender" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Receiver" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SMSMessage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SMSSentTime" Type="DateTime" Precision="3" />
+          <Property Name="SMSErrorMsg" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SMSStatus" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="NumberMaster">
           <Key>
@@ -1478,12 +1522,31 @@
           <Property Name="MilkCommission" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="HouseRent" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="MachineRent" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Pin" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_VLC" FromRole="VLC" ToRole="Customer" />
           <NavigationProperty Name="DockMilkCollections" Relationship="Self.FK_DockMilkCollection_VLC" FromRole="VLC" ToRole="DockMilkCollection" />
           <NavigationProperty Name="VLCMilkCollections" Relationship="Self.FK_VLCMilkCollection_VLC" FromRole="VLC" ToRole="VLCMilkCollection" />
           <NavigationProperty Name="VLCPaymentDetails" Relationship="Self.FK_VLCPaymentDetail_VLC" FromRole="VLC" ToRole="VLCPaymentDetail" />
           <NavigationProperty Name="VLCWallets" Relationship="Self.FK_VLCWaller_VLC" FromRole="VLC" ToRole="VLCWallet" />
-          <Property Name="Pin" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VLCExpenseDetail">
+          <Key>
+            <PropertyRef Name="VLCExpenseId" />
+          </Key>
+          <Property Name="VLCExpenseId" Type="Int32" Nullable="false" />
+          <Property Name="VLCId" Type="Int32" Nullable="false" />
+          <Property Name="ExpenseReason" Type="String" MaxLength="1" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PaymentCrAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentDrAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ExpenseDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpenseComments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="VLCMilkCollection">
           <Key>
@@ -1550,29 +1613,6 @@
           <Property Name="WalletBalance" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="AmountDueDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="VLC" Relationship="Self.FK_VLCWaller_VLC" FromRole="VLCWallet" ToRole="VLC" />
-        </EntityType>
-        <EntityType Name="MilkRate">
-          <Key>
-            <PropertyRef Name="Fat" />
-            <PropertyRef Name="CLR" />
-          </Key>
-          <Property Name="Fat" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="CLR" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-        </EntityType>
-        <EntityType Name="NatrajSMSLog">
-          <Key>
-            <PropertyRef Name="SMSId" />
-          </Key>
-          <Property Name="SMSId" Type="Int32" Nullable="false" />
-          <Property Name="ComponentId" Type="Int32" Nullable="false" />
-          <Property Name="SMSTypeId" Type="Int32" Nullable="false" />
-          <Property Name="Sender" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Receiver" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="SMSMessage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="SMSSentTime" Type="DateTime" Precision="3" />
-          <Property Name="SMSErrorMsg" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="SMSStatus" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Customer_VLC">
           <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
@@ -1876,7 +1916,9 @@
           <EntitySet Name="DockMilkCollectionDtls" EntityType="Self.DockMilkCollectionDtl" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="MilkProcessings" EntityType="Self.MilkProcessing" />
+          <EntitySet Name="MilkRates" EntityType="Self.MilkRate" />
           <EntitySet Name="NatrajConfigurations" EntityType="Self.NatrajConfiguration" />
+          <EntitySet Name="NatrajSMSLogs" EntityType="Self.NatrajSMSLog" />
           <EntitySet Name="NumberMasters" EntityType="Self.NumberMaster" />
           <EntitySet Name="OrderStatus" EntityType="Self.OrderStatu" />
           <EntitySet Name="Products" EntityType="Self.Product" />
@@ -1890,12 +1932,11 @@
           <EntitySet Name="UserPermissions" EntityType="Self.UserPermission" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="VLCs" EntityType="Self.VLC" />
+          <EntitySet Name="VLCExpenseDetails" EntityType="Self.VLCExpenseDetail" />
           <EntitySet Name="VLCMilkCollections" EntityType="Self.VLCMilkCollection" />
           <EntitySet Name="VLCMilkCollectionDtls" EntityType="Self.VLCMilkCollectionDtl" />
           <EntitySet Name="VLCPaymentDetails" EntityType="Self.VLCPaymentDetail" />
           <EntitySet Name="VLCWallets" EntityType="Self.VLCWallet" />
-          <EntitySet Name="MilkRates" EntityType="Self.MilkRate" />
-          <EntitySet Name="NatrajSMSLogs" EntityType="Self.NatrajSMSLog" />
           <AssociationSet Name="FK_Customer_VLC" Association="Self.FK_Customer_VLC">
             <End Role="VLC" EntitySet="VLCs" />
             <End Role="Customer" EntitySet="Customers" />
@@ -2220,8 +2261,6 @@
           <EntitySetMapping Name="DockMilkCollectionDtls">
             <EntityTypeMapping TypeName="PlatformDBModel.DockMilkCollectionDtl">
               <MappingFragment StoreEntitySet="DockMilkCollectionDtl">
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Commission" ColumnName="Commission" />
                 <ScalarProperty Name="DockMilkCollectionDtlI" ColumnName="DockMilkCollectionDtlI" />
                 <ScalarProperty Name="DockMilkCollectionId" ColumnName="DockMilkCollectionId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
@@ -2235,6 +2274,8 @@
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="RejectedReason" ColumnName="RejectedReason" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Commission" ColumnName="Commission" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2264,6 +2305,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MilkRates">
+            <EntityTypeMapping TypeName="PlatformDBModel.MilkRate">
+              <MappingFragment StoreEntitySet="MilkRate">
+                <ScalarProperty Name="Fat" ColumnName="Fat" />
+                <ScalarProperty Name="CLR" ColumnName="CLR" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="NatrajConfigurations">
             <EntityTypeMapping TypeName="PlatformDBModel.NatrajConfiguration">
               <MappingFragment StoreEntitySet="NatrajConfigurations">
@@ -2273,6 +2323,21 @@
                 <ScalarProperty Name="DataVal" ColumnName="DataVal" />
                 <ScalarProperty Name="DefaultVal" ColumnName="DefaultVal" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NatrajSMSLogs">
+            <EntityTypeMapping TypeName="PlatformDBModel.NatrajSMSLog">
+              <MappingFragment StoreEntitySet="NatrajSMSLog">
+                <ScalarProperty Name="SMSId" ColumnName="SMSId" />
+                <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
+                <ScalarProperty Name="SMSTypeId" ColumnName="SMSTypeId" />
+                <ScalarProperty Name="Sender" ColumnName="Sender" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="SMSMessage" ColumnName="SMSMessage" />
+                <ScalarProperty Name="SMSSentTime" ColumnName="SMSSentTime" />
+                <ScalarProperty Name="SMSErrorMsg" ColumnName="SMSErrorMsg" />
+                <ScalarProperty Name="SMSStatus" ColumnName="SMSStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2460,7 +2525,6 @@
           <EntitySetMapping Name="VLCs">
             <EntityTypeMapping TypeName="PlatformDBModel.VLC">
               <MappingFragment StoreEntitySet="VLC">
-                <ScalarProperty Name="Pin" ColumnName="Pin" />
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
                 <ScalarProperty Name="VLCCode" ColumnName="VLCCode" />
                 <ScalarProperty Name="VLCName" ColumnName="VLCName" />
@@ -2488,6 +2552,27 @@
                 <ScalarProperty Name="MilkCommission" ColumnName="MilkCommission" />
                 <ScalarProperty Name="HouseRent" ColumnName="HouseRent" />
                 <ScalarProperty Name="MachineRent" ColumnName="MachineRent" />
+                <ScalarProperty Name="Pin" ColumnName="Pin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VLCExpenseDetails">
+            <EntityTypeMapping TypeName="PlatformDBModel.VLCExpenseDetail">
+              <MappingFragment StoreEntitySet="VLCExpenseDetail">
+                <ScalarProperty Name="VLCExpenseId" ColumnName="VLCExpenseId" />
+                <ScalarProperty Name="VLCId" ColumnName="VLCId" />
+                <ScalarProperty Name="ExpenseReason" ColumnName="ExpenseReason" />
+                <ScalarProperty Name="PaymentCrAmount" ColumnName="PaymentCrAmount" />
+                <ScalarProperty Name="PaymentDrAmount" ColumnName="PaymentDrAmount" />
+                <ScalarProperty Name="ExpenseDate" ColumnName="ExpenseDate" />
+                <ScalarProperty Name="ExpenseComments" ColumnName="ExpenseComments" />
+                <ScalarProperty Name="Ref1" ColumnName="Ref1" />
+                <ScalarProperty Name="Ref2" ColumnName="Ref2" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2552,30 +2637,6 @@
                 <ScalarProperty Name="VLCId" ColumnName="VLCId" />
                 <ScalarProperty Name="WalletBalance" ColumnName="WalletBalance" />
                 <ScalarProperty Name="AmountDueDate" ColumnName="AmountDueDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MilkRates">
-            <EntityTypeMapping TypeName="PlatformDBModel.MilkRate">
-              <MappingFragment StoreEntitySet="MilkRate">
-                <ScalarProperty Name="Fat" ColumnName="Fat" />
-                <ScalarProperty Name="CLR" ColumnName="CLR" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NatrajSMSLogs">
-            <EntityTypeMapping TypeName="PlatformDBModel.NatrajSMSLog">
-              <MappingFragment StoreEntitySet="NatrajSMSLog">
-                <ScalarProperty Name="SMSId" ColumnName="SMSId" />
-                <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
-                <ScalarProperty Name="SMSTypeId" ColumnName="SMSTypeId" />
-                <ScalarProperty Name="Sender" ColumnName="Sender" />
-                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-                <ScalarProperty Name="SMSMessage" ColumnName="SMSMessage" />
-                <ScalarProperty Name="SMSSentTime" ColumnName="SMSSentTime" />
-                <ScalarProperty Name="SMSErrorMsg" ColumnName="SMSErrorMsg" />
-                <ScalarProperty Name="SMSStatus" ColumnName="SMSStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

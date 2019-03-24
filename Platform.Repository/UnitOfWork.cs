@@ -26,6 +26,7 @@ namespace Platform.Repository
         private VLCRepository vLCRepository;
         private VLCWalletRepository vLCWalletRepository;
         private VLCPaymentDetailRepository vLCPaymentDetailRepository;
+        private VLCExpenseDetailRepository vLCExpenseDetailRepository;
         private VLCMilkCollectionRepository vLCMilkCollectionRepository;
         private VLCMilkCollectionDtlRepository vLCMilkCollectionDtlRepository;
         private DistributionCenterRepository distributionCenterRepository;
@@ -194,6 +195,21 @@ namespace Platform.Repository
                 else
                 {
                     return vLCPaymentDetailRepository;
+                }
+            }
+        }
+
+
+        public VLCExpenseDetailRepository VLCExpenseDetailRepository
+        {
+            get
+            {
+                if (vLCExpenseDetailRepository == null)
+                    return vLCExpenseDetailRepository = new VLCExpenseDetailRepository(_repository);
+
+                else
+                {
+                    return vLCExpenseDetailRepository;
                 }
             }
         }

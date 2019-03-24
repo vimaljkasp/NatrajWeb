@@ -11,3 +11,9 @@ Platform.Utilities/bin/
 Platform.Utilities/obj/
 PlatformWeb/bin/
 PlatformWeb/obj/
+Platform.WebAPI.Test/bin/
+Platform.WebAPI.Test/obj/
+Platform.WebAPI.Test/bin/Debug/Platform.WebAPI.Test.exe
+Platform.WebAPI.Test/bin/Debug/Platform.WebAPI.Test.pdb
+Platform.WebAPI.Test/obj/Debug/Platform.WebAPI.Test.exe
+Platform.WebAPI.Test/obj/Debug/Platform.WebAPI.Test.pdb

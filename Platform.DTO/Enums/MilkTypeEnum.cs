@@ -10,6 +10,18 @@ namespace Platform.DTO
     public enum MilkTypeEnum
     {
         [Description("None")]
+        None,
+        [Description("Cow Milk")]
+        CowMilk,
+        [Description("Buffelo Milk")]
+        BuffaloMilk,
+        [Description("Mixed Milk")]
+        MixedMilk
+    }
+
+    public enum ReportMilkTypeEnum
+    {
+        [Description("None")]
         N,
         [Description("Cow Milk")]
         C,

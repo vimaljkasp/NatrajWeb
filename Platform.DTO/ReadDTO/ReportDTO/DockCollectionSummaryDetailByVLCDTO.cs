@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Platform.DTO
 {
@@ -10,8 +11,14 @@ namespace Platform.DTO
     {
         public int VLCId { get; set; }
         public string VLCName { get; set; }
-        public DateTime CollectionFromDate { get; set; }
-        public DateTime CollectionToDate { get; set; }
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+
+            public DateTime CollectionFromDate { get; set; }
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+
+            public DateTime CollectionToDate { get; set; }
 
         public List<DockCollectionSummaryDetailByVLCListDTO> dockCollectionSummaryDetailByVLCListDTO { get; set; }
 
@@ -19,8 +26,11 @@ namespace Platform.DTO
 
     public class DockCollectionSummaryDetailByVLCListDTO
     {
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+
         public DateTime CollectionDate { get; set; }
-        public MilkTypeEnum MilkType { get; set; }
+        public ReportMilkTypeEnum  MilkType { get; set; }
         public decimal Fat { get; set; }
         public decimal CLR { get; set; }
 
