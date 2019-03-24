@@ -12,7 +12,7 @@ namespace Platform.DTO
 
         ResponseDTO GetAllVLCExpensesByVLCId(int vlcId);
 
-       
+        ResponseDTO UpdateMachineAndHouseRentExpenseForALLVLC(DateTime expenseMonth);
 
         ResponseDTO AddVLCExpenseDetail(VLCExpenseDTO vLCExpenseDTO);
 

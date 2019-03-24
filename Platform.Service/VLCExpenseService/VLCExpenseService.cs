@@ -62,9 +62,29 @@ namespace Platform.Service
         public ResponseDTO AddVLCExpenseDetail(VLCExpenseDTO vLCExpenseDTO)
         {
             ResponseDTO responseDTO = new ResponseDTO();
+            
+            var vLC = unitOfWork.DistributionCenterRepository.GetById(vLCExpenseDTO.VLCId);
+            if (vLC != null)
+            {
+                VLCExpenseDetail vLCExpenseDetail = AddExpense(vLCExpenseDTO);
+                vLCExpenseDTO = VLCExpenseConvertor.ConvertToVLCExpenseDTO(vLCExpenseDetail);
+
+                responseDTO.Status = true;
+                responseDTO.Message = "VLC Expense Detail Added Successfully";
+                responseDTO.Data = vLCExpenseDTO;
+                return responseDTO;
+            }
+            else
+            {
+                throw new PlatformModuleException("VLC Not Found");
+            }
+
+        }
+
+        private VLCExpenseDetail AddExpense(VLCExpenseDTO vLCExpenseDTO)
+        {
             VLCExpenseDetail vLCExpenseDetail = new VLCExpenseDetail();
             vLCExpenseDetail.VLCExpenseId = unitOfWork.DashboardRepository.NextNumberGenerator("VLCExpenseDetail");
-            var vLC = unitOfWork.DistributionCenterRepository.GetById(vLCExpenseDTO.VLCId);
             vLCExpenseDetail.VLCId = vLCExpenseDTO.VLCId;
             vLCExpenseDetail.ExpenseReason = vLCExpenseDTO.ExpenseReason;
             vLCExpenseDetail.IsDeleted = false;
@@ -86,12 +106,7 @@ namespace Platform.Service
                 AddVLCExpenseInPaymentDetail(vLCExpenseDTO, 0, vLCExpenseDTO.PaymentCrAmount);
             }
             unitOfWork.SaveChanges();
-            vLCExpenseDTO = VLCExpenseConvertor.ConvertToVLCExpenseDTO(vLCExpenseDetail);
-
-            responseDTO.Status = true;
-            responseDTO.Message = "VLC Expense Detail Added Successfully";
-            responseDTO.Data = vLCExpenseDTO;
-            return responseDTO;
+            return vLCExpenseDetail;
         }
         
 
@@ -182,6 +197,41 @@ namespace Platform.Service
                     unitOfWork = null;
                 }
             }
+        }
+
+        public ResponseDTO UpdateMachineAndHouseRentExpenseForALLVLC(DateTime expenseMonth)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            var vlcList = unitOfWork.VLCRepository.GetAll();
+            foreach(var vlc in vlcList)
+            {
+                if(vlc.HouseRent.GetValueOrDefault()>0 || vlc.MachineRent.GetValueOrDefault()>0)
+                {
+                    VLCExpenseDTO vLCExpenseDTO = new VLCExpenseDTO();
+                    vLCExpenseDTO.VLCId = vlc.VLCId;
+                    vLCExpenseDTO.ExpenseDate = expenseMonth;
+                    if (vlc.HouseRent.GetValueOrDefault() > 0 && vlc.MachineRent.GetValueOrDefault() > 0)
+                    {
+                        vLCExpenseDTO.ExpenseReason = (int)VLCExpenseEnum.HouseAndMachineRent;
+                        vLCExpenseDTO.PaymentDrAmount = vlc.HouseRent.GetValueOrDefault() + vlc.MachineRent.GetValueOrDefault();
+                    }
+                    else if (vlc.HouseRent.GetValueOrDefault() > 0)
+                    {
+                        vLCExpenseDTO.ExpenseReason = (int)VLCExpenseEnum.HouseRent;
+                        vLCExpenseDTO.PaymentDrAmount = vlc.HouseRent.GetValueOrDefault();
+
+                    }
+                    else
+                    {
+                        vLCExpenseDTO.ExpenseReason = (int)VLCExpenseEnum.MachineRent;
+                        vLCExpenseDTO.PaymentDrAmount = vlc.HouseRent.GetValueOrDefault();
+                    }
+                }
+            }
+            responseDTO.Message = "Machine Rent and House Rent Updated for all VLCs";
+            responseDTO.Status = true;
+            responseDTO.Data =new object();
+            return responseDTO;
         }
 
         public void Dispose()

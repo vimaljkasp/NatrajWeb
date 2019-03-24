@@ -16,7 +16,7 @@ namespace Platform.Repository
         }
         public List<VLC> GetAll()
         {
-            var vlcs = _repository.VLCs.ToList<Sql.VLC>();
+            var vlcs = _repository.VLCs.Where(v=>v.IsDeleted==false).ToList<Sql.VLC>();
             return vlcs;
         }
 

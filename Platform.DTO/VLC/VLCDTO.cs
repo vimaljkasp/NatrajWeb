@@ -41,6 +41,10 @@ namespace Platform.DTO
         public Decimal? FAT { get; set; }
 
         public Decimal? DifferenceCLR { get; set; }
+
+        public decimal MachineRent { get; set; }
+
+        public decimal HouseRent { get; set; }
     }
     public class VLCValidator : AbstractValidator<VLCDTO>
     {

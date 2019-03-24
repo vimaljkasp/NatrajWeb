@@ -37,6 +37,8 @@ namespace Platform.Service
             vlcDto.DifferenceCLR = vLC.DifferenceCLR;
             vlcDto.ApplicableRate = vLC.ApplicableRate;
             vlcDto.Shift = vLC.CurrentShift.GetValueOrDefault();
+            vlcDto.HouseRent = vLC.HouseRent.GetValueOrDefault();
+            vlcDto.MachineRent = vLC.MachineRent.GetValueOrDefault();
             return vlcDto;
 
 
@@ -81,6 +83,10 @@ namespace Platform.Service
                 vLC.CurrentShift = vlcDTO.Shift;
             if (vlcDTO.ApplicableRate > 0)
                 vLC.ApplicableRate = vlcDTO.ApplicableRate;
+            if (vlcDTO.MachineRent > 0)
+                vLC.MachineRent = vlcDTO.MachineRent;
+            if (vlcDTO.HouseRent > 0)
+                vLC.HouseRent = vlcDTO.HouseRent;
 
         }
     }
