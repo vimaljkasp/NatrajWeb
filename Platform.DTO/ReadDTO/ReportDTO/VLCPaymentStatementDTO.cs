@@ -36,9 +36,11 @@ namespace Platform.DTO
 
         public decimal PaymentDRAmoumt { get; set; }
 
-        public string PaymentReceivedBy { get; set; }
+         public string PaymentReceivedBy { get; set; }
 
-        public string PaymentMode { get; set; }
+        public PaymentModeEnum PaymentMode { get; set; }
+
+        public string PaymentComments { get; set; }
 
     }
 }

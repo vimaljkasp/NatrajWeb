@@ -15,7 +15,7 @@ namespace Platform.DTO
         public decimal PaymentDrAmount { get; set; }
         public System.DateTime PaymentDate { get; set; }
         public string PaymentReceivedBy { get; set; }
-        public string PaymentMode { get; set; }
+        public PaymentModeEnum PaymentMode { get; set; }
         public string PaymentComments { get; set; }
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }

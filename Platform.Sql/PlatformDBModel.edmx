@@ -500,7 +500,7 @@
           </Key>
           <Property Name="VLCExpenseId" Type="int" Nullable="false" />
           <Property Name="VLCId" Type="int" Nullable="false" />
-          <Property Name="ExpenseReason" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="ExpenseReason" Type="int" Nullable="false" />
           <Property Name="PaymentCrAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PaymentDrAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ExpenseDate" Type="datetime" Nullable="false" />
@@ -554,7 +554,7 @@
           <Property Name="PaymentDrAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PaymentDate" Type="datetime" Nullable="false" />
           <Property Name="PaymentReceivedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="PaymentMode" Type="nvarchar" MaxLength="10" />
+          <Property Name="PaymentMode" Type="int" />
           <Property Name="PaymentComments" Type="nvarchar" MaxLength="200" />
           <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
           <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
@@ -563,6 +563,7 @@
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="60" />
           <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="VLCExpenseId" Type="int" />
         </EntityType>
         <EntityType Name="VLCWallet">
           <Key>
@@ -801,6 +802,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VLCExpenseDetail_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="1" />
+          <End Role="VLCExpenseDetail" Type="Self.VLCExpenseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="VLCExpenseDetail">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_VLCMilkCollection_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="VLCMilkCollection" Type="Self.VLCMilkCollection" Multiplicity="*" />
@@ -971,6 +984,10 @@
           <AssociationSet Name="FK_ProductSubCategory_ProductCategory" Association="Self.FK_ProductSubCategory_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
             <End Role="ProductSubCategory" EntitySet="ProductSubCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VLCExpenseDetail_VLC" Association="Self.FK_VLCExpenseDetail_VLC">
+            <End Role="VLC" EntitySet="VLC" />
+            <End Role="VLCExpenseDetail" EntitySet="VLCExpenseDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_VLCMilkCollection_Customer" Association="Self.FK_VLCMilkCollection_Customer">
             <End Role="Customer" EntitySet="Customer" />
@@ -1525,6 +1542,7 @@
           <Property Name="Pin" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_VLC" FromRole="VLC" ToRole="Customer" />
           <NavigationProperty Name="DockMilkCollections" Relationship="Self.FK_DockMilkCollection_VLC" FromRole="VLC" ToRole="DockMilkCollection" />
+          <NavigationProperty Name="VLCExpenseDetails" Relationship="Self.FK_VLCExpenseDetail_VLC" FromRole="VLC" ToRole="VLCExpenseDetail" />
           <NavigationProperty Name="VLCMilkCollections" Relationship="Self.FK_VLCMilkCollection_VLC" FromRole="VLC" ToRole="VLCMilkCollection" />
           <NavigationProperty Name="VLCPaymentDetails" Relationship="Self.FK_VLCPaymentDetail_VLC" FromRole="VLC" ToRole="VLCPaymentDetail" />
           <NavigationProperty Name="VLCWallets" Relationship="Self.FK_VLCWaller_VLC" FromRole="VLC" ToRole="VLCWallet" />
@@ -1535,7 +1553,7 @@
           </Key>
           <Property Name="VLCExpenseId" Type="Int32" Nullable="false" />
           <Property Name="VLCId" Type="Int32" Nullable="false" />
-          <Property Name="ExpenseReason" Type="String" MaxLength="1" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ExpenseReason" Type="Int32" Nullable="false" />
           <Property Name="PaymentCrAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PaymentDrAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="ExpenseDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -1547,6 +1565,7 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="VLC" Relationship="Self.FK_VLCExpenseDetail_VLC" FromRole="VLCExpenseDetail" ToRole="VLC" />
         </EntityType>
         <EntityType Name="VLCMilkCollection">
           <Key>
@@ -1593,7 +1612,7 @@
           <Property Name="PaymentDrAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PaymentReceivedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PaymentMode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentMode" Type="Int32" />
           <Property Name="PaymentComments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1602,6 +1621,7 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="ModifiedBy" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="VLCExpenseId" Type="Int32" />
           <NavigationProperty Name="VLC" Relationship="Self.FK_VLCPaymentDetail_VLC" FromRole="VLCPaymentDetail" ToRole="VLC" />
         </EntityType>
         <EntityType Name="VLCWallet">
@@ -1854,6 +1874,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VLCExpenseDetail_VLC">
+          <End Role="VLC" Type="Self.VLC" Multiplicity="1" />
+          <End Role="VLCExpenseDetail" Type="Self.VLCExpenseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VLC">
+              <PropertyRef Name="VLCId" />
+            </Principal>
+            <Dependent Role="VLCExpenseDetail">
+              <PropertyRef Name="VLCId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_VLCMilkCollection_VLC">
           <End Role="VLC" Type="Self.VLC" Multiplicity="0..1" />
           <End Role="VLCMilkCollection" Type="Self.VLCMilkCollection" Multiplicity="*" />
@@ -2016,6 +2048,10 @@
           <AssociationSet Name="FK_ProductSubCategory_ProductCategory" Association="Self.FK_ProductSubCategory_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategories" />
             <End Role="ProductSubCategory" EntitySet="ProductSubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VLCExpenseDetail_VLC" Association="Self.FK_VLCExpenseDetail_VLC">
+            <End Role="VLC" EntitySet="VLCs" />
+            <End Role="VLCExpenseDetail" EntitySet="VLCExpenseDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_VLCMilkCollection_VLC" Association="Self.FK_VLCMilkCollection_VLC">
             <End Role="VLC" EntitySet="VLCs" />
@@ -2627,6 +2663,7 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="VLCExpenseId" ColumnName="VLCExpenseId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

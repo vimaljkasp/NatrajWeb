@@ -10,9 +10,9 @@ namespace Platform.DTO
     {
          ResponseDTO DockCollectionSummaryByDate(DateTime collectionStartDate, DateTime collectionEndDate, int startShift, int endShift, int milkType);
 
-        ResponseDTO DockCollectionSummaryByVLC(int vlcId, DateTime collectionStartDate, DateTime collectionEndDate);
+        ResponseDTO DockCollectionSummaryByVLC(int vlcId, DateTime collectionStartDate, DateTime collectionEndDate, int startShift, int endShift, int milkType);
 
-        ResponseDTO DockCollectionSummaryDetailByVLC(int vlcId, DateTime collectionStartDate, DateTime collectionEndDate);
+   //     ResponseDTO DockCollectionSummaryDetailByVLC(int vlcId, DateTime collectionStartDate, DateTime collectionEndDate);
 
 
 

@@ -24,7 +24,7 @@ namespace Platform.DTO
         public System.DateTime PaymentDate { get; set; }
         public string PaymentReceivedBy { get; set; }
         public string PaymentComments { get; set; }
-        public PaymentMode PaymentMode { get; set; }
+        public PaymentModeEnum PaymentMode { get; set; }
         public string Ref2 { get; set; }
 
     }
@@ -44,10 +44,5 @@ namespace Platform.DTO
         }
     }
 
-    public enum PaymentMode
-    {
-        Cash,
-        Cheque,
-        NEFT
-    }
+  
 }

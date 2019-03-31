@@ -78,6 +78,7 @@
     <Compile Include="Enums\MilkTypeEnum.cs" />
     <Compile Include="Enums\NatrajComponent.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
+    <Compile Include="Enums\PaymentModeEnum.cs" />
     <Compile Include="Enums\ShiftEnum.cs" />
     <Compile Include="Enums\SMSType.cs" />
     <Compile Include="Enums\VLCExpenseEnum.cs" />

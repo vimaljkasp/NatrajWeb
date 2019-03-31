@@ -22,10 +22,10 @@ namespace Platform.Service
             return responseDTO;
         }
 
-        public ResponseDTO DockCollectionSummaryByVLC(int vlcId, DateTime collectionStartDate, DateTime collectionEndDate)
+        public ResponseDTO DockCollectionSummaryByVLC(int vlcId, DateTime collectionStartDate, DateTime collectionEndDate, int startShift, int endShift, int milkType)
         {
             ResponseDTO responseDTO = new ResponseDTO();
-            var list = unitOfWork.DockReportRepository.DockCollectionSummaryByVLC(vlcId, collectionStartDate, collectionEndDate);
+            var list = unitOfWork.DockReportRepository.DockCollectionSummaryByVLC(vlcId, collectionStartDate, collectionEndDate, startShift, endShift, milkType);
             list.VLCName = this.GetVLCName(vlcId);
             responseDTO.Data = list;
              responseDTO.Status = true;
@@ -34,16 +34,16 @@ namespace Platform.Service
         }
 
 
-        public ResponseDTO DockCollectionSummaryDetailByVLC(int vlcId, DateTime collectionStartDate, DateTime collectionEndDate)
-        {
-            ResponseDTO responseDTO = new ResponseDTO();
-            var list= unitOfWork.DockReportRepository.DockCollectionSummaryDetailByVLC(vlcId, collectionStartDate, collectionEndDate);
-            list.VLCName = this.GetVLCName(vlcId);
-            responseDTO.Data = list;
-            responseDTO.Status = true;
-            responseDTO.Message = "Dock Collection Summary Detail Report By VLC";
-            return responseDTO;
-        }
+        //public ResponseDTO DockCollectionSummaryDetailByVLC(int vlcId, DateTime collectionStartDate, DateTime collectionEndDate)
+        //{
+        //    ResponseDTO responseDTO = new ResponseDTO();
+        //    var list= unitOfWork.DockReportRepository.DockCollectionSummaryDetailByVLC(vlcId, collectionStartDate, collectionEndDate, startShift, endShift, milkType);
+        //    list.VLCName = this.GetVLCName(vlcId);
+        //    responseDTO.Data = list;
+        //    responseDTO.Status = true;
+        //    responseDTO.Message = "Dock Collection Summary Detail Report By VLC";
+        //    return responseDTO;
+        //}
 
 
         private string GetVLCName(int vlcId)

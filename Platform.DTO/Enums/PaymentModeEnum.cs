@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Platform.DTO
 {
-    public enum VLCExpenseEnum
+    public enum PaymentModeEnum
     {
-        HouseRent=1,
-        MachineRent,
-        HouseAndMachineRent,
-        Other
+        Cash=1,
+        Check,
+        NEFT
     }
 }

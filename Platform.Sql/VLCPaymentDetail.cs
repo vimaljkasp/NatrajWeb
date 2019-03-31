@@ -21,7 +21,7 @@ namespace Platform.Sql
         public Nullable<decimal> PaymentDrAmount { get; set; }
         public System.DateTime PaymentDate { get; set; }
         public string PaymentReceivedBy { get; set; }
-        public string PaymentMode { get; set; }
+        public Nullable<int> PaymentMode { get; set; }
         public string PaymentComments { get; set; }
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }
@@ -30,6 +30,7 @@ namespace Platform.Sql
         public Nullable<bool> IsDeleted { get; set; }
         public string ModifiedBy { get; set; }
         public System.DateTime ModifiedDate { get; set; }
+        public Nullable<int> VLCExpenseId { get; set; }
     
         public virtual VLC VLC { get; set; }
     }

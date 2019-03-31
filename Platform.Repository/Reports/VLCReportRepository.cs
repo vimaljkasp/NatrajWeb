@@ -112,12 +112,12 @@ namespace Platform.Repository
             var cmd = _repository.Database.Connection.CreateCommand();
             cmd.CommandText = "[dbo].[VLCPaymentStatmentSummaryByDate]";
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add(new SqlParameter("@CollectionStartDate", SqlDbType.DateTime, 4));
-            cmd.Parameters.Add(new SqlParameter("@CollectionEndDate", SqlDbType.DateTime, 4));
+            cmd.Parameters.Add(new SqlParameter("@PaymentFromDate", SqlDbType.DateTime, 4));
+            cmd.Parameters.Add(new SqlParameter("@PaymentToDate", SqlDbType.DateTime, 4));
 
             cmd.Parameters.Add(new SqlParameter("@VLCId", SqlDbType.Int, 4));
-            cmd.Parameters["@CollectionStartDate"].Value = startDate;
-            cmd.Parameters["@CollectionEndDate"].Value = endDate;
+            cmd.Parameters["@PaymentFromDate"].Value = startDate;
+            cmd.Parameters["@PaymentToDate"].Value = endDate;
             cmd.Parameters["@VLCId"].Value = vlcId;
             try
             {
@@ -134,7 +134,8 @@ namespace Platform.Repository
                                 PaymentCRAmoumt = Convert.ToDecimal(reader["PaymentCRAmoumt"]),
                                 PaymentDRAmoumt = Convert.ToDecimal(reader["PaymentDRAmoumt"]),
                                 PaymentReceivedBy = Convert.ToString(reader["PaymentReceivedBy"]),
-                                PaymentMode = Convert.ToString(reader["PaymentMode"])
+                                PaymentMode =(PaymentModeEnum) Convert.ToInt32(reader["PaymentMode"]),
+                                PaymentComments=Convert.ToString(reader["PaymentComments"])
                                
                             });
                 }

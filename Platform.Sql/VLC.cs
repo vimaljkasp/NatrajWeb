@@ -19,6 +19,7 @@ namespace Platform.Sql
         {
             this.Customers = new HashSet<Customer>();
             this.DockMilkCollections = new HashSet<DockMilkCollection>();
+            this.VLCExpenseDetails = new HashSet<VLCExpenseDetail>();
             this.VLCMilkCollections = new HashSet<VLCMilkCollection>();
             this.VLCPaymentDetails = new HashSet<VLCPaymentDetail>();
             this.VLCWallets = new HashSet<VLCWallet>();
@@ -57,6 +58,8 @@ namespace Platform.Sql
         public virtual ICollection<Customer> Customers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DockMilkCollection> DockMilkCollections { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VLCExpenseDetail> VLCExpenseDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VLCMilkCollection> VLCMilkCollections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

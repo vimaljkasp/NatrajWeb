@@ -28,5 +28,7 @@ namespace Platform.Sql
         public Nullable<bool> IsDeleted { get; set; }
         public string ModifiedBy { get; set; }
         public System.DateTime ModifiedDate { get; set; }
+    
+        public virtual VLC VLC { get; set; }
     }
 }

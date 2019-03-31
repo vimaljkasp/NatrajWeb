@@ -116,13 +116,13 @@
       <DependentUpon>PlatformDBModel.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="PlatformDBModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>PlatformDBModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="PlatformDBModel.Designer.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>PlatformDBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
@@ -197,8 +197,8 @@
     </Content>
     <Content Include="PlatformDBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PlatformDBModel.edmx</DependentUpon>
       <LastGenOutput>PlatformDBModel.cs</LastGenOutput>
+      <DependentUpon>PlatformDBModel.edmx</DependentUpon>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

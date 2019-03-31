@@ -19,7 +19,7 @@ namespace Platform.Service
                 vLCExpenseDTO.CreatedBy = vLCExpenseDetail.CreatedBy;
                 vLCExpenseDTO.CreatedDate = vLCExpenseDetail.CreatedDate;
                 vLCExpenseDTO.VLCId = vLCExpenseDetail.VLCId;
-                vLCExpenseDTO.ExpenseReason= vLCExpenseDetail.ExpenseReason;
+                //vLCExpenseDTO.ExpenseReason= vLCExpenseDetail.ExpenseReason.ToString();
                 vLCExpenseDTO.VLCExpenseId = vLCExpenseDetail.VLCExpenseId;
                 vLCExpenseDTO.ModifiedDate = vLCExpenseDetail.ModifiedDate;
                 vLCExpenseDTO.ModifiedBy = vLCExpenseDetail.ModifiedBy;

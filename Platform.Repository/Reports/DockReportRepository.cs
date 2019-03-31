@@ -82,7 +82,8 @@ namespace Platform.Repository
         }
 
 
-        public DockCollectionSummaryByVLCDTO DockCollectionSummaryByVLC(int vlcId, DateTime collectionStartDate, DateTime collectionEndDate)
+        public DockCollectionSummaryByVLCDTO DockCollectionSummaryByVLC(int vlcId, DateTime collectionStartDate, DateTime collectionEndDate,
+             int collectionStartShift, int collectionEndShift, int milkType)
         {
 
             DockCollectionSummaryByVLCDTO dockCollectionSummaryByVLCDTO = new DockCollectionSummaryByVLCDTO();
@@ -98,11 +99,17 @@ namespace Platform.Repository
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@CollectionStartDate", SqlDbType.DateTime, 4));
                 cmd.Parameters.Add(new SqlParameter("@CollectionEndDate", SqlDbType.DateTime, 4));
+            cmd.Parameters.Add(new SqlParameter("@CollectionStartShift", SqlDbType.Int, 4));
+            cmd.Parameters.Add(new SqlParameter("@CollectionEndShift", SqlDbType.Int, 4));
+            cmd.Parameters.Add(new SqlParameter("@MilkType", SqlDbType.Int, 4));
 
-                cmd.Parameters.Add(new SqlParameter("@VLCId", SqlDbType.Int, 4));
-                cmd.Parameters["@CollectionStartDate"].Value = collectionStartDate;
-                cmd.Parameters["@CollectionEndDate"].Value = collectionEndDate;
-                cmd.Parameters["@VLCId"].Value = vlcId;
+            cmd.Parameters.Add(new SqlParameter("@VLCId", SqlDbType.Int, 4));
+            cmd.Parameters["@CollectionStartDate"].Value = collectionStartDate;
+            cmd.Parameters["@CollectionEndDate"].Value = collectionEndDate;
+            cmd.Parameters["@CollectionStartShift"].Value = collectionStartShift;
+            cmd.Parameters["@CollectionEndShift"].Value = collectionEndShift;
+            cmd.Parameters["@MilkType"].Value = milkType;
+            cmd.Parameters["@VLCId"].Value = vlcId;
             try
             {
                 // Run the sproc  
@@ -114,15 +121,20 @@ namespace Platform.Repository
                         dockCollectionSummaryByVLCDTO.dockCollectionSummaryListByVLCDTO.Add(
                             new DockCollectionSummaryListByVLCDTO()
                             {
+                              
+
                                 CollectionDate = Convert.ToDateTime(reader["CollectionDate"]),
-                                TotalCan = Convert.ToInt32(reader["TotalCan"]),
-                                TotalRejectedCan = Convert.ToInt32(reader["TotalRejectedCan"]),
+                                AvgFAT = Convert.ToDecimal(reader["AvgFAT"]),
+                                AvgCLR = Convert.ToDecimal(reader["AvgCLR"]),
+                                AvgRatePerUnit = Convert.ToDecimal(reader["AvgRatePerUnit"]),
                                 RejectedQuantity = Convert.ToDecimal(reader["TotalRejectedQuantity"]),
+                                MiilkType = ((ReportMilkTypeEnum)Convert.ToInt32(reader["ProductId"])).ToString(),
                                 Amount = Convert.ToDecimal(reader["Amount"]),
                                 Commission = Convert.ToDecimal(reader["Commission"]),
-                                Shift = Convert.ToInt32(reader["ShiftId"]) == 1 ? "Morning" : "Evening",
+                                Shift = ((ReportShiftEnum)Convert.ToInt32(reader["ShiftId"])).ToString(),
                                 TotalQuantity = Convert.ToDecimal(reader["TotalQuantity"]),
                                 TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
+                                
                             });
                 }
 
@@ -138,67 +150,67 @@ namespace Platform.Repository
         }
 
 
-        public DockCollectionSummaryDetailByVLCDTO DockCollectionSummaryDetailByVLC(int VlcId, DateTime collectionStartDate, DateTime collectionEndDate)
-        {
+        //public DockCollectionSummaryDetailByVLCDTO DockCollectionSummaryDetailByVLC(int VlcId, DateTime collectionStartDate, DateTime collectionEndDate)
+        //{
 
-            DockCollectionSummaryDetailByVLCDTO dockCollectionSummaryDetailByVLCDTO = new DockCollectionSummaryDetailByVLCDTO();
-            dockCollectionSummaryDetailByVLCDTO.CollectionFromDate = collectionStartDate;
-            dockCollectionSummaryDetailByVLCDTO.CollectionToDate = collectionEndDate;
-            dockCollectionSummaryDetailByVLCDTO.VLCId = VlcId;
+        //    DockCollectionSummaryDetailByVLCDTO dockCollectionSummaryDetailByVLCDTO = new DockCollectionSummaryDetailByVLCDTO();
+        //    dockCollectionSummaryDetailByVLCDTO.CollectionFromDate = collectionStartDate;
+        //    dockCollectionSummaryDetailByVLCDTO.CollectionToDate = collectionEndDate;
+        //    dockCollectionSummaryDetailByVLCDTO.VLCId = VlcId;
 
-            dockCollectionSummaryDetailByVLCDTO.dockCollectionSummaryDetailByVLCListDTO = new List<DockCollectionSummaryDetailByVLCListDTO>();
+        //    dockCollectionSummaryDetailByVLCDTO.dockCollectionSummaryDetailByVLCListDTO = new List<DockCollectionSummaryDetailByVLCListDTO>();
 
-            // Create a SQL command to execute the sproc 
-            var cmd = _repository.Database.Connection.CreateCommand();
-            cmd.CommandText = "[dbo].[DockCollectionSummaryDetailByVLC]";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add(new SqlParameter("@CollectionStartDate", SqlDbType.DateTime, 4));
-            cmd.Parameters.Add(new SqlParameter("@CollectionEndDate", SqlDbType.DateTime, 4));
+        //    // Create a SQL command to execute the sproc 
+        //    var cmd = _repository.Database.Connection.CreateCommand();
+        //    cmd.CommandText = "[dbo].[DockCollectionSummaryDetailByVLC]";
+        //    cmd.CommandType = CommandType.StoredProcedure;
+        //    cmd.Parameters.Add(new SqlParameter("@CollectionStartDate", SqlDbType.DateTime, 4));
+        //    cmd.Parameters.Add(new SqlParameter("@CollectionEndDate", SqlDbType.DateTime, 4));
 
-            cmd.Parameters.Add(new SqlParameter("@VLCId", SqlDbType.Int, 4));
-            cmd.Parameters["@CollectionStartDate"].Value = collectionStartDate;
-            cmd.Parameters["@CollectionEndDate"].Value = collectionEndDate;
-            cmd.Parameters["@VLCId"].Value = VlcId;
-            try
-            {
-                // Run the sproc  
-                _repository.Database.Connection.Open();
-                var reader = cmd.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                        dockCollectionSummaryDetailByVLCDTO.dockCollectionSummaryDetailByVLCListDTO.Add(
-                            new DockCollectionSummaryDetailByVLCListDTO()
-                            {
-                                CollectionDate = Convert.ToDateTime(reader["CollectionDate"]),
-                                MilkType =(ReportMilkTypeEnum) Convert.ToInt32(reader["ProductId"]) ,
-                                TotalCan = Convert.ToInt32(reader["TotalCan"]),
-                                Fat = Convert.ToDecimal(reader["Fat"]),
-                                CLR = Convert.ToDecimal(reader["CLR"]),
-                                TotalRejectedCan = Convert.ToInt32(reader["TotalRejectedCan"]),
-                                RejectedQuantity = Convert.ToDecimal(reader["TotalRejectedQuantity"]),
-                                //Amount = Convert.ToDecimal(reader["Amount"]),
-                                //Commission = Convert.ToDecimal(reader["Commission"]),
-                                Shift = Convert.ToInt32(reader["ShiftId"]) == 1 ? "Morning" : "Evening",
-                                TotalQuantity = Convert.ToDecimal(reader["TotalQuantity"]),
-                                TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
-                                RatePerUnit = Convert.ToDecimal(reader["RatePerUnit"])
-                            });
-                }
-            }
+        //    cmd.Parameters.Add(new SqlParameter("@VLCId", SqlDbType.Int, 4));
+        //    cmd.Parameters["@CollectionStartDate"].Value = collectionStartDate;
+        //    cmd.Parameters["@CollectionEndDate"].Value = collectionEndDate;
+        //    cmd.Parameters["@VLCId"].Value = VlcId;
+        //    try
+        //    {
+        //        // Run the sproc  
+        //        _repository.Database.Connection.Open();
+        //        var reader = cmd.ExecuteReader();
+        //        if (reader.HasRows)
+        //        {
+        //            while (reader.Read())
+        //                dockCollectionSummaryDetailByVLCDTO.dockCollectionSummaryDetailByVLCListDTO.Add(
+        //                    new DockCollectionSummaryDetailByVLCListDTO()
+        //                    {
+        //                        CollectionDate = Convert.ToDateTime(reader["CollectionDate"]),
+        //                        MilkType =(ReportMilkTypeEnum) Convert.ToInt32(reader["ProductId"]) ,
+        //                        TotalCan = Convert.ToInt32(reader["TotalCan"]),
+        //                        Fat = Convert.ToDecimal(reader["Fat"]),
+        //                        CLR = Convert.ToDecimal(reader["CLR"]),
+        //                        TotalRejectedCan = Convert.ToInt32(reader["TotalRejectedCan"]),
+        //                        RejectedQuantity = Convert.ToDecimal(reader["TotalRejectedQuantity"]),
+        //                        //Amount = Convert.ToDecimal(reader["Amount"]),
+        //                        //Commission = Convert.ToDecimal(reader["Commission"]),
+        //                        Shift = Convert.ToInt32(reader["ShiftId"]) == 1 ? "Morning" : "Evening",
+        //                        TotalQuantity = Convert.ToDecimal(reader["TotalQuantity"]),
+        //                        TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
+        //                        RatePerUnit = Convert.ToDecimal(reader["RatePerUnit"])
+        //                    });
+        //        }
+        //    }
             
             
 
 
 
-            finally
-            {
-                _repository.Database.Connection.Close();
-            }
+        //    finally
+        //    {
+        //        _repository.Database.Connection.Close();
+        //    }
 
-            return dockCollectionSummaryDetailByVLCDTO;
+        //    return dockCollectionSummaryDetailByVLCDTO;
 
-        }
+        //}
 
     }
 

@@ -28,7 +28,7 @@ namespace Platform.Service
                 vLCPaymentDTO.PaymentCrAmount = vLCPaymentDetail.PaymentCrAmount.GetValueOrDefault();
                 vLCPaymentDTO.PaymentDate = vLCPaymentDetail.PaymentDate;
                 vLCPaymentDTO.PaymentDrAmount = vLCPaymentDetail.PaymentDrAmount.GetValueOrDefault();
-                vLCPaymentDTO.PaymentMode = vLCPaymentDetail.PaymentMode;
+                vLCPaymentDTO.PaymentMode = (PaymentModeEnum)vLCPaymentDetail.PaymentMode;
                 vLCPaymentDTO.PaymentReceivedBy = vLCPaymentDetail.PaymentReceivedBy;
             }
 
@@ -41,8 +41,7 @@ namespace Platform.Service
             vLCPaymentDetail.VLCId = vLCPaymentDTO.VLCId;
             if (string.IsNullOrWhiteSpace(vLCPaymentDTO.PaymentComments) == false)
                 vLCPaymentDetail.PaymentComments = vLCPaymentDTO.PaymentComments;
-            if (string.IsNullOrWhiteSpace(vLCPaymentDTO.PaymentMode) == false)
-                vLCPaymentDetail.PaymentMode = vLCPaymentDTO.PaymentMode;
+                vLCPaymentDetail.PaymentMode = (int)vLCPaymentDTO.PaymentMode;
             if (string.IsNullOrWhiteSpace(vLCPaymentDTO.PaymentReceivedBy) == false)
                 vLCPaymentDetail.PaymentReceivedBy = vLCPaymentDTO.PaymentReceivedBy;
         }

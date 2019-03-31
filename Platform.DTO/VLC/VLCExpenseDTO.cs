@@ -10,7 +10,7 @@ namespace Platform.DTO
     {
         public int VLCExpenseId { get; set; }
         public int VLCId { get; set; }
-        public int ExpenseReason { get; set; }
+        public VLCExpenseEnum ExpenseReason { get; set; }
         public decimal PaymentCrAmount { get; set; }
         public decimal PaymentDrAmount { get; set; }
         public DateTime ExpenseDate { get; set; }

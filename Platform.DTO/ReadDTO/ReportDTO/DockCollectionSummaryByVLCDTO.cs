@@ -42,6 +42,11 @@ namespace Platform.DTO
         public decimal TotalAmount { get; set; }
 
         public string Shift { get; set; }
+
+        public decimal AvgFAT { get; set; }
+        public decimal AvgCLR { get; set; }
+        public decimal AvgRatePerUnit { get; set; }
+        public string MiilkType { get; set; }
     }
 
 }
