@@ -272,5 +272,21 @@ namespace Platform.Service
                 throw new PlatformModuleException("Distribution Center Details Not Found");
             }
         }
+
+
+        public ResponseDTO GetDCWalletBalance(int dcId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.Message = "Distribution Center Wallet Balance by DC ID";
+            responseDTO.Status = true;
+            var dc = unitOfWork.DCWalletRepository.GetByDCId(dcId);
+            if(dc!=null)
+            responseDTO.Data = dc.WalletBalance;
+            else
+            {
+                throw new PlatformModuleException("DC Wallet Does Not Exist");
+            }
+            return responseDTO;
+        }
     }
 }

@@ -32,5 +32,7 @@ namespace Platform.DTO
 
         ResponseDTO DeleteDistriubtionCenter(int id);
 
+        ResponseDTO GetDCWalletBalance(int dcId);
+
     }
 }

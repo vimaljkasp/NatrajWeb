@@ -18,6 +18,7 @@ namespace Platform.Service
             dCOrderDTO.DCOrderId = dCOrder.DCOrderId;
             dCOrderDTO.DCOrderNumber = dCOrder.DCOrderNumber;
             dCOrderDTO.DeliveryExpectedDate = dCOrder.DeliveryExpectedDate.GetValueOrDefault();
+            dCOrderDTO.DeliveredDate = dCOrder.DeliveredDate.GetValueOrDefault();
             dCOrderDTO.OrderComments = dCOrder.OrderComments;
             dCOrderDTO.OrderDate = dCOrder.OrderDate;
             dCOrderDTO.OrderTotalPrice = dCOrder.OrderTotalPrice;

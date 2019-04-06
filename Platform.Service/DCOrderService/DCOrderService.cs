@@ -26,6 +26,7 @@ namespace Platform.Service
                 dcOrder.DeliveryExpectedDate = dCOrderStatusDTO.DeliveryExpectedDate;
             if(dCOrderStatusDTO.OrderStatus==OrderStatus.Received)
             {
+                dcOrder.DeliveredDate = DateTimeHelper.GetISTDateTime();
                 UpdateOrderPaymentDetailsForOrder(dc, dcOrder);
             }
             unitOfWork.DCOrderRepository.Update(dcOrder);

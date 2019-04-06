@@ -121,5 +121,21 @@ namespace PlatformWeb.Controller
                 return Ok(ResponseHelper.CreateResponseDTOForException(exception.Message));
             }
         }
+
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/GetContactUsDetails")]
+        public IHttpActionResult GetContactUsDetails()
+        {
+            try
+            {
+                return Ok(_loginService.GetContactUsDetails());
+            }
+            catch (PlatformModuleException exception)
+            {
+                return Ok(ResponseHelper.CreateResponseDTOForException(exception.Message));
+            }
+        }
     }
 }

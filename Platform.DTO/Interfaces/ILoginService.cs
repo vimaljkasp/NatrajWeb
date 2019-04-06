@@ -18,5 +18,7 @@ namespace Platform.DTO
 
 
         ResponseDTO ForgotPassword(ForgotPasswordDTO forgotPasswordDTO);
+
+        ResponseDTO GetContactUsDetails();
     }
 }

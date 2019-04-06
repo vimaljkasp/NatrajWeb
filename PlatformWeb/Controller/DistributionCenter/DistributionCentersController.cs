@@ -144,5 +144,21 @@ namespace PlatformWeb.Controller
                 return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
             }
         }
+
+        //GET api/Customer/id
+        [Route("api/GetDCWalletBalance/{id}")]
+        public IHttpActionResult GetDCWalletBalance(int id)
+        {
+            try
+            {
+                return Ok(_distributionCenterService.GetDCWalletBalance(id));
+            }
+            catch (PlatformModuleException ex)
+            {
+                return Ok(ResponseHelper.CreateResponseDTOForException(ex.Message));
+            }
+        }
+
+
     }
 }

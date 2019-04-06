@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ChangePasswordDTO.cs" />
+    <Compile Include="Common\ContactUsDTO.cs" />
     <Compile Include="Common\LoggedInUserDTO.cs" />
     <Compile Include="Common\ResponseDTO.cs" />
     <Compile Include="Constants\NatrajMessages.cs" />

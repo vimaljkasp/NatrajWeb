@@ -224,6 +224,15 @@ namespace Platform.Service
 
         }
 
+        public ResponseDTO GetContactUsDetails()
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.Message = "Contact Us Details";
+            responseDTO.Status = true;
+            responseDTO.Data = unitOfWork.NatrajConfigurationSettings.ContactUsDTO;
+            return responseDTO;
+        }
+
 
         public ResponseDTO ForgotPassword(ForgotPasswordDTO forgotPasswordDTO)
         {

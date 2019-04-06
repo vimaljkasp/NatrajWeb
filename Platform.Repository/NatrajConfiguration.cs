@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Platform.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,5 +28,7 @@ namespace Platform.Repository
         public bool IsDockCommonCommissionEnabled { get; set; }
 
         public decimal DockCommonCommission { get; set; }
+
+        public ContactUsDTO ContactUsDTO { get; set; }
     }
 }
