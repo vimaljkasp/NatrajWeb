@@ -8,7 +8,8 @@ namespace Platform.DTO
 {
     public enum VLCExpenseEnum
     {
-        HouseRent=1,
+        None,
+        HouseRent,
         MachineRent,
         HouseAndMachineRent,
         Other

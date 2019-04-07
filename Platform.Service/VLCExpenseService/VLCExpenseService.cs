@@ -30,6 +30,26 @@ namespace Platform.Service
 
         }
 
+        public ResponseDTO GetVLCExpensesById(int vLCExpenseId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            VLCExpenseDTO vLCExpenseList = new VLCExpenseDTO();
+            var vLCExpenseDetails = unitOfWork.VLCExpenseDetailRepository.GetExpenseByExpenseId(vLCExpenseId);
+            if (vLCExpenseDetails != null)
+            {
+                vLCExpenseList = VLCExpenseConvertor.ConvertToVLCExpenseDTO(vLCExpenseDetails);
+                responseDTO.Status = true;
+                responseDTO.Message = "VLC Expense Details ";
+                responseDTO.Data = vLCExpenseList;
+            }
+            else
+            {
+                responseDTO.Status = false;
+                responseDTO.Message = String.Format("VLC Payemnts Details with VLC expense ID {0} not found", vLCExpenseId);
+                responseDTO.Data = new object();
+            }
+            return responseDTO;
+        }
 
 
         public ResponseDTO GetAllVLCExpensesByVLCId(int vLCId)
@@ -62,8 +82,8 @@ namespace Platform.Service
         public ResponseDTO AddVLCExpenseDetail(VLCExpenseDTO vLCExpenseDTO)
         {
             ResponseDTO responseDTO = new ResponseDTO();
-            
-            var vLC = unitOfWork.DistributionCenterRepository.GetById(vLCExpenseDTO.VLCId);
+
+            var vLC = unitOfWork.VLCRepository.GetById(vLCExpenseDTO.VLCId);
             if (vLC != null)
             {
                 VLCExpenseDetail vLCExpenseDetail = AddExpense(vLCExpenseDTO);
@@ -108,7 +128,7 @@ namespace Platform.Service
             unitOfWork.SaveChanges();
             return vLCExpenseDetail;
         }
-        
+
 
         public VLCPaymentDetail AddVLCExpenseInPaymentDetail(VLCExpenseDTO vLCPaymentDTO, int expenseId, decimal paidAmount)
         {
@@ -118,7 +138,7 @@ namespace Platform.Service
             vLCPaymentDetail.VLCId = vLCPaymentDTO.VLCId;
             if (string.IsNullOrWhiteSpace(vLCPaymentDTO.ExpenseComments) == false)
                 vLCPaymentDetail.PaymentComments = vLCPaymentDTO.ExpenseComments;
-            
+
             vLCPaymentDetail.VLCExpenseId = expenseId;
             vLCPaymentDetail.IsDeleted = false;
             vLCPaymentDetail.CreatedBy = vLCPaymentDetail.ModifiedBy = "Admin";
@@ -203,9 +223,9 @@ namespace Platform.Service
         {
             ResponseDTO responseDTO = new ResponseDTO();
             var vlcList = unitOfWork.VLCRepository.GetAll();
-            foreach(var vlc in vlcList)
+            foreach (var vlc in vlcList)
             {
-                if(vlc.HouseRent.GetValueOrDefault()>0 || vlc.MachineRent.GetValueOrDefault()>0)
+                if (vlc.HouseRent.GetValueOrDefault() > 0 || vlc.MachineRent.GetValueOrDefault() > 0)
                 {
                     VLCExpenseDTO vLCExpenseDTO = new VLCExpenseDTO();
                     vLCExpenseDTO.VLCId = vlc.VLCId;
@@ -230,7 +250,7 @@ namespace Platform.Service
             }
             responseDTO.Message = "Machine Rent and House Rent Updated for all VLCs";
             responseDTO.Status = true;
-            responseDTO.Data =new object();
+            responseDTO.Data = new object();
             return responseDTO;
         }
 
