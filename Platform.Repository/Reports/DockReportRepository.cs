@@ -121,7 +121,7 @@ namespace Platform.Repository
                         dockCollectionSummaryByVLCDTO.dockCollectionSummaryListByVLCDTO.Add(
                             new DockCollectionSummaryListByVLCDTO()
                             {
-                              
+
 
                                 CollectionDate = Convert.ToDateTime(reader["CollectionDate"]),
                                 AvgFAT = Convert.ToDecimal(reader["AvgFAT"]),
@@ -134,6 +134,9 @@ namespace Platform.Repository
                                 Shift = ((ReportShiftEnum)Convert.ToInt32(reader["ShiftId"])).ToString(),
                                 TotalQuantity = Convert.ToDecimal(reader["TotalQuantity"]),
                                 TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
+                                TotalCan = Convert.ToInt32(reader["TotalCan"]),
+                                TotalRejectedCan=Convert.ToInt32(reader["TotalRejectedCan"])
+                                
                                 
                             });
                 }
@@ -149,6 +152,58 @@ namespace Platform.Repository
             
         }
 
+        public VLCExpenseSummaryDTO VLCExpenseSummary(DateTime startDate, DateTime endDate)
+        {
+
+            VLCExpenseSummaryDTO vLCExpenseSummaryDTO = new VLCExpenseSummaryDTO();
+            vLCExpenseSummaryDTO.FromDate = startDate;
+            vLCExpenseSummaryDTO.ToDate = endDate;
+
+            vLCExpenseSummaryDTO.vlcExpenseSummaryDTOList = new List<VLCExpenseSummaryDetailDTO>();
+
+            // Create a SQL command to execute the sproc 
+            var cmd = _repository.Database.Connection.CreateCommand();
+            cmd.CommandText = "[dbo].[VLCExpenseSummaryByVLC]";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@StartDate", SqlDbType.DateTime, 4));
+            cmd.Parameters.Add(new SqlParameter("@EndDate", SqlDbType.DateTime, 4));
+            cmd.Parameters["@StartDate"].Value = startDate;
+            cmd.Parameters["@EndDate"].Value = endDate;
+            try
+            {
+                // Run the sproc  
+                _repository.Database.Connection.Open();
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                        vLCExpenseSummaryDTO.vlcExpenseSummaryDTOList.Add(
+                            new VLCExpenseSummaryDetailDTO()
+                            {
+
+
+                                ExpenseDate = Convert.ToDateTime(reader["ExpenseDate"]),
+                                ExpenseReason = Convert.ToString((VLCExpenseEnum)reader["ExpenseReason"]),
+                                VLCId = Convert.ToInt32(reader["VLCId"]),
+                                VLCName = Convert.ToString(reader["VLCName"]),
+                               CRAmount = Convert.ToDecimal(reader["PaymentCrAmount"]),
+                               DRAmount= Convert.ToDecimal(reader["PaymentDrAmount"]),
+                                Comments= Convert.ToString(reader["ExpenseComments"])
+
+
+                            });
+                }
+
+
+            }
+            finally
+            {
+                _repository.Database.Connection.Close();
+            }
+
+            return vLCExpenseSummaryDTO;
+
+        }
 
         //public DockCollectionSummaryDetailByVLCDTO DockCollectionSummaryDetailByVLC(int VlcId, DateTime collectionStartDate, DateTime collectionEndDate)
         //{
@@ -198,8 +253,8 @@ namespace Platform.Repository
         //                    });
         //        }
         //    }
-            
-            
+
+
 
 
 

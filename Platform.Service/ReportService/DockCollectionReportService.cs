@@ -33,6 +33,17 @@ namespace Platform.Service
             return responseDTO;
         }
 
+        public ResponseDTO VLCExpenseSummaryByVLC(DateTime collectionStartDate, DateTime collectionEndDate)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            var list = unitOfWork.DockReportRepository.VLCExpenseSummary(collectionStartDate, collectionEndDate);
+        //    list.VLCName = this.GetVLCName(vlcId);
+            responseDTO.Data = list;
+            responseDTO.Status = true;
+            responseDTO.Message = "VLC Expense Summary Report By VLC";
+            return responseDTO;
+        }
+
 
         //public ResponseDTO DockCollectionSummaryDetailByVLC(int vlcId, DateTime collectionStartDate, DateTime collectionEndDate)
         //{
@@ -48,6 +59,8 @@ namespace Platform.Service
 
         private string GetVLCName(int vlcId)
         {
+            if (vlcId == 0)
+                return "ALL VLC";
             var vlc = unitOfWork.VLCRepository.GetById(vlcId);
             if (vlc != null)
                 return vlc.VLCName;

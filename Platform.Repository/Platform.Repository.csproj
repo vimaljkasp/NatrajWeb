@@ -71,6 +71,7 @@
     <Compile Include="MessageRepository.cs" />
     <Compile Include="MilkRateRepository.cs" />
     <Compile Include="NatrajConfiguration.cs" />
+    <Compile Include="NatrajConfigurationHelper.cs" />
     <Compile Include="PagingConstant.cs" />
     <Compile Include="Product\ProductCategoryRepository.cs" />
     <Compile Include="Product\ProductRepository.cs" />
