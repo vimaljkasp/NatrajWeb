@@ -162,7 +162,7 @@ namespace Platform.Service
                 }
                 unitOfWork.DockMilkCollectionRepository.Add(dockMilkCollection);
                 UpdateVLCPaymentDetailsForDockCollection(vlc, dockMilkCollection);
-                string dockMessage = string.Format(unitOfWork.NatrajConfigurationSettings.DockCollectionMessage, dockMilkCollection.CollectionDateTime.Date, dockMilkCollection.TotalQuantity, dockMilkCollection.TotalAmount);
+                string dockMessage = string.Format(NatrajConfigurationHelper.DockCollectionMessage, dockMilkCollection.CollectionDateTime.Date, dockMilkCollection.TotalQuantity, dockMilkCollection.TotalAmount);
                 var natrajSMSLog = this.SendSMS(vlc.Contact, dockMessage);
                 unitOfWork.SMSRepository.Add(natrajSMSLog);
                 unitOfWork.SaveChanges();
@@ -186,8 +186,8 @@ namespace Platform.Service
 
         private decimal GetCommissionForDockMilkCollection(VLC vLC)
         {
-            if (unitOfWork.NatrajConfigurationSettings.IsDockCommonCommissionEnabled)
-                return unitOfWork.NatrajConfigurationSettings.DockCommonCommission;
+            if (NatrajConfigurationHelper.IsDockCommonCommissionEnabled)
+                return NatrajConfigurationHelper.DockCommonCommission;
             else
                 return vLC.MilkCommission.GetValueOrDefault();
 
@@ -306,7 +306,7 @@ namespace Platform.Service
             UpdateVLCPaymentDetailsForDockCollection(vlc, dockMilkCollection);
       
 
-            string dockMessage = string.Format(unitOfWork.NatrajConfigurationSettings.DockCollectionMessage, dockMilkCollection.CollectionDateTime.Date, dockMilkCollection.TotalQuantity, dockMilkCollection.TotalAmount);
+            string dockMessage = string.Format(NatrajConfigurationHelper.DockCollectionMessage, dockMilkCollection.CollectionDateTime.Date, dockMilkCollection.TotalQuantity, dockMilkCollection.TotalAmount);
             var natrajSMSLog = this.SendSMS(vlc.Contact, dockMessage);
             unitOfWork.SMSRepository.Add(natrajSMSLog);
             unitOfWork.SaveChanges();

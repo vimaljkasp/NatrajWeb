@@ -40,7 +40,6 @@ namespace Platform.Service
         {
             ResponseDTO responseDTO = new ResponseDTO();
             var list = unitOfWork.DockReportRepository.VLCExpenseSummary(collectionStartDate, collectionEndDate);
-        //    list.VLCName = this.GetVLCName(vlcId);
             responseDTO.Data = list;
             responseDTO.Status = true;
             responseDTO.Message = "VLC Expense Summary Report By VLC";

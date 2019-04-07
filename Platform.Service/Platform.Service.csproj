@@ -93,6 +93,8 @@
     <Compile Include="DockMilkCollectionService\DockMilkCollectionService.cs" />
     <Compile Include="LoggerService\LoggerService.cs" />
     <Compile Include="LoginService\LoggedInUserConvertor.cs" />
+    <Compile Include="NatrajConfigurationService\NatrajConfigurationConvertor.cs" />
+    <Compile Include="NatrajConfigurationService\NatrajConfigurationService.cs" />
     <Compile Include="ProductService\ProductConvertor.cs" />
     <Compile Include="ProductService\ProductService.cs" />
     <Compile Include="ReportService\DockCollectionReportService.cs" />

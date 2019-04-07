@@ -122,7 +122,7 @@ namespace Platform.Service
         //            throw new PlatformModuleException("Milk Collection Detail Not Found");
         //        }
         //        unitOfWork.VLCMilkCollectionRepository.Add(vLCMilkCollection);
-        //        string vlcMessage=string.Format(unitOfWork.NatrajConfigurationSettings.VLCCollectionMessage, vLCMilkCollection.CollectionDateTime.Value.Date, vLCMilkCollection.TotalQuantity,vLCMilkCollection.TotalAmount);
+        //        string vlcMessage=string.Format(NatrajConfigurationHelper.VLCCollectionMessage, vLCMilkCollection.CollectionDateTime.Value.Date, vLCMilkCollection.TotalQuantity,vLCMilkCollection.TotalAmount);
         //        var natrajSMSLog = this.SendSMS(customer.Contact, vlcMessage);
         //        unitOfWork.SMSRepository.Add(natrajSMSLog);
         //        unitOfWork.SaveChanges();

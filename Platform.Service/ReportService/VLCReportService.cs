@@ -18,9 +18,11 @@ namespace Platform.Service
         {
 
             ResponseDTO responseDTO = new ResponseDTO();
-            responseDTO.Data = unitOfWork.VLCReportRepository.VLCPaymentSummaryByDate(vlcId,StartDate, EndDate);
+            var list= unitOfWork.VLCReportRepository.VLCPaymentSummaryByDate(vlcId, StartDate, EndDate);
+            list.VLCName = this.GetVLCName(vlcId);
+            responseDTO.Data = list;
             responseDTO.Status = true;
-            responseDTO.Message = "Dock Collection Summary Report By Date";
+            responseDTO.Message = "VLC Payment Summary By Date";
             return responseDTO;
         }
 

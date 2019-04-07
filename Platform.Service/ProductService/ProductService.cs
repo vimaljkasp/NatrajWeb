@@ -59,7 +59,7 @@ namespace Platform.Service
             if(products !=null)
             {
                 foreach (var product in products)
-                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product,unitOfWork.NatrajConfigurationSettings.ImagePath));
+                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product,NatrajConfigurationHelper.ImagePath));
                 responseDTO.Status = true;
                 responseDTO.Message = "Product List";
                 responseDTO.Data = productList;
@@ -80,7 +80,7 @@ namespace Platform.Service
             if (products != null)
             {
                 foreach (var product in products)
-                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product, unitOfWork.NatrajConfigurationSettings.ImagePath));
+                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product, NatrajConfigurationHelper.ImagePath));
                 responseDTO.Status = true;
                 responseDTO.Message = "Product List By Category";
                 responseDTO.Data = productList;
@@ -106,7 +106,7 @@ namespace Platform.Service
             if (products != null)
             {
                 foreach (var product in products)
-                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product,unitOfWork.NatrajConfigurationSettings.ImagePath));
+                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product,NatrajConfigurationHelper.ImagePath));
                 responseDTO.Status = true;
                 responseDTO.Message = "Product List";
                 responseDTO.Data = productList;

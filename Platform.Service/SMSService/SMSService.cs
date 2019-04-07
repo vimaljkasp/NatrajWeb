@@ -27,13 +27,13 @@ namespace Platform.Service
         public void SendMessage(Object natrajSMS)
         {
             NatrajSMSLog natrajSMSLog = (NatrajSMSLog)natrajSMS;
-            natrajSMSLog.Sender = unitOfWork.NatrajConfigurationSettings.SenderMobileNumber;
+            natrajSMSLog.Sender =NatrajConfigurationHelper.SenderMobileNumber;
             using (var web = new System.Net.WebClient())
             {
                 try
                 {
-                    string userName = unitOfWork.NatrajConfigurationSettings.SMSServiceUserName;
-                    string userPassword = unitOfWork.NatrajConfigurationSettings.SMSServicePassword;
+                    string userName = NatrajConfigurationHelper.SMSServiceUserName;
+                    string userPassword = NatrajConfigurationHelper.SMSServicePassword;
                     string msgRecepient =natrajSMSLog.Receiver;
                     string msgText = natrajSMSLog.SMSMessage;
                     string url = "https://www.txtguru.in/imobile/api.php?username="+ userName+
