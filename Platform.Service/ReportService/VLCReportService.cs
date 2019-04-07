@@ -1,4 +1,5 @@
 ﻿using Platform.DTO;
+using Platform.DTO.Interfaces;
 using Platform.Repository;
 using Platform.Sql;
 using Platform.Utilities;
@@ -9,7 +10,7 @@ using System.Collections.Generic;
 namespace Platform.Service
 {
 
-    public class VLCReportService :  IDisposable
+    public class VLCReportService : IVLCReportService, IDisposable
     {
         private UnitOfWork unitOfWork = new UnitOfWork();
 

@@ -8,5 +8,6 @@ namespace Platform.DTO.Interfaces
 {
     public interface IVLCReportService
     {
+        ResponseDTO VLCPaymentSummaryByDate(int vlcId, DateTime StartDate, DateTime EndDate);
     }
 }

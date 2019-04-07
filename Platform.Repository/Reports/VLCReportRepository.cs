@@ -131,8 +131,8 @@ namespace Platform.Repository
                             new VLCPaymentStatmentListDTO()
                             {
                                 PaymentDate = Convert.ToDateTime(reader["PaymentDate"]),
-                                PaymentCRAmoumt = Convert.ToDecimal(reader["PaymentCRAmoumt"]),
-                                PaymentDRAmoumt = Convert.ToDecimal(reader["PaymentDRAmoumt"]),
+                                PaymentCRAmoumt = Convert.ToDecimal(reader["PaymentCRAmount"]),
+                                PaymentDRAmoumt = Convert.ToDecimal(reader["PaymentDRAmount"]),
                                 PaymentReceivedBy = Convert.ToString(reader["PaymentReceivedBy"]),
                                 PaymentMode =(PaymentModeEnum) Convert.ToInt32(reader["PaymentMode"]),
                                 PaymentComments=Convert.ToString(reader["PaymentComments"])

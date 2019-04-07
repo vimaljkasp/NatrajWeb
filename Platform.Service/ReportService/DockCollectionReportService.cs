@@ -12,9 +12,9 @@ namespace Platform.Service
     {
         private UnitOfWork unitOfWork = new UnitOfWork();
 
-        public ResponseDTO DockCollectionSummaryByDate(DateTime collectionStartDate, DateTime collectionEndDate,int startShift,int endShift,int milkType)
+        public ResponseDTO DockCollectionSummaryByDate(DateTime collectionStartDate, DateTime collectionEndDate, int startShift, int endShift, int milkType)
         {
-           
+
             ResponseDTO responseDTO = new ResponseDTO();
             responseDTO.Data = unitOfWork.DockReportRepository.DockCollectionSummaryByDate(collectionStartDate, collectionEndDate, startShift, endShift, milkType);
             responseDTO.Status = true;
@@ -26,9 +26,12 @@ namespace Platform.Service
         {
             ResponseDTO responseDTO = new ResponseDTO();
             var list = unitOfWork.DockReportRepository.DockCollectionSummaryByVLC(vlcId, collectionStartDate, collectionEndDate, startShift, endShift, milkType);
-            list.VLCName = this.GetVLCName(vlcId);
+            if (vlcId == 0)
+                list.VLCName = "ALL VLC";
+            else
+                list.VLCName = this.GetVLCName(vlcId);
             responseDTO.Data = list;
-             responseDTO.Status = true;
+            responseDTO.Status = true;
             responseDTO.Message = "Dock Collection Summary Report By VLC";
             return responseDTO;
         }
@@ -89,7 +92,7 @@ namespace Platform.Service
             GC.SuppressFinalize(this);
         }
 
-    
+
 
 
     }
