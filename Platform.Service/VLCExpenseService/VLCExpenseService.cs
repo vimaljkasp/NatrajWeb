@@ -107,6 +107,13 @@ namespace Platform.Service
             vLCExpenseDetail.VLCExpenseId = unitOfWork.DashboardRepository.NextNumberGenerator("VLCExpenseDetail");
             vLCExpenseDetail.VLCId = vLCExpenseDTO.VLCId;
             vLCExpenseDetail.ExpenseReason = (int)vLCExpenseDTO.ExpenseReason;
+
+            //Mapped CR and DR
+            vLCExpenseDetail.PaymentCrAmount = vLCExpenseDTO.PaymentCrAmount;
+            vLCExpenseDetail.PaymentDrAmount = vLCExpenseDTO.PaymentDrAmount;
+            vLCExpenseDetail.ExpenseComments = vLCExpenseDTO.ExpenseComments;
+
+
             vLCExpenseDetail.IsDeleted = false;
             vLCExpenseDetail.CreatedBy = vLCExpenseDetail.ModifiedBy = "Admin";
             vLCExpenseDetail.CreatedDate = vLCExpenseDetail.ModifiedDate = DateTimeHelper.GetISTDateTime();

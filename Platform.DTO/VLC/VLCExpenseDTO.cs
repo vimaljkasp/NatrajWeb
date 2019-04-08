@@ -11,6 +11,7 @@ namespace Platform.DTO
     {
         public int VLCExpenseId { get; set; }
         public int VLCId { get; set; }
+        public string VLCName { get; set; }
         public VLCExpenseEnum ExpenseReason { get; set; }
         public decimal PaymentCrAmount { get; set; }
         public decimal PaymentDrAmount { get; set; }

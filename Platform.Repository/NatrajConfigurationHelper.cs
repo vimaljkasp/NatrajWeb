@@ -26,7 +26,7 @@ namespace Platform.Repository
         public static string CompanyName = "Natraj Dairy";
 
 
-        public static string[] CompanyAddress = new string[] { "Unit: Natraj Dairy, Narsakhedi, Nimbahera, Distt. Chittorgarh, Rajasthan"
+        public static string[] CompanyAddress = new string[] { "Unit: Natraj Dairy, Narsakhedi, Nimbahera, Distt. Chittorgarh, Rajasthan",
                                 "Office: Natraj Dairy, Patel chowk, Choti sadri, Distt. Pratapgarh, Rajasthan" };
         public static string[] CompanyEmail = new string[] { "sunil@Natrajdairy.com", "info@Natrajdairy.com" };
         public static string[] CompanyPhone = new string[] { "+91 6350505864", "+91 9929575888" };

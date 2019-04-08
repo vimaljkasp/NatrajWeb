@@ -19,7 +19,9 @@ namespace Platform.Service
                 vLCExpenseDTO.CreatedBy = vLCExpenseDetail.CreatedBy;
                 vLCExpenseDTO.CreatedDate = vLCExpenseDetail.CreatedDate;
                 vLCExpenseDTO.VLCId = vLCExpenseDetail.VLCId;
-                //vLCExpenseDTO.ExpenseReason= vLCExpenseDetail.ExpenseReason.ToString();
+                VLCExpenseEnum expenseReason;
+                Enum.TryParse(vLCExpenseDetail.ExpenseReason.ToString(), out expenseReason);
+                vLCExpenseDTO.ExpenseReason = expenseReason;
                 vLCExpenseDTO.VLCExpenseId = vLCExpenseDetail.VLCExpenseId;
                 vLCExpenseDTO.ModifiedDate = vLCExpenseDetail.ModifiedDate;
                 vLCExpenseDTO.ModifiedBy = vLCExpenseDetail.ModifiedBy;
