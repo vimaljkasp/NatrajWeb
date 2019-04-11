@@ -5,7 +5,6 @@ using Platform.Utilities;
 using System;
 using System.Collections.Generic;
 
-
 namespace Platform.Service
 {
     public class VLCExpenseService : IVLCExpenseService, IDisposable
@@ -162,12 +161,15 @@ namespace Platform.Service
         public void UpdateVLCWalletForExpense(int vLCId, decimal orderAmount, bool isCredit)
         {
             var vLCWallet = unitOfWork.VLCWalletRepository.GetByVLCId(vLCId);
-            if (isCredit)
-                vLCWallet.WalletBalance -= orderAmount;
-            else
-                vLCWallet.WalletBalance += orderAmount;
-            vLCWallet.AmountDueDate = vLCWallet.AmountDueDate.AddDays(10);
-            unitOfWork.VLCWalletRepository.Update(vLCWallet);
+            if (vLCWallet != null)
+            {
+                if (isCredit)
+                    vLCWallet.WalletBalance -= orderAmount;
+                else
+                    vLCWallet.WalletBalance += orderAmount;
+                vLCWallet.AmountDueDate = vLCWallet.AmountDueDate.AddDays(10);
+                unitOfWork.VLCWalletRepository.Update(vLCWallet);
+            }
         }
 
 

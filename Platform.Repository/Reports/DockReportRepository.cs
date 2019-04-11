@@ -135,8 +135,7 @@ namespace Platform.Repository
                                 TotalQuantity = Convert.ToDecimal(reader["TotalQuantity"]),
                                 TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
                                 TotalCan = Convert.ToInt32(reader["TotalCan"]),
-                                TotalRejectedCan=Convert.ToInt32(reader["TotalRejectedCan"])
-                                
+                                TotalRejectedCan=Convert.ToInt32(reader["TotalRejectedCan"])                               
                                 
                             });
                 }

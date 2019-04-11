@@ -44,26 +44,26 @@
       <HintPath>..\..\AVSYS.Nat.web\AVS.Natraj.Web\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\AVSYS.Nat.web\AVS.Natraj.Web\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+      <HintPath>..\..\AVSYS.Nat.web\AVS.Natraj.Web\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
+      <HintPath>..\..\AVSYS.Nat.web\AVS.Natraj.Web\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <HintPath>..\..\AVSYS.Nat.web\AVS.Natraj.Web\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <HintPath>..\..\AVSYS.Nat.web\AVS.Natraj.Web\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+      <HintPath>..\..\AVSYS.Nat.web\AVS.Natraj.Web\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -113,24 +113,6 @@
     <Compile Include="VLCService\VLCService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Platform.DTO\Platform.DTO.csproj">
-      <Project>{58292060-6e50-4fb7-ac50-a7c67caa9b1c}</Project>
-      <Name>Platform.DTO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Platform.Repository\Platform.Repository.csproj">
-      <Project>{f89af692-d7e0-4445-aa6e-dcf4e978d590}</Project>
-      <Name>Platform.Repository</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Platform.Sql\Platform.Sql.csproj">
-      <Project>{be316c17-5a9f-447a-a681-e40e3281375d}</Project>
-      <Name>Platform.Sql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Platform.Utilities\Platform.Utilities.csproj">
-      <Project>{1aead882-4708-469f-8825-e12997f5df1d}</Project>
-      <Name>Platform.Utilities</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -165,6 +147,24 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Platform.DTO\Platform.DTO.csproj">
+      <Project>{58292060-6e50-4fb7-ac50-a7c67caa9b1c}</Project>
+      <Name>Platform.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Repository\Platform.Repository.csproj">
+      <Project>{f89af692-d7e0-4445-aa6e-dcf4e978d590}</Project>
+      <Name>Platform.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Sql\Platform.Sql.csproj">
+      <Project>{be316c17-5a9f-447a-a681-e40e3281375d}</Project>
+      <Name>Platform.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Utilities\Platform.Utilities.csproj">
+      <Project>{1aead882-4708-469f-8825-e12997f5df1d}</Project>
+      <Name>Platform.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
