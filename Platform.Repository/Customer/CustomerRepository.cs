@@ -16,13 +16,13 @@ namespace Platform.Repository
         }
         public List<Customer> GetAll()
         {
-            var customers = _repository.Customers.ToList<Sql.Customer>();
+            var customers = _repository.Customers.Where(c => c.IsDeleted == false).ToList<Sql.Customer>();
             return customers;
         }
 
         public List<Customer> GetCustomerByVLCId(int vlcId)
         {
-            var customers = _repository.Customers.Where(v=>v.VLCId==vlcId).ToList<Sql.Customer>();
+            var customers = _repository.Customers.Where(v=>v.VLCId==vlcId && v.IsDeleted==false).ToList<Sql.Customer>();
             return customers;
         }
 
@@ -31,7 +31,7 @@ namespace Platform.Repository
             var takePage = pageNumber ?? PagingConstant.DefaultPageNumber;
             var takeCount = PagingConstant.DefaultRecordCount;
             var customers = _repository.Customers
-                 .Where(v => v.VLCId == vlcId)
+                 .Where(v => v.VLCId == vlcId && v.IsDeleted==false)
                 .OrderBy(c=>c.DateOfJoinVLC)
                 .Skip((takePage - 1) * takeCount)
                                 .Take(takeCount)
@@ -43,7 +43,7 @@ namespace Platform.Repository
         public List<Customer> GetCustomerListForSearchByVLCId(int vlcId)
         {
             var customers = _repository.Customers
-                 .Where(v => v.VLCId == vlcId)
+                 .Where(v => v.VLCId == vlcId && v.IsDeleted == false)
                 .OrderBy(c => c.CustomerId)
                 .ToList<Sql.Customer>();
             return customers;
@@ -57,6 +57,7 @@ namespace Platform.Repository
          
 
             var customers = _repository.Customers
+                                     .Where(c => c.IsDeleted == false)
                                  .OrderBy(c => c.CustomerId)
                                 .Skip((takePage - 1) * takeCount)
                                 .Take(takeCount)
@@ -73,7 +74,7 @@ namespace Platform.Repository
         public Customer GetById(int id)
         {
            
-                var customer = _repository.Customers.FirstOrDefault(x => x.CustomerId == id);
+                var customer = _repository.Customers.FirstOrDefault(x => x.CustomerId == id && x.IsDeleted == false);
              
            
             
@@ -108,7 +109,7 @@ namespace Platform.Repository
         {
             var customer = _repository.Customers.Where(x => x.CustomerId == id).FirstOrDefault();
             if (customer != null)
-                _repository.Customers.Remove(customer);
+                customer.IsDeleted = true;
 
            // _repository.SaveChanges();
 
@@ -116,14 +117,14 @@ namespace Platform.Repository
 
         public Customer GetCustomerByMobileNumber(string mobileNumber)
         {
-            var custmer = _repository.Customers.Where(x => x.Contact == mobileNumber).FirstOrDefault();
+            var custmer = _repository.Customers.Where(x => x.Contact == mobileNumber && x.IsDeleted==false).FirstOrDefault();
             return custmer;
         }
 
 
         public Customer GetCustomerByEmail(string email)
         {
-            var custmer = _repository.Customers.Where(x => x.Email == email).FirstOrDefault();
+            var custmer = _repository.Customers.Where(x => x.Email == email && x.IsDeleted == false).FirstOrDefault();
             return custmer;
         }
 

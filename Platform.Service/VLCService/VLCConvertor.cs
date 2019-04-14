@@ -89,5 +89,18 @@ namespace Platform.Service
                 vLC.HouseRent = vlcDTO.HouseRent;
 
         }
+
+
+        public static  VLCWalletDTO ConvertToVLCWalletDTO(VLCWallet vLCWallet)
+        {
+            VLCWalletDTO vLCWalletDTO = new VLCWalletDTO();
+            vLCWalletDTO.VLCId = vLCWallet.VLCId;
+            vLCWalletDTO.VLCCode=vLCWallet.VLC!=null ? vLCWallet.VLC.VLCCode : string.Empty;
+            vLCWalletDTO.VLCName = vLCWallet.VLC != null ? vLCWallet.VLC.VLCName : string.Empty;
+            vLCWalletDTO.WalletBalance = vLCWallet.WalletBalance;
+            vLCWalletDTO.WalletId = vLCWallet.WalletId;
+            return vLCWalletDTO;
+        }
+        
     }
 }

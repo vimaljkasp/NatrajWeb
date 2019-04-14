@@ -28,6 +28,7 @@ namespace Platform.Repository
             PlatformDBEntities context = new PlatformDBEntities();
 
             var customerAgricultures = context.CustomerAgricultures
+                                  .Where(c=>c.IsDeleted ==false)
                                  .OrderBy(c => c.CustAgriId)
                                 .Skip((takePage - 1) * takeCount)
                                 .Take(takeCount)
@@ -39,7 +40,7 @@ namespace Platform.Repository
         public CustomerAgriculture GetByCustomerId(int id)
         {
 
-            var customerAgriculture = _repository.CustomerAgricultures.FirstOrDefault(x => x.CustomerId == id);
+            var customerAgriculture = _repository.CustomerAgricultures.FirstOrDefault(x => x.CustomerId == id && x.IsDeleted==false);
 
 
 
@@ -73,8 +74,9 @@ namespace Platform.Repository
         public void Delete(int id)
         {
             var customerAgriculture = _repository.CustomerAgricultures.Where(x => x.CustAgriId == id).FirstOrDefault();
+           
             if (customerAgriculture != null)
-                _repository.CustomerAgricultures.Remove(customerAgriculture);
+                customerAgriculture.IsDeleted = true;
 
             // _repository.SaveChanges();
 

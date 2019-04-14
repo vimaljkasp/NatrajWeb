@@ -81,5 +81,17 @@ namespace Platform.Service
             if (string.IsNullOrWhiteSpace(distributionCenterDTO.Pin) == false)
                 distributionCenter.Pin = distributionCenterDTO.Pin;
         }
+
+
+
+        public static DCWalletDTO ConvertToDCWalletDTO(DCWallet dCWallet)
+        {
+            DCWalletDTO dCWalletDTO = new DCWalletDTO();
+            dCWalletDTO.DCId = dCWallet.DCId;
+            dCWalletDTO.WalletBalance = dCWallet.WalletBalance;
+            dCWalletDTO.AmountDueDate = dCWallet.AmountDueDate;
+            dCWalletDTO.WalletId = dCWallet.WalletId;
+            return dCWalletDTO;
+        }
     }
 }

@@ -28,6 +28,8 @@ namespace Platform.Repository
             PlatformDBEntities context = new PlatformDBEntities();
 
             var vlcs = context.VLCs
+                  .Where(c=>c.IsDeleted==false)
+
                                  .OrderBy(c => c.VLCId)
                                 .Skip((takePage - 1) * takeCount)
                                 .Take(takeCount)
@@ -39,7 +41,7 @@ namespace Platform.Repository
         public VLC GetById(int id)
         {
 
-            var vlc = _repository.VLCs.FirstOrDefault(x => x.VLCId == id);
+            var vlc = _repository.VLCs.FirstOrDefault(x => x.VLCId == id && x.IsDeleted == false);
 
 
 
@@ -58,7 +60,7 @@ namespace Platform.Repository
             string vlcAgentName = "System";
             if (vlcId>0)
             {
-                var vlc = _repository.VLCs.FirstOrDefault(x => x.VLCId == vlcId);
+                var vlc = _repository.VLCs.FirstOrDefault(x => x.VLCId == vlcId && x.IsDeleted == false);
                 if (vlc != null)
                     vlcAgentName = vlc.AgentName;
             }
@@ -96,7 +98,7 @@ namespace Platform.Repository
         {
             var vlc = _repository.VLCs.Where(x => x.VLCId == id).FirstOrDefault();
             if (vlc != null)
-                _repository.VLCs.Remove(vlc);
+                vlc.IsDeleted = false;
 
             // _repository.SaveChanges();
 

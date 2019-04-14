@@ -19,19 +19,19 @@ namespace Platform.Repository
 
         public List<VLCExpenseDetail> GetAll()
         {
-            var vlcExpenses = _repository.VLCExpenseDetails.ToList<Sql.VLCExpenseDetail>();
+            var vlcExpenses = _repository.VLCExpenseDetails.Where(v=>v.IsDeleted==false).ToList<Sql.VLCExpenseDetail>();
             return vlcExpenses;
         }
 
         public VLCExpenseDetail GetExpenseByExpenseId(int expenseId)
         {
-            var vlcExpenses = _repository.VLCExpenseDetails.Where(v => v.VLCExpenseId == expenseId).FirstOrDefault();
+            var vlcExpenses = _repository.VLCExpenseDetails.Where(v => v.VLCExpenseId == expenseId && v.IsDeleted == false).FirstOrDefault();
             return vlcExpenses;
         }
 
         public List<VLCExpenseDetail> GetAllVLCExpenseDetailByVLCId(int vlcId)
         {
-            var vlcExpenses = _repository.VLCExpenseDetails.Where(v => v.VLCId == vlcId).ToList<Sql.VLCExpenseDetail>();
+            var vlcExpenses = _repository.VLCExpenseDetails.Where(v => v.VLCId == vlcId && v.IsDeleted == false).ToList<Sql.VLCExpenseDetail>();
             return vlcExpenses;
         }
 
@@ -73,7 +73,7 @@ namespace Platform.Repository
         {
             var vlcExpense = _repository.VLCExpenseDetails.Where(x => x.VLCExpenseId == id).FirstOrDefault();
             if (vlcExpense != null)
-                _repository.VLCExpenseDetails.Remove(vlcExpense);
+                vlcExpense.IsDeleted = true;
 
             // _repository.SaveChanges();
 

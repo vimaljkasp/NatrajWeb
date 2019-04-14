@@ -19,25 +19,25 @@ namespace Platform.Repository
 
         public List<DCPaymentDetail> GetAll()
         {
-            var dcAddress = _repository.DCPaymentDetails.ToList<Sql.DCPaymentDetail>();
+            var dcAddress = _repository.DCPaymentDetails.Where(p=>p.IsDeleted==false).ToList<Sql.DCPaymentDetail>();
             return dcAddress;
         }
 
         public DCPaymentDetail GetPaymentDetailByPaymentId(int paymentId)
         {
-            var dcAddress = _repository.DCPaymentDetails.Where(v => v.DCPaymentId == paymentId).FirstOrDefault();
+            var dcAddress = _repository.DCPaymentDetails.Where(v => v.DCPaymentId == paymentId && v.IsDeleted==false).FirstOrDefault();
             return dcAddress;
         }
 
         public List<DCPaymentDetail> GetAllDCPaymentDetailByDCId(int dCid)
         {
-            var dcPayments = _repository.DCPaymentDetails.Where(v => v.DCId == dCid).ToList<Sql.DCPaymentDetail>();
+            var dcPayments = _repository.DCPaymentDetails.Where(v => v.DCId == dCid && v.IsDeleted == false).ToList<Sql.DCPaymentDetail>();
             return dcPayments;
         }
 
         public List<DCPaymentDetail> GetAllDCPaymentDetailByOrderId(int orderId)
         {
-            var dcAddress = _repository.DCPaymentDetails.Where(v => v.DCOrderId == orderId).ToList<Sql.DCPaymentDetail>();
+            var dcAddress = _repository.DCPaymentDetails.Where(v => v.DCOrderId == orderId && v.IsDeleted == false).ToList<Sql.DCPaymentDetail>();
             return dcAddress;
         }
 
@@ -67,7 +67,7 @@ namespace Platform.Repository
         {
             var dCPaymentDetail = _repository.DCPaymentDetails.Where(x => x.DCPaymentId == id).FirstOrDefault();
             if (dCPaymentDetail != null)
-                _repository.DCPaymentDetails.Remove(dCPaymentDetail);
+                dCPaymentDetail.IsDeleted = false;
 
             // _repository.SaveChanges();
 

@@ -24,13 +24,13 @@ namespace Platform.Repository
 
          public DCOrder GetDCOrderByOrderId(int orderId)
         {
-            var dcOrder = _repository.DCOrders.Include("DCAddress").Include("DCOrderDtls.Product").Where(d=>d.DCOrderId==orderId).FirstOrDefault();
+            var dcOrder = _repository.DCOrders.Include("DCAddress").Include("DCOrderDtls.Product").Where(d=>d.DCOrderId==orderId && d.IsDeleted==false).FirstOrDefault();
             return dcOrder;
         }
 
         public List<DCOrder> GetAllDCOrdersByDCId(int dCid)
         {
-            var dCOrders = _repository.DCOrders.Include("DCAddress").Include("DCOrderDtls.Product").Where(v => v.DCId == dCid).OrderByDescending(v=>v.OrderDate).ToList<Sql.DCOrder>();
+            var dCOrders = _repository.DCOrders.Include("DCAddress").Include("DCOrderDtls.Product").Where(v => v.DCId == dCid && v.IsDeleted == false).OrderByDescending(v=>v.OrderDate).ToList<Sql.DCOrder>();
             return dCOrders;
         }
 
@@ -60,7 +60,7 @@ namespace Platform.Repository
         {
             var dCOrder = _repository.DCOrders.Where(x => x.DCOrderId == id).FirstOrDefault();
             if (dCOrder != null)
-                _repository.DCOrders.Remove(dCOrder);
+                dCOrder.IsDeleted = true;
 
             // _repository.SaveChanges();
 

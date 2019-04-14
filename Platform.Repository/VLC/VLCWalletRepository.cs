@@ -18,7 +18,7 @@ namespace Platform.Repository
 
         public List<VLCWallet> GetAll()
         {
-            var vlcWalletList = _repository.VLCWallets.ToList<Sql.VLCWallet>();
+            var vlcWalletList = _repository.VLCWallets.Include("VLC").ToList<Sql.VLCWallet>();
             return vlcWalletList;
         }
 
@@ -30,7 +30,7 @@ namespace Platform.Repository
 
         public VLCWallet GetByVLCId(int vlcId)
         {
-            var vlcWallet = _repository.VLCWallets.Where(d => d.VLCId == vlcId).FirstOrDefault();
+            var vlcWallet = _repository.VLCWallets.Include("VLC").Where(d => d.VLCId == vlcId).FirstOrDefault();
             return vlcWallet;
         }
 

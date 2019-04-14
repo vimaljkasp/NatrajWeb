@@ -170,5 +170,23 @@ namespace Platform.Service
         }
 
 
+        public ResponseDTO GetVLCWalletDetailsByVLCId(int vlcId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            var vLCWallet = unitOfWork.VLCWalletRepository.GetByVLCId(vlcId);
+            if (vLCWallet != null)
+            {
+                VLCConvertor.ConvertToVLCWalletDTO(vLCWallet);
+                responseDTO.Status = true;
+                responseDTO.Message = "Customer Collection Summary Report";
+                return responseDTO;
+            }
+            else
+            {
+                throw new PlatformModuleException("VLC Wallet Not found for given VLC Id");
+            }
+        }
+
+
     }
 }
