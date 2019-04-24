@@ -39,6 +39,14 @@ namespace Platform.DTO
 
     }
 
+    public class DCWalletDTO
+    {
+        public int WalletId { get; set; }
+        public int DCId { get; set; }
+        public decimal WalletBalance { get; set; }
+        public System.DateTime AmountDueDate { get; set; }
+    }
+
 
     public class DistributionCenterValidator : AbstractValidator<DistributionCenterDTO>
     {

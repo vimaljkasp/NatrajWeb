@@ -190,7 +190,7 @@ namespace Platform.Service
             List<DCOrderDTO> dcOrderDTOList = new List<DCOrderDTO>();
             foreach(var dcOrder in dcOrders)
             {
-                dcOrderDTOList.Add(DCOrderConvertor.ConvertToDCOrderDto(dcOrder,unitOfWork.NatrajConfigurationSettings.ImagePath));
+                dcOrderDTOList.Add(DCOrderConvertor.ConvertToDCOrderDto(dcOrder,NatrajConfigurationHelper.ImagePath));
             }
             responseDTO.Data = dcOrderDTOList;
             return responseDTO;
@@ -203,7 +203,7 @@ namespace Platform.Service
             responseDTO.Message = String.Format("DC Order Details");
             var dcOrder = unitOfWork.DCOrderRepository.GetDCOrderByOrderId(orderId);
          
-            DCOrderDTO dCOrderDTO = DCOrderConvertor.ConvertToDCOrderDto(dcOrder, unitOfWork.NatrajConfigurationSettings.ImagePath);
+            DCOrderDTO dCOrderDTO = DCOrderConvertor.ConvertToDCOrderDto(dcOrder, NatrajConfigurationHelper.ImagePath);
             responseDTO.Data = dCOrderDTO;
             return responseDTO;
         }

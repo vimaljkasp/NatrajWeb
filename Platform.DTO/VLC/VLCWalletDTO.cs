@@ -9,6 +9,9 @@ namespace Platform.DTO
     public class VLCWalletDTO
     {
         public int WalletId { get; set; }
+        public string VLCCode { get; set; }
+
+        public string VLCName { get; set; }
         public int VLCId { get; set; }
         public decimal WalletBalance { get; set; }
         public System.DateTime AmountDueDate { get; set; }

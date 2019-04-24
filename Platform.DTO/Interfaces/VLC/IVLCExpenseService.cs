@@ -9,7 +9,7 @@ namespace Platform.DTO
     public interface IVLCExpenseService
     {
         List<VLCExpenseDTO> GetAllVLCExpenses();
-        ResponseDTO GetVLCExpensesById(int vLCExpenseId);
+
         ResponseDTO GetAllVLCExpensesByVLCId(int vlcId);
 
         ResponseDTO UpdateMachineAndHouseRentExpenseForALLVLC(DateTime expenseMonth);

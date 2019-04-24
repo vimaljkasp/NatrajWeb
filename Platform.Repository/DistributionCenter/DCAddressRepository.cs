@@ -18,19 +18,19 @@ namespace Platform.Repository
 
         public List<DCAddress> GetAll()
         {
-            var dcAddress = _repository.DCAddresses.ToList<Sql.DCAddress>();
+            var dcAddress = _repository.DCAddresses.Where(v=>v.IsDeleted == false).ToList<Sql.DCAddress>();
             return dcAddress;
         }
 
         public DCAddress GetDefaultAddressByDCId(int dCid)
         {
-            var dcAddress = _repository.DCAddresses.Where(v => v.DCId == dCid && v.IsDefaultAddress).FirstOrDefault();
+            var dcAddress = _repository.DCAddresses.Where(v => v.DCId == dCid && v.IsDefaultAddress && v.IsDeleted == false).FirstOrDefault();
             return dcAddress;
         }
 
         public List<DCAddress> GetAllDCAddressByDCId(int dCid)
         {
-            var dcAddress = _repository.DCAddresses.Where(v => v.DCId == dCid).ToList<Sql.DCAddress>();
+            var dcAddress = _repository.DCAddresses.Where(v => v.DCId == dCid && v.IsDeleted == false).ToList<Sql.DCAddress>();
             return dcAddress;
         }
 
@@ -60,7 +60,7 @@ namespace Platform.Repository
         {
             var dcAddress = _repository.DCAddresses.Where(x => x.DCAddressId == id).FirstOrDefault();
             if (dcAddress != null)
-                _repository.DCAddresses.Remove(dcAddress);
+                dcAddress.IsDeleted = true;
 
             // _repository.SaveChanges();
 

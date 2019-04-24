@@ -16,7 +16,7 @@ namespace Platform.Repository
         }
         public List<CustomerBank> GetAll()
         {
-            var customerBanks = _repository.CustomerBanks.ToList<Sql.CustomerBank>();
+            var customerBanks = _repository.CustomerBanks.Where(c => c.IsDeleted == false).ToList<Sql.CustomerBank>();
             return customerBanks;
         }
 
@@ -28,6 +28,7 @@ namespace Platform.Repository
             PlatformDBEntities context = new PlatformDBEntities();
 
             var customerBanks = context.CustomerBanks
+                                   .Where(c => c.IsDeleted == false)
                                  .OrderBy(c => c.CustomerBankId)
                                 .Skip((takePage - 1) * takeCount)
                                 .Take(takeCount)
@@ -39,7 +40,7 @@ namespace Platform.Repository
         public CustomerBank GetByCustomerId(int id)
         {
 
-            var customerBank = _repository.CustomerBanks.FirstOrDefault(x => x.CustomerId == id);
+            var customerBank = _repository.CustomerBanks.FirstOrDefault(x => x.CustomerId == id && x.IsDeleted==false);
 
 
 
@@ -74,7 +75,7 @@ namespace Platform.Repository
         {
             var customerBank = _repository.CustomerBanks.Where(x => x.CustomerBankId == id).FirstOrDefault();
             if (customerBank != null)
-                _repository.CustomerBanks.Remove(customerBank);
+                customerBank.IsDeleted = true;
 
             // _repository.SaveChanges();
 

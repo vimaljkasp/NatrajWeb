@@ -8,9 +8,8 @@ namespace Platform.DTO
 {
     public enum PaymentModeEnum
     {
-        None = 0,
-        Cash = 1,
-        Check = 2,
-        NEFT = 3
+        Cash=1,
+        Check,
+        NEFT
     }
 }

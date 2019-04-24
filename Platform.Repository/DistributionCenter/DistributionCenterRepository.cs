@@ -17,13 +17,13 @@ namespace Platform.Repository
         
         public List<DistributionCenter> GetAll()
         {
-            var distributionCenters = _repository.DistributionCenters.ToList<Sql.DistributionCenter>();
+            var distributionCenters = _repository.DistributionCenters.Where(d=>d.IsDeleted==false).ToList<Sql.DistributionCenter>();
             return distributionCenters;
         }
 
         public List<DistributionCenter> GetDistributionCenterByVLCId(int dcId)
         {
-            var distributionCenters = _repository.DistributionCenters.Where(v => v.DCId == dcId).ToList<Sql.DistributionCenter>();
+            var distributionCenters = _repository.DistributionCenters.Where(v => v.DCId == dcId && v.IsDeleted==false).ToList<Sql.DistributionCenter>();
             return distributionCenters;
         }
 
@@ -35,6 +35,7 @@ namespace Platform.Repository
             var distributionCenters = _repository.DistributionCenters.Include("DCAddresses")
                  .Where(d=>d.DCAddresses.Any(
               c=>c.City!=null && c.City.Contains(city) && c.IsDefaultAddress))
+                .Where(c=>c.IsDeleted==false)
                 .OrderBy(c => c.DateOfRegistration)
                 .Skip((takePage - 1) * takeCount)
                                 .Take(takeCount)
@@ -62,6 +63,7 @@ namespace Platform.Repository
 
 
             var distributionCenters = _repository.DistributionCenters
+                                 .Where(c=>c.IsDeleted==false)
                                  .OrderBy(c => c.DCId)
                                 .Skip((takePage - 1) * takeCount)
                                 .Take(takeCount)
@@ -78,7 +80,7 @@ namespace Platform.Repository
         public DistributionCenter GetById(int id)
         {
 
-            var distributionCenter = _repository.DistributionCenters.Include("DCAddresses").Include("DCWallets").FirstOrDefault(x => x.DCId == id);
+            var distributionCenter = _repository.DistributionCenters.Include("DCAddresses").Include("DCWallets").FirstOrDefault(x => x.DCId == id && x.IsDeleted==false);
 
 
 
@@ -113,7 +115,7 @@ namespace Platform.Repository
         {
             var distributionCenter = _repository.DistributionCenters.Where(x => x.DCId == id).FirstOrDefault();
             if (distributionCenter != null)
-                _repository.DistributionCenters.Remove(distributionCenter);
+                distributionCenter.IsDeleted = true;
 
             // _repository.SaveChanges();
 
@@ -121,21 +123,21 @@ namespace Platform.Repository
 
         public DistributionCenter GetDistributionCenterByMobileNumber(string mobileNumber)
         {
-            var distributionCenter = _repository.DistributionCenters.Where(x => x.Contact == mobileNumber).FirstOrDefault();
+            var distributionCenter = _repository.DistributionCenters.Where(x => x.Contact == mobileNumber && x.IsDeleted == false).FirstOrDefault();
             return distributionCenter;
         }
 
 
         public DistributionCenter GetDistributionCenterByEmail(string email)
         {
-            var distributionCenter = _repository.DistributionCenters.Where(x => x.Email == email).FirstOrDefault();
+            var distributionCenter = _repository.DistributionCenters.Where(x => x.Email == email && x.IsDeleted == false).FirstOrDefault();
             return distributionCenter;
         }
 
 
         public DistributionCenter GetDistributionCenterByCode(string dcCode)
         {
-            var distributionCenter = _repository.DistributionCenters.Where(x => x.DCCode == dcCode).FirstOrDefault();
+            var distributionCenter = _repository.DistributionCenters.Where(x => x.DCCode == dcCode && x.IsDeleted == false).FirstOrDefault();
             return distributionCenter;
         }
 

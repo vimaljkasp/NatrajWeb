@@ -5,6 +5,7 @@ using Platform.Utilities;
 using System;
 using System.Collections.Generic;
 
+
 namespace Platform.Service
 {
     public class VLCExpenseService : IVLCExpenseService, IDisposable
@@ -29,26 +30,6 @@ namespace Platform.Service
 
         }
 
-        public ResponseDTO GetVLCExpensesById(int vLCExpenseId)
-        {
-            ResponseDTO responseDTO = new ResponseDTO();
-            VLCExpenseDTO vLCExpenseList = new VLCExpenseDTO();
-            var vLCExpenseDetails = unitOfWork.VLCExpenseDetailRepository.GetExpenseByExpenseId(vLCExpenseId);
-            if (vLCExpenseDetails != null)
-            {
-                vLCExpenseList = VLCExpenseConvertor.ConvertToVLCExpenseDTO(vLCExpenseDetails);
-                responseDTO.Status = true;
-                responseDTO.Message = "VLC Expense Details ";
-                responseDTO.Data = vLCExpenseList;
-            }
-            else
-            {
-                responseDTO.Status = false;
-                responseDTO.Message = String.Format("VLC Payemnts Details with VLC expense ID {0} not found", vLCExpenseId);
-                responseDTO.Data = new object();
-            }
-            return responseDTO;
-        }
 
 
         public ResponseDTO GetAllVLCExpensesByVLCId(int vLCId)
@@ -81,8 +62,8 @@ namespace Platform.Service
         public ResponseDTO AddVLCExpenseDetail(VLCExpenseDTO vLCExpenseDTO)
         {
             ResponseDTO responseDTO = new ResponseDTO();
-
-            var vLC = unitOfWork.VLCRepository.GetById(vLCExpenseDTO.VLCId);
+            
+            var vLC = unitOfWork.DistributionCenterRepository.GetById(vLCExpenseDTO.VLCId);
             if (vLC != null)
             {
                 VLCExpenseDetail vLCExpenseDetail = AddExpense(vLCExpenseDTO);
@@ -106,13 +87,6 @@ namespace Platform.Service
             vLCExpenseDetail.VLCExpenseId = unitOfWork.DashboardRepository.NextNumberGenerator("VLCExpenseDetail");
             vLCExpenseDetail.VLCId = vLCExpenseDTO.VLCId;
             vLCExpenseDetail.ExpenseReason = (int)vLCExpenseDTO.ExpenseReason;
-
-            //Mapped CR and DR
-            vLCExpenseDetail.PaymentCrAmount = vLCExpenseDTO.PaymentCrAmount;
-            vLCExpenseDetail.PaymentDrAmount = vLCExpenseDTO.PaymentDrAmount;
-            vLCExpenseDetail.ExpenseComments = vLCExpenseDTO.ExpenseComments;
-
-
             vLCExpenseDetail.IsDeleted = false;
             vLCExpenseDetail.CreatedBy = vLCExpenseDetail.ModifiedBy = "Admin";
             vLCExpenseDetail.CreatedDate = vLCExpenseDetail.ModifiedDate = DateTimeHelper.GetISTDateTime();
@@ -134,7 +108,7 @@ namespace Platform.Service
             unitOfWork.SaveChanges();
             return vLCExpenseDetail;
         }
-
+        
 
         public VLCPaymentDetail AddVLCExpenseInPaymentDetail(VLCExpenseDTO vLCPaymentDTO, int expenseId, decimal paidAmount)
         {
@@ -144,7 +118,7 @@ namespace Platform.Service
             vLCPaymentDetail.VLCId = vLCPaymentDTO.VLCId;
             if (string.IsNullOrWhiteSpace(vLCPaymentDTO.ExpenseComments) == false)
                 vLCPaymentDetail.PaymentComments = vLCPaymentDTO.ExpenseComments;
-
+            
             vLCPaymentDetail.VLCExpenseId = expenseId;
             vLCPaymentDetail.IsDeleted = false;
             vLCPaymentDetail.CreatedBy = vLCPaymentDetail.ModifiedBy = "Admin";
@@ -161,15 +135,12 @@ namespace Platform.Service
         public void UpdateVLCWalletForExpense(int vLCId, decimal orderAmount, bool isCredit)
         {
             var vLCWallet = unitOfWork.VLCWalletRepository.GetByVLCId(vLCId);
-            if (vLCWallet != null)
-            {
-                if (isCredit)
-                    vLCWallet.WalletBalance -= orderAmount;
-                else
-                    vLCWallet.WalletBalance += orderAmount;
-                vLCWallet.AmountDueDate = vLCWallet.AmountDueDate.AddDays(10);
-                unitOfWork.VLCWalletRepository.Update(vLCWallet);
-            }
+            if (isCredit)
+                vLCWallet.WalletBalance -= orderAmount;
+            else
+                vLCWallet.WalletBalance += orderAmount;
+            vLCWallet.AmountDueDate = vLCWallet.AmountDueDate.AddDays(10);
+            unitOfWork.VLCWalletRepository.Update(vLCWallet);
         }
 
 
@@ -232,9 +203,9 @@ namespace Platform.Service
         {
             ResponseDTO responseDTO = new ResponseDTO();
             var vlcList = unitOfWork.VLCRepository.GetAll();
-            foreach (var vlc in vlcList)
+            foreach(var vlc in vlcList)
             {
-                if (vlc.HouseRent.GetValueOrDefault() > 0 || vlc.MachineRent.GetValueOrDefault() > 0)
+                if(vlc.HouseRent.GetValueOrDefault()>0 || vlc.MachineRent.GetValueOrDefault()>0)
                 {
                     VLCExpenseDTO vLCExpenseDTO = new VLCExpenseDTO();
                     vLCExpenseDTO.VLCId = vlc.VLCId;
@@ -259,7 +230,7 @@ namespace Platform.Service
             }
             responseDTO.Message = "Machine Rent and House Rent Updated for all VLCs";
             responseDTO.Status = true;
-            responseDTO.Data = new object();
+            responseDTO.Data =new object();
             return responseDTO;
         }
 

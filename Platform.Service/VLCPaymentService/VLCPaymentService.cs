@@ -39,7 +39,6 @@ namespace Platform.Service
             var vLCPaymentDetails = unitOfWork.VLCPaymentDetailRepository.GetAllVLCPaymentDetailByVLCId(vLCId);
             if (vLCPaymentDetails != null)
             {
-                vLCPaymentDetails = vLCPaymentDetails.FindAll(x => x.IsDeleted == false);
                 foreach (var vLCpayemnt in vLCPaymentDetails)
                 {
                     vLCPaymentDetailList.Add(VLCPaymentConvertor.ConvertToVLCPaymentDTO(vLCpayemnt));
@@ -105,16 +104,14 @@ namespace Platform.Service
         public void UpdateVLCWalletForOrder(int vLCId, decimal orderAmount, bool isCredit)
         {
             var vLCWallet = unitOfWork.VLCWalletRepository.GetByVLCId(vLCId);
-            if (vLCWallet != null)
-            {
-                if (isCredit)
-                    vLCWallet.WalletBalance -= orderAmount;
-                else
-                    vLCWallet.WalletBalance += orderAmount;
-                vLCWallet.AmountDueDate = vLCWallet.AmountDueDate.AddDays(10);
-                unitOfWork.VLCWalletRepository.Update(vLCWallet);
-            }
+            if (isCredit)
+                vLCWallet.WalletBalance -= orderAmount;
+            else
+                vLCWallet.WalletBalance += orderAmount;
+            vLCWallet.AmountDueDate = vLCWallet.AmountDueDate.AddDays(10);
+            unitOfWork.VLCWalletRepository.Update(vLCWallet);
         }
+
 
 
         public ResponseDTO UpdateVLCPaymentDetail(VLCPaymentDTO vLCPaymentDTO)
@@ -178,27 +175,6 @@ namespace Platform.Service
             GC.SuppressFinalize(this);
         }
 
-        public ResponseDTO GetVLCPaymentById(int id)
-        {
-            ResponseDTO responseDTO = new ResponseDTO();
-            VLCPaymentDTO vLCPaymentDetail = new VLCPaymentDTO();
-            var vLCPaymentDetails = unitOfWork.VLCPaymentDetailRepository.GetPaymentDetailByPaymentId(id);
-            if (vLCPaymentDetails != null)
-            {
-                vLCPaymentDetail = VLCPaymentConvertor.ConvertToVLCPaymentDTO(vLCPaymentDetails);              
 
-                
-                responseDTO.Status = true;
-                responseDTO.Message = "VLC Payemnts Details For Dock Milk  Collection";
-                responseDTO.Data = vLCPaymentDetail;
-            }
-            else
-            {
-                responseDTO.Status = false;
-                responseDTO.Message = String.Format("VLC Payemnts Details with Payment ID {0} not found", id);
-                responseDTO.Data = new object();
-            }
-            return responseDTO;
-        }
     }
 }

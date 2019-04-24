@@ -229,7 +229,11 @@ namespace Platform.Service
             ResponseDTO responseDTO = new ResponseDTO();
             responseDTO.Message = "Contact Us Details";
             responseDTO.Status = true;
-            responseDTO.Data = unitOfWork.NatrajConfigurationSettings.ContactUsDTO;
+            responseDTO.Data =new ContactUsDTO() {CompanyName= NatrajConfigurationHelper.CompanyName,
+            CompanyAddress=NatrajConfigurationHelper.CompanyAddress,
+            CompanyDescription=NatrajConfigurationHelper.CompanyDescription,
+            CompanyEmail=NatrajConfigurationHelper.CompanyEmail,
+            CompanyPhone=NatrajConfigurationHelper.CompanyPhone};
             return responseDTO;
         }
 
@@ -285,7 +289,7 @@ namespace Platform.Service
 
         public void SendOTP(string OTP,string mobileNumber,NatrajComponent natrajComponent)
         {
-            string otpMessage = string.Format(unitOfWork.NatrajConfigurationSettings.ForgotPasswordOTPMessage,OTP);
+            string otpMessage = string.Format(NatrajConfigurationHelper.ForgotPasswordOTPMessage,OTP);
             NatrajSMSLog natrajSMSLog = new NatrajSMSLog();
             natrajSMSLog.SMSId = unitOfWork.DashboardRepository.NextNumberGenerator("NatrajSMSLog");
             SMSConvertor.ConvertToSMSMessage(ref natrajSMSLog, natrajComponent, SMSType.ForgotPasswordOTP, mobileNumber, otpMessage);

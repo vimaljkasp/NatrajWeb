@@ -28,9 +28,7 @@ namespace Platform.Service
                 vLCPaymentDTO.PaymentCrAmount = vLCPaymentDetail.PaymentCrAmount.GetValueOrDefault();
                 vLCPaymentDTO.PaymentDate = vLCPaymentDetail.PaymentDate;
                 vLCPaymentDTO.PaymentDrAmount = vLCPaymentDetail.PaymentDrAmount.GetValueOrDefault();
-                PaymentModeEnum paymentMode;
-                Enum.TryParse(vLCPaymentDetail.PaymentMode.ToString(),out paymentMode);
-                vLCPaymentDTO.PaymentMode = paymentMode;
+                vLCPaymentDTO.PaymentMode = (PaymentModeEnum)vLCPaymentDetail.PaymentMode;
                 vLCPaymentDTO.PaymentReceivedBy = vLCPaymentDetail.PaymentReceivedBy;
             }
 

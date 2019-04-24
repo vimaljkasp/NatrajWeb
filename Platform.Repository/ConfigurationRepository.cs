@@ -19,7 +19,13 @@ namespace Platform.Repository
             var configurations = _repository.NatrajConfigurations.ToList<Sql.NatrajConfiguration>();
             return configurations;
         }
-       
+
+
+        public NatrajConfiguration GetById(int id)
+        {
+            var configuration = _repository.NatrajConfigurations.Where(c=>c.Id==id).FirstOrDefault();
+            return configuration;
+        }
 
         public string GetConfiguration(string keyData,string keyName,string defaultVal)
         {

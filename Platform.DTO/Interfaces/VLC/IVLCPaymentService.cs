@@ -27,7 +27,5 @@ namespace Platform.DTO
 
         ResponseDTO DeleteVLCPaymentDetail(int id);
 
-        ResponseDTO GetVLCPaymentById(int id);
-
     }
 }

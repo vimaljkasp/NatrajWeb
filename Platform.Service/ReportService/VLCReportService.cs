@@ -1,5 +1,5 @@
 ﻿using Platform.DTO;
-using Platform.DTO.Interfaces;
+
 using Platform.Repository;
 using Platform.Sql;
 using Platform.Utilities;
@@ -18,12 +18,42 @@ namespace Platform.Service
         {
 
             ResponseDTO responseDTO = new ResponseDTO();
-            responseDTO.Data = unitOfWork.VLCReportRepository.VLCPaymentSummaryByDate(vlcId,StartDate, EndDate);
+            var list= unitOfWork.VLCReportRepository.VLCPaymentSummaryByDate(vlcId, StartDate, EndDate);
+            list.VLCName = this.GetVLCName(vlcId);
+            responseDTO.Data = list;
             responseDTO.Status = true;
-            responseDTO.Message = "Dock Collection Summary Report By Date";
+            responseDTO.Message = "VLC Payment Summary By Date";
             return responseDTO;
         }
 
+
+        public ResponseDTO VLCWalletSummary()
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            List<VLCWalletDTO> vLCWalletDTOList = new List<VLCWalletDTO>();
+            var vLCWallets = unitOfWork.VLCWalletRepository.GetAll();
+            if (vLCWallets != null)
+            {
+                foreach (var vlcWallet in vLCWallets)
+                {
+                    vLCWalletDTOList.Add(VLCConvertor.ConvertToVLCWalletDTO(vlcWallet));
+                   
+                }
+                responseDTO.Data = vLCWalletDTOList;
+                responseDTO.Status = true;
+                responseDTO.Message = "VLC Wallet Summary Report";
+                return responseDTO;
+            }
+            else
+            {
+                throw new PlatformModuleException("No VLC Wallet Not Found");
+            }
+           
+
+        }
+
+
+    
 
 
 

@@ -23,6 +23,8 @@ namespace Platform.DTO
 
         ResponseDTO UpdateVLC(VLCDTO vlcDto);
 
+        ResponseDTO GetVLCWalletDetailsByVLCId(int vlcId);
+
         void DeleteVLC(int id);
 
 

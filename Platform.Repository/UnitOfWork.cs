@@ -41,7 +41,7 @@ namespace Platform.Repository
         private ProductRepository productRepository;
         private ProductCategoryRepository productCategoryRepository;
 
-        private NatrajConfigurationSettings natrajConfigurationSettings; 
+        //private NatrajConfigurationSettings natrajConfigurationSettings; 
 
         PlatformDBEntities _repository;
         public UnitOfWork()
@@ -51,44 +51,44 @@ namespace Platform.Repository
         }
 
 
-        public NatrajConfigurationSettings NatrajConfigurationSettings
-        {
-            get
-            {
-                if (natrajConfigurationSettings == null)
-                {
-                    return natrajConfigurationSettings = new NatrajConfigurationSettings()
-                    {
-                        ImagePath = @"http://service.natrajdairy.com/img/",
-                        MilkRatePath = @"http://service.natrajdairy.com/MilkRate/",
-                        SenderMobileNumber = this.ConfigurationRepository.GetConfiguration("SMS", "SenderNumber", "9566812835"),
-                        SMSServiceUserName = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "adam"),
-                        SMSServicePassword = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "12345"),
-                        IsDockCommonCommissionEnabled=Convert.ToBoolean(this.configurationRepository.GetConfiguration("DockMilkCollection", "IsDockCommonCommissionEnabled","False")),
-                        DockCommonCommission = Convert.ToDecimal(this.configurationRepository.GetConfiguration("DockMilkCollection", "DockCommonCommission", "0.01")),
+        //public NatrajConfigurationSettings NatrajConfigurationSettings
+        //{
+        //    get
+        //    {
+        //        if (natrajConfigurationSettings == null)
+        //        {
+        //            return natrajConfigurationSettings = new NatrajConfigurationSettings()
+        //            {
+        //                ImagePath = @"http://service.natrajdairy.com/img/",
+        //                MilkRatePath = @"http://service.natrajdairy.com/MilkRate/",
+        //                SenderMobileNumber = this.ConfigurationRepository.GetConfiguration("SMS", "SenderNumber", "9566812835"),
+        //                SMSServiceUserName = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "adam"),
+        //                SMSServicePassword = this.ConfigurationRepository.GetConfiguration("SMS", "SMSServiceUserName", "12345"),
+        //                IsDockCommonCommissionEnabled=Convert.ToBoolean(this.configurationRepository.GetConfiguration("DockMilkCollection", "IsDockCommonCommissionEnabled","False")),
+        //                DockCommonCommission = Convert.ToDecimal(this.configurationRepository.GetConfiguration("DockMilkCollection", "DockCommonCommission", "0.01")),
 
-                        VLCCollectionMessage = "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}",
-                        DockCollectionMessage= "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}",
-                        ForgotPasswordOTPMessage="Dear  Customer,{0} is your one time password (OTP). Please enter the OTP to proceed. Thank You",
-                        ContactUsDTO=new DTO.ContactUsDTO()
-                        {
-                            CompanyName="Natraj Dairy",
-                            CompanyAddress=new string[] { "Unit: Natraj Dairy, Narsakhedi, Nimbahera, Distt. Chittorgarh, Rajasthan",
-                                "Office: Natraj Dairy, Patel chowk, Choti sadri, Distt. Pratapgarh, Rajasthan" },
-                            CompanyEmail=new string[] {"sunil@Natrajdairy.com","info@Natrajdairy.com"},
-                            CompanyPhone=new string[] {"+91 6350505864","+91 9929575888"},
-                            CompanyDescription="A Milk Production Company"
-                        }
+        //                VLCCollectionMessage = "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}",
+        //                DockCollectionMessage= "Your Collection Details for Collection Date:{0},Total Quantity:{1},Tota; Amount:{2}",
+        //                ForgotPasswordOTPMessage="Dear  Customer,{0} is your one time password (OTP). Please enter the OTP to proceed. Thank You",
+        //                ContactUsDTO=new DTO.ContactUsDTO()
+        //                {
+        //                    CompanyName="Natraj Dairy",
+        //                    CompanyAddress=new string[] { "Unit: Natraj Dairy, Narsakhedi, Nimbahera, Distt. Chittorgarh, Rajasthan",
+        //                        "Office: Natraj Dairy, Patel chowk, Choti sadri, Distt. Pratapgarh, Rajasthan" },
+        //                    CompanyEmail=new string[] {"sunil@Natrajdairy.com","info@Natrajdairy.com"},
+        //                    CompanyPhone=new string[] {"+91 6350505864","+91 9929575888"},
+        //                    CompanyDescription="A Milk Production Company"
+        //                }
                         
 
-                    };
-                }
-                else
-                {
-                    return natrajConfigurationSettings;
-                }
-            }
-        }
+        //            };
+        //        }
+        //        else
+        //        {
+        //            return natrajConfigurationSettings;
+        //        }
+        //    }
+        //}
 
 
         public CustomerRepository CustomerRepository
