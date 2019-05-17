@@ -57,6 +57,11 @@ namespace Platform.Service
             return responseDTO;
         }
 
+        public ResponseDTO GetVLCPaymentById(int id)
+        {
+            //TODO: 
+            return new ResponseDTO(); 
+        }
 
 
         public ResponseDTO AddVLCPaymentDetail(VLCPaymentDTO vLCPaymentDTO)

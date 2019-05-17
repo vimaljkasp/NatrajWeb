@@ -8,13 +8,13 @@ using System.Collections.Generic;
 
 namespace Platform.Service
 {
-    public class VLCService : IVLCService,IDisposable
+    public class VLCService : IVLCService, IDisposable
     {
-        private  UnitOfWork unitOfWork=new UnitOfWork();
-   
+        private UnitOfWork unitOfWork = new UnitOfWork();
+
 
         public List<VLCDTO> GetAllVLCAgents()
-        { 
+        {
             List<VLCDTO> vlcList = new List<VLCDTO>();
             var vLCs = unitOfWork.VLCRepository.GetAll();
             if (vLCs != null)
@@ -36,7 +36,7 @@ namespace Platform.Service
         public List<VLCDTO> GetAllVLCAgentsByPageCount(int? pageNumber, int? count)
         {
             List<VLCDTO> vlcList = new List<VLCDTO>();
-            var vlcs = unitOfWork.VLCRepository.GetVLCByCount(pageNumber,count);
+            var vlcs = unitOfWork.VLCRepository.GetVLCByCount(pageNumber, count);
             if (vlcs != null)
             {
                 foreach (var vlc in vlcs)
@@ -71,7 +71,7 @@ namespace Platform.Service
 
         }
 
-        
+
 
         public ResponseDTO AddVLC(VLCDTO vlcDto)
         {
@@ -79,11 +79,13 @@ namespace Platform.Service
             ResponseDTO responseDTO = new ResponseDTO();
             VLC vLC = new VLC();
             vLC.VLCId = unitOfWork.DashboardRepository.NextNumberGenerator("VLC");
+            vLC.VLCCode = unitOfWork.DashboardRepository.GenerateVLCCode(vlcDto.VLCName);
             vLC.CreatedDate = DateTimeHelper.GetISTDateTime();
             vLC.ModifiedDate = DateTimeHelper.GetISTDateTime();
             vLC.CreatedBy = vlcDto.ModifiedBy = "Admin";
             vLC.VLCEnrollmentDate = DateTimeHelper.GetISTDateTime().Date;
             vLC.IsDeleted = false;
+            vlcDto.Password = vlcDto.Password == null ? "Admin@123" : vlcDto.Password;
             vLC.Password = EncryptionHelper.Encryptword(vlcDto.Password);
             VLCConvertor.ConvertToVLCEntity(ref vLC, vlcDto, false);
             unitOfWork.VLCRepository.Add(vLC);
@@ -93,7 +95,6 @@ namespace Platform.Service
             responseDTO.Data = VLCConvertor.ConvertToVLCDto(vLC);
             unitOfWork.SaveChanges();
             return responseDTO;
-            
         }
 
         public void AddVLCWallet(VLC vLC)
@@ -104,7 +105,7 @@ namespace Platform.Service
             vLCWallet.WalletBalance = 0;
             vLCWallet.AmountDueDate = DateTimeHelper.GetISTDateTime().AddDays(10);
             unitOfWork.VLCWalletRepository.Add(vLCWallet);
-            
+
         }
 
         public ResponseDTO UpdateVLC(VLCDTO vlcDto)
@@ -128,10 +129,10 @@ namespace Platform.Service
             UnitOfWork unitOfWork = new UnitOfWork();
             //get customer
             var vlc = unitOfWork.VLCRepository.GetById(id);
-        
+
             unitOfWork.VLCRepository.Delete(id);
             unitOfWork.SaveChanges();
-  
+
         }
         protected void Dispose(bool disposing)
         {
@@ -153,7 +154,7 @@ namespace Platform.Service
 
         public ResponseDTO GetVLCCollectionSummary(int vlcId)
         {
-            ResponseDTO responseDTO=new ResponseDTO();
+            ResponseDTO responseDTO = new ResponseDTO();
             responseDTO.Data = unitOfWork.VLCReportRepository.GetCollectionSummaryReportByVLC(vlcId);
             responseDTO.Status = true;
             responseDTO.Message = "VLC Collection Summary Report";

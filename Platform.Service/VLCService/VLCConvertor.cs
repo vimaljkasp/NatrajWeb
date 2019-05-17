@@ -39,20 +39,21 @@ namespace Platform.Service
             vlcDto.Shift = vLC.CurrentShift.GetValueOrDefault();
             vlcDto.HouseRent = vLC.HouseRent.GetValueOrDefault();
             vlcDto.MachineRent = vLC.MachineRent.GetValueOrDefault();
+            vlcDto.MilkCommission = vLC.MilkCommission.GetValueOrDefault();
             return vlcDto;
 
 
-}
+        }
 
         public static void ConvertToVLCEntity(ref VLC vLC, VLCDTO vlcDTO, bool isUpdate)
         {
-        
+
             if (string.IsNullOrWhiteSpace(vlcDTO.VLCCode) == false)
                 vLC.VLCCode = vlcDTO.VLCCode;
             if (string.IsNullOrWhiteSpace(vlcDTO.VLCName) == false)
                 vLC.VLCName = vlcDTO.VLCName;
-            if(string.IsNullOrWhiteSpace(vlcDTO.AgentName)==false)
-            vLC.AgentName = vlcDTO.AgentName;
+            if (string.IsNullOrWhiteSpace(vlcDTO.AgentName) == false)
+                vLC.AgentName = vlcDTO.AgentName;
             if (string.IsNullOrWhiteSpace(vlcDTO.Contact) == false)
                 vLC.Contact = vlcDTO.Contact;
             if (string.IsNullOrWhiteSpace(vlcDTO.Email) == false)
@@ -69,7 +70,7 @@ namespace Platform.Service
                 vLC.Password = vlcDTO.Password;
             if (string.IsNullOrWhiteSpace(vlcDTO.AlternateContact) == false)
                 vLC.AlternateContact = vlcDTO.AlternateContact;
-       
+
             vLC.IsDeleted = false;
             if (string.IsNullOrWhiteSpace(vlcDTO.VLCAgentAadhaar) == false)
                 vLC.VLCAgentAadhaar = vlcDTO.VLCAgentAadhaar;
@@ -87,20 +88,22 @@ namespace Platform.Service
                 vLC.MachineRent = vlcDTO.MachineRent;
             if (vlcDTO.HouseRent > 0)
                 vLC.HouseRent = vlcDTO.HouseRent;
+            if (vlcDTO.MilkCommission > 0)
+                vLC.MilkCommission = vlcDTO.MilkCommission;
 
         }
 
 
-        public static  VLCWalletDTO ConvertToVLCWalletDTO(VLCWallet vLCWallet)
+        public static VLCWalletDTO ConvertToVLCWalletDTO(VLCWallet vLCWallet)
         {
             VLCWalletDTO vLCWalletDTO = new VLCWalletDTO();
             vLCWalletDTO.VLCId = vLCWallet.VLCId;
-            vLCWalletDTO.VLCCode=vLCWallet.VLC!=null ? vLCWallet.VLC.VLCCode : string.Empty;
+            vLCWalletDTO.VLCCode = vLCWallet.VLC != null ? vLCWallet.VLC.VLCCode : string.Empty;
             vLCWalletDTO.VLCName = vLCWallet.VLC != null ? vLCWallet.VLC.VLCName : string.Empty;
             vLCWalletDTO.WalletBalance = vLCWallet.WalletBalance;
             vLCWalletDTO.WalletId = vLCWallet.WalletId;
             return vLCWalletDTO;
         }
-        
+
     }
 }

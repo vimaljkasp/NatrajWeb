@@ -240,6 +240,10 @@ namespace Platform.Service
             GC.SuppressFinalize(this);
         }
 
-
+        public ResponseDTO GetVLCExpensesById(int value)
+        {
+            //TODO:
+            return new ResponseDTO(); 
+        }
     }
 }

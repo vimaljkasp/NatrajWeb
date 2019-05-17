@@ -26,6 +26,6 @@ namespace Platform.DTO
         ResponseDTO UpdateVLCPaymentDetail(VLCPaymentDTO dCPaymentDTO);
 
         ResponseDTO DeleteVLCPaymentDetail(int id);
-
+        ResponseDTO GetVLCPaymentById(int value);
     }
 }

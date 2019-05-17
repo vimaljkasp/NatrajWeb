@@ -2,6 +2,7 @@
 using FluentValidation.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace Platform.DTO
         public int VLCId { get; set; }
         public string VLCCode { get; set; }
         public string VLCName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? VLCEnrollmentDate { get; set; }
         public string AgentName { get; set; }
         public string Contact { get; set; }
@@ -45,6 +48,8 @@ namespace Platform.DTO
         public decimal MachineRent { get; set; }
 
         public decimal HouseRent { get; set; }
+
+        public decimal MilkCommission { get; set; }
     }
     public class VLCValidator : AbstractValidator<VLCDTO>
     {

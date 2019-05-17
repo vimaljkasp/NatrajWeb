@@ -19,5 +19,6 @@ namespace Platform.DTO
         ResponseDTO UpdateVLCExpenseDetail(VLCExpenseDTO vLCExpenseDTO);
 
         ResponseDTO DeleteVLCExpenseDetail(int id);
+        ResponseDTO GetVLCExpensesById(int value);
     }
 }
