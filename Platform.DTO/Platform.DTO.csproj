@@ -86,6 +86,7 @@
     <Compile Include="DockCollection\DockMilkCollectionDTO.cs" />
     <Compile Include="DockCollection\DockVLCCollectionDTO.cs" />
     <Compile Include="Enums\ApplicableType.cs" />
+    <Compile Include="Enums\GenderEnum.cs" />
     <Compile Include="Enums\MilkTypeEnum.cs" />
     <Compile Include="Enums\NatrajComponent.cs" />
     <Compile Include="Enums\OrderStatus.cs" />

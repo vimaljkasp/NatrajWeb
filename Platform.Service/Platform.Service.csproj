@@ -116,24 +116,6 @@
     <Compile Include="VLCService\VLCService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Platform.DTO\Platform.DTO.csproj">
-      <Project>{58292060-6e50-4fb7-ac50-a7c67caa9b1c}</Project>
-      <Name>Platform.DTO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Platform.Repository\Platform.Repository.csproj">
-      <Project>{f89af692-d7e0-4445-aa6e-dcf4e978d590}</Project>
-      <Name>Platform.Repository</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Platform.Sql\Platform.Sql.csproj">
-      <Project>{be316c17-5a9f-447a-a681-e40e3281375d}</Project>
-      <Name>Platform.Sql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Platform.Utilities\Platform.Utilities.csproj">
-      <Project>{1aead882-4708-469f-8825-e12997f5df1d}</Project>
-      <Name>Platform.Utilities</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -168,6 +150,24 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Platform.DTO\Platform.DTO.csproj">
+      <Project>{58292060-6e50-4fb7-ac50-a7c67caa9b1c}</Project>
+      <Name>Platform.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Repository\Platform.Repository.csproj">
+      <Project>{f89af692-d7e0-4445-aa6e-dcf4e978d590}</Project>
+      <Name>Platform.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Sql\Platform.Sql.csproj">
+      <Project>{be316c17-5a9f-447a-a681-e40e3281375d}</Project>
+      <Name>Platform.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Utilities\Platform.Utilities.csproj">
+      <Project>{1aead882-4708-469f-8825-e12997f5df1d}</Project>
+      <Name>Platform.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

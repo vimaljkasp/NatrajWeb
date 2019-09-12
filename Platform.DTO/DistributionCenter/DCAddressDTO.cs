@@ -2,6 +2,7 @@
 using FluentValidation.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace Platform.DTO
         public string City { get; set; }
         public string District { get; set; }
         public string State { get; set; }
+        [DisplayName("Postal Code")]
         public string PostalCode { get; set; }
         public string Contact { get; set; }
         //public bool IsDeleted { get; set; }

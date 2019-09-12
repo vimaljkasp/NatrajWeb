@@ -10,7 +10,8 @@ namespace Platform.DTO
     {
         public int VLCMilkCollectionDtlId { get; set; }
         public Nullable<int> VLCMilkCollectionId { get; set; }
-        public int ProductId { get; set; }
+        public MilkTypeEnum ProductId { get; set; }
+        public string ProductName { get; set; }
         public Nullable<decimal> Quantity { get; set; }
         public Nullable<decimal> RatePerUnit { get; set; }
         public Nullable<decimal> FAT { get; set; }

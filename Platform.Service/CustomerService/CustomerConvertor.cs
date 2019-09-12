@@ -27,15 +27,18 @@ namespace Platform.Service
                 customerDto.Tehsil = customer.Tehsil;
                 customerDto.District = customer.District;
                 customerDto.AddressState = customer.AddressState;
-               
+
                 customerDto.Contact = customer.Contact;
                 customerDto.AlternateContact = customer.AlternateContact;
                 customerDto.Email = customer.Email;
                 customerDto.PostalCode = customer.PostalCode;
-                customerDto.Gender = customer.Gender;
+                GenderEnum gender;
+                Enum.TryParse<GenderEnum>(customer.Gender, out gender);
+                customerDto.Gender = gender;
                 customerDto.Aniversary = customer.Aniversary.GetValueOrDefault();
                 customerDto.Occupation = customer.Occupation;
                 customerDto.VLCId = customer.VLCId.GetValueOrDefault();
+                customerDto.VLCName = customer.VLC.VLCName.ToString();
                 customerDto.DateOfJoinVLC = customer.DateOfJoinVLC.GetValueOrDefault();
                 customerDto.CreatedBy = customer.CreatedBy;
                 customerDto.CreatedDate = customer.CreatedDate;
@@ -66,13 +69,13 @@ namespace Platform.Service
 
         public static void ConvertToCustomerEntity(ref Customer customer, CustomerDto customerdto, bool isUpdate)
         {
-           
+
             if (string.IsNullOrWhiteSpace(customerdto.CustomerName) == false)
             {
                 customer.CustomerName = customerdto.CustomerName;
             }
 
-            if(string.IsNullOrWhiteSpace(customerdto.AddressLine)==false)
+            if (string.IsNullOrWhiteSpace(customerdto.AddressLine) == false)
             {
                 customer.CustomerAddress = customerdto.AddressLine;
             }
@@ -94,11 +97,11 @@ namespace Platform.Service
 
             }
 
-            
 
-            if (string.IsNullOrWhiteSpace(customerdto.Gender) == false)
+
+            if (string.IsNullOrWhiteSpace(customerdto.Gender.ToString()) == false)
             {
-                customer.Gender = customerdto.Gender;
+                customer.Gender = customerdto.Gender.ToString();
 
             }
 
@@ -137,8 +140,8 @@ namespace Platform.Service
                 customer.Occupation = customerdto.Occupation;
             }
 
-            
-            customer.DOB = customerdto.DOB.HasValue ? customerdto.DOB.Value: (DateTime ?)null;
+
+            customer.DOB = customerdto.DOB.HasValue ? customerdto.DOB.Value : (DateTime?)null;
             customer.Aniversary = customerdto.Aniversary.HasValue ? customerdto.Aniversary.Value : (DateTime?)null;
 
 

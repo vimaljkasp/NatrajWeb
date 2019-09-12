@@ -89,6 +89,10 @@
     <Compile Include="VLC\VLCWalletRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Platform.DTO\Platform.DTO.csproj">
       <Project>{58292060-6e50-4fb7-ac50-a7c67caa9b1c}</Project>
       <Name>Platform.DTO</Name>
@@ -97,10 +101,6 @@
       <Project>{be316c17-5a9f-447a-a681-e40e3281375d}</Project>
       <Name>Platform.Sql</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

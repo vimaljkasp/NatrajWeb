@@ -26,9 +26,19 @@ namespace Platform.Service
             vlcMilkCollectionDTO.ModifiedDate = vlcMilkCollection.ModifiedDate.GetValueOrDefault();
             vlcMilkCollectionDTO.CustomerName = vlcMilkCollection.Customer.CustomerName.ToString();
             vlcMilkCollectionDTO.VLCName = vlcMilkCollection.VLC.VLCName.ToString();
+
+            if (vlcMilkCollection.VLCMilkCollectionDtls != null && vlcMilkCollection.VLCMilkCollectionDtls.Count() > 0)
+            {
+                vlcMilkCollectionDTO.vLCMilkCollectionDtlDTOList = new List<VLCMilkCollectionDtlDTO>();
+                foreach (VLCMilkCollectionDtl item in vlcMilkCollection.VLCMilkCollectionDtls)
+                {
+                    vlcMilkCollectionDTO.vLCMilkCollectionDtlDTOList.Add(ConvertToVLCMilkCollectionDetailDTO(item));
+                }
+            }
+
             return vlcMilkCollectionDTO;
 
-    }
+        }
 
         public static void ConvertToVLCMilkCollectionEntity(ref VLCMilkCollection vlcMilkCollection, VLCMilkCollectionDTO vlcMilkCollectionDTO, bool isUpdate)
         {
@@ -36,8 +46,8 @@ namespace Platform.Service
                 vlcMilkCollection.VLCMilkCollectionId = vlcMilkCollectionDTO.VLCMilkCollectionId;
             vlcMilkCollection.VLCId = vlcMilkCollectionDTO.VLCId;
             vlcMilkCollection.CustomerId = vlcMilkCollectionDTO.CustomerId;
-            vlcMilkCollection.ShiftId = vlcMilkCollectionDTO.ShiftId;
-          
+            vlcMilkCollection.ShiftId = (int)vlcMilkCollectionDTO.ShiftId;
+
 
         }
 
@@ -48,10 +58,27 @@ namespace Platform.Service
             vlcMilkCollectionDtl.CLR = vlcMilkCollectionDtlDTO.CLR;
             vlcMilkCollectionDtl.FAT = vlcMilkCollectionDtlDTO.FAT;
             vlcMilkCollectionDtl.Qunatity = vlcMilkCollectionDtlDTO.Quantity;
+            vlcMilkCollectionDtl.RatePerUnit = vlcMilkCollectionDtlDTO.RatePerUnit;
             vlcMilkCollectionDtl.Amount = vlcMilkCollectionDtlDTO.Amount;
-            vlcMilkCollectionDtl.ProductId = vlcMilkCollectionDtlDTO.ProductId;
+            vlcMilkCollectionDtl.ProductId = (int)vlcMilkCollectionDtlDTO.ProductId;
 
 
+        }
+
+        public static VLCMilkCollectionDtlDTO ConvertToVLCMilkCollectionDetailDTO(VLCMilkCollectionDtl vLCMilkCollectionDtl)
+        {
+            VLCMilkCollectionDtlDTO vLCMilkCollectionDtlDTO = new VLCMilkCollectionDtlDTO();
+            vLCMilkCollectionDtlDTO.Amount = vLCMilkCollectionDtl.Amount;
+            vLCMilkCollectionDtlDTO.CLR = vLCMilkCollectionDtl.CLR;
+            vLCMilkCollectionDtlDTO.FAT = vLCMilkCollectionDtl.FAT;
+            MilkTypeEnum milkType;
+            Enum.TryParse<MilkTypeEnum>(vLCMilkCollectionDtl.ProductId.ToString(), out milkType);
+            vLCMilkCollectionDtlDTO.ProductId = milkType;
+            vLCMilkCollectionDtlDTO.ProductName = milkType.ToString();
+            vLCMilkCollectionDtlDTO.Quantity = vLCMilkCollectionDtl.Qunatity;
+            vLCMilkCollectionDtlDTO.RatePerUnit = vLCMilkCollectionDtl.RatePerUnit;
+            vLCMilkCollectionDtlDTO.VLCMilkCollectionId = vLCMilkCollectionDtl.VLCMilkCollectionId;
+            return vLCMilkCollectionDtlDTO;
         }
 
 
@@ -74,12 +101,12 @@ namespace Platform.Service
                     vLCCustomerCollectionDTO.vLCCustomerCollectionDtlDTOList.Add(ConvertToCustomerCollectionDtlDTO(dtl));
                 }
 
-               
+
             }
             return vLCCustomerCollectionDTO;
         }
 
-        public static VLCCustomerCollectionDtlDTO ConvertToCustomerCollectionDtlDTO( VLCMilkCollectionDtl vLCMilkCollectionDtl)
+        public static VLCCustomerCollectionDtlDTO ConvertToCustomerCollectionDtlDTO(VLCMilkCollectionDtl vLCMilkCollectionDtl)
         {
             VLCCustomerCollectionDtlDTO vLCCustomerCollectionDtlDTO = new VLCCustomerCollectionDtlDTO();
             vLCCustomerCollectionDtlDTO.VLCMilkCollectionDtlId = vLCMilkCollectionDtl.VLCMilkCollectionDtlId;

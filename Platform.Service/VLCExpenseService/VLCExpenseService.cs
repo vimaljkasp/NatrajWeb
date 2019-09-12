@@ -58,12 +58,15 @@ namespace Platform.Service
         }
 
 
-
+        //TODO: Vimal please check why you are checking vlc id in DC repository
+        //Date: 09-Sep-19
         public ResponseDTO AddVLCExpenseDetail(VLCExpenseDTO vLCExpenseDTO)
         {
             ResponseDTO responseDTO = new ResponseDTO();
             
-            var vLC = unitOfWork.DistributionCenterRepository.GetById(vLCExpenseDTO.VLCId);
+            //CC: By Anil see comment above
+            //var vLC = unitOfWork.DistributionCenterRepository.GetById(vLCExpenseDTO.VLCId);
+            var vLC = unitOfWork.VLCRepository.GetById(vLCExpenseDTO.VLCId);
             if (vLC != null)
             {
                 VLCExpenseDetail vLCExpenseDetail = AddExpense(vLCExpenseDTO);

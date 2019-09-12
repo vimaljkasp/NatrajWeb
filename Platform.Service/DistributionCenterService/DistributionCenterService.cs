@@ -27,7 +27,7 @@ namespace Platform.Service
             distributionCenter.CreatedBy = distributionCenter.ModifiedBy = "Admin";
                // unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customerDto.VLCId);
             distributionCenter.DateOfRegistration = DateTimeHelper.GetISTDateTime().Date;
-            distributionCenter.IsDeleted = true;
+            distributionCenter.IsDeleted = false;
             distributionCenter.Pin = OTPGenerator.GetSixDigitOTP();
             distributionCenterDTO.DCId = distributionCenter.DCId;
             

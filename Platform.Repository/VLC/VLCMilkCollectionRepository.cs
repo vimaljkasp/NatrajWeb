@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using Platform.DTO;
 
 namespace Platform.Repository
 {
@@ -43,24 +44,24 @@ namespace Platform.Repository
             return vlcMilkCollection;
         }
 
-        public VLCMilkCollection GetCollectionByShiftDateProduct(DateTime collectionDate,int shift,int productId,int customerId)
+        public VLCMilkCollection GetCollectionByShiftDateProduct(DateTime collectionDate, ShiftEnum shift, MilkTypeEnum productId, int customerId)
         {
             DateTime collectionDat = Convert.ToDateTime(collectionDate).Date;
-            var vlcmilk = _repository.VLCMilkCollections.Where(v => v.ShiftId == shift &&
+            var vlcmilk = _repository.VLCMilkCollections.Where(v => v.ShiftId == (int)shift &&
             System.Data.Entity.DbFunctions.TruncateTime(v.CollectionDateTime) == collectionDat && v.CustomerId == customerId).FirstOrDefault();
-                if (vlcmilk !=null)
+            if (vlcmilk != null)
             {
-                if (_repository.VLCMilkCollectionDtls.Where(v => v.VLCMilkCollectionId == vlcmilk.VLCMilkCollectionId && v.ProductId == productId).Any())
+                if (_repository.VLCMilkCollectionDtls.Where(v => v.VLCMilkCollectionId == vlcmilk.VLCMilkCollectionId && v.ProductId == (int)productId).Any())
                     return vlcmilk;
-                
+
             }
             return null;
-            
+
 
         }
 
 
-        public List<VLCMilkCollection> GetByVLCIdAndCollectionDateShift (int vlcId,DateTime collectionDate,int shift, int? pageNumber)
+        public List<VLCMilkCollection> GetByVLCIdAndCollectionDateShift(int vlcId, DateTime collectionDate, ShiftEnum shift, int? pageNumber)
         {
             DateTime collectionDat = Convert.ToDateTime(collectionDate).Date;
 
@@ -69,9 +70,9 @@ namespace Platform.Repository
             var vlcMilkCollection = _repository.VLCMilkCollections
                  .Where(x => x.VLCId == vlcId
                  && System.Data.Entity.DbFunctions.TruncateTime(x.CollectionDateTime) == collectionDat
-                 && x.ShiftId== shift)
-                 
-                .OrderByDescending(x=>x.CollectionDateTime)
+                 && x.ShiftId == (int)shift)
+
+                .OrderByDescending(x => x.CollectionDateTime)
                 .Skip((takePage - 1) * takeCount)
                 .Take(takeCount)
                 .Include("Customer")

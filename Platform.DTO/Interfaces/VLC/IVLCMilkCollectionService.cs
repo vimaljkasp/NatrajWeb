@@ -15,7 +15,7 @@ namespace Platform.DTO
 
         VLCMilkCollectionDTO GetVLCMilkCollectionById(int customerId);
 
-       ResponseDTO GetVLCCustomerCollectionsByDateAndShift(int vlcId, DateTime collectionDate,int shift,int? PageNumber);
+       ResponseDTO GetVLCCustomerCollectionsByDateAndShift(int vlcId, DateTime collectionDate, ShiftEnum shift,int? PageNumber);
 
         ResponseDTO AddVLCMilkCollection(VLCMilkCollectionDTO vlcMilkCollectionDto);
 

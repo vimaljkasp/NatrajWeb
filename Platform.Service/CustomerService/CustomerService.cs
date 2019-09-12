@@ -9,16 +9,16 @@ using System.Linq;
 
 namespace Platform.Service
 {
-    public class CustomerService : ICustomerService,IDisposable
+    public class CustomerService : ICustomerService, IDisposable
     {
-        private  UnitOfWork unitOfWork=new UnitOfWork();
-     public CustomerService(LoggerService loggerService)
+        private UnitOfWork unitOfWork = new UnitOfWork();
+        public CustomerService(LoggerService loggerService)
         {
-            
+
         }
 
         public List<CustomerDto> GetAllCustomers()
-        { 
+        {
             List<CustomerDto> customerList = new List<CustomerDto>();
             var customers = unitOfWork.CustomerRepository.GetAll();
             if (customers != null)
@@ -37,7 +37,7 @@ namespace Platform.Service
         public List<CustomerDto> GetCustomerByPageCount(int? pageNumber, int? count)
         {
             List<CustomerDto> customerList = new List<CustomerDto>();
-            var customers = unitOfWork.CustomerRepository.GetCustomerByCount(pageNumber,count);
+            var customers = unitOfWork.CustomerRepository.GetCustomerByCount(pageNumber, count);
             if (customers != null)
             {
                 foreach (var customer in customers)
@@ -51,12 +51,12 @@ namespace Platform.Service
 
         }
 
-        public ResponseDTO GetCustomerListByVLCId(int vlcId,int? pageNumber)
+        public ResponseDTO GetCustomerListByVLCId(int vlcId, int? pageNumber)
         {
             ResponseDTO responseDTO = new ResponseDTO();
 
             List<CustomerDto> customerList = new List<CustomerDto>();
-            var customers = unitOfWork.CustomerRepository.GetCustomerListByVLCId(vlcId,pageNumber);
+            var customers = unitOfWork.CustomerRepository.GetCustomerListByVLCId(vlcId, pageNumber);
             if (customers != null)
             {
                 foreach (var customer in customers)
@@ -69,7 +69,7 @@ namespace Platform.Service
             responseDTO.Message = String.Format("List of Customers By VLC Id");
             responseDTO.Data = customerList;
             return responseDTO;
-           
+
         }
 
         public ResponseDTO GetCustomerListForSearchByVLCId(int vlcId)
@@ -95,13 +95,13 @@ namespace Platform.Service
         public ResponseDTO GetCustomerDetailsByCustomerId(int customerId)
         {
             ResponseDTO responseDTO = new ResponseDTO();
-        
-            CustomerDetailsDTO customerDetailsDto = new CustomerDetailsDTO() ;
+
+            CustomerDetailsDTO customerDetailsDto = new CustomerDetailsDTO();
             var customer = unitOfWork.CustomerRepository.GetById(customerId);
             if (customer != null)
             {
                 customerDetailsDto.customerProfileDetails = CustomerConvertor.ConvertToCustomerDto(customer);
-                if(customer.CustomerBanks!=null)
+                if (customer.CustomerBanks != null)
                 {
                     customerDetailsDto.customerBankDetails = CustomerBankConvertor.ConvertTocustomerBankDto(customer.CustomerBanks.FirstOrDefault());
                 }
@@ -128,13 +128,13 @@ namespace Platform.Service
 
             }
             return responseDTO;
-           
+
         }
 
         public List<CustomerDto> GetCustomerDetailsByVLCCode(string vlcCode)
         {
             List<CustomerDto> customerList = new List<CustomerDto>();
-            var customers = unitOfWork.CustomerRepository.GetAll().Where(id => id.VLC.VLCCode==vlcCode).ToList();
+            var customers = unitOfWork.CustomerRepository.GetAll().Where(id => id.VLC.VLCCode == vlcCode).ToList();
             if (customers != null)
             {
                 foreach (var customer in customers)
@@ -168,70 +168,86 @@ namespace Platform.Service
             return responseDTO;
         }
 
-        
+
 
         public ResponseDTO AddCustomer(CustomerDto customerDto)
         {
-             this.CheckForExisitngCustomer(customerDto);
             ResponseDTO responseDTO = new ResponseDTO();
-            Customer customer = new Customer();
-           customer.CustomerId = unitOfWork.DashboardRepository.NextNumberGenerator("Customer");
-            var vlc = unitOfWork.VLCRepository.GetById(customerDto.VLCId);
-            if (vlc != null)
+            if (!this.CheckForExisitngCustomer(customerDto))
             {
-                CustomerConvertor.ConvertToCustomerEntity(ref customer, customerDto, false);
-                customer.CustomerCode = unitOfWork.CustomerRepository.GetCustomerCodeIdByVLC(customerDto.VLCId);
-                customer.CreatedDate = DateTimeHelper.GetISTDateTime();
-                customer.ModifiedDate = DateTimeHelper.GetISTDateTime();
-                customer.CreatedBy = customer.ModifiedBy = vlc.AgentName ?? "System";
-                customer.DateOfJoinVLC = DateTimeHelper.GetISTDateTime().Date;
-                customer.IsDeleted = false;
-                customer.VLCId = customerDto.VLCId;
-               unitOfWork.CustomerRepository.Add(customer);
-                customerDto = CustomerConvertor.ConvertToCustomerDto(customer);
-                unitOfWork.SaveChanges();
-                responseDTO.Status = true;
-                responseDTO.Message = String.Format("Customer Successfully Created");
-                responseDTO.Data = customerDto;
+                Customer customer = new Customer();
+                customer.CustomerId = unitOfWork.DashboardRepository.NextNumberGenerator("Customer");
+                var vlc = unitOfWork.VLCRepository.GetById(customerDto.VLCId);
+                if (vlc != null)
+                {
+                    CustomerConvertor.ConvertToCustomerEntity(ref customer, customerDto, false);
+                    customer.CustomerCode = unitOfWork.CustomerRepository.GetCustomerCodeIdByVLC(customerDto.VLCId);
+                    customer.CreatedDate = DateTimeHelper.GetISTDateTime();
+                    customer.ModifiedDate = DateTimeHelper.GetISTDateTime();
+                    customer.CreatedBy = customer.ModifiedBy = vlc.AgentName ?? "System";
+                    customer.DateOfJoinVLC = DateTimeHelper.GetISTDateTime().Date;
+                    customer.IsDeleted = false;
+                    customer.VLCId = customerDto.VLCId;
+                    unitOfWork.CustomerRepository.Add(customer);
+                    customerDto = CustomerConvertor.ConvertToCustomerDto(customer);
+                    unitOfWork.SaveChanges();
+                    responseDTO.Status = true;
+                    responseDTO.Message = String.Format("Customer Successfully Created");
+                    responseDTO.Data = customerDto;
+                }
+                else
+                {
+                    throw new PlatformModuleException("VLC Details Not Found");
+                }
             }
             else
             {
-                throw new PlatformModuleException("VLC Details Not Found");
+                responseDTO.Message = "Customer with this Contact & Email already exists.Please enter unique contact & Email.";
+                responseDTO.Status = false;
             }
             return responseDTO;
 
 
         }
 
-        private void CheckForExisitngCustomer(CustomerDto customerDto)
+        private bool CheckForExisitngCustomer(CustomerDto customerDto)
         {
-            var existingCustomer = unitOfWork.CustomerRepository.GetCustomerByMobileNumber(customerDto.Contact);
-            if (existingCustomer != null)
-                throw new PlatformModuleException("Customer Account Already Exist with given Mobile Number");
-             existingCustomer = unitOfWork.CustomerRepository.GetCustomerByEmail( customerDto.Email);
-            if (existingCustomer != null)
-                throw new PlatformModuleException("Customer Account Already Exist with given Email");
-
+            var existingCustomerByContact = unitOfWork.CustomerRepository.GetCustomerByMobileNumber(customerDto.Contact);
+            var existingCustomerByEmail = unitOfWork.CustomerRepository.GetCustomerByEmail(customerDto.Email);
+            if (existingCustomerByContact != null || existingCustomerByEmail != null)
+                return true;
+            else
+                return false;
 
         }
 
         public ResponseDTO UpdateCustomer(CustomerDto customerDto)
         {
+            ResponseDTO responseDTO = new ResponseDTO();
 
             var customer = unitOfWork.CustomerRepository.GetById(customerDto.CustomerId);
-            if(customer ==null)
-                throw new PlatformModuleException(string.Format("Customer Account Not Found with Customer Id {0}",customerDto.CustomerId));
-            CustomerConvertor.ConvertToCustomerEntity(ref customer, customerDto, true);
-           
-            customer.ModifiedDate = DateTimeHelper.GetISTDateTime();
-            customer.ModifiedBy = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customer.VLCId.GetValueOrDefault());
-          
-            unitOfWork.CustomerRepository.Update(customer);
-            unitOfWork.SaveChanges();
-            ResponseDTO responseDTO = new ResponseDTO();
-            responseDTO.Status = true;
-            responseDTO.Message = String.Format("Customer Updated Successfully");
-            responseDTO.Data = CustomerConvertor.ConvertToCustomerDto(customer);
+            if (customer != null)
+            {
+
+
+
+                CustomerConvertor.ConvertToCustomerEntity(ref customer, customerDto, true);
+
+                customer.ModifiedDate = DateTimeHelper.GetISTDateTime();
+                customer.ModifiedBy = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(customer.VLCId.GetValueOrDefault());
+
+                unitOfWork.CustomerRepository.Update(customer);
+                unitOfWork.SaveChanges();
+
+                responseDTO.Status = true;
+                responseDTO.Message = String.Format("Customer Updated Successfully");
+                responseDTO.Data = CustomerConvertor.ConvertToCustomerDto(customer);
+            }
+            else
+            {
+                responseDTO.Message = "Customer Account Not Found with Customer Id. Please try to update again.";
+                responseDTO.Status = false;
+            }
             return responseDTO;
         }
 
@@ -272,6 +288,6 @@ namespace Platform.Service
             GC.SuppressFinalize(this);
         }
 
-       
+
     }
 }

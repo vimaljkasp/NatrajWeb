@@ -49,14 +49,14 @@ namespace Platform.Service
 
         }
 
-        public List<VLCCustomerCollectionDTO> GetVLCCustomerCollectionByDateAndShift(int vlcId, DateTime collectionDate, int shift,int? pageNumber)
+        public List<VLCCustomerCollectionDTO> GetVLCCustomerCollectionByDateAndShift(int vlcId, DateTime collectionDate, ShiftEnum shift, int? pageNumber)
         {
             List<VLCCustomerCollectionDTO> vlcCustomerMilkCollection = new List<VLCCustomerCollectionDTO>();
-     
-            var vLCMilkCollection = unitOfWork.VLCMilkCollectionRepository.GetByVLCIdAndCollectionDateShift(vlcId, collectionDate, shift,pageNumber);
+
+            var vLCMilkCollection = unitOfWork.VLCMilkCollectionRepository.GetByVLCIdAndCollectionDateShift(vlcId, collectionDate, shift, pageNumber);
             if (vLCMilkCollection != null)
             {
-                foreach (var vlcMilk in  vLCMilkCollection)
+                foreach (var vlcMilk in vLCMilkCollection)
                 {
                     vlcCustomerMilkCollection.Add(VLCMilkCollectionConvertor.ConvertToVLCCustomerCollectionDTO(vlcMilk));
                 }
@@ -66,7 +66,7 @@ namespace Platform.Service
             return vlcCustomerMilkCollection;
         }
 
-        public ResponseDTO GetVLCCustomerCollectionsByDateAndShift(int vlcId, DateTime collectionDate, int shift, int? pageNumber)
+        public ResponseDTO GetVLCCustomerCollectionsByDateAndShift(int vlcId, DateTime collectionDate, ShiftEnum shift, int? pageNumber)
         {
             ResponseDTO responseDTO = new ResponseDTO();
             responseDTO.Status = true;
@@ -141,12 +141,12 @@ namespace Platform.Service
 
         //}
 
-        public NatrajSMSLog SendSMS(string mobileNumber,string message)
+        public NatrajSMSLog SendSMS(string mobileNumber, string message)
         {
             NatrajSMSLog natrajSMSLog = new NatrajSMSLog();
             natrajSMSLog.SMSId = unitOfWork.DashboardRepository.NextNumberGenerator("");
             SMSConvertor.ConvertToSMSMessage(ref natrajSMSLog, NatrajComponent.VLC, SMSType.VLCMilkCollection, mobileNumber, message);
-            
+
             return natrajSMSLog;
         }
 
@@ -186,17 +186,17 @@ namespace Platform.Service
             unitOfWork.SaveChanges();
             responseDTO.Status = true;
             responseDTO.Message = String.Format("Milk Collection Detail Added Successfully ");
-                responseDTO.Data = this.GetVLCCustomerCollectionByDateAndShift(vLCMilkCollectionDTO.VLCId,DateTimeHelper.GetISTDateTime().Date, vLCMilkCollectionDTO.ShiftId,1);
-            
+            responseDTO.Data = this.GetVLCCustomerCollectionByDateAndShift(vLCMilkCollectionDTO.VLCId, DateTimeHelper.GetISTDateTime().Date, vLCMilkCollectionDTO.ShiftId, 1);
+
             return responseDTO;
 
 
         }
 
-        public void CheckForExistingCollectionDetailByDateShiftProduct(DateTime collectionDate,int shift,int product,int customerId)
+        public void CheckForExistingCollectionDetailByDateShiftProduct(DateTime collectionDate, ShiftEnum shift, MilkTypeEnum product, int customerId)
         {
             var existingCollection = unitOfWork.VLCMilkCollectionRepository.GetCollectionByShiftDateProduct(collectionDate, shift, product, customerId);
-            if(existingCollection !=null)
+            if (existingCollection != null)
                 throw new PlatformModuleException("Customer Collection Already Exist with given Details");
 
         }
@@ -208,22 +208,28 @@ namespace Platform.Service
             ResponseDTO responseDTO = new ResponseDTO();
             //Will update the method when required
             var vlcMilkCollection = unitOfWork.VLCMilkCollectionRepository.GetById(vLCMilkCollectionDTO.VLCMilkCollectionId);
+            //TODO: Make sure what detail need to allow for update - Anil
+            vlcMilkCollection.ShiftId = (int)vLCMilkCollectionDTO.ShiftId;
+            vlcMilkCollection.CollectionDateTime = vLCMilkCollectionDTO.CollectionDateTime;
+            vlcMilkCollection.CustomerId = vLCMilkCollectionDTO.CustomerId;
+            vlcMilkCollection.VLCId = vLCMilkCollectionDTO.VLCId;
+
             var customer = unitOfWork.CustomerRepository.GetById(vlcMilkCollection.CustomerId.GetValueOrDefault());
-           if(vlcMilkCollection==null)
+            if (vlcMilkCollection == null)
                 throw new PlatformModuleException(string.Format("VLC Milk Collection Detail Not Found with Collection Id {0}", vLCMilkCollectionDTO.VLCMilkCollectionId));
             vlcMilkCollection.ModifiedDate = DateTimeHelper.GetISTDateTime();
             vlcMilkCollection.ModifiedBy = "Admin";
             //    VLCMilkCollectionConvertor.ConvertToVLCMilkCollectionEntity(ref vlcMilkCollection, vLCMilkCollectionDTO, true);
 
-                var detailList = unitOfWork.VLCMilkCollectionDtlRepository.GetById(vLCMilkCollectionDTO.VLCMilkCollectionId);
+            var detailList = unitOfWork.VLCMilkCollectionDtlRepository.GetById(vLCMilkCollectionDTO.VLCMilkCollectionId);
 
             if (detailList != null && detailList.Count() > 0)
             {
                 foreach (var collectionDtl in detailList)
                     unitOfWork.VLCMilkCollectionDtlRepository.Delete(collectionDtl.VLCMilkCollectionDtlId);
-                
+
             }
-            
+
             if (vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList != null)
             {
                 foreach (var vlcCollectionDtlDTO in vLCMilkCollectionDTO.vLCMilkCollectionDtlDTOList)
@@ -248,7 +254,9 @@ namespace Platform.Service
             unitOfWork.SaveChanges();
             responseDTO.Status = true;
             responseDTO.Message = String.Format("Milk Collection Detail Updated Successfully");
-            responseDTO.Data = this.GetVLCCustomerCollectionByDateAndShift(vlcMilkCollection.VLCId.GetValueOrDefault(), DateTimeHelper.GetISTDateTime().Date, vlcMilkCollection.ShiftId.GetValueOrDefault(),1);
+            ShiftEnum shift;
+            Enum.TryParse<ShiftEnum>(vlcMilkCollection.ShiftId.GetValueOrDefault().ToString(), out shift);
+            responseDTO.Data = this.GetVLCCustomerCollectionByDateAndShift(vlcMilkCollection.VLCId.GetValueOrDefault(), DateTimeHelper.GetISTDateTime().Date, shift, 1);
             return responseDTO;
         }
 
@@ -271,29 +279,31 @@ namespace Platform.Service
                 unitOfWork.SaveChanges();
                 responseDTO.Status = true;
                 responseDTO.Message = String.Format("Milk Collection Detail Deleted Successfully");
-                responseDTO.Data = this.GetVLCCustomerCollectionByDateAndShift(vLCMilkCollection.VLCId.GetValueOrDefault(), DateTimeHelper.GetISTDateTime().Date, vLCMilkCollection.ShiftId.GetValueOrDefault(), 1);
+                ShiftEnum shift;
+                Enum.TryParse<ShiftEnum>(vLCMilkCollection.ShiftId.GetValueOrDefault().ToString(), out shift);
+                responseDTO.Data = this.GetVLCCustomerCollectionByDateAndShift(vLCMilkCollection.VLCId.GetValueOrDefault(), DateTimeHelper.GetISTDateTime().Date, shift, 1);
                 return responseDTO;
             }
             else
             {
                 throw new PlatformModuleException("Milk Collection Detail Not Found ");
             }
-            
-           
+
+
         }
 
 
 
-     
 
-   
+
+
 
         public ResponseDTO DeleteVLCMilkCollectionDtl(int id)
         {
             ResponseDTO responseDTO = new ResponseDTO();
             UnitOfWork unitOfWork = new UnitOfWork();
             var vLCMilkCollectionDtl = unitOfWork.VLCMilkCollectionDtlRepository.GetById(id);
-        
+
             unitOfWork.VLCMilkCollectionDtlRepository.Delete(id);
             unitOfWork.SaveChanges();
             responseDTO.Status = true;
