@@ -2,6 +2,7 @@
 using FluentValidation.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -27,25 +28,42 @@ namespace Platform.DTO
         }
 
         public int DCOrderId { get; set; }
+        [DisplayName("Order #")]
         public string DCOrderNumber { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayName("Date")]
         public System.DateTime OrderDate { get; set; }
+        [DisplayName("DCID")]
         public int DCId { get; set; }
         //public decimal OrderPrice { get; set; }
-    
-        //public decimal OrderTax { get; set; }
-        public decimal OrderDiscount { get; set; }
-        public decimal OrderTotalPrice { get; set; }
-        public String DCName { get; set; }
 
+        //public decimal OrderTax { get; set; }
+        [DisplayName("Discount")]
+        public decimal OrderDiscount { get; set; }
+        [DisplayName("Total Price")]
+        public decimal OrderTotalPrice { get; set; }
+        [DisplayName("DC Name")]
+        public String DCName { get; set; }
+        [DisplayName("Paid Amount")]
         public decimal OrderPaidAmount { get; set; }
+        [DisplayName("Total Qty")]
         public decimal TotalOrderQuantity { get; set; }
+        [DisplayName("Actual Qty")]
         public decimal TotalActualQuantity { get; set; }
+        [DisplayName("Status")]
         public string OrderStatus { get; set; }
+        [DisplayName("Expected Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DeliveryExpectedDate { get; set; }
+        [DisplayName("Delivery Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DeliveredDate { get; set; }
+        [DisplayName("Delivered By")]
         public string DeliveredBy { get; set; }
+        [DisplayName("Comments")]
         public string OrderComments { get; set; }
     
 
