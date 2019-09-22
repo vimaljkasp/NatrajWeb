@@ -2,6 +2,8 @@
 using Platform.Sql;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,8 +48,8 @@ namespace Platform.Repository
         PlatformDBEntities _repository;
         public UnitOfWork()
         {
-            _repository= new PlatformDBEntities();
-           
+            _repository = new PlatformDBEntities();
+
         }
 
 
@@ -79,7 +81,7 @@ namespace Platform.Repository
         //                    CompanyPhone=new string[] {"+91 6350505864","+91 9929575888"},
         //                    CompanyDescription="A Milk Production Company"
         //                }
-                        
+
 
         //            };
         //        }
@@ -332,7 +334,7 @@ namespace Platform.Repository
             }
         }
 
-        
+
 
         public MessageRepository MessageRepository
         {
@@ -449,9 +451,36 @@ namespace Platform.Repository
         }
 
         //To save multiple repository and maintain consistency
-        public void SaveChanges()
+        public int SaveChanges()
         {
-            this._repository.SaveChanges();
+
+            try
+            {
+                return this._repository.SaveChanges();
+
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                {
+                    // Get entry
+
+                    DbEntityEntry entry = item.Entry;
+                    string entityTypeName = entry.Entity.GetType().Name;
+
+                    // Display or log error messages
+
+                    foreach (DbValidationError subItem in item.ValidationErrors)
+                    {
+                        string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                 subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                        Console.WriteLine(message);
+                    }
+                }
+
+                return 0;
+            }
+
         }
 
 

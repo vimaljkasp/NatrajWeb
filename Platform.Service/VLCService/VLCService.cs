@@ -124,15 +124,37 @@ namespace Platform.Service
             return responseDTO;
         }
 
-        public void DeleteVLC(int id)
+        public ResponseDTO DeleteVLC(int id)
         {
-            UnitOfWork unitOfWork = new UnitOfWork();
-            //get customer
-            var vlc = unitOfWork.VLCRepository.GetById(id);
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                UnitOfWork unitOfWork = new UnitOfWork();
 
-            unitOfWork.VLCRepository.Delete(id);
-            unitOfWork.SaveChanges();
 
+                var vlc = unitOfWork.VLCRepository.GetById(id);
+                unitOfWork.VLCRepository.Delete(id);
+                if (unitOfWork.SaveChanges() > 0)
+                {
+                    //Deleted 
+                    response.Status = true;
+                    response.Message = "VLC Deleted Successfully.";
+                }
+                else
+                {
+                    //Not deleted
+                    response.Status = false;
+                    response.Message = "You can not Delete this VLC. PLease check with Admin for more details.";
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
         protected void Dispose(bool disposing)
         {

@@ -11,7 +11,7 @@ namespace Platform.Service
 {
     public class ProductConvertor
     {
-        public static ProductShoppingDTO ConvertToProductShoppingDTO(Product product,string path)
+        public static ProductShoppingDTO ConvertToProductShoppingDTO(Product product, string path)
         {
             ProductShoppingDTO productShoppingDTO = new ProductShoppingDTO();
             productShoppingDTO.CategoryId = product.CategoryId;
@@ -21,7 +21,7 @@ namespace Platform.Service
             productShoppingDTO.ProductName = product.Name;
             productShoppingDTO.ProductPrice = product.Rate;
             productShoppingDTO.ProductQuantityDescription = product.Description;
-            productShoppingDTO.ImageUrl = Path.Combine(path, "PROD" + product.ProductId.ToString()+".jpg");
+            productShoppingDTO.ImageUrl = Path.Combine(path, "PROD" + product.ProductId.ToString() + ".jpg");
             return productShoppingDTO;
 
         }
@@ -34,14 +34,25 @@ namespace Platform.Service
             return productCategoryDTO;
         }
 
-        public static void ConvertProductDTOToProductEntity(ref Product product,ProductDTO productDTO)
+        public static void ConvertProductDTOToProductEntity(ref Product product, ProductDTO productDTO)
         {
             product.CategoryId = productDTO.CategoryId;
             product.Description = productDTO.ProductQuantityDescription;
             product.DiscountedRate = productDTO.DiscountedProductPrice;
             product.Rate = productDTO.ProductPrice;
             product.SubCategoryId = product.CategoryId;
-            
+
+        }
+
+        public static void ConvertProductEntityToProductDTO(ref ProductDTO productDTO, Product product)
+        {
+            productDTO.CategoryId = product.CategoryId;
+            productDTO.CategoryName = product.ProductCategory.CategoryName;
+            productDTO.ProductPrice = product.Rate;
+            productDTO.DiscountedProductPrice = product.DiscountedRate;
+            productDTO.ProductName = product.Name;
+            productDTO.ProductId = product.ProductId;
+
         }
     }
 }

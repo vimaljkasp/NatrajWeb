@@ -29,7 +29,11 @@ namespace Platform.Service
                 vLCPaymentDTO.PaymentDate = vLCPaymentDetail.PaymentDate;
                 vLCPaymentDTO.PaymentDrAmount = vLCPaymentDetail.PaymentDrAmount.GetValueOrDefault();
                 PaymentModeEnum paymentModeEnum;
-                Enum.TryParse(vLCPaymentDetail.PaymentMode.Value.ToString(), out paymentModeEnum);
+                if (vLCPaymentDetail.PaymentMode != null)
+                    Enum.TryParse(vLCPaymentDetail.PaymentMode.Value.ToString(), out paymentModeEnum);
+                else
+                    paymentModeEnum = PaymentModeEnum.Cash;
+
                 vLCPaymentDTO.PaymentMode = paymentModeEnum;
                 vLCPaymentDTO.PaymentReceivedBy = vLCPaymentDetail.PaymentReceivedBy;
             }

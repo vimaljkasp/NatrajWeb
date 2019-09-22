@@ -103,6 +103,7 @@
     <Compile Include="Interfaces\DistributionCenter\IDCPaymentService.cs" />
     <Compile Include="Interfaces\DistributionCenter\IDistributionCenterService.cs" />
     <Compile Include="Interfaces\INatrajConfigurationService.cs" />
+    <Compile Include="Interfaces\MilkRate\IMilkRateService.cs" />
     <Compile Include="Interfaces\Reports\IDockCollectionReportService.cs" />
     <Compile Include="Interfaces\DockCollection\IDockCollectionService.cs" />
     <Compile Include="Interfaces\ILoginService.cs" />

@@ -56,10 +56,10 @@ namespace Platform.Service
             ResponseDTO responseDTO = new ResponseDTO();
             List<ProductShoppingDTO> productList = new List<ProductShoppingDTO>();
             var products = unitOfWork.ProductRepository.GetAllProducts();
-            if(products !=null)
+            if (products != null)
             {
                 foreach (var product in products)
-                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product,NatrajConfigurationHelper.ImagePath));
+                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product, NatrajConfigurationHelper.ImagePath));
                 responseDTO.Status = true;
                 responseDTO.Message = "Product List";
                 responseDTO.Data = productList;
@@ -93,9 +93,23 @@ namespace Platform.Service
 
         }
 
+        /// <summary>
+        /// Create by Anil for unit price on UI
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
         public ResponseDTO GetProductByProductId(int productId)
         {
-            throw new NotImplementedException();
+            ResponseDTO responseDTO = new ResponseDTO();
+            Product product = new Product();
+            ProductDTO productDTO = new ProductDTO();
+            List<Product> products = unitOfWork.ProductRepository.GetAllProducts();
+            product = products.Find(x => x.ProductId == productId);
+            ProductConvertor.ConvertProductEntityToProductDTO(ref productDTO, product);
+            responseDTO.Status = true;
+            responseDTO.Message = "Product single by Id";
+            responseDTO.Data = productDTO;
+            return responseDTO;
         }
 
         public ResponseDTO SearchDCProductsByProductName(string productName)
@@ -106,7 +120,7 @@ namespace Platform.Service
             if (products != null)
             {
                 foreach (var product in products)
-                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product,NatrajConfigurationHelper.ImagePath));
+                    productList.Add(ProductConvertor.ConvertToProductShoppingDTO(product, NatrajConfigurationHelper.ImagePath));
                 responseDTO.Status = true;
                 responseDTO.Message = "Product List";
                 responseDTO.Data = productList;
@@ -141,6 +155,6 @@ namespace Platform.Service
             GC.SuppressFinalize(this);
         }
 
-       
+
     }
 }
