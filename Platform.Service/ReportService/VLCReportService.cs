@@ -1,5 +1,5 @@
 ﻿using Platform.DTO;
-
+using Platform.DTO.ReadDTO.ReportDTO;
 using Platform.Repository;
 using Platform.Sql;
 using Platform.Utilities;
@@ -14,11 +14,11 @@ namespace Platform.Service
     {
         private UnitOfWork unitOfWork = new UnitOfWork();
 
-        public ResponseDTO VLCPaymentSummaryByDate(int vlcId,DateTime StartDate, DateTime EndDate)
+        public ResponseDTO VLCPaymentSummaryByDate(int vlcId, DateTime StartDate, DateTime EndDate)
         {
 
             ResponseDTO responseDTO = new ResponseDTO();
-            var list= unitOfWork.VLCReportRepository.VLCPaymentSummaryByDate(vlcId, StartDate, EndDate);
+            var list = unitOfWork.VLCReportRepository.VLCPaymentSummaryByDate(vlcId, StartDate, EndDate);
             list.VLCName = this.GetVLCName(vlcId);
             responseDTO.Data = list;
             responseDTO.Status = true;
@@ -37,7 +37,7 @@ namespace Platform.Service
                 foreach (var vlcWallet in vLCWallets)
                 {
                     vLCWalletDTOList.Add(VLCConvertor.ConvertToVLCWalletDTO(vlcWallet));
-                   
+
                 }
                 responseDTO.Data = vLCWalletDTOList;
                 responseDTO.Status = true;
@@ -48,12 +48,12 @@ namespace Platform.Service
             {
                 throw new PlatformModuleException("No VLC Wallet Not Found");
             }
-           
+
 
         }
 
 
-    
+
 
 
 
@@ -89,8 +89,58 @@ namespace Platform.Service
             GC.SuppressFinalize(this);
         }
 
+        public ResponseDTO GetVLCByNameContactnCity(string VLCName, string Contact, string City)
+        {
 
+            ResponseDTO response = new ResponseDTO();
 
+            try
+            {
+                List<VLC> VLCs = unitOfWork.VLCRepository.GetAll();
 
+                if (!string.IsNullOrEmpty(VLCName))
+                {
+                    VLCs = VLCs.FindAll(x => x.VLCName.ToUpper().Trim().Contains(VLCName.ToUpper().Trim()));
+                }
+
+                if (!string.IsNullOrEmpty(City))
+                {
+                    VLCs = VLCs.FindAll(x => x.City.ToUpper().Trim().Contains(City.ToUpper().Trim())
+                    || x.Village.ToUpper().Trim().Contains(City.ToUpper().Trim()));
+                }
+
+                if (!string.IsNullOrEmpty(Contact))
+                {
+                    VLCs = VLCs.FindAll(x => x.Contact.ToUpper().Trim().Contains(Contact.ToUpper().Trim()));
+                }
+
+                if (!string.IsNullOrEmpty(VLCName) && !string.IsNullOrEmpty(Contact) && !string.IsNullOrEmpty(City))
+                {
+                    VLCs = VLCs.FindAll(x => x.VLCName.ToUpper().Trim().Contains(VLCName.ToUpper().Trim())
+                     || x.City.ToUpper().Trim().Contains(City.ToUpper().Trim())
+                     || x.Contact.ToUpper().Trim().Contains(Contact.ToUpper().Trim())
+                    );
+                }
+
+                VLCReportByNameAndCityContactDTO report = new VLCReportByNameAndCityContactDTO();
+                report.VLCs = new List<VLCDTO>(); 
+                foreach (var vlc in VLCs)
+                {
+                    report.VLCs.Add(VLCConvertor.ConvertToVLCDto(vlc));
+                }
+                report.VLCName = VLCName;
+                report.City = City;
+                report.Contact = Contact;
+
+                response.Status = true;
+                response.Data = report;
+            }
+            catch
+            {
+                response.Status = false;
+            }
+
+            return response;
+        }
     }
 }

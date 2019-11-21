@@ -8,15 +8,19 @@ namespace Platform.DTO
 {
     public interface IDCOrderService
     {
-        List<DCOrderDTO> GetAllDCOrders();
+        ResponseDTO GetAllDCOrders();
 
-      ResponseDTO GetDCOrdersById(int dcId);
+        ResponseDTO GetDCOrdersById(int dcId);
 
-        ResponseDTO GetDCOrdersByOrderStatus(int dcId,string orderStatus);
+        ResponseDTO GetDCOrdersByOrderStatus(int dcId, string orderStatus);
 
         ResponseDTO AddDCOrder(CreateDCOrderDTO dcOrderDTO);
 
+        ResponseDTO AddDCOrderFromCRM(DCOrderDTO dCOrderDTO);
+
         ResponseDTO UpdateDCOrder(CreateDCOrderDTO dCPaymentDTO);
+
+        ResponseDTO UpdateDCOrderFromCRM(DCOrderDTO dCOrderDTO);
 
         ResponseDTO GetOrderDetailsByOrderId(int orderId);
 

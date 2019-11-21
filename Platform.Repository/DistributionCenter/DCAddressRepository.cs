@@ -18,19 +18,25 @@ namespace Platform.Repository
 
         public List<DCAddress> GetAll()
         {
-            var dcAddress = _repository.DCAddresses.Where(v=>v.IsDeleted == false).ToList<Sql.DCAddress>();
+            var dcAddress = _repository.DCAddresses.Where(v => v.IsDeleted == false).ToList<Sql.DCAddress>();
+            return dcAddress;
+        }
+
+        public DCAddress GetById(int id)
+        {
+            var dcAddress = _repository.DCAddresses.Where(v => v.DCAddressId == id && (v.IsDeleted == null || v.IsDeleted == false)).FirstOrDefault();
             return dcAddress;
         }
 
         public DCAddress GetDefaultAddressByDCId(int dCid)
         {
-            var dcAddress = _repository.DCAddresses.Where(v => v.DCId == dCid && v.IsDefaultAddress && v.IsDeleted == false).FirstOrDefault();
+            var dcAddress = _repository.DCAddresses.Where(v => v.DCId == dCid && v.IsDefaultAddress==true && (v.IsDeleted == null || v.IsDeleted == false)).FirstOrDefault();
             return dcAddress;
         }
 
         public List<DCAddress> GetAllDCAddressByDCId(int dCid)
         {
-            var dcAddress = _repository.DCAddresses.Where(v => v.DCId == dCid && v.IsDeleted == false).ToList<Sql.DCAddress>();
+            var dcAddress = _repository.DCAddresses.Include("DistributionCenter").Where(v => v.DCId == dCid && (v.IsDeleted == null || v.IsDeleted == false)).ToList<Sql.DCAddress>();
             return dcAddress;
         }
 
@@ -49,7 +55,7 @@ namespace Platform.Repository
             if (dCAddress != null)
             {
                 _repository.Entry<Sql.DCAddress>(dCAddress).State = System.Data.Entity.EntityState.Modified;
-               
+
             }
 
 

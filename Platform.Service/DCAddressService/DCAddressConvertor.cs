@@ -15,24 +15,26 @@ namespace Platform.Service
             DCAddressDTO dCAddressDTO = new DCAddressDTO();
             dCAddressDTO.DCAddressId = dCAddress.DCAddressId;
             dCAddressDTO.Address = dCAddress.Address;
-        //    dCAddressDTO.AddressTypeId = dCAddress.AddressTypeId==1 ? "Shop" : "Other";
+            //    dCAddressDTO.AddressTypeId = dCAddress.AddressTypeId==1 ? "Shop" : "Other";
             dCAddressDTO.City = dCAddress.City;
             dCAddressDTO.Contact = dCAddress.Contact;
             dCAddressDTO.DCId = dCAddress.DCId;
             dCAddressDTO.District = dCAddress.District;
-          //  dCAddressDTO.IsDefaultAddress = dCAddress.IsDefaultAddress;
+            //  dCAddressDTO.IsDefaultAddress = dCAddress.IsDefaultAddress;
             dCAddressDTO.PostalCode = dCAddress.PostalCode;
             dCAddressDTO.State = dCAddress.State;
+            dCAddressDTO.DCName = dCAddress.DistributionCenter != null ? dCAddress.DistributionCenter.DCName : string.Empty;
 
             return dCAddressDTO;
         }
 
         public static void ConvertToDCAddressEntity(ref DCAddress dCAddress, DCAddressDTO dCAddressDTO, bool isUpdate)
         {
-           
-        if (string.IsNullOrWhiteSpace(dCAddressDTO.Address)==false)
-            dCAddress.Address = dCAddressDTO.Address;
-           
+            dCAddress.DCId = dCAddressDTO.DCId;
+
+            if (string.IsNullOrWhiteSpace(dCAddressDTO.Address) == false)
+                dCAddress.Address = dCAddressDTO.Address;
+
             if (string.IsNullOrWhiteSpace(dCAddressDTO.City) == false)
                 dCAddress.City = dCAddressDTO.City;
 
@@ -41,7 +43,7 @@ namespace Platform.Service
 
             if (string.IsNullOrWhiteSpace(dCAddressDTO.District) == false)
                 dCAddress.District = dCAddressDTO.District;
-         
+
             if (string.IsNullOrWhiteSpace(dCAddressDTO.PostalCode) == false)
                 dCAddress.PostalCode = dCAddressDTO.PostalCode;
 

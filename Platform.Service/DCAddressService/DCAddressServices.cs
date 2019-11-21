@@ -83,18 +83,26 @@ namespace Platform.Service
             DCAddress dCAddress = new DCAddress();
             var exisitingdCAddress = unitOfWork.DCAddressRepository.GetDefaultAddressByDCId(dCAddressDto.DCId);
             if (exisitingdCAddress != null)
-                throw new PlatformModuleException(string.Format("DC Address Details Already Exist For DC Id {0}", dCAddressDto.DCId));
+            {
+                responseDTO.Status = true;
+                responseDTO.Message = "One DC Address already exist. You can only add one address.";
+            }
+            else
+            {
+                //throw new PlatformModuleException(string.Format("DC Address Details Already Exist For DC Id {0}", dCAddressDto.DCId));
 
-            dCAddress.DCAddressId = unitOfWork.DashboardRepository.NextNumberGenerator("DCAddress");
-            DCAddressConvertor.ConvertToDCAddressEntity(ref dCAddress, dCAddressDto, false);
-            dCAddress.IsDeleted = false;
-          
-            unitOfWork.DCAddressRepository.Add(dCAddress);
-            unitOfWork.SaveChanges();
-            dCAddressDto = DCAddressConvertor.ConvertToDCAddressDTO(dCAddress);
-            responseDTO.Status = true;
-            responseDTO.Message = "Customer Bank Added Successfully";
-            responseDTO.Data = dCAddressDto;
+                dCAddress.DCAddressId = unitOfWork.DashboardRepository.NextNumberGenerator("DCAddress");
+                DCAddressConvertor.ConvertToDCAddressEntity(ref dCAddress, dCAddressDto, false);
+                dCAddress.IsDefaultAddress = true;
+                dCAddress.IsDeleted = false;
+
+                unitOfWork.DCAddressRepository.Add(dCAddress);
+                unitOfWork.SaveChanges();
+                dCAddressDto = DCAddressConvertor.ConvertToDCAddressDTO(dCAddress);
+                responseDTO.Status = true;
+                responseDTO.Message = "DC Address Added Successfully";
+                responseDTO.Data = dCAddressDto;
+            }
             return responseDTO;
         }
 
@@ -115,7 +123,7 @@ namespace Platform.Service
                 return AddDCAddress(dCAddressDto);
 
             DCAddressConvertor.ConvertToDCAddressEntity(ref dCAddress, dCAddressDto, true);
-           
+
             //    dCAddress.ModifiedBy = unitOfWork.VLCRepository.GetEmployeeNameByVLCId(dCAddress.Customer.VLCId.GetValueOrDefault());
 
             unitOfWork.DCAddressRepository.Update(dCAddress);
@@ -132,8 +140,8 @@ namespace Platform.Service
             ResponseDTO responseDTO = new ResponseDTO();
             UnitOfWork unitOfWork = new UnitOfWork();
             //get dCAddress
-            var dCAddress = unitOfWork.DCAddressRepository.GetDefaultAddressByDCId(id);
-         
+            var dCAddress = unitOfWork.DCAddressRepository.GetById(id);
+
             dCAddress.IsDeleted = true;
             unitOfWork.DCAddressRepository.Update(dCAddress);
             unitOfWork.SaveChanges();
@@ -162,6 +170,16 @@ namespace Platform.Service
             GC.SuppressFinalize(this);
         }
 
+        public ResponseDTO GetDCAddressById(int Id)
+        {
+            var dCAddress = unitOfWork.DCAddressRepository.GetById(Id);
+            DCAddressDTO dCAddressDto = DCAddressConvertor.ConvertToDCAddressDTO(dCAddress);
+            ResponseDTO response = new ResponseDTO();
+            response.Data = dCAddressDto;
+            response.Status = true;
+            response.Message = "DC address found.";
 
+            return response;
+        }
     }
 }

@@ -10,10 +10,13 @@ using System.Threading.Tasks;
 namespace Platform.DTO
 {
     [Validator(typeof(DCAddressValidator))]
-    public  class DCAddressDTO
+    public class DCAddressDTO
     {
         public int DCAddressId { get; set; }
+        [DisplayName("DC")]
         public int DCId { get; set; }
+        [DisplayName("DC Name")]
+        public string DCName { get; set; }
         //public string AddressTypeId { get; set; }
         //public bool IsDefaultAddress { get; set; }
         public string Address { get; set; }
@@ -30,10 +33,10 @@ namespace Platform.DTO
     {
         public DCAddressValidator()
         {
-         ////   RuleFor(x => x.DCId).NotEqual(0).WithMessage("DC Id Is Required");
-         //   RuleFor(x => x.AddressTypeId).NotNull().WithMessage("Address Type Is Required");
-         //   RuleFor(x => x.PostalCode).NotNull().WithMessage("Postal Code is Required");
-         //   RuleFor(x => x.Contact).NotNull().WithMessage("Contact Number Cannnot be blank");
+            ////   RuleFor(x => x.DCId).NotEqual(0).WithMessage("DC Id Is Required");
+            //   RuleFor(x => x.AddressTypeId).NotNull().WithMessage("Address Type Is Required");
+            //   RuleFor(x => x.PostalCode).NotNull().WithMessage("Postal Code is Required");
+            //   RuleFor(x => x.Contact).NotNull().WithMessage("Contact Number Cannnot be blank");
             //  RuleFor(x=>x.Contact).
             //      RuleFor(x => x.WalletBalance).NotEmpty().WithMessage("The Password cannot be blank.");
 

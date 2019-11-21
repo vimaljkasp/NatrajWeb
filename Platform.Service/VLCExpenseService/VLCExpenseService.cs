@@ -63,7 +63,7 @@ namespace Platform.Service
         public ResponseDTO AddVLCExpenseDetail(VLCExpenseDTO vLCExpenseDTO)
         {
             ResponseDTO responseDTO = new ResponseDTO();
-            
+
             //CC: By Anil see comment above
             //var vLC = unitOfWork.DistributionCenterRepository.GetById(vLCExpenseDTO.VLCId);
             var vLC = unitOfWork.VLCRepository.GetById(vLCExpenseDTO.VLCId);
@@ -93,10 +93,14 @@ namespace Platform.Service
             vLCExpenseDetail.IsDeleted = false;
             vLCExpenseDetail.CreatedBy = vLCExpenseDetail.ModifiedBy = "Admin";
             vLCExpenseDetail.CreatedDate = vLCExpenseDetail.ModifiedDate = DateTimeHelper.GetISTDateTime();
+            vLCExpenseDetail.PaymentCrAmount = vLCExpenseDTO.PaymentCrAmount;
+            vLCExpenseDetail.PaymentDrAmount = vLCExpenseDTO.PaymentDrAmount;
+            vLCExpenseDetail.ExpenseComments = vLCExpenseDTO.ExpenseComments;
+
             if (vLCExpenseDetail.ExpenseDate != DateTime.MinValue)
                 vLCExpenseDetail.ExpenseDate = DateTimeHelper.GetISTDateTime().Date;
             else
-                vLCExpenseDetail.ExpenseDate = vLCExpenseDTO.ExpenseDate;
+                vLCExpenseDetail.ExpenseDate = vLCExpenseDTO.ExpenseDate.Value;
             unitOfWork.VLCExpenseDetailRepository.Add(vLCExpenseDetail);
             if (vLCExpenseDTO.PaymentCrAmount > 0)
             {
@@ -111,7 +115,7 @@ namespace Platform.Service
             unitOfWork.SaveChanges();
             return vLCExpenseDetail;
         }
-        
+
 
         public VLCPaymentDetail AddVLCExpenseInPaymentDetail(VLCExpenseDTO vLCPaymentDTO, int expenseId, decimal paidAmount)
         {
@@ -121,7 +125,7 @@ namespace Platform.Service
             vLCPaymentDetail.VLCId = vLCPaymentDTO.VLCId;
             if (string.IsNullOrWhiteSpace(vLCPaymentDTO.ExpenseComments) == false)
                 vLCPaymentDetail.PaymentComments = vLCPaymentDTO.ExpenseComments;
-            
+
             vLCPaymentDetail.VLCExpenseId = expenseId;
             vLCPaymentDetail.IsDeleted = false;
             vLCPaymentDetail.CreatedBy = vLCPaymentDetail.ModifiedBy = "Admin";
@@ -129,7 +133,7 @@ namespace Platform.Service
             if (vLCPaymentDTO.ExpenseDate != DateTime.MinValue)
                 vLCPaymentDetail.PaymentDate = DateTimeHelper.GetISTDateTime().Date;
             else
-                vLCPaymentDetail.PaymentDate = vLCPaymentDTO.ExpenseDate;
+                vLCPaymentDetail.PaymentDate = vLCPaymentDTO.ExpenseDate.HasValue ? vLCPaymentDTO.ExpenseDate.Value : DateTime.Now.Date;
             vLCPaymentDetail.PaymentCrAmount = paidAmount;
             unitOfWork.VLCPaymentDetailRepository.Add(vLCPaymentDetail);
             return vLCPaymentDetail;
@@ -206,9 +210,9 @@ namespace Platform.Service
         {
             ResponseDTO responseDTO = new ResponseDTO();
             var vlcList = unitOfWork.VLCRepository.GetAll();
-            foreach(var vlc in vlcList)
+            foreach (var vlc in vlcList)
             {
-                if(vlc.HouseRent.GetValueOrDefault()>0 || vlc.MachineRent.GetValueOrDefault()>0)
+                if (vlc.HouseRent.GetValueOrDefault() > 0 || vlc.MachineRent.GetValueOrDefault() > 0)
                 {
                     VLCExpenseDTO vLCExpenseDTO = new VLCExpenseDTO();
                     vLCExpenseDTO.VLCId = vlc.VLCId;
@@ -233,7 +237,7 @@ namespace Platform.Service
             }
             responseDTO.Message = "Machine Rent and House Rent Updated for all VLCs";
             responseDTO.Status = true;
-            responseDTO.Data =new object();
+            responseDTO.Data = new object();
             return responseDTO;
         }
 
@@ -245,8 +249,22 @@ namespace Platform.Service
 
         public ResponseDTO GetVLCExpensesById(int value)
         {
-            //TODO:
-            return new ResponseDTO(); 
+            ResponseDTO response = new ResponseDTO();
+            VLCExpenseDetail vLCExpenseDetail = unitOfWork.VLCExpenseDetailRepository.GetExpenseByExpenseId(value);
+            VLCExpenseDTO vLCExpense = new VLCExpenseDTO();
+            vLCExpense = VLCExpenseConvertor.ConvertToVLCExpenseDTO(vLCExpenseDetail);
+            if (vLCExpense != null)
+            {
+                response.Data = vLCExpense;
+                response.Status = true;
+                response.Message = "VLC Expense by ID";
+            }
+            else
+            {
+                response.Status = false;
+                response.Message = "VLC Expense not found !";
+            }
+            return response;
         }
     }
 }

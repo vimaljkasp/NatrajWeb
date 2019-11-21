@@ -19,17 +19,20 @@ namespace Platform.Service
                 vLCExpenseDTO.CreatedBy = vLCExpenseDetail.CreatedBy;
                 vLCExpenseDTO.CreatedDate = vLCExpenseDetail.CreatedDate;
                 vLCExpenseDTO.VLCId = vLCExpenseDetail.VLCId;
-                //vLCExpenseDTO.ExpenseReason= vLCExpenseDetail.ExpenseReason.ToString();
+                vLCExpenseDTO.VLCName = vLCExpenseDetail.VLC.VLCName;
+
+                VLCExpenseEnum vLCExpenseReason;
+                Enum.TryParse<VLCExpenseEnum>(vLCExpenseDetail.ExpenseReason.ToString(), out vLCExpenseReason);
+                vLCExpenseDTO.ExpenseReason = vLCExpenseReason;
+
                 vLCExpenseDTO.VLCExpenseId = vLCExpenseDetail.VLCExpenseId;
                 vLCExpenseDTO.ModifiedDate = vLCExpenseDetail.ModifiedDate;
-                vLCExpenseDTO.ModifiedBy = vLCExpenseDetail.ModifiedBy;
-                vLCExpenseDTO.ModifiedDate = vLCExpenseDetail.ModifiedDate;
+                vLCExpenseDTO.ModifiedBy = vLCExpenseDetail.ModifiedBy;             
                 vLCExpenseDTO.ExpenseComments = vLCExpenseDetail.ExpenseComments;
                 vLCExpenseDTO.PaymentCrAmount = vLCExpenseDetail.PaymentCrAmount.GetValueOrDefault();
                 vLCExpenseDTO.ExpenseDate = vLCExpenseDetail.ExpenseDate;
                 vLCExpenseDTO.PaymentDrAmount = vLCExpenseDetail.PaymentDrAmount.GetValueOrDefault();
             }
-
 
             return vLCExpenseDTO;
         }
@@ -38,8 +41,16 @@ namespace Platform.Service
         {
             vLCExpenseDetail.VLCId = vLCExpenseDTO.VLCId;
             if (string.IsNullOrWhiteSpace(vLCExpenseDTO.ExpenseComments) == false)
+            {
                 vLCExpenseDetail.ExpenseComments = vLCExpenseDTO.ExpenseComments;
-          
+                vLCExpenseDetail.ExpenseDate = vLCExpenseDTO.ExpenseDate.HasValue ? vLCExpenseDTO.ExpenseDate.Value : DateTime.Now.Date;
+                vLCExpenseDetail.ExpenseReason = (int)vLCExpenseDTO.ExpenseReason;
+                vLCExpenseDTO.PaymentCrAmount = vLCExpenseDTO.PaymentCrAmount;
+                vLCExpenseDTO.PaymentDrAmount = vLCExpenseDTO.PaymentDrAmount;
+                vLCExpenseDTO.CreatedBy = "User";
+                vLCExpenseDTO.CreatedDate = DateTime.Now.Date;
+
+            }
         }
     }
 }

@@ -11,41 +11,43 @@ namespace Platform.Service
 {
     public class DCOrderConvertor
     {
-        public static DCOrderDTO ConvertToDCOrderDto(DCOrder dCOrder,string path)
+        public static DCOrderDTO ConvertToDCOrderDto(DCOrder dCOrder, string path)
         {
             DCOrderDTO dCOrderDTO = new DCOrderDTO();
             dCOrderDTO.DCId = dCOrder.DCId;
             dCOrderDTO.DCOrderId = dCOrder.DCOrderId;
             dCOrderDTO.DCOrderNumber = dCOrder.DCOrderNumber;
-            dCOrderDTO.DeliveryExpectedDate = dCOrder.DeliveryExpectedDate.GetValueOrDefault();
-            dCOrderDTO.DeliveredDate = dCOrder.DeliveredDate.GetValueOrDefault();
+            dCOrderDTO.DeliveryExpectedDate = dCOrder.DeliveryExpectedDate.HasValue ? dCOrder.DeliveryExpectedDate : DateTime.Now.Date;
+            dCOrderDTO.DeliveredDate = dCOrder.DeliveredDate.HasValue ? dCOrder.DeliveredDate : DateTime.Now.Date;
+            dCOrderDTO.DeliveredBy = dCOrder.DeliveredBy;
             dCOrderDTO.OrderComments = dCOrder.OrderComments;
             dCOrderDTO.OrderDate = dCOrder.OrderDate;
             dCOrderDTO.OrderTotalPrice = dCOrder.OrderTotalPrice;
             dCOrderDTO.TotalOrderQuantity = dCOrder.TotalOrderQuantity;
             dCOrderDTO.TotalActualQuantity = dCOrder.TotalActualQuantity.GetValueOrDefault();
-            dCOrderDTO.OrderStatus = ((OrderStatus)dCOrder.OrderStatusId).ToString();
+            OrderStatus status;
+            Enum.TryParse<OrderStatus>(dCOrder.OrderStatusId.ToString(), out status);
+            dCOrderDTO.OrderStatus = status;
             dCOrderDTO.DCName = dCOrder.DistributionCenter != null ? dCOrder.DistributionCenter.DCName : string.Empty;
             if (dCOrder.DCAddress != null)
-             dCOrderDTO.dCAddressDTO =DCAddressConvertor.ConvertToDCAddressDTO(dCOrder.DCAddress);
+                dCOrderDTO.dCAddressDTO = DCAddressConvertor.ConvertToDCAddressDTO(dCOrder.DCAddress);
             if (dCOrder.DCOrderDtls != null)
             {
                 dCOrderDTO.dcOrderDtlList = new List<DCOrderDtlDTO>();
                 foreach (var dcorderDtl in dCOrder.DCOrderDtls)
-                    dCOrderDTO.dcOrderDtlList.Add(ConvertToDCOrderDtlDto(dcorderDtl,path));
+                    dCOrderDTO.dcOrderDtlList.Add(ConvertToDCOrderDtlDto(dcorderDtl, path));
             }
             return dCOrderDTO;
-
         }
 
-        public static DCOrderDtlDTO ConvertToDCOrderDtlDto(DCOrderDtl dCOrderDtl,string path)
+        public static DCOrderDtlDTO ConvertToDCOrderDtlDto(DCOrderDtl dCOrderDtl, string path)
         {
             DCOrderDtlDTO dCOrderDtlDTO = new DCOrderDtlDTO();
             dCOrderDtlDTO.DCOrderDtlId = dCOrderDtl.DCOrderDtlId;
             dCOrderDtlDTO.DCOrderId = dCOrderDtl.DCOrderId;
             dCOrderDtlDTO.ProductId = dCOrderDtl.ProductId;
             dCOrderDtlDTO.ProductName = dCOrderDtl.Product.Name;
-            dCOrderDtlDTO.ProductDescription= dCOrderDtl.Product.Description;
+            dCOrderDtlDTO.ProductDescription = dCOrderDtl.Product.Description;
             dCOrderDtlDTO.ProductImageUrl = Path.Combine(path, "PROD" + dCOrderDtl.ProductId.ToString() + ".jpg");
             dCOrderDtlDTO.QuantityOrdered = dCOrderDtl.QuantityOrdered;
             dCOrderDtlDTO.ActualQuantity = dCOrderDtl.ActualQuantity;
@@ -53,27 +55,27 @@ namespace Platform.Service
             dCOrderDtlDTO.UnitPrice = dCOrderDtl.UnitPrice.GetValueOrDefault();
             return dCOrderDtlDTO;
         }
-            //public static void ConvertToDCOrderEntity(ref DCOrder dcOrder, CreateDCOrderDTO dcOrderDTO, bool isUpdate)
-            //{
+        //public static void ConvertToDCOrderEntity(ref DCOrder dcOrder, CreateDCOrderDTO dcOrderDTO, bool isUpdate)
+        //{
 
-            //    dcOrder.dco = dcOrderDTO.VLCId;
-            //    dcOrder.CustomerId = dcOrderDTO.CustomerId;
-            //    dcOrder.OrderComments = dcOrderDTO.ShiftId;
+        //    dcOrder.dco = dcOrderDTO.VLCId;
+        //    dcOrder.CustomerId = dcOrderDTO.CustomerId;
+        //    dcOrder.OrderComments = dcOrderDTO.ShiftId;
 
 
-            //}
+        //}
 
-            public static void ConvertToDCOrderDtlEntity(ref DCOrderDtl dcOrderDtl, CreateDCOrderDtlDTO dCOrderDtlDTO, bool isUpdate)
+        public static void ConvertToDCOrderDtlEntity(ref DCOrderDtl dcOrderDtl, CreateDCOrderDtlDTO dCOrderDtlDTO, bool isUpdate)
         {
-            if(dCOrderDtlDTO.ActualQuantity>0)
-              dcOrderDtl.ActualQuantity = dCOrderDtlDTO.ActualQuantity;
+            if (dCOrderDtlDTO.ActualQuantity > 0)
+                dcOrderDtl.ActualQuantity = dCOrderDtlDTO.ActualQuantity;
             else
-                dcOrderDtl.ActualQuantity= dCOrderDtlDTO.QuantityOrdered;
+                dcOrderDtl.ActualQuantity = dCOrderDtlDTO.QuantityOrdered;
 
             if (dCOrderDtlDTO.QuantityOrdered > 0)
                 dcOrderDtl.QuantityOrdered = dCOrderDtlDTO.QuantityOrdered;
-          
-            
+
+
             if (dCOrderDtlDTO.ProductId > 0)
                 dcOrderDtl.ProductId = dCOrderDtlDTO.ProductId;
 
@@ -81,12 +83,29 @@ namespace Platform.Service
                 dcOrderDtl.UnitPrice = dCOrderDtlDTO.UnitPrice;
             if (dCOrderDtlDTO.TotalPrice > 0)
                 dcOrderDtl.OrderTotalPrice = dCOrderDtlDTO.TotalPrice;
-
-
-
         }
 
-     
+        public static void ConvertToDCOrderDtlEntity(ref DCOrderDtl dcOrderDtl, DCOrderDtlDTO dCOrderDtlDTO, bool isUpdate)
+        {
+            if (dCOrderDtlDTO.ActualQuantity > 0)
+                dcOrderDtl.ActualQuantity = dCOrderDtlDTO.ActualQuantity;
+            else
+                dcOrderDtl.ActualQuantity = dCOrderDtlDTO.QuantityOrdered;
+
+            if (dCOrderDtlDTO.QuantityOrdered > 0)
+                dcOrderDtl.QuantityOrdered = dCOrderDtlDTO.QuantityOrdered;
+
+
+            if (dCOrderDtlDTO.ProductId > 0)
+                dcOrderDtl.ProductId = dCOrderDtlDTO.ProductId;
+
+            if (dCOrderDtlDTO.UnitPrice > 0)
+                dcOrderDtl.UnitPrice = dCOrderDtlDTO.UnitPrice;
+            if (dCOrderDtlDTO.TotalPrice > 0)
+                dcOrderDtl.OrderTotalPrice = dCOrderDtlDTO.TotalPrice;
+        }
+
+
 
         public static VLCCustomerCollectionDTO ConvertToVLCCustomerCollectionDTO(VLCMilkCollection vLCMilkCollection)
         {

@@ -15,9 +15,10 @@ namespace Platform.DTO
 
         //    ResponseDTO GetDistributionCenterByVLCId(int vlcId, int? PageNumber);
 
-         ResponseDTO GetAllDCAddressByDCId(int dcId);
-        
-          ResponseDTO GetDefaultDCAddressByDCId(int dcId);
+        ResponseDTO GetAllDCAddressByDCId(int dcId);
+        ResponseDTO GetDCAddressById(int Id);
+
+        ResponseDTO GetDefaultDCAddressByDCId(int dcId);
 
         //  List<CustomerDto> GetCustomerDetailsByVLCCode(string vlcCode);
 

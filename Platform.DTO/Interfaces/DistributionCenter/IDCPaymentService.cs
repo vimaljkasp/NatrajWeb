@@ -10,7 +10,7 @@ namespace Platform.DTO
     {
         List<DCPaymentDTO> GetAllDCPayments();
 
-   //     List<DCPaymentDTO> GetDistributionCentersByPageCount(int? pageNumber, int? count);
+        //     List<DCPaymentDTO> GetDistributionCentersByPageCount(int? pageNumber, int? count);
 
 
         //    ResponseDTO GetDistributionCenterByVLCId(int vlcId, int? PageNumber);

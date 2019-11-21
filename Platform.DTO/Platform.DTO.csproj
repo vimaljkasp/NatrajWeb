@@ -137,6 +137,7 @@
     <Compile Include="ReadDTO\ReportDTO\VLCCollectionSummaryDTO.cs" />
     <Compile Include="ReadDTO\ReportDTO\VLCExpenseSummaryDTO.cs" />
     <Compile Include="ReadDTO\ReportDTO\VLCPaymentStatementDTO.cs" />
+    <Compile Include="ReadDTO\ReportDTO\VLCReportByNameAndCityContactDTO.cs" />
     <Compile Include="Site\SiteConfigurationDTO.cs" />
     <Compile Include="Site\SiteDTO.cs" />
     <Compile Include="VLCCustomerCollectionDTO.cs" />

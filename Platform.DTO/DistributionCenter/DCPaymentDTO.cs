@@ -2,6 +2,8 @@
 using FluentValidation.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,13 +15,29 @@ namespace Platform.DTO
     public class DCPaymentDTO
     {
         public int DCPaymentId { get; set; }
+        [DisplayName("DC")]
         public int DCId { get; set; }
+        [DisplayName("DC Name")]
+        public string DCName { get; set; }
+
+        [DisplayName("DC Order")]
         public int DCOrderId { get; set; }
+
+        [DisplayName("DC Order Code")]
+        public string DCOrderCode { get; set; }
+        [DisplayName("Cr Amount")]
         public decimal PaymentCrAmount { get; set; }
+        [DisplayName("Dr Amount")]
         public decimal PaymentDrAmount { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayName("Payment Date")]
         public DateTime PaymentDate { get; set; }
+        [DisplayName("Payment Recieved By")]
         public string PaymentReceivedBy { get; set; }
+        [DisplayName("Payment Mode")]
         public string PaymentMode { get; set; }
+        [DisplayName("Payment Comments")]
         public string PaymentComments { get; set; }
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }
@@ -35,7 +53,7 @@ namespace Platform.DTO
     {
         public DCPaymentValidator()
         {
-            RuleFor(x => x.DCId).NotEqual(0).WithMessage("DC Id Is Required");
+            //RuleFor(x => x.DCId).NotEqual(0).WithMessage("DC Id Is Required");
 
             //RuleFor(x => x.DCName).NotEmpty().MinimumLength(3).MaximumLength(100).WithMessage("The DC name is cannot be blank.");
             //RuleFor(x => x.AgentName).NotNull().WithMessage("Customer Name Cannot be NULL");

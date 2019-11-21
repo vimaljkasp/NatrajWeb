@@ -14,8 +14,7 @@ namespace Platform.DTO
         public int DCId { get; set; }
 
         public int DCOrderId { get; set; }
-
-
+        
         public string OrderComments { get; set; }
 
         public List<CreateDCOrderDtlDTO> CreateDCOrderDtlList { get; set; }

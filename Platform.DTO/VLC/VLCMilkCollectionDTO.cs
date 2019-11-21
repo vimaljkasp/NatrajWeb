@@ -41,10 +41,10 @@ namespace Platform.DTO
         public Nullable<decimal> TotalQuantity { get; set; }
         [DisplayName("Total Amt")]
         public Nullable<decimal> TotalAmount { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]        
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Collection Date")]
-        public DateTime CollectionDateTime { get; set; }
+        public DateTime? CollectionDateTime { get; set; }
         [DisplayName("Shift")]
         public string CollectionShift { get; set; }
         [DisplayName("Shift")]

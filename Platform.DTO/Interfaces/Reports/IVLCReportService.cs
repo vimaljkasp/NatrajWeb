@@ -11,5 +11,7 @@ namespace Platform.DTO
         ResponseDTO VLCPaymentSummaryByDate(int vlcId, DateTime StartDate, DateTime EndDate);
 
         ResponseDTO VLCWalletSummary();
+
+        ResponseDTO GetVLCByNameContactnCity(string VLCName, string Contact, string City);
     }
 }

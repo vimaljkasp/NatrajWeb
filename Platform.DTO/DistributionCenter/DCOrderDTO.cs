@@ -13,9 +13,15 @@ namespace Platform.DTO
     [Validator(typeof(DCOrderValidator))]
     public class DCOrderDTO
     {
+        
 
         public DCOrderDTO()
         {
+
+            OrderDate = DateTime.Now.Date;
+            DeliveredDate = DateTime.Now.Date;
+            DeliveryExpectedDate = DateTime.Now.Date;           
+
             dcOrderDtlList = new List<DCOrderDtlDTO>() { new DCOrderDtlDTO {
                 ProductDescription = "",
                 ProductId = 0,
@@ -30,10 +36,10 @@ namespace Platform.DTO
         public int DCOrderId { get; set; }
         [DisplayName("Order #")]
         public string DCOrderNumber { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]        
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Date")]
-        public System.DateTime OrderDate { get; set; }
+        public DateTime? OrderDate { get; set; }
         [DisplayName("DCID")]
         public int DCId { get; set; }
         //public decimal OrderPrice { get; set; }
@@ -52,20 +58,21 @@ namespace Platform.DTO
         [DisplayName("Actual Qty")]
         public decimal TotalActualQuantity { get; set; }
         [DisplayName("Status")]
-        public string OrderStatus { get; set; }
+        public OrderStatus OrderStatus { get; set; }
+
         [DisplayName("Expected Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime DeliveryExpectedDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? DeliveryExpectedDate { get; set; }
         [DisplayName("Delivery Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime DeliveredDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? DeliveredDate { get; set; }
         [DisplayName("Delivered By")]
         public string DeliveredBy { get; set; }
         [DisplayName("Comments")]
         public string OrderComments { get; set; }
-    
+
 
         public List<DCOrderDtlDTO> dcOrderDtlList { get; set; }
 
@@ -108,6 +115,6 @@ namespace Platform.DTO
         //public decimal Price { get; set; }
         //public decimal OrderTax { get; set; }
         public decimal TotalPrice { get; set; }
-       
+
     }
 }

@@ -16,7 +16,14 @@ namespace Platform.Service
             vlcMilkCollectionDTO.VLCMilkCollectionId = vlcMilkCollection.VLCMilkCollectionId;
             vlcMilkCollectionDTO.VLCId = vlcMilkCollection.VLCId.GetValueOrDefault();
             vlcMilkCollectionDTO.TotalAmount = vlcMilkCollection.TotalAmount.GetValueOrDefault();
-            vlcMilkCollectionDTO.CollectionDateTime = vlcMilkCollection.CollectionDateTime.GetValueOrDefault();
+            vlcMilkCollectionDTO.TotalQuantity = vlcMilkCollection.TotalQuantity.GetValueOrDefault();
+
+            ShiftEnum shift;
+            Enum.TryParse<ShiftEnum>(vlcMilkCollection.ShiftId.ToString(), out shift);
+            vlcMilkCollectionDTO.ShiftId = shift;
+
+            vlcMilkCollectionDTO.CollectionDateTime = vlcMilkCollection.CollectionDateTime.HasValue ? vlcMilkCollection.CollectionDateTime.Value : DateTime.Now;
+
             vlcMilkCollectionDTO.CreatedBy = vlcMilkCollection.CreatedBy;
             vlcMilkCollectionDTO.CreatedDate = vlcMilkCollection.CreatedDate;
             vlcMilkCollectionDTO.CreatedBy = vlcMilkCollection.CreatedBy;

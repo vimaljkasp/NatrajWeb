@@ -19,6 +19,8 @@ namespace Platform.Service
                 dCPaymentDTO.CreatedBy = dCPaymentDetail.CreatedBy;
                 dCPaymentDTO.CreatedDate = dCPaymentDetail.CreatedDate;
                 dCPaymentDTO.DCId = dCPaymentDetail.DCId;
+                //dCPaymentDTO.DCOrderCode = dCPaymentDetail.
+                dCPaymentDTO.DCName = dCPaymentDetail.DistributionCenter.DCName;
                 dCPaymentDTO.DCOrderId = dCPaymentDetail.DCOrderId;
                 dCPaymentDTO.DCPaymentId = dCPaymentDetail.DCPaymentId;
                 dCPaymentDTO.ModifiedDate = dCPaymentDetail.ModifiedDate;
